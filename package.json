@@ -1,15 +1,13 @@
 {
-  "name": "dancernotes-next-yoga-prisma-frontend-netlify",
+  "name": "dancernotes-next-yoga-prisma-frontend-heroku",
   "version": "1.0.0",
   "description": "Front End of Full Stack DancerNotes v1",
   "main": "index.js",
   "scripts": {
     "dev": "next -p 9999",
-    "build": "next build",
+    "build": "next build -p $PORT",
     "start": "next start",
-    "test": "NODE_ENV=test jest --watch",
-    "export": "next export",
-    "deploy": "npm run build && npm run export"
+    "test": "NODE_ENV=test jest --watch"
   },
   "author": "",
   "license": "ISC",
