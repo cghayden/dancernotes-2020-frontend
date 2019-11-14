@@ -1,46 +1,46 @@
 import { useState } from "react";
 import { animated, useTransition } from "react-spring";
 
-import CreateDancerForm from "../../../components/Parent/CreateDancerForm";
-import MobileNav from "../../../components/Parent/MobileNav";
-import DesktopNav from "../../../components/Parent/DesktopNav";
-import MobileStatusBar from "../../../components/Parent/MobileStatusBar";
-import ParentUserQuery from "../../../components/Parent/ParentUserQuery";
-import ContentLayout from "../../../components/ContentLayout";
-import DancerCard from "../../../components/Parent/DancerCard";
-import ContentHeader from "../../../components/ContentHeader";
-import AccountSubNav from "../../../components/Parent/AccountSubNav";
+import CreateDancerForm from "../../components/Parent/CreateDancerForm";
+import MobileNav from "../../components/Parent/MobileNav";
+import DesktopNav from "../../components/Parent/DesktopNav";
+import MobileStatusBar from "../../components/Parent/MobileStatusBar";
+import ParentUserQuery from "../../components/Parent/ParentUserQuery";
+import ContentLayout from "../../components/ContentLayout";
+import DancerCard from "../../components/Parent/DancerCard";
+import ContentHeader from "../../components/ContentHeader";
+import AccountSubNav from "../../components/Parent/AccountSubNav";
 function DancersPage() {
   const [addDancer, toggleAddDancer] = useState(false);
   const dancersTransition = useTransition(addDancer, null, {
     from: {
       opacity: 0,
-      transform: "translate3d(0, 0%,0 )",
+      transform: "translate3d(0, 0%,0 )"
     },
     enter: {
       opacity: 1,
-      transform: "translate3d(0,0,0)",
+      transform: "translate3d(0,0,0)"
     },
     leave: {
       opacity: 0,
-      transform: "translate3d(0, 100%,0)",
-    },
+      transform: "translate3d(0, 100%,0)"
+    }
   });
   const transition = useTransition(addDancer, null, {
     from: {
       position: "absolute",
       top: "150px",
       opacity: 0,
-      transform: "translate3d(0, 100% 0)",
+      transform: "translate3d(0, 100% 0)"
     },
     enter: {
       opacity: 1,
-      transform: "translate3d(0,0,0)",
+      transform: "translate3d(0,0,0)"
     },
     leave: {
       opacity: 0,
-      transform: "translate3d(0, -100%,0)",
-    },
+      transform: "translate3d(0, -100%,0)"
+    }
   });
 
   return (
@@ -79,7 +79,7 @@ function DancersPage() {
                       <animated.div key={key} style={styles}>
                         <CreateDancerForm toggleAddDancer={toggleAddDancer} />
                       </animated.div>
-                    ),
+                    )
                 )}
                 {dancersTransition.map(
                   ({ item, key, props: styles }) =>
@@ -93,7 +93,7 @@ function DancersPage() {
                             );
                           })}
                       </animated.div>
-                    ),
+                    )
                 )}
               </main>
             </ContentLayout>

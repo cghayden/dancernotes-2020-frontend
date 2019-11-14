@@ -88,7 +88,11 @@ const GlobalStyle = createGlobalStyle`
       cursor: not-allowed;
     }
     }
-  
+  &.landingPage{
+    font-size: 1.5rem;
+    width: 200px;
+    height: 50px;
+  }
   }
 
   input,

@@ -44,7 +44,6 @@ const AboutNav = styled.div`
 const AboutButton = styled.button`
   padding-left: 0;
   padding-right: 0;
-  width: 100px;
   :hover {
     background-color: transparent;
     color: unset;
