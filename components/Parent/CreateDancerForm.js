@@ -2,20 +2,19 @@ import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import Form from "../styles/Form";
+import Card from "../styles/Card";
 import Error from "../Error";
 import { PARENT_USER_QUERY } from "./ParentUserQuery";
 import styled from "styled-components";
+import { DancerCardHeaderStyles } from "./DancerCard";
 
-//same as DancerCard with height modification
-const CreateFormHeader = styled.div`
-  height: 50px;
-  position: relative;
+//same as DancerCard
+
+const CardBody = styled(Form)`
+  height: auto;
+  border-radius: 0 0 5px 5px;
+  margin-top: -1rem;
   background: ${props => props.theme.gray0};
-  margin-top: 60px;
-  margin-bottom: -20px;
-  border-radius: 5px 5px 0 0;
-  width: 90%;
-  max-width: 600px;
 `;
 
 //same as DancerCard with z-index to put it on top of cardBody(form)
@@ -43,14 +42,6 @@ const ImageDiv = styled.div`
   p {
     font-size: 5rem;
   }
-`;
-
-const CardBody = styled(CreateFormHeader)`
-  height: auto;
-  border-radius: 0 0 5px 5px;
-  margin-top: -1rem;
-  padding-top: 0;
-  background: ${props => props.theme.gray0};
 `;
 
 const CREATE_DANCER = gql`
@@ -106,7 +97,7 @@ class CreateDancerForm extends Component {
       >
         {(createDancer, { error, loading }) => (
           <>
-            <CreateFormHeader>
+            <DancerCardHeaderStyles>
               <ImageDiv avatar={avatar}>
                 {avatar ? (
                   <img src={avatar} alt={`dancer's picture`} />
@@ -114,60 +105,58 @@ class CreateDancerForm extends Component {
                   <p>{firstName && firstName[0]}</p>
                 )}
               </ImageDiv>
-            </CreateFormHeader>
-            <CardBody>
-              <Form
-                method="post"
-                onSubmit={async e => {
-                  e.preventDefault();
-                  const res = await createDancer();
-                  this.setState({
-                    firstName: "",
-                    avatar: ""
-                  });
-                  toggleAddDancer(false);
-                }}
+            </DancerCardHeaderStyles>
+            <CardBody
+              method="post"
+              onSubmit={async e => {
+                e.preventDefault();
+                const res = await createDancer();
+                this.setState({
+                  firstName: "",
+                  avatar: ""
+                });
+                toggleAddDancer(false);
+              }}
+            >
+              <fieldset
+                disabled={loading || loadingAvatar}
+                aria-busy={loading || loadingAvatar}
               >
-                <fieldset
-                  disabled={loading || loadingAvatar}
-                  aria-busy={loading || loadingAvatar}
+                <Error error={error} />
+                <div className="input-item">
+                  <label htmlFor="firstName">Name</label>
+                  <input
+                    required
+                    type="text"
+                    name="firstName"
+                    placeholder="firstName"
+                    value={firstName}
+                    onChange={this.handleChange}
+                  />
+                </div>
+
+                <div className="input-item">
+                  <label htmlFor="image">
+                    Add a picture of your dancer easily identify the activities
+                    he/she is involved in.
+                  </label>
+                  <input
+                    type="file"
+                    id="image"
+                    name="file"
+                    placeholder="Upload a picture of your dancer"
+                    onChange={this.uploadFile}
+                  />
+                </div>
+
+                <button type="submit">Add Dancer to my Account</button>
+                <button
+                  type="button"
+                  onClick={() => this.props.toggleAddDancer(false)}
                 >
-                  <Error error={error} />
-                  <div className="input-item">
-                    <label htmlFor="firstName">Name</label>
-                    <input
-                      required
-                      type="text"
-                      name="firstName"
-                      placeholder="firstName"
-                      value={firstName}
-                      onChange={this.handleChange}
-                    />
-                  </div>
-
-                  <div className="input-item">
-                    <label htmlFor="image">
-                      Add a picture of your dancer easily identify the
-                      activities he/she is involved in.
-                    </label>
-                    <input
-                      type="file"
-                      id="image"
-                      name="file"
-                      placeholder="Upload a picture of your dancer"
-                      onChange={this.uploadFile}
-                    />
-                  </div>
-
-                  <button type="submit">Add Dancer to my Account</button>
-                  <button
-                    type="button"
-                    onClick={() => this.props.toggleAddDancer(false)}
-                  >
-                    Cancel
-                  </button>
-                </fieldset>
-              </Form>
+                  Cancel
+                </button>
+              </fieldset>
             </CardBody>
           </>
         )}

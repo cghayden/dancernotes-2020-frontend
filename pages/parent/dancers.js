@@ -20,6 +20,7 @@ function DancersPage() {
       transform: "translate3d(0, 0%,0 )"
     },
     enter: {
+      width: "100%",
       opacity: 1,
       transform: "translate3d(0,0,0)"
     },
@@ -63,15 +64,22 @@ function DancersPage() {
       subnav={<AccountSubNav dancers={parentUser.dancers} />}
     >
       <Fragment>
-        {transition.map(
-          ({ item, key, props: styles }) =>
-            item && (
-              <animated.div key={key} style={styles}>
-                <CreateDancerForm toggleAddDancer={toggleAddDancer} />
-              </animated.div>
-            )
+        {transition.map(({ item, key, props: styles }) =>
+          item ? (
+            <animated.div key={key} style={styles}>
+              <CreateDancerForm toggleAddDancer={toggleAddDancer} />
+            </animated.div>
+          ) : (
+            <animated.div key={key} style={styles}>
+              {parentUser.dancers &&
+                parentUser.dancers.length > 0 &&
+                parentUser.dancers.map(dancer => {
+                  return <DancerCard key={dancer.id} dancer={dancer} />;
+                })}
+            </animated.div>
+          )
         )}
-        {dancersTransition.map(
+        {/* {dancersTransition.map(
           ({ item, key, props: styles }) =>
             !item && (
               <animated.div key={key} style={styles}>
@@ -82,7 +90,7 @@ function DancersPage() {
                   })}
               </animated.div>
             )
-        )}
+        )} */}
       </Fragment>
     </ParentLayout>
   );

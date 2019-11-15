@@ -19,8 +19,8 @@ const Form = styled.form`
   background: ${props => props.theme.gray1};
   border: 10px solid ${props => props.theme.gray0};
   padding: 0.5rem;
-  width: 100%;
-  min-width: 325px;
+  width: 90%;
+  min-width: 320px;
   max-width: 650px;
   margin: 0 auto 1rem auto;
 

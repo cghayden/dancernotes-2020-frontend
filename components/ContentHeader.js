@@ -2,11 +2,13 @@
 import React from "react";
 import styled from "styled-components";
 
+// z-index on header prevents dancer cards from overlapping and prevents click event on action buttons/links in the header
 const HeaderStyle = styled.header`
   width: 90%;
   display: flex;
   align-items: center;
   padding: 1rem;
+  z-index: 100;
 `;
 
 const Actions = styled.div`

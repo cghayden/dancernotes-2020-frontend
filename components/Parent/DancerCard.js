@@ -10,10 +10,10 @@ import UpdateDancer from "./UpdateDancer";
 
 import { RegistrationContextConsumer } from "./RegistrationContext";
 
-const HeaderStyles = styled(Card)`
-  text-align: right;
+const DancerCardHeaderStyles = styled(Card)`
   height: 80px;
   position: relative;
+  text-align: right;
   padding: 1rem;
   margin-top: 80px;
   margin-bottom: -20px;
@@ -138,7 +138,7 @@ export default class DancerCard extends Component {
         {({ setBrowsingDancer }) => {
           return (
             <>
-              <HeaderStyles id={dancer.id}>
+              <DancerCardHeaderStyles id={dancer.id}>
                 <ImageDiv>
                   {this.state.newAvatar ? (
                     <img
@@ -157,7 +157,7 @@ export default class DancerCard extends Component {
                 <FlipButton onClick={this.switchView}>
                   <Edit />
                 </FlipButton>
-              </HeaderStyles>
+              </DancerCardHeaderStyles>
 
               <CardFlipAnimation>
                 <TransitionGroup component={null}>
@@ -242,4 +242,4 @@ export default class DancerCard extends Component {
   }
 }
 
-export { CardFlipAnimation };
+export { DancerCardHeaderStyles, CardFlipAnimation };
