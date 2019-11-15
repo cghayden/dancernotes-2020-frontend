@@ -75,6 +75,10 @@ const GlobalStyle = createGlobalStyle`
     color: white;
     }
     }
+    &.btn-danger{
+      background-color: ${theme.red5};
+      color: white;
+    }
 
     &.btn-dark{
       background-color: ${theme.newBlue[70].hsl};

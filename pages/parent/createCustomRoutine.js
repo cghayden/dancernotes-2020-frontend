@@ -1,26 +1,15 @@
-import MobileStatusBar from "../../components/Parent/MobileStatusBar";
-import MobileNav from "../../components/Parent/MobileNav";
-import ContentLayout from "../../components/ContentLayout";
-import DesktopNav from "../../components/Parent/DesktopNav";
-import NotesSubNav from "../../components/Parent/NotesSubNav";
-import ContentHeader from "../../components/ContentHeader";
+import Link from "next/link";
+import ParentLayout from "../../components/Parent/ParentLayout";
+import Router from "next/router";
 import CreateCustomRoutineForm from "../../components/Parent/CreateCustomRoutineForm";
 
-function makeupPage() {
+function createCustomRoutinePage() {
+  const cancelButton = <button onClick={() => Router.back()}>Back</button>;
   return (
-    <>
-      <MobileStatusBar page={"Hair Styles"} />
-      <MobileNav />
-      <DesktopNav />
-      <ContentLayout>
-        <NotesSubNav />
-        <ContentHeader page={"Create Your own Routine"} />
-        <main>
-          <CreateCustomRoutineForm />
-        </main>
-      </ContentLayout>
-    </>
+    <ParentLayout page={"Create Your own Routine"} action={cancelButton}>
+      <CreateCustomRoutineForm />
+    </ParentLayout>
   );
 }
 
-export default makeupPage;
+export default createCustomRoutinePage;

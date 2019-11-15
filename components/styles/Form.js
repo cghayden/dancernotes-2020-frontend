@@ -14,15 +14,15 @@ const loading = keyframes`
 
 const Form = styled.form`
   text-align: center;
-  border-radius: 5px;
+  border-radius: ${props => props.theme.borderRadius};
   color: ${props => props.theme.newBlue[90].hsl};
   background: ${props => props.theme.gray1};
-  border: 20px solid ${props => props.theme.gray0};
+  border: 10px solid ${props => props.theme.gray0};
   padding: 0.5rem;
   width: 100%;
   min-width: 325px;
   max-width: 650px;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem auto;
 
   legend,
   h2 {
@@ -48,6 +48,7 @@ const Form = styled.form`
   input[type="submit"] {
     border-radius: 10px;
     width: 75%;
+    max-width: 300px;
     background: ${props => props.theme.newBlue[80].hsl};
     color: white;
     border: 0;

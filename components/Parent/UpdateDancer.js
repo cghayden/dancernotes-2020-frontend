@@ -63,7 +63,8 @@ class UpdateDancer extends Component {
     );
     const file = await res.json();
     this.setState({
-      avatar: file.eager[0].secure_url
+      avatar: file.eager[0].secure_url,
+      changePicture: false
     });
   };
 
@@ -96,36 +97,38 @@ class UpdateDancer extends Component {
                         defaultValue={dancer.firstName}
                       />
                     </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        this.setState({
+                          changePicture: !this.state.changePicture
+                        })
+                      }
+                    >
+                      {this.props.hasAvatar
+                        ? `Change Picture`
+                        : `Add a picture`}
+                    </button>
+                    {this.state.changePicture && (
+                      <div className="input-item">
+                        <label htmlFor="image">Choose an Image</label>
+                        <input
+                          type="file"
+                          id="image"
+                          name="image"
+                          placeholder="Image for Avatar"
+                          onChange={async e => {
+                            this.setState({ loadingAvatar: true });
+                            await this.props.changeAvatar(e);
+                            this.setState({
+                              avatar: this.props.newAvatar,
+                              loadingAvatar: false
+                            });
+                          }}
+                        />
+                      </div>
+                    )}
                     <div className="form-footer">
-                      <button
-                        type="button"
-                        onClick={() =>
-                          this.setState({
-                            changePicture: !this.state.changePicture
-                          })
-                        }
-                      >
-                        Change Picture
-                      </button>
-                      {this.state.changePicture && (
-                        <label htmlFor="image">
-                          Upload a New Image
-                          <input
-                            type="file"
-                            id="image"
-                            name="image"
-                            placeholder="Image for Avatar"
-                            onChange={async e => {
-                              this.setState({ loadingAvatar: true });
-                              await this.props.changeAvatar(e);
-                              this.setState({
-                                avatar: this.props.newAvatar
-                              });
-                              this.setState({ loadingAvatar: false });
-                            }}
-                          />
-                        </label>
-                      )}
                       <button
                         type="submit"
                         aria-busy={loading || this.state.loadingAvatar}

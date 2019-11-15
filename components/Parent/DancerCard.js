@@ -23,21 +23,11 @@ const FlipButton = styled.button`
   padding: 0;
   margin: 0;
   box-shadow: none;
-  right: 0;
   /* background-color: transparent; */
   border: none;
 `;
 
-const CardBody = styled(HeaderStyles)`
-  text-align: center;
-  height: auto;
-  margin: 0;
-  background: ${props => props.theme.gray0};
-`;
-
-const DancerCardMain = styled.div`
-  margin-bottom: 1rem;
-`;
+const DancerCardMain = styled.div``;
 
 const DancerCardFooter = styled.div`
   display: flex;
@@ -139,6 +129,7 @@ export default class DancerCard extends Component {
     const { dancer } = this.props;
     const hasDanceClasses = dancer.danceClasses.length > 0;
     console.log("dancer:", dancer);
+    const hasAvatar = dancer.avatar;
     // if (dancer) {
     //   console.log("dancer classes:", dancer.classes.length);
     // }
@@ -154,7 +145,7 @@ export default class DancerCard extends Component {
                       src={this.state.newAvatar}
                       alt={`preview of new image picture`}
                     />
-                  ) : dancer.avatar ? (
+                  ) : hasAvatar ? (
                     <img
                       src={dancer.avatar}
                       alt={`${dancer.firstName}'s picture`}
@@ -177,70 +168,69 @@ export default class DancerCard extends Component {
                     key={this.state.view}
                     unmountOnExit
                   >
-                    <CardBody>
-                      {this.state.view === "update" ? (
-                        <UpdateDancer
-                          id={dancer.id}
-                          closeFunc={this.switchView}
-                          newAvatar={this.state.newAvatar}
-                          changeAvatar={this.changeAvatar}
-                        />
-                      ) : (
-                        <>
-                          <DancerCardMain>
-                            <h2>{dancer.firstName}</h2>
-                            {hasDanceClasses ? (
-                              <div>
-                                <h3>Classes</h3>
-                                {dancer.studios.map(studio => (
-                                  <div key={studio.id}>
-                                    <h4>Classes at {studio.studioName}</h4>
-                                    <ul>
-                                      {dancer.danceClasses.map(dance => {
-                                        if (dance.studio.id === studio.id) {
-                                          return (
-                                            <li key={dance.id}>{dance.name}</li>
-                                          );
-                                        }
-                                      })}
-                                    </ul>
-                                  </div>
-                                ))}
-                              </div>
-                            ) : (
-                              <p>
-                                {dancer.firstName} is not registered in any
-                                classes.
-                              </p>
-                            )}
-                          </DancerCardMain>
-                          <DancerCardFooter>
-                            <button
-                              className="btn-dark"
-                              onClick={this.toggleStudioSearch}
-                            >
-                              Find a Studio to Browse or Register{" "}
-                              {dancer.firstName} for classes ->
-                            </button>
-                            {this.state.showStudioSearch && (
-                              <SearchForStudio
-                                setBrowsingDancer={setBrowsingDancer}
-                                dancerName={dancer.firstName}
-                                dancerId={dancer.id}
-                              />
-                            )}
+                    {this.state.view === "update" ? (
+                      <UpdateDancer
+                        id={dancer.id}
+                        hasAvatar={hasAvatar}
+                        closeFunc={this.switchView}
+                        newAvatar={this.state.newAvatar}
+                        changeAvatar={this.changeAvatar}
+                      />
+                    ) : (
+                      <Card>
+                        <DancerCardMain>
+                          <h2>{dancer.firstName}</h2>
+                          {hasDanceClasses ? (
                             <div>
-                              <p>OR</p>
+                              <h3>Classes</h3>
+                              {dancer.studios.map(studio => (
+                                <div key={studio.id}>
+                                  <h4>Classes at {studio.studioName}</h4>
+                                  <ul>
+                                    {dancer.danceClasses.map(dance => {
+                                      if (dance.studio.id === studio.id) {
+                                        return (
+                                          <li key={dance.id}>{dance.name}</li>
+                                        );
+                                      }
+                                    })}
+                                  </ul>
+                                </div>
+                              ))}
                             </div>
-                            <Link href="/parent/createCustomRoutine">
-                              <a className="btn-dark">
-                                Create Your Own Routine for {dancer.firstName}
-                              </a>
-                            </Link>
-                          </DancerCardFooter>
-                        </>
-                      )}
-                    </CardBody>
+                          ) : (
+                            <p>
+                              {dancer.firstName} is not registered in any
+                              classes.
+                            </p>
+                          )}
+                        </DancerCardMain>
+                        <DancerCardFooter>
+                          <button
+                            className="btn-dark"
+                            onClick={this.toggleStudioSearch}
+                          >
+                            Find a Studio to Browse or Register{" "}
+                            {dancer.firstName} for classes ->
+                          </button>
+                          {this.state.showStudioSearch && (
+                            <SearchForStudio
+                              setBrowsingDancer={setBrowsingDancer}
+                              dancerName={dancer.firstName}
+                              dancerId={dancer.id}
+                            />
+                          )}
+                          <div>
+                            <p>OR</p>
+                          </div>
+                          <Link href="/parent/createCustomRoutine">
+                            <a className="btn-dark">
+                              Create Your Own Routine for {dancer.firstName}
+                            </a>
+                          </Link>
+                        </DancerCardFooter>
+                      </Card>
+                    )}
                   </CSSTransition>
                 </TransitionGroup>
               </CardFlipAnimation>

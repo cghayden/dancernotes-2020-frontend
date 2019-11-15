@@ -7,9 +7,9 @@ const Card = styled.div`
   border-radius: ${props => props.theme.borderRadius};
   margin: 0 auto 1rem auto;
   padding: 0.5rem;
-  width: 90%;
+  /* width: 90%; */
   min-width: 320px;
-  max-width: 600px;
+  max-width: 650px;
 
   .card__header {
     display: flex;

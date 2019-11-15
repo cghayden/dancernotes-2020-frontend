@@ -95,7 +95,7 @@ class CreateCustomRoutineForm extends Component {
     showSuccessMessage: false,
     loadingSong: false,
     dancer: "",
-    studio: "",
+    studio: ""
   };
 
   handleChange = e => {
@@ -114,13 +114,13 @@ class CreateCustomRoutineForm extends Component {
       "https://api.cloudinary.com/v1_1/coreytesting/video/upload",
       {
         method: "POST",
-        body: data,
-      },
+        body: data
+      }
     );
     const file = await res.json();
     this.setState({
       music: file.secure_url,
-      loadingSong: false,
+      loadingSong: false
     });
   };
 
@@ -130,7 +130,7 @@ class CreateCustomRoutineForm extends Component {
 
   onSuccess = () => {
     Router.push({
-      pathname: "/parent/notes/routines",
+      pathname: "/parent/notes/routines"
     });
   };
 
@@ -138,6 +138,7 @@ class CreateCustomRoutineForm extends Component {
     return (
       <Query query={PARENTS_STUDIOS}>
         {({ data: { parentStudios } = {}, error, loading }) => {
+          if (error) return <Error error={error} />;
           return (
             <Query query={PARENTS_DANCERS_QUERY}>
               {({ data: { parentsDancers } = {}, loading, error }) => {
@@ -159,7 +160,6 @@ class CreateCustomRoutineForm extends Component {
                               closeFunc={this.closeSuccessMessage}
                             />
                           )}
-                          <h3>Create Your Own Routine</h3>
 
                           <StyledCreateClassForm
                             method="post"
@@ -177,14 +177,14 @@ class CreateCustomRoutineForm extends Component {
                                 notes: "",
                                 music: "",
                                 dancer: "",
-                                studio: "",
+                                studio: ""
                               });
                             }}
                           >
                             <fieldset disabled={loading} aria-busy={loading}>
                               <Error error={error} />
-                              <label htmlFor="name">
-                                Name
+                              <div className="input-item">
+                                <label htmlFor="name">Name </label>
                                 <input
                                   required
                                   type="text"
@@ -193,13 +193,16 @@ class CreateCustomRoutineForm extends Component {
                                   value={this.state.name}
                                   onChange={this.handleChange}
                                 />
-                              </label>
-                              <label htmlFor="dancer">
-                                Dancer:{" "}
-                                <span>
-                                  (You can add other dancers after creating the
-                                  routine.)
-                                </span>
+                              </div>
+                              <div className="input-item">
+                                <label htmlFor="dancer">
+                                  Dancer:{" "}
+                                  <span>
+                                    (You can add other dancers after creating
+                                    the routine.)
+                                  </span>
+                                </label>
+
                                 <select
                                   required
                                   id="dancer"
@@ -217,9 +220,10 @@ class CreateCustomRoutineForm extends Component {
                                       </option>
                                     ))}
                                 </select>
-                              </label>
-                              <label htmlFor="studio">
-                                Studio:
+                              </div>
+
+                              <div className="input-item">
+                                <label htmlFor="studio">Studio:</label>
                                 <select
                                   required
                                   id="studio"
@@ -238,7 +242,8 @@ class CreateCustomRoutineForm extends Component {
                                     ))}
                                   <option value={"None"}>None</option>
                                 </select>
-                              </label>
+                              </div>
+
                               <div className="formGroup">
                                 <div className="day formGroup-item">
                                   <label htmlFor="day">
@@ -292,8 +297,10 @@ class CreateCustomRoutineForm extends Component {
                                   </label>
                                 </div>
                               </div>
-                              <label htmlFor="performanceName">
-                                Performance Name
+                              <div className="input-item">
+                                <label htmlFor="performanceName">
+                                  Performance Name
+                                </label>
                                 <input
                                   type="text"
                                   name="performanceName"
@@ -301,9 +308,10 @@ class CreateCustomRoutineForm extends Component {
                                   value={this.state.performanceName}
                                   onChange={this.handleChange}
                                 />
-                              </label>
-                              <label htmlFor="tights">
-                                Tights
+                              </div>
+
+                              <div className="input-item">
+                                <label htmlFor="tights">Tights</label>
                                 <input
                                   type="text"
                                   name="tights"
@@ -311,9 +319,10 @@ class CreateCustomRoutineForm extends Component {
                                   value={this.state.tights}
                                   onChange={this.handleChange}
                                 />
-                              </label>
-                              <label htmlFor="shoes">
-                                Shoes
+                              </div>
+
+                              <div className="input-item">
+                                <label htmlFor="shoes">Shoes</label>
                                 <input
                                   type="text"
                                   name="shoes"
@@ -321,9 +330,9 @@ class CreateCustomRoutineForm extends Component {
                                   value={this.state.shoes}
                                   onChange={this.handleChange}
                                 />
-                              </label>
-                              <label htmlFor="notes">
-                                Notes
+                              </div>
+                              <div className="input-item">
+                                <label htmlFor="notes">Notes</label>
                                 <textarea
                                   id="notes"
                                   type="text"
@@ -332,9 +341,11 @@ class CreateCustomRoutineForm extends Component {
                                   value={this.state.notes}
                                   onChange={this.handleChange}
                                 />
-                              </label>
-                              <label htmlFor="music">
-                                Upload the music for this dance...
+                              </div>
+                              <div className="input-item">
+                                <label htmlFor="music">
+                                  Upload the music for this dance...
+                                </label>
                                 <input
                                   type="file"
                                   id="music"
@@ -342,17 +353,17 @@ class CreateCustomRoutineForm extends Component {
                                   placeholder="Upload the music for this dance"
                                   onChange={this.uploadSong}
                                 />
-                              </label>
-                              <button
-                                type="submit"
-                                disabled={loading || this.state.loadingSong}
-                              >
-                                Creat
-                                {loading ? "ing " : "e "} Class
-                              </button>
-                              <Link href="/parent/notes">
-                                <a>Cancel</a>
-                              </Link>
+                              </div>
+
+                              <div className="form-footer">
+                                <button
+                                  type="submit"
+                                  disabled={loading || this.state.loadingSong}
+                                >
+                                  Creat
+                                  {loading ? "ing " : "e "} Class
+                                </button>
+                              </div>
                             </fieldset>
                           </StyledCreateClassForm>
                         </div>
