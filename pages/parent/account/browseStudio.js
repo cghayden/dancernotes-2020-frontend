@@ -49,9 +49,9 @@ const BrowseStudioPage = () => {
   const {
     data: studioData,
     loading: classesLoading,
-    error: classesError,
+    error: classesError
   } = useQuery(BROWSE_STUDIO_CLASSES_QUERY, {
-    variables: { id: router.query.studioId },
+    variables: { id: router.query.studioId }
   });
   const dancerName = browsingDancer.browsingDancerName;
   const studio = studioData ? studioData.studio : {};
@@ -66,7 +66,7 @@ const BrowseStudioPage = () => {
             </MobileStatusBar>
             <MobileNav />
             <DesktopNav />
-            <ContentLayout withControls={true}>
+            <ContentLayout>
               <ContentHeader page={`Classes at ${studio.studioName}`}>
                 {/* <button onClick={toggleControlPanel}>Filter</button> */}
               </ContentHeader>

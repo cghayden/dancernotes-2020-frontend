@@ -27,17 +27,17 @@ const ParentHome = () => {
       display: "grid",
       placeItems: "center",
       opacity: 0,
-      transform: "translate3d(100%, 0,0)",
+      transform: "translate3d(100%, 0,0)"
     },
     enter: { opacity: 1, transform: "translate3d(0,0,0)" },
-    leave: { opacity: 0, transform: "translate3d(100%, 0,0)" },
+    leave: { opacity: 0, transform: "translate3d(100%, 0,0)" }
   });
 
   if (loading) return <p>loading...</p>;
   if (!parentUser.dancers || parentUser.dancers.length < 1) {
     return (
       <div>
-        <MobileStatusBar dancers={[]} page={"Welcome"} />
+        <MobileStatusBar page={"Welcome"} />
         <DesktopNav />
         <ContentLayout>
           <main>
@@ -53,7 +53,7 @@ const ParentHome = () => {
                   <animated.div key={key} style={styles}>
                     <CreateDancerForm toggleAddDancer={toggleAddDancer} />
                   </animated.div>
-                ),
+                )
             )}
           </main>
         </ContentLayout>
@@ -63,12 +63,12 @@ const ParentHome = () => {
   }
   return (
     <>
-      <MobileStatusBar dancers={parentUser.dancers} page={"Notes > Routines"}>
+      <MobileStatusBar page={"Notes > Routines"}>
         <OffScreenControlsToggler text="Display" />
       </MobileStatusBar>
       <MobileNav />
       <DesktopNav />
-      <ContentLayout rightSidebar page={"Notes"} withControls={true}>
+      <ContentLayout page={"Notes"}>
         <NotesSubNav dancers={parentUser.dancers} />
         <main>
           <ContentHeader page="Routines">

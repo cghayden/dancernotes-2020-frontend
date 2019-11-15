@@ -14,11 +14,11 @@ const Actions = styled.div`
   color: ${props => props.theme.vividBlue9};
 `;
 
-function ContentHeader(props) {
+function ContentHeader({ page, action }) {
   return (
     <HeaderStyle>
-      <h1>{props.page}</h1>
-      <Actions>{props.children}</Actions>
+      <h1>{page}</h1>
+      <Actions>{action}</Actions>
     </HeaderStyle>
   );
 }

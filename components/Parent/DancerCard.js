@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Link from "next/link";
+
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import SearchForStudio from "../SearchForStudio";
@@ -6,10 +8,10 @@ import Card from "../styles/Card";
 import Edit from "../Icons/Edit";
 import UpdateDancer from "./UpdateDancer";
 
-// import { RegistrationContext } from "./RegistrationContext";
 import { RegistrationContextConsumer } from "./RegistrationContext";
 
 const HeaderStyles = styled(Card)`
+  text-align: right;
   height: 80px;
   position: relative;
   padding: 1rem;
@@ -21,25 +23,32 @@ const FlipButton = styled.button`
   padding: 0;
   margin: 0;
   box-shadow: none;
-  position: absolute;
   right: 0;
   /* background-color: transparent; */
   border: none;
 `;
 
 const CardBody = styled(HeaderStyles)`
+  text-align: center;
   height: auto;
   margin: 0;
   background: ${props => props.theme.gray0};
 `;
 
+const DancerCardMain = styled.div`
+  margin-bottom: 1rem;
+`;
+
+const DancerCardFooter = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const CardFlipAnimation = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
   position: relative;
   .body {
-    display: block;
     position: relative;
     transition: all 0.4s;
     backface-visibility: hidden;
@@ -89,16 +98,12 @@ const ImageDiv = styled.div`
   }
 `;
 
-const CardFooter = styled.div`
-  background: ${props => props.theme.gray1};
-`;
-
 export default class DancerCard extends Component {
   state = {
     showStudioSearch: false,
     update: false,
     view: "info",
-    newAvatar: "",
+    newAvatar: ""
   };
 
   toggleStudioSearch = () => {
@@ -121,17 +126,22 @@ export default class DancerCard extends Component {
       "https://api.cloudinary.com/v1_1/coreytesting/image/upload",
       {
         method: "POST",
-        body: data,
-      },
+        body: data
+      }
     );
     const file = await res.json();
     this.setState({
-      newAvatar: file.eager[0].secure_url,
+      newAvatar: file.eager[0].secure_url
     });
   };
 
   render() {
     const { dancer } = this.props;
+    const hasDanceClasses = dancer.danceClasses.length > 0;
+    console.log("dancer:", dancer);
+    // if (dancer) {
+    //   console.log("dancer classes:", dancer.classes.length);
+    // }
     return (
       <RegistrationContextConsumer>
         {({ setBrowsingDancer }) => {
@@ -177,25 +187,40 @@ export default class DancerCard extends Component {
                         />
                       ) : (
                         <>
-                          <h2>{dancer.firstName}</h2>
-                          <h3>Classes</h3>
-                          {dancer.studios.map(studio => (
-                            <div key={studio.id}>
-                              <h4>Classes at {studio.studioName}</h4>
-                              <ul>
-                                {dancer.danceClasses.map(dance => {
-                                  if (dance.studio.id === studio.id) {
-                                    return <li key={dance.id}>{dance.name}</li>;
-                                  }
-                                })}
-                              </ul>
-                            </div>
-                          ))}
-
-                          <CardFooter>
-                            <button onClick={this.toggleStudioSearch}>
-                              Register {dancer.firstName} for classes, or browse
-                              a studio's class schedule ->
+                          <DancerCardMain>
+                            <h2>{dancer.firstName}</h2>
+                            {hasDanceClasses ? (
+                              <div>
+                                <h3>Classes</h3>
+                                {dancer.studios.map(studio => (
+                                  <div key={studio.id}>
+                                    <h4>Classes at {studio.studioName}</h4>
+                                    <ul>
+                                      {dancer.danceClasses.map(dance => {
+                                        if (dance.studio.id === studio.id) {
+                                          return (
+                                            <li key={dance.id}>{dance.name}</li>
+                                          );
+                                        }
+                                      })}
+                                    </ul>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <p>
+                                {dancer.firstName} is not registered in any
+                                classes.
+                              </p>
+                            )}
+                          </DancerCardMain>
+                          <DancerCardFooter>
+                            <button
+                              className="btn-dark"
+                              onClick={this.toggleStudioSearch}
+                            >
+                              Find a Studio to Browse or Register{" "}
+                              {dancer.firstName} for classes ->
                             </button>
                             {this.state.showStudioSearch && (
                               <SearchForStudio
@@ -204,7 +229,15 @@ export default class DancerCard extends Component {
                                 dancerId={dancer.id}
                               />
                             )}
-                          </CardFooter>
+                            <div>
+                              <p>OR</p>
+                            </div>
+                            <Link href="/parent/createCustomRoutine">
+                              <a className="btn-dark">
+                                Create Your Own Routine for {dancer.firstName}
+                              </a>
+                            </Link>
+                          </DancerCardFooter>
                         </>
                       )}
                     </CardBody>

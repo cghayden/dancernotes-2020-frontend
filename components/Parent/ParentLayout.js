@@ -1,5 +1,31 @@
-import React from "react";
+import React, { Fragment } from "react";
+import MobileStatusBar from "./MobileStatusBar";
+import MobileNav from "./MobileNav";
+import DesktopNav from "./DesktopNav";
+import ContentLayout from "../ContentLayout";
+import ContentHeader from "../ContentHeader";
 
-export const ParentLayout = ({ children }) => {
-  return <div>{children}</div>;
+//action is a component that triggers an action for the page, i.e add a dancer, or create a new dance
+const ParentLayout = ({
+  children,
+  page = "",
+  action = <div />,
+  subnav = <div />
+}) => {
+  return (
+    <Fragment>
+      {/* <MobileStatusBar page={page} action={action} /> */}
+      <MobileNav />
+      <DesktopNav />
+      <ContentLayout>
+        {subnav}
+        <main>
+          <ContentHeader page={page} action={action} />
+          {children}
+        </main>
+      </ContentLayout>
+    </Fragment>
+  );
 };
+
+export default ParentLayout;

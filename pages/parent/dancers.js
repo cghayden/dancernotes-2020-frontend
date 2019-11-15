@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { animated, useTransition } from "react-spring";
+import { useQuery } from "@apollo/react-hooks";
 
-import CreateDancerForm from "../../components/Parent/CreateDancerForm";
-import MobileNav from "../../components/Parent/MobileNav";
-import DesktopNav from "../../components/Parent/DesktopNav";
-import MobileStatusBar from "../../components/Parent/MobileStatusBar";
-import ParentUserQuery from "../../components/Parent/ParentUserQuery";
-import ContentLayout from "../../components/ContentLayout";
-import DancerCard from "../../components/Parent/DancerCard";
-import ContentHeader from "../../components/ContentHeader";
+import { PARENT_USER_QUERY } from "../../components/Parent/Queries";
+
 import AccountSubNav from "../../components/Parent/AccountSubNav";
+import ParentLayout from "../../components/Parent/ParentLayout";
+import CreateDancerForm from "../../components/Parent/CreateDancerForm";
+import DancerCard from "../../components/Parent/DancerCard";
+
 function DancersPage() {
   const [addDancer, toggleAddDancer] = useState(false);
+  const { data, loading, error } = useQuery(PARENT_USER_QUERY);
+  const parentUser = data ? data.parentUser : {};
+
   const dancersTransition = useTransition(addDancer, null, {
     from: {
       opacity: 0,
@@ -26,9 +28,11 @@ function DancersPage() {
       transform: "translate3d(0, 100%,0)"
     }
   });
+
   const transition = useTransition(addDancer, null, {
     from: {
       position: "absolute",
+      textAlign: "-webkit-center",
       top: "150px",
       opacity: 0,
       transform: "translate3d(0, 100% 0)"
@@ -43,64 +47,44 @@ function DancersPage() {
     }
   });
 
+  if (loading) return "5, 6, 7, 8...";
+  if (error) return `Error! ${error.message}`;
+
+  const AddDancerButton = (
+    <button onClick={() => toggleAddDancer(!addDancer)}>
+      {!addDancer ? `Add a Dancer` : `Cancel`}
+    </button>
+  );
+
   return (
-    <ParentUserQuery>
-      {({ data, loading, error }) => {
-        if (loading) return "5, 6, 7, 8...";
-        if (error) return `Error! ${error.message}`;
-        const parentUser = data ? data.parentUser : {};
-        return (
-          <>
-            <MobileStatusBar
-              dancers={
-                parentUser.dancers && parentUser.dancers.length < 1
-                  ? []
-                  : parentUser.dancers
-              }
-              page={"Account > My Dancers"}
-            >
-              <button onClick={() => toggleAddDancer(!addDancer)}>
-                Add a Dancer
-              </button>
-            </MobileStatusBar>
-            <MobileNav />
-            <DesktopNav />
-            <ContentLayout>
-              <AccountSubNav />
-              <main>
-                <ContentHeader page={"My Dancers"}>
-                  <button onClick={() => toggleAddDancer(!addDancer)}>
-                    Add a Dancer
-                  </button>
-                </ContentHeader>
-                {transition.map(
-                  ({ item, key, props: styles }) =>
-                    item && (
-                      <animated.div key={key} style={styles}>
-                        <CreateDancerForm toggleAddDancer={toggleAddDancer} />
-                      </animated.div>
-                    )
-                )}
-                {dancersTransition.map(
-                  ({ item, key, props: styles }) =>
-                    !item && (
-                      <animated.div key={key} style={styles}>
-                        {parentUser.dancers &&
-                          parentUser.dancers.length > 0 &&
-                          parentUser.dancers.map(dancer => {
-                            return (
-                              <DancerCard key={dancer.id} dancer={dancer} />
-                            );
-                          })}
-                      </animated.div>
-                    )
-                )}
-              </main>
-            </ContentLayout>
-          </>
-        );
-      }}
-    </ParentUserQuery>
+    <ParentLayout
+      page={"My Dancers"}
+      action={AddDancerButton}
+      subnav={<AccountSubNav dancers={parentUser.dancers} />}
+    >
+      <Fragment>
+        {transition.map(
+          ({ item, key, props: styles }) =>
+            item && (
+              <animated.div key={key} style={styles}>
+                <CreateDancerForm toggleAddDancer={toggleAddDancer} />
+              </animated.div>
+            )
+        )}
+        {dancersTransition.map(
+          ({ item, key, props: styles }) =>
+            !item && (
+              <animated.div key={key} style={styles}>
+                {parentUser.dancers &&
+                  parentUser.dancers.length > 0 &&
+                  parentUser.dancers.map(dancer => {
+                    return <DancerCard key={dancer.id} dancer={dancer} />;
+                  })}
+              </animated.div>
+            )
+        )}
+      </Fragment>
+    </ParentLayout>
   );
 }
 

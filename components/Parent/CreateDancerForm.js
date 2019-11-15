@@ -66,7 +66,7 @@ const CREATE_DANCER = gql`
 class CreateDancerForm extends Component {
   state = {
     firstName: "",
-    avatar: "",
+    avatar: ""
   };
 
   handleChange = e => {
@@ -85,18 +85,19 @@ class CreateDancerForm extends Component {
       "https://api.cloudinary.com/v1_1/coreytesting/image/upload",
       {
         method: "POST",
-        body: data,
-      },
+        body: data
+      }
     );
     const file = await res.json();
     this.setState({
       avatar: file.eager[0].secure_url,
-      loadingAvatar: false,
+      loadingAvatar: false
     });
   };
 
   render() {
     const { avatar, loadingAvatar, firstName } = this.state;
+    const { toggleAddDancer } = this.props;
     return (
       <Mutation
         mutation={CREATE_DANCER}
@@ -122,9 +123,9 @@ class CreateDancerForm extends Component {
                   const res = await createDancer();
                   this.setState({
                     firstName: "",
-                    avatar: "",
+                    avatar: ""
                   });
-                  setFormVisible(false);
+                  toggleAddDancer(false);
                 }}
               >
                 <fieldset

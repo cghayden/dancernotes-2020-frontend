@@ -1,14 +1,9 @@
 import { useQuery } from "@apollo/react-hooks";
-
-import MobileNav from "../../../components/Parent/MobileNav";
-import ParentUserQuery from "../../../components/Parent/ParentUserQuery";
-import MobileStatusBar from "../../../components/Parent/MobileStatusBar";
-import ContentLayout from "../../../components/ContentLayout";
-import MyProfile from "../../../components/Parent/MyProfile";
-import DesktopNav from "../../../components/Parent/DesktopNav";
-import AccountSubNav from "../../../components/Parent/AccountSubNav";
-import ContentHeader from "../../../components/ContentHeader";
 import { PARENT_USER_QUERY } from "../../../components/Parent/Queries";
+
+import ParentLayout from "../../../components/Parent/ParentLayout";
+import AccountSubNav from "../../../components/Parent/AccountSubNav";
+import MyProfile from "../../../components/Parent/MyProfile";
 
 //input array of parent's dancers,
 // compile a list of all routines they are involved in
@@ -22,7 +17,7 @@ const getParentsRoutines = function(dancers) {
   const allRoutinesMerged = [].concat.apply([], parentsRoutines);
   const allRoutinesDuplicatesRemoved = allRoutinesMerged.filter(function(
     routine,
-    index,
+    index
   ) {
     return allRoutinesMerged.indexOf(routine) === index;
   });
@@ -35,19 +30,29 @@ const Profile = () => {
   const parentUser = data ? data.parentUser : {};
 
   return (
-    <>
-      <MobileStatusBar page={"Account > My Profile"} />
-      <MobileNav />
-      <DesktopNav />
-      <ContentLayout>
-        <AccountSubNav dancers={parentUser.dancers} />
-        <main>
-          <ContentHeader page={"My Profile"} />
-          <MyProfile user={parentUser} />
-        </main>
-      </ContentLayout>
-    </>
+    <ParentLayout
+      page={"My Account"}
+      action={"Edit button"}
+      subnav={<AccountSubNav dancers={parentUser.dancers} />}
+    >
+      <MyProfile user={parentUser} />
+    </ParentLayout>
   );
+
+  // return (
+  //   <>
+  //     <MobileStatusBar page={"Account > My Profile"} />
+  //     <MobileNav />
+  //     <DesktopNav />
+  //     <ContentLayout>
+  //       <AccountSubNav dancers={parentUser.dancers} />
+  //       <main>
+  //         <ContentHeader page={"My Profile"} />
+  //         <MyProfile user={parentUser} />
+  //       </main>
+  //     </ContentLayout>
+  //   </>
+  // );
 };
 
 export default Profile;

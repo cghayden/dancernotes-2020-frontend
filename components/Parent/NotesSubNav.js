@@ -4,7 +4,6 @@ import StyledLink from "../StyledLink";
 import SidebarPosition from "../styles/SidebarPosition";
 
 function NotesSubNav(props) {
-  // comments example
   const { dancers } = props;
 
   return (
@@ -54,8 +53,9 @@ function NotesSubNav(props) {
             </StyledLink>
           </li>
         </ul>
-        <h2 className="subNav-heading">Dancers</h2>
-        <ul>
+        <h2 className="subNav-heading">Dancers?</h2>
+        {/* DancersLink should be own component to hold the query? */}
+        {/* <ul>
           {dancers &&
             dancers.map(dancer => (
               <li key={dancer.id}>
@@ -67,7 +67,7 @@ function NotesSubNav(props) {
                 </StyledLink>
               </li>
             ))}
-        </ul>
+        </ul> */}
       </SubNavStyles>
     </SidebarPosition>
   );

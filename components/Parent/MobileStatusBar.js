@@ -27,20 +27,20 @@ const Actions = styled.div`
 `;
 function MobileStatusBar(props) {
   // todo : get active dancers and display avatars?
-  const { avatars, dancers, page } = props;
+  const { page, action } = props;
 
   return (
     <MobileStatusBarStyles>
       <Title>{page}</Title>
-      {/* {avatars && <Avatars dancers={dancers} />} */}
-      <Actions>{props.children}</Actions>
+      {/* {avatars && <Avatars dancers={[Dancer]} />} */}
+      <Actions>{action}</Actions>
     </MobileStatusBarStyles>
   );
 }
 
 MobileStatusBar.propTypes = {
   dancers: PropTypes.array,
-  page: PropTypes.string.isRequired,
+  page: PropTypes.string.isRequired
 };
 
 // const Avatar = styled.div`

@@ -32,7 +32,8 @@ const Form = styled.form`
   }
 
   label {
-    margin: 0;
+    margin-bottom: 5px;
+    padding-left: 0.6rem;
     text-align: left;
     &.visuallyHidden {
       display: none;
@@ -40,14 +41,13 @@ const Form = styled.form`
   }
   input {
     margin: 0;
-
     color: ${props => props.theme.newBlue[90].hsl};
   }
 
   button,
   input[type="submit"] {
     border-radius: 10px;
-    width: 100%;
+    width: 75%;
     background: ${props => props.theme.newBlue[80].hsl};
     color: white;
     border: 0;
@@ -55,6 +55,10 @@ const Form = styled.form`
     :active {
       box-shadow: 0 2px 3px hsla(0 0%, 0%, 0.8);
       transform: translateY(4px);
+    }
+    &[aria-busy="true"]::after {
+      background-size: 50% auto;
+      animation: ${loading} 1s linear infinite;
     }
   }
   select {
@@ -69,6 +73,7 @@ const Form = styled.form`
     }
     &::after {
       height: 2px;
+      margin: 4px 0;
       content: "";
       display: block;
       background-image: linear-gradient(
@@ -89,6 +94,9 @@ const Form = styled.form`
   .input-item {
     display: grid;
     margin-bottom: 1rem;
+  }
+  .form-footer {
+    text-align: center;
   }
 `;
 
