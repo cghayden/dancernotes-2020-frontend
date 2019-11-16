@@ -3,12 +3,8 @@ import { useQuery } from "@apollo/react-hooks";
 import { useState, useContext } from "react";
 import gql from "graphql-tag";
 
-import DesktopNav from "../../../components/Parent/DesktopNav";
 import BrowseStudioClasses from "../../../components/Parent/BrowseStudioClasses";
-import MobileNav from "../../../components/Parent/MobileNav";
-import ContentLayout from "../../../components/ContentLayout";
-import MobileStatusBar from "../../../components/Parent/MobileStatusBar";
-import ContentHeader from "../../../components/ContentHeader";
+import ParentLayout from "../../../components/Parent/ParentLayout";
 import BrowseClassFilter from "../../../components/Parent/BrowseClassFilter";
 import { ParentDisplayConsumer } from "../../../components/ParentDisplayProvider";
 import OffScreenControlsToggler from "../../../components/Parent/OffscreenControlsToggler";
@@ -60,25 +56,9 @@ const BrowseStudioPage = () => {
     <ParentDisplayConsumer>
       {({ showControlPanel, toggleControlPanel }) => {
         return (
-          <>
-            <MobileStatusBar page={`Account > Browse Studio > ${dancerName}`}>
-              <OffScreenControlsToggler text="Filter" />
-            </MobileStatusBar>
-            <MobileNav />
-            <DesktopNav />
-            <ContentLayout>
-              <ContentHeader page={`Classes at ${studio.studioName}`}>
-                {/* <button onClick={toggleControlPanel}>Filter</button> */}
-              </ContentHeader>
-              <main className="main">
-                <BrowseStudioClasses
-                  dancerName={dancerName}
-                  classFilter={classFilter}
-                  studio={studio}
-                  dancerId={router.query.dancerId}
-                  toggleControls={toggleControlPanel}
-                />
-              </main>
+          <ParentLayout
+            page={`Classes at ${studio.studioName}`}
+            controls={
               <BrowseClassFilter
                 studio={studio}
                 filter={classFilter}
@@ -86,8 +66,17 @@ const BrowseStudioPage = () => {
                 open={showControlPanel}
                 closeControls={toggleControlPanel}
               />
-            </ContentLayout>
-          </>
+            }
+            action={<OffScreenControlsToggler text="Filter" />}
+          >
+            <BrowseStudioClasses
+              dancerName={dancerName}
+              classFilter={classFilter}
+              studio={studio}
+              // dancerId={router.query.dancerId}
+              toggleControls={toggleControlPanel}
+            />
+          </ParentLayout>
         );
       }}
     </ParentDisplayConsumer>

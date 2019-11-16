@@ -49,7 +49,7 @@ const ParentHome = () => {
           Add a dancer to your account
         </button>
 
-        <button disabled>Find / Browse a studio near me.</button>
+        {/* <button disabled>Find / Browse a studio near me.</button> */}
         {transition.map(
           ({ item, key, props: styles }) =>
             item && (
