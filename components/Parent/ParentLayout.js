@@ -4,6 +4,7 @@ import MobileNav from "./MobileNav";
 import DesktopNav from "./DesktopNav";
 import ContentLayout from "../ContentLayout";
 import ContentHeader from "../ContentHeader";
+import { useSpring, animated } from "react-spring";
 
 //action is a component that triggers an action for the page, i.e add a dancer, or create a new dance
 const ParentLayout = ({
@@ -13,17 +14,24 @@ const ParentLayout = ({
   subnav = <div />,
   controls = <div />
 }) => {
+  const fade = useSpring({
+    from: {
+      opacity: 0
+    },
+    to: {
+      opacity: 1
+    }
+  });
+
   return (
     <Fragment>
       <MobileStatusBar page={page} action={action} />
       <MobileNav />
       <DesktopNav />
       <ContentLayout>
+        <ContentHeader page={page} action={action} />
         {subnav}
-        <main>
-          <ContentHeader page={page} action={action} />
-          {children}
-        </main>
+        <main>{children}</main>
         {controls}
       </ContentLayout>
     </Fragment>

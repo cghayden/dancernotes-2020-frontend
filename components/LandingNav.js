@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Link from "next/link";
 
 const LandingNavStyle = styled.nav`
-  padding: 1rem 0;
+  padding-top: 1rem;
   display: grid;
   grid-template-columns: min-content 1fr max-content;
 

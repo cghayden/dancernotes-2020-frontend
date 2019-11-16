@@ -9,14 +9,16 @@ const HeaderStyle = styled.header`
   align-items: center;
   padding: 1rem;
   z-index: 100;
+  padding-left: 10vw;
+  grid-column: 1/-1;
+  @media (max-width: ${props => props.theme.largeScreen}) {
+    display: none;
+  }
 `;
 
 const Actions = styled.div`
   margin-left: auto;
   color: ${props => props.theme.vividBlue9};
-  @media (max-width: ${props => props.theme.largeScreen}) {
-    display: none;
-  }
 `;
 
 function ContentHeader({ page, action }) {

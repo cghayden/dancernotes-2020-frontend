@@ -34,7 +34,7 @@ const DancerCardFooter = styled.div`
   flex-direction: column;
 `;
 
-const CardFlipAnimation = styled.div`
+const CardFlipAnimation = styled(Card)`
   display: flex;
   justify-content: center;
   position: relative;

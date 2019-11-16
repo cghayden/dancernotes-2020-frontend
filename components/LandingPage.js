@@ -13,7 +13,7 @@ import SignupRetail from "./SignupRetail";
 import { animated, useTransition } from "react-spring";
 
 const StyledLandingPage = styled.div`
-  min-height: 100vh;
+  min-height: 120vh;
   display: grid;
   grid-template-rows: min-content auto;
   color: white;

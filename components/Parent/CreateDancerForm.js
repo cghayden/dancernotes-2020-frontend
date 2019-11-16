@@ -97,6 +97,7 @@ class CreateDancerForm extends Component {
       >
         {(createDancer, { error, loading }) => (
           <>
+            <h2 style={{ textAlign: "center" }}>Add a Dancer</h2>
             <DancerCardHeaderStyles>
               <ImageDiv avatar={avatar}>
                 {avatar ? (
