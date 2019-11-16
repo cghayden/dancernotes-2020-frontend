@@ -21,7 +21,7 @@ const Form = styled.form`
   padding: 0.5rem;
   width: 90%;
   min-width: 320px;
-  max-width: 650px;
+  max-width: 500px;
   margin: 0 auto 1rem auto;
 
   legend,

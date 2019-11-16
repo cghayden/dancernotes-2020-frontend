@@ -14,27 +14,12 @@ function DancersPage() {
   const { data, loading, error } = useQuery(PARENT_USER_QUERY);
   const parentUser = data ? data.parentUser : {};
 
-  const dancersTransition = useTransition(addDancer, null, {
-    from: {
-      opacity: 0,
-      transform: "translate3d(0, 0%,0 )"
-    },
-    enter: {
-      width: "100%",
-      opacity: 1,
-      transform: "translate3d(0,0,0)"
-    },
-    leave: {
-      opacity: 0,
-      transform: "translate3d(0, 100%,0)"
-    }
-  });
-
   const transition = useTransition(addDancer, null, {
     from: {
+      width: "100%",
       position: "absolute",
-      textAlign: "-webkit-center",
-      top: "150px",
+      // textAlign: "-webkit-center",
+      top: "160px",
       opacity: 0,
       transform: "translate3d(0, 100% 0)"
     },

@@ -10,11 +10,12 @@ const ParentLayout = ({
   children,
   page = "",
   action = <div />,
-  subnav = <div />
+  subnav = <div />,
+  controls = <div />
 }) => {
   return (
     <Fragment>
-      {/* <MobileStatusBar page={page} action={action} /> */}
+      <MobileStatusBar page={page} action={action} />
       <MobileNav />
       <DesktopNav />
       <ContentLayout>
@@ -23,6 +24,7 @@ const ParentLayout = ({
           <ContentHeader page={page} action={action} />
           {children}
         </main>
+        {controls}
       </ContentLayout>
     </Fragment>
   );

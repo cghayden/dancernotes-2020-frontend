@@ -27,12 +27,12 @@ const MobileNav = props => {
         <Link href="/parent/shop">
           <a>Shop</a>
         </Link>
+        <Link href="/parent/dancers">
+          <a>Dancers</a>
+        </Link>
         <Link href="/parent/account/profile">
           <a>Account</a>
         </Link>
-        <div>
-          <button>Display</button>
-        </div>
       </NavStyles>
     </>
   );

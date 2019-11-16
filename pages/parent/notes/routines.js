@@ -3,6 +3,8 @@ import Link from "next/link";
 import { useQuery } from "@apollo/react-hooks";
 import { animated, useTransition } from "react-spring";
 
+import ParentLayout from "../../../components/Parent/ParentLayout";
+
 import MobileStatusBar from "../../../components/Parent/MobileStatusBar";
 import RoutinesDisplay from "../../../components/Parent/RoutinesDisplay";
 import MobileNav from "../../../components/Parent/MobileNav";
@@ -21,7 +23,11 @@ const ParentHome = () => {
   const [addDancer, toggleAddDancer] = useState(false);
   const { data, loading, error } = useQuery(PARENT_USER_QUERY);
   const parentUser = data ? data.parentUser : {};
-
+  const addDancerButton = (
+    <button onClick={() => toggleAddDancer(!addDancer)}>
+      Add a dancer to your account
+    </button>
+  );
   const transition = useTransition(addDancer, null, {
     from: {
       display: "grid",
@@ -36,54 +42,39 @@ const ParentHome = () => {
   if (loading) return <p>loading...</p>;
   if (!parentUser.dancers || parentUser.dancers.length < 1) {
     return (
-      <div>
-        <MobileStatusBar page={"Welcome"} />
-        <DesktopNav />
-        <ContentLayout>
-          <main>
-            <p>Welcome to dancernotes!</p>
-            <button onClick={() => toggleAddDancer(!addDancer)}>
-              Add a dancer to your account
-            </button>
-            <button>Find / Browse a studio near me.</button>
+      <ParentLayout page="Routines">
+        <p>Welcome to dancernotes!</p>
 
-            {transition.map(
-              ({ item, key, props: styles }) =>
-                item && (
-                  <animated.div key={key} style={styles}>
-                    <CreateDancerForm toggleAddDancer={toggleAddDancer} />
-                  </animated.div>
-                )
-            )}
-          </main>
-        </ContentLayout>
-        <MobileNav />
-      </div>
+        <button onClick={() => toggleAddDancer(!addDancer)}>
+          Add a dancer to your account
+        </button>
+
+        <button disabled>Find / Browse a studio near me.</button>
+        {transition.map(
+          ({ item, key, props: styles }) =>
+            item && (
+              <animated.div key={key} style={styles}>
+                <CreateDancerForm toggleAddDancer={toggleAddDancer} />
+              </animated.div>
+            )
+        )}
+      </ParentLayout>
     );
   }
   return (
-    <>
-      <MobileStatusBar page={"Notes > Routines"}>
-        <OffScreenControlsToggler text="Display" />
-      </MobileStatusBar>
-      <MobileNav />
-      <DesktopNav />
-      <ContentLayout page={"Notes"}>
-        <NotesSubNav dancers={parentUser.dancers} />
-        <main>
-          <ContentHeader page="Routines">
-            <Link href="/parent/createCustomRoutine">
-              <a>Create My Own Routine</a>
-            </Link>
-          </ContentHeader>
-          <RoutinesDisplay dancerIds={parentUser.dancersIds} />
-        </main>
+    <ParentLayout
+      page="Routines"
+      action={<OffScreenControlsToggler text="Display" />}
+      subnav={<NotesSubNav dancers={parentUser.dancers} />}
+      controls={
         <ControlPanel
           dancerIds={parentUser.dancersIds}
           dancers={parentUser.dancers}
         />
-      </ContentLayout>
-    </>
+      }
+    >
+      <RoutinesDisplay dancerIds={parentUser.dancersIds} />
+    </ParentLayout>
   );
 };
 

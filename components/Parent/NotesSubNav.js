@@ -52,6 +52,11 @@ function NotesSubNav(props) {
               <a>Hair</a>
             </StyledLink>
           </li>
+          <li>
+            <StyledLink href="/parent/createCustomRoutine">
+              <a>Add a Routine</a>
+            </StyledLink>
+          </li>
         </ul>
         <h2 className="subNav-heading">Dancers?</h2>
         {/* DancersLink should be own component to hold the query? */}

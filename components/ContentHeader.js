@@ -14,6 +14,9 @@ const HeaderStyle = styled.header`
 const Actions = styled.div`
   margin-left: auto;
   color: ${props => props.theme.vividBlue9};
+  @media (max-width: ${props => props.theme.largeScreen}) {
+    display: none;
+  }
 `;
 
 function ContentHeader({ page, action }) {
