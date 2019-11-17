@@ -40,7 +40,12 @@ const BROWSE_STUDIO_CLASSES_QUERY = gql`
 
 const BrowseStudioPage = () => {
   const [classFilter, setFilter] = useState({});
-  const browsingDancer = useContext(RegistrationContext);
+  // let browsingDancer = useContext(RegistrationContext);
+  // console.log("browsingDancer from context:", browsingDancer);
+  // if (!browsingDancer.Id) {
+  //   // browsingDancer = localStorage.getItem("browsingDancer");
+  //   console.log("browsingDancer from local Storage:", browsingDancer);
+  // }
   const router = useRouter();
   const {
     data: studioData,
@@ -49,7 +54,7 @@ const BrowseStudioPage = () => {
   } = useQuery(BROWSE_STUDIO_CLASSES_QUERY, {
     variables: { id: router.query.studioId }
   });
-  const dancerName = browsingDancer.browsingDancerName;
+  // const dancerName = browsingDancer.browsingDancerName;
   const studio = studioData ? studioData.studio : {};
 
   return (
@@ -70,7 +75,7 @@ const BrowseStudioPage = () => {
             action={<OffScreenControlsToggler text="Filter" />}
           >
             <BrowseStudioClasses
-              dancerName={dancerName}
+              // dancerName={dancerName}
               classFilter={classFilter}
               studio={studio}
               // dancerId={router.query.dancerId}

@@ -1,11 +1,12 @@
 import React, { Component, createContext } from "react";
+import { useApolloClient } from "@apollo/react-hooks";
 
 const RegistrationContext = createContext();
 
 class RegistrationContextProvider extends Component {
   state = {
     browsingDancerId: "",
-    browsingDancerName: "",
+    browsingDancerName: ""
   };
 
   setBrowsingDancer = (id, name) => {
@@ -18,7 +19,7 @@ class RegistrationContextProvider extends Component {
         value={{
           browsingDancerId,
           browsingDancerName,
-          setBrowsingDancer: this.setBrowsingDancer,
+          setBrowsingDancer: this.setBrowsingDancer
         }}
       >
         {this.props.children}

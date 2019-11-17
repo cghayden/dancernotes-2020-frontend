@@ -128,7 +128,6 @@ export default class DancerCard extends Component {
   render() {
     const { dancer } = this.props;
     const hasDanceClasses = dancer.danceClasses.length > 0;
-    console.log("dancer:", dancer);
     const hasAvatar = dancer.avatar;
     // if (dancer) {
     //   console.log("dancer classes:", dancer.classes.length);

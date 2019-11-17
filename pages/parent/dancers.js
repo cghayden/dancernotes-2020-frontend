@@ -53,14 +53,14 @@ function DancersPage() {
     >
       {transition.map(({ item, key, props: styles }) =>
         item ? (
-          <animated.div style={styles}>
+          <animated.div key={key} style={styles}>
             <CreateDancerForm
               style={styles}
               toggleAddDancer={toggleAddDancer}
             />
           </animated.div>
         ) : (
-          <animated.div style={styles}>
+          <animated.div key={key} style={styles}>
             <Dancers
               addDancer={addDancer}
               toggleAddDancer={toggleAddDancer}
