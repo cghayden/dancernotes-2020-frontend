@@ -20,7 +20,7 @@ const DancerControlsStyle = styled.div`
   display: grid;
   justify-items: start;
   border-radius: 5px;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 0;
 
   input[type="checkbox"] {
     margin-right: 0.5rem;
@@ -37,10 +37,10 @@ class DisplayController extends Component {
           const dancer = data ? data.dancer : {};
           dancer.allRoutines = [
             ...dancer.danceClasses,
-            ...dancer.customRoutines,
+            ...dancer.customRoutines
           ];
           const independentRoutines = dancer.allRoutines.filter(
-            routine => !routine.studio,
+            routine => !routine.studio
           );
 
           return (

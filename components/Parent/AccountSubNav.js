@@ -8,8 +8,6 @@ function AccountSubNav({ dancers }) {
   return (
     <SidebarPosition>
       <SubNavStyles>
-        <div className="blur-right"></div>
-        <div className="blur-left"></div>
         <h2 className="subNav-heading">Account</h2>
         <ul>
           <li>

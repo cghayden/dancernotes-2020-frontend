@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const ControlPanelStyles = styled.div`
+  justify-self: center;
   display: grid;
   padding: 1rem;
   grid-gap: 1rem;
@@ -36,7 +37,7 @@ const ControlPanelStyles = styled.div`
   @media (min-width: ${props => props.theme.largeScreen}) {
     background-color: ${props => props.theme.background};
     width: unset;
-    min-width: 180px;
+    min-width: 200px;
     transform: translateX(0%);
     border-radius: 0;
     box-shadow: none;

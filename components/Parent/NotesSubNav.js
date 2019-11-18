@@ -9,8 +9,6 @@ function NotesSubNav(props) {
   return (
     <SidebarPosition>
       <SubNavStyles>
-        <div className="blur-right"></div>
-        <div className="blur-left"></div>
         <h2 className="subNav-heading">Notes</h2>
         <ul>
           <li>

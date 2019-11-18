@@ -9,7 +9,7 @@ const MobileStatusBarStyles = styled.div`
   top: 0;
   background-color: ${props => props.theme.gray0};
   display: flex;
-  z-index: 100;
+  z-index: 1000;
   place-items: center;
   justify-content: space-between;
   padding-left: 1rem;

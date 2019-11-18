@@ -13,7 +13,7 @@ const NavStyles = styled.nav`
   /* grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); */
   /* place-items: center; */
   height: ${props => props.theme.navHeight};
-  z-index: 100;
+  z-index: 1000;
   background-color: ${props => props.theme.background};
   /* color: ${props => props.theme.indigo9}; */
 
@@ -42,11 +42,12 @@ const NavStyles = styled.nav`
 
 const DesktopNavStyles = styled(NavStyles)`
   display: none;
-  top: 0;
-  bottom: unset;
-  border-bottom: 1px solid ${props => props.theme.gray4};
+
   @media (min-width: ${props => props.theme.largeScreen}) {
     display: flex;
+    top: 0;
+    bottom: unset;
+    border-bottom: 1px solid ${props => props.theme.gray4};
   }
 `;
 
