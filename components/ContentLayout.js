@@ -11,6 +11,10 @@ const ContentLayout = styled.div`
     align-items: center;
     height: calc(100vh - ${props => props.theme.navHeight});
     overflow-y: scroll;
+
+    .subHeading {
+      padding: 0.5rem 1rem 1rem 1rem;
+    }
   }
 
   @media (min-width: ${props => props.theme.largeScreen}) {

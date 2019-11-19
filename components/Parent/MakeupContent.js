@@ -45,8 +45,23 @@ class MakeupContent extends Component {
         {({ data: { allRs } = {}, error, loading }) => {
           if (loading) return <p>loading...</p>;
           if (error) return <p>Error! {error}</p>;
-          const makeup = this.compileMakeupSets(allRs);
 
+          const makeup = this.compileMakeupSets(allRs);
+          if (makeup.length < 1) {
+            return (
+              <Card>
+                <div className="card__section">
+                  <p>
+                    At this time, no Makeup guidelines are present for any of
+                    the studios your dancers are enrolled in.
+                  </p>
+                  <p>
+                    You can add your own notes in the details for any dance.
+                  </p>
+                </div>
+              </Card>
+            );
+          }
           return (
             <>
               {makeup.map((makeupSet, index) => {

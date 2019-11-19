@@ -1,12 +1,6 @@
-import MobileStatusBar from "../../../components/Parent/MobileStatusBar";
-import MobileNav from "../../../components/Parent/MobileNav";
-import ContentLayout from "../../../components/ContentLayout";
-import DesktopNav from "../../../components/Parent/DesktopNav";
-import NotesSubNav from "../../../components/Parent/NotesSubNav";
-import ContentHeader from "../../../components/ContentHeader";
-import Competitions from "../../../components/Parent/Competitions";
 import { useQuery } from "@apollo/react-hooks";
 import { PARENTS_EVENTS_QUERY } from "../../../components/Parent/Queries";
+import ParentLayout from "../../../components/Parent/ParentLayout";
 
 function CompetitionsPage() {
   // const { data, loading, error } = useQuery(PARENTS_EVENTS_QUERY);
@@ -20,18 +14,9 @@ function CompetitionsPage() {
   // console.log("flatEvents:", flatEvents);
 
   return (
-    <>
-      <MobileStatusBar page={"Competitions"} />
-      <MobileNav />
-      <DesktopNav />
-      <ContentLayout>
-        <NotesSubNav />
-        <main>
-          <ContentHeader page={"Competitions"} />
-          <Competitions />
-        </main>
-      </ContentLayout>
-    </>
+    <ParentLayout page={"Competitions"}>
+      <p>Coming Soon!</p>
+    </ParentLayout>
   );
 }
 

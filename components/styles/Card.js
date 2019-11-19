@@ -6,19 +6,30 @@ const Card = styled.div`
   color: ${props => props.theme.newBlue[90].hsl};
   background-color: ${props => props.theme.gray0};
   margin: 0 auto 1rem auto;
-  padding: 0.5rem;
+  padding: 1rem;
   width: 90%;
   min-width: 320px;
   max-width: 550px;
 
   .card__header {
     display: flex;
+    padding-bottom: 1rem;
   }
   .card__header--editButton {
     margin-left: auto;
   }
   .card__section {
-    padding: 0.5rem 0;
+    padding: 1rem 0;
+    p {
+      padding: 0.5rem 0;
+    }
+  }
+  img {
+    margin: 1rem 0;
+  }
+  .img-large {
+    width: 300px;
+    height: 300px;
   }
 `;
 

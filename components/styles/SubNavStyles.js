@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const SubNavStyles = styled.nav`
   color: ${props => props.theme.blackText};
+  padding: 0.5rem 0;
   /* overflow-x: scroll; */
   /* blurs not being used - not working on Safari */
   .blur-right {

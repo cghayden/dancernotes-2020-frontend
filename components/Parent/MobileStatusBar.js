@@ -20,7 +20,7 @@ const MobileStatusBarStyles = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 1rem;
+  font-size: 1.4rem;
 `;
 const Actions = styled.div`
   margin-left: auto;

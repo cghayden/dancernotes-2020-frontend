@@ -2,13 +2,31 @@ import React from "react";
 import SubNavStyles from "../styles/SubNavStyles";
 import StyledLink from "../StyledLink";
 import SidebarPosition from "../styles/SidebarPosition";
+import styled from "styled-components";
+
+const NotesSubNavStyles = styled(SubNavStyles)`
+  .comps {
+    display: none;
+  }
+  .conventions {
+    display: none;
+  }
+  @media (min-width: ${props => props.theme.largeScreen}) {
+    .comps {
+      display: block;
+    }
+    .conventions {
+      display: list-item;
+    }
+  }
+`;
 
 function NotesSubNav(props) {
-  const { dancers } = props;
+  //todo -- query dancers for direct links
 
   return (
     <SidebarPosition>
-      <SubNavStyles>
+      <NotesSubNavStyles>
         <h2 className="subNav-heading">Notes</h2>
         <ul>
           <li>
@@ -16,7 +34,7 @@ function NotesSubNav(props) {
               <a>Routines</a>
             </StyledLink>
           </li>
-          <li>
+          <li className="comps">
             <StyledLink
               activeClassName="active"
               href="/parent/notes/competitions"
@@ -24,7 +42,7 @@ function NotesSubNav(props) {
               <a>Competitions</a>
             </StyledLink>
           </li>
-          <li>
+          <li className="conventions">
             <StyledLink
               activeClassName="active"
               href="/parent/notes/conventions"
@@ -71,7 +89,7 @@ function NotesSubNav(props) {
               </li>
             ))}
         </ul> */}
-      </SubNavStyles>
+      </NotesSubNavStyles>
     </SidebarPosition>
   );
 }

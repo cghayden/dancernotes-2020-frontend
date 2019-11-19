@@ -1,21 +1,19 @@
-import MobileStatusBar from "../../../components/Parent/MobileStatusBar";
-import MobileNav from "../../../components/Parent/MobileNav";
-import ContentLayout from "../../../components/ContentLayout";
-import DesktopNav from "../../../components/Parent/DesktopNav";
+import ParentLayout from "../../../components/Parent/ParentLayout";
+import Card from "../../../components/styles/Card";
 
 function shopPage() {
   return (
-    <>
-      <MobileStatusBar page={"Shop"} />
-      <MobileNav />
-      <DesktopNav />
-      <ContentLayout>
-        <main>
-          <p>links to local or saved retailers?</p>
-          <p>ads from retailers tailored to apparel needs</p>
-        </main>
-      </ContentLayout>
-    </>
+    <ParentLayout page={"Shop"}>
+      <Card>
+        <div className="card__header">
+          <h2>Coming Soon!</h2>
+        </div>
+
+        <div className="card__section">
+          <p>Preferred, saved, and other local retailers.</p>
+        </div>
+      </Card>
+    </ParentLayout>
   );
 }
 
