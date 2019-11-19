@@ -12,6 +12,7 @@ import { ActiveFilters } from "./BrowseClassFilter";
 import { DANCER_QUERY } from "./DancerQuery";
 
 import { RegistrationContext } from "./RegistrationContext";
+import Cookies from "js-cookie";
 
 // 1. get all classes from studio
 //2. get filters
@@ -31,17 +32,19 @@ const LargeScreenActiveFilters = styled(ActiveFilters)`
   }
 `;
 
-function BrowseStudioClasses(props) {
+function BrowseStudioClasses({classFilter, studio}) {
   const BrowsingContext = useContext(RegistrationContext);
-  const activeDancerName = BrowsingContext.browsingDancerName;
-  const activeDancerId = BrowsingContext.browsingDancerId;
+  // const activeDancerName = BrowsingContext.browsingDancerName;
+  //activeDancerId to set active Tab
+  // const activeDancerId = BrowsingContext.browsingDancerId;
   const setBrowsingDancer = BrowsingContext.setBrowsingDancer;
 
+  //get browsing dancer fro cookies so it will still be available if page is refreshed
+  const activeDancerId = Cookies.get('browsingDancerId');
+  const activeDancerName = Cookies.get('browsingDancerName');
+  
   const { data: parentData } = useQuery(PARENT_USER_QUERY);
   const parentUser = parentData ? parentData.parentUser : {};
-
-  const classFilter = props.classFilter;
-  const studio = props.studio;
 
   const { data: dancerData, loading, error } = useQuery(DANCER_QUERY, {
     variables: { id: activeDancerId },

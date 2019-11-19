@@ -11,6 +11,9 @@ const DanceCardStyles = styled(Card)`
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1),
     -1px -1px 1px 0px rgba(0, 0, 0, 0.02);
+  img {
+    margin: 0;
+  }
 `;
 
 const DanceCardHeader = styled.div`
@@ -54,6 +57,9 @@ const DanceCardNav = styled.div`
   display: flex;
   justify-content: space-around;
   font-size: 0.825rem;
+  button {
+    margin: 0;
+  }
 `;
 
 function DanceCard(props) {
@@ -64,7 +70,7 @@ function DanceCard(props) {
 
   const animation = useSpring({
     overflow: "hidden",
-    height: showBody ? height : 0,
+    height: showBody ? height : 0
   });
 
   function toggleBody() {

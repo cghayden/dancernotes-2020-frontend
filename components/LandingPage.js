@@ -13,7 +13,7 @@ import SignupRetail from "./SignupRetail";
 import { animated, useTransition } from "react-spring";
 
 const StyledLandingPage = styled.div`
-  min-height: 100vh;
+  min-height: 120vh;
   display: grid;
   grid-template-rows: min-content auto;
   color: white;
@@ -30,9 +30,13 @@ const StyledLandingContent = styled.div`
   position: relative;
 `;
 
-const AboutContent = styled(animated.div)`
+const AboutContent = styled(animated.main)`
   padding: 2rem;
   text-align: center;
+  font-size: 1.25rem;
+  .aboutBody {
+    padding: 1rem 0;
+  }
 `;
 function LandingPage() {
   const [active, setActive] = useState("about");
@@ -41,10 +45,10 @@ function LandingPage() {
     from: {
       position: "absolute",
       opacity: 0,
-      transform: "translate3d(100%, 0,0)",
+      transform: "translate3d(100%, 0,0)"
     },
     enter: { opacity: 1, transform: "translate3d(0,0,0)" },
-    leave: { opacity: 0, transform: "translate3d(-100%, 0,0)" },
+    leave: { opacity: 0, transform: "translate3d(-100%, 0,0)" }
   });
   return (
     <StyledLandingPage>

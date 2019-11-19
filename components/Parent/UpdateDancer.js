@@ -30,7 +30,7 @@ const UPDATE_DANCER_MUTATION = gql`
 
 class UpdateDancer extends Component {
   state = {
-    changePicture: false,
+    changePicture: false
   };
 
   handleChange = e => {
@@ -43,7 +43,7 @@ class UpdateDancer extends Component {
     e.preventDefault();
     //TODO - delete old avatar image from cloudinary
     const res = await updateDancerMutation({
-      variables: { id: this.props.id, ...this.state },
+      variables: { id: this.props.id, ...this.state }
     });
     this.props.closeFunc();
   };
@@ -58,12 +58,13 @@ class UpdateDancer extends Component {
       "https://api.cloudinary.com/v1_1/coreytesting/image/upload",
       {
         method: "POST",
-        body: data,
-      },
+        body: data
+      }
     );
     const file = await res.json();
     this.setState({
       avatar: file.eager[0].secure_url,
+      changePicture: false
     });
   };
 
@@ -72,6 +73,7 @@ class UpdateDancer extends Component {
       <Query query={DANCER_PROFILE_QUERY} variables={{ id: this.props.id }}>
         {({ data: { dancer } = {}, loading, error }) => {
           if (loading) return <p>Loading...</p>;
+
           if (!dancer) return <p>No Dancer found for ID {this.props.id}</p>;
           return (
             <Mutation mutation={UPDATE_DANCER_MUTATION} variables={this.state}>
@@ -79,13 +81,13 @@ class UpdateDancer extends Component {
                 <Form onSubmit={e => this.updateDancer(e, updateDancer)}>
                   <Error error={error} />
 
-                  <h5>Update {dancer.firstName}'s Profile</h5>
                   <fieldset
                     disabled={loading || this.state.loadingAvatar}
                     aria-busy={loading || this.state.loadingAvatar}
                   >
-                    <label htmlFor="firstName">
-                      Name
+                    <h5>Update {dancer.firstName}'s Profile</h5>
+                    <div className="input-item">
+                      <label htmlFor="firstName">Name </label>
                       <input
                         required
                         type="text"
@@ -94,20 +96,22 @@ class UpdateDancer extends Component {
                         onChange={this.handleChange}
                         defaultValue={dancer.firstName}
                       />
-                    </label>
+                    </div>
                     <button
                       type="button"
                       onClick={() =>
                         this.setState({
-                          changePicture: !this.state.changePicture,
+                          changePicture: !this.state.changePicture
                         })
                       }
                     >
-                      Change Picture
+                      {this.props.hasAvatar
+                        ? `Change Picture`
+                        : `Add a picture`}
                     </button>
                     {this.state.changePicture && (
-                      <label htmlFor="image">
-                        Upload a New Image
+                      <div className="input-item">
+                        <label htmlFor="image">Choose an Image</label>
                         <input
                           type="file"
                           id="image"
@@ -118,22 +122,27 @@ class UpdateDancer extends Component {
                             await this.props.changeAvatar(e);
                             this.setState({
                               avatar: this.props.newAvatar,
+                              loadingAvatar: false
                             });
-                            this.setState({ loadingAvatar: false });
                           }}
                         />
-                      </label>
+                      </div>
                     )}
-                    <button type="submit">
-                      Sav
-                      {loading ? "ing " : "e "} Changes
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => this.props.closeFunc()}
-                    >
-                      Cancel
-                    </button>
+                    <div className="form-footer">
+                      <button
+                        type="submit"
+                        aria-busy={loading || this.state.loadingAvatar}
+                      >
+                        Sav
+                        {loading ? "ing " : "e "} Changes
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => this.props.closeFunc()}
+                      >
+                        Cancel
+                      </button>
+                    </div>
                   </fieldset>
                 </Form>
               )}

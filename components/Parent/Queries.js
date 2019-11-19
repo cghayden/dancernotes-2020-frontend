@@ -91,10 +91,19 @@ const PARENTS_STUDIOS = gql`
   }
 `;
 
+const PARENTS_DANCERS = gql`
+  query PARENTS_DANCERS {
+    parentsDancers {
+      firstName
+    }
+  }
+`;
+
 export {
   HIDDEN_DANCERS_QUERY,
   PARENTS_STUDIOS,
   PARENT_USER_QUERY,
   ALL_Rs,
   PARENTS_EVENTS_QUERY,
+  PARENTS_DANCERS
 };

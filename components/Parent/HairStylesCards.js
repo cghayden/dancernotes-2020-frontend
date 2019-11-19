@@ -21,12 +21,6 @@ const HAIRSTYLES_QUERY = gql`
 `;
 
 const StudioHair = styled.div`
-  width: 90%;
-  max-width: 90%;
-
-  .heading {
-    text-align: left;
-  }
   .studioHair__cards {
     display: flex;
     justify-content: center;
@@ -39,6 +33,7 @@ class HairStylesCards extends Component {
     return (
       <Query query={HAIRSTYLES_QUERY}>
         {({ data: { parentStudios } = {}, error, loading }) => {
+          console.log("parentStudios:", parentStudios);
           if (loading) return <p>loading...</p>;
           if (error) return <p>Error! {error}</p>;
           return (
@@ -48,8 +43,8 @@ class HairStylesCards extends Component {
                   <>
                     {studio.hairStyles.length ? (
                       <StudioHair>
-                        <h2 className="heading">
-                          Hair Styles for {studio.studioName}
+                        <h2 className="subHeading">
+                          Studio: {studio.studioName}
                         </h2>
                         <div className="studioHair__cards">
                           {studio.hairStyles.map(style => (

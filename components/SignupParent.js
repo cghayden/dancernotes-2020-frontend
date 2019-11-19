@@ -34,7 +34,7 @@ class SignupParent extends Component {
     firstName: "",
     lastName: "",
     password: "",
-    userType: "parent",
+    userType: "parent"
   };
   saveToState = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -46,7 +46,7 @@ class SignupParent extends Component {
         mutation={SIGNUP_PARENT_MUTATION}
         variables={this.state}
         onCompleted={data => {
-          Router.push(`/parent/notes/routines`);
+          Router.push(`/parent/dancers`);
         }}
         // refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
@@ -60,7 +60,7 @@ class SignupParent extends Component {
                 firstName: "",
                 lastName: "",
                 email: "",
-                password: "",
+                password: ""
               });
             }}
           >

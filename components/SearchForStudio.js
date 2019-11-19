@@ -1,4 +1,5 @@
 import React from "react";
+import Cookies from "js-cookie";
 import Downshift from "downshift";
 import Router from "next/router";
 import { ApolloConsumer } from "react-apollo";
@@ -6,6 +7,7 @@ import gql from "graphql-tag";
 // import debounce from "lodash.debounce";
 import debounce from "../lib/debounce";
 import { DropDown, DropDownItem, SearchStyles } from "./styles/DropDown";
+
 //TODO: props
 const SEARCH_STUDIOS_QUERY = gql`
   query SEARCH_STUDIOS_QUERY($searchTerm: String!) {
@@ -19,7 +21,7 @@ const SEARCH_STUDIOS_QUERY = gql`
 class SearchForStudio extends React.Component {
   state = {
     studios: [],
-    loading: false,
+    loading: false
   };
   onChange = debounce(async (e, client) => {
     // turn loading on
@@ -27,11 +29,11 @@ class SearchForStudio extends React.Component {
     // Manually query apollo client
     const res = await client.query({
       query: SEARCH_STUDIOS_QUERY,
-      variables: { searchTerm: e.target.value },
+      variables: { searchTerm: e.target.value }
     });
     this.setState({
       studios: res.data.studios,
-      loading: false,
+      loading: false
     });
   }, 350);
   render() {
@@ -40,12 +42,15 @@ class SearchForStudio extends React.Component {
       <SearchStyles>
         <Downshift
           onChange={async studio => {
+            Cookies.set("browsingDancerId", dancerId);
+            Cookies.set("browsingDancerName", dancerName);
             await this.props.setBrowsingDancer(dancerId, dancerName);
+
             Router.push({
               pathname: "/parent/account/browseStudio",
               query: {
-                studioId: studio.id,
-              },
+                studioId: studio.id
+              }
             });
           }}
           itemToString={studio => (studio === null ? "" : studio.studioName)}
@@ -55,7 +60,7 @@ class SearchForStudio extends React.Component {
             getItemProps,
             isOpen,
             inputValue,
-            highlightedIndex,
+            highlightedIndex
           }) => (
             <div>
               <ApolloConsumer>
@@ -69,7 +74,7 @@ class SearchForStudio extends React.Component {
                       onChange: e => {
                         e.persist();
                         this.onChange(e, client);
-                      },
+                      }
                     })}
                   />
                 )}

@@ -9,7 +9,7 @@ const MobileStatusBarStyles = styled.div`
   top: 0;
   background-color: ${props => props.theme.gray0};
   display: flex;
-  z-index: 100;
+  z-index: 1000;
   place-items: center;
   justify-content: space-between;
   padding-left: 1rem;
@@ -20,27 +20,27 @@ const MobileStatusBarStyles = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 1rem;
+  font-size: 1.4rem;
 `;
 const Actions = styled.div`
   margin-left: auto;
 `;
 function MobileStatusBar(props) {
   // todo : get active dancers and display avatars?
-  const { avatars, dancers, page } = props;
+  const { page, action } = props;
 
   return (
     <MobileStatusBarStyles>
       <Title>{page}</Title>
-      {/* {avatars && <Avatars dancers={dancers} />} */}
-      <Actions>{props.children}</Actions>
+      {/* {avatars && <Avatars dancers={[Dancer]} />} */}
+      <Actions>{action}</Actions>
     </MobileStatusBarStyles>
   );
 }
 
 MobileStatusBar.propTypes = {
   dancers: PropTypes.array,
-  page: PropTypes.string.isRequired,
+  page: PropTypes.string.isRequired
 };
 
 // const Avatar = styled.div`

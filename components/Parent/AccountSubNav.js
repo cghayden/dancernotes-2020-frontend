@@ -4,16 +4,14 @@ import Signout from "../Signout";
 import SidebarPosition from "../styles/SidebarPosition";
 import StyledLink from "../StyledLink";
 
-function AccountSubNav() {
+function AccountSubNav({ dancers }) {
   return (
     <SidebarPosition>
       <SubNavStyles>
-        <div className="blur-right"></div>
-        <div className="blur-left"></div>
         <h2 className="subNav-heading">Account</h2>
         <ul>
           <li>
-            <StyledLink activeClassName="active" href="/parent/account/dancers">
+            <StyledLink activeClassName="active" href="/parent/dancers">
               <a>Dancers</a>
             </StyledLink>
           </li>
@@ -31,6 +29,17 @@ function AccountSubNav() {
             <Signout />
           </li>
         </ul>
+        {/* <h2 className="subNav-heading">Dancers</h2>
+        <ul>
+          {dancers &&
+            dancers.map(dancer => (
+              <li key={dancer.id}>
+                <StyledLink activeClassName="active" href={`/parent/dancers`}>
+                  <a>{dancer.firstName}</a>
+                </StyledLink>
+              </li>
+            ))}
+        </ul> */}
       </SubNavStyles>
     </SidebarPosition>
   );
