@@ -20,7 +20,7 @@ const DancerControlsStyle = styled.div`
   display: grid;
   justify-items: start;
   border-radius: 5px;
-  padding: 0.5rem 0;
+  padding-bottom: 0;
 
   input[type="checkbox"] {
     margin-right: 0.5rem;

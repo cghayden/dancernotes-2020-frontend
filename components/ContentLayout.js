@@ -4,7 +4,6 @@ const ContentLayout = styled.div`
   background: ${props => props.theme.background};
   margin: ${props => props.theme.mobileStatusBarHeight} auto 0 auto;
   height: calc(100vh - ${props => props.theme.navHeight});
-  max-width: 1200px;
 
   main {
     display: flex;
@@ -15,12 +14,15 @@ const ContentLayout = styled.div`
   }
 
   @media (min-width: ${props => props.theme.largeScreen}) {
-    main {
-      grid-column: 2;
-    }
-    display: grid;
-    grid-template-columns: minmax(200px, 20vw) 1fr minmax(200px, 20vw);
     margin-top: ${props => props.theme.navHeight};
+    display: flex;
+    /* vertical padding for sidebars */
+    padding: 0 3rem;
+    main {
+      /* position relative to keep transition div 100% within the bounds of main? */
+      position: relative;
+      flex-grow: 2;
+    }
   }
 `;
 

@@ -12,7 +12,7 @@ const ParentLayout = ({
   page = "",
   action = <div />,
   subnav = <div />,
-  controls = <div />
+  controls = null
 }) => {
   const fade = useSpring({
     from: {
@@ -29,9 +29,11 @@ const ParentLayout = ({
       <MobileNav />
       <DesktopNav />
       <ContentLayout>
-        <ContentHeader page={page} action={action} />
         {subnav}
-        <main>{children}</main>
+        <main>
+          <ContentHeader page={page} action={action} />
+          {children}
+        </main>
         {controls}
       </ContentLayout>
     </Fragment>

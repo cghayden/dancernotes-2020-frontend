@@ -24,6 +24,7 @@ function DancersPage() {
       // textAlign: "-webkit-center",
       top: "110px",
       opacity: 0,
+      width: "100%",
       transform: "translate3d(0, 100% 0)"
     },
     enter: {

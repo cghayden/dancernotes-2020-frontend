@@ -32,12 +32,16 @@ const ControlPanelStyles = styled.div`
   }
   .controls-heading {
     grid-column: 1/-1;
+    padding-bottom: 1rem;
   }
 
   @media (min-width: ${props => props.theme.largeScreen}) {
+    /* in desktop animation-fill-mode, padding is provided by Content Layout.  In ::-moz-list-bullet, it needs padding because it is its own self contained offscreen/onscreen container */
+    padding-left: 0;
+    padding-right: 0;
     background-color: ${props => props.theme.background};
-    width: unset;
-    min-width: 200px;
+    width: 20vw;
+    min-width: 210px;
     transform: translateX(0%);
     border-radius: 0;
     box-shadow: none;

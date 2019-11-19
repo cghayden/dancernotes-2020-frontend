@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { ParentDisplayConsumer } from "../../components/ParentDisplayProvider";
+
 const StudioCheckboxes = styled.div`
+  justify-self: center;
   .label_Studio {
     font-size: 1.1rem;
     font-weight: 600;
@@ -21,10 +23,10 @@ const DanceDisplayByStudio = ({
   allRoutines,
   studioName,
   studioId,
-  dancerId,
+  dancerId
 }) => {
   const studioRoutines = allRoutines.filter(
-    routine => routine.studio && routine.studio.id === studioId,
+    routine => routine.studio && routine.studio.id === studioId
   );
 
   return (
@@ -34,7 +36,7 @@ const DanceDisplayByStudio = ({
         hiddenDancers,
         toggleDance,
         hiddenStudios,
-        toggleStudio,
+        toggleStudio
       }) => {
         const disabled =
           hiddenStudios.includes(studioId) || hiddenDancers.includes(dancerId);

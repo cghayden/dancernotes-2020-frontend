@@ -9,7 +9,7 @@ const Card = styled.div`
   padding: 0.5rem;
   width: 90%;
   min-width: 320px;
-  max-width: 500px;
+  max-width: 550px;
 
   .card__header {
     display: flex;
