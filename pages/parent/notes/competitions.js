@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/react-hooks";
 import { PARENTS_EVENTS_QUERY } from "../../../components/Parent/Queries";
 import ParentLayout from "../../../components/Parent/ParentLayout";
+import NotesSubNav from "../../../components/Parent/NotesSubNav";
 
 function CompetitionsPage() {
   // const { data, loading, error } = useQuery(PARENTS_EVENTS_QUERY);
@@ -14,7 +15,7 @@ function CompetitionsPage() {
   // console.log("flatEvents:", flatEvents);
 
   return (
-    <ParentLayout page={"Competitions"}>
+    <ParentLayout page={"Competitions"} subnav={<NotesSubNav />}>
       <p>Coming Soon!</p>
     </ParentLayout>
   );

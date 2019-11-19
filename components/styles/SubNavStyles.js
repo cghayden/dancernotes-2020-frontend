@@ -69,6 +69,7 @@ const SubNavStyles = styled.nav`
     }
     ul {
       padding-left: 1rem;
+      padding-bottom: 1rem;
 
       flex-direction: column;
       align-items: flex-start;

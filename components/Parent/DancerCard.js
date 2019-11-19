@@ -73,8 +73,6 @@ const ImageDiv = styled.div`
   top: -60px;
   left: 0;
   right: 0;
-  margin-left: auto;
-  margin-right: auto;
   border: 5px solid ${props => props.theme.gray0};
   text-align: center;
   img {
@@ -82,6 +80,7 @@ const ImageDiv = styled.div`
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
+    margin: 0;
   }
   p {
     font-size: 5rem;

@@ -11,6 +11,7 @@ const ContentLayout = styled.div`
     align-items: center;
     height: calc(100vh - ${props => props.theme.navHeight});
     overflow-y: scroll;
+    padding-bottom: 200px;
 
     .subHeading {
       padding: 0.5rem 1rem 1rem 1rem;

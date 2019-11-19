@@ -1,28 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+import { useQuery } from "@apollo/react-hooks";
 import SubNavStyles from "../styles/SubNavStyles";
 import StyledLink from "../StyledLink";
 import SidebarPosition from "../styles/SidebarPosition";
 import styled from "styled-components";
+import Modal from "../Modal";
+import EventsLinksModal from "./EventsLinksModal";
+import { PARENTS_DANCERS } from "./Queries";
 
 const NotesSubNavStyles = styled(SubNavStyles)`
-  .comps {
+  .hideOnMobile {
     display: none;
   }
-  .conventions {
-    display: none;
+  .hideOnDesktop {
+    display: block;
   }
+
   @media (min-width: ${props => props.theme.largeScreen}) {
-    .comps {
+    .hideOnMobile {
       display: block;
     }
-    .conventions {
-      display: list-item;
+    .hideOnDesktop {
+      display: none;
     }
   }
 `;
 
-function NotesSubNav(props) {
-  //todo -- query dancers for direct links
+function NotesSubNav() {
+  const { data, loading, error } = useQuery(PARENTS_DANCERS);
+  console.log("data:", data);
+  const dancers = data && data.parentsDancers;
+  const [showEvents, setShowEvents] = useState(false);
 
   return (
     <SidebarPosition>
@@ -32,27 +40,6 @@ function NotesSubNav(props) {
           <li>
             <StyledLink activeClassName="active" href="/parent/notes/routines">
               <a>Routines</a>
-            </StyledLink>
-          </li>
-          <li className="comps">
-            <StyledLink
-              activeClassName="active"
-              href="/parent/notes/competitions"
-            >
-              <a>Competitions</a>
-            </StyledLink>
-          </li>
-          <li className="conventions">
-            <StyledLink
-              activeClassName="active"
-              href="/parent/notes/conventions"
-            >
-              <a>Conventions</a>
-            </StyledLink>
-          </li>
-          <li>
-            <StyledLink activeClassName="active" href="/parent/events">
-              <a>Events</a>
             </StyledLink>
           </li>
           <li>
@@ -68,28 +55,61 @@ function NotesSubNav(props) {
               <a>Hair</a>
             </StyledLink>
           </li>
+          <li className="hideOnMobile">
+            <StyledLink
+              activeClassName="active"
+              href="/parent/notes/competitions"
+            >
+              <a>Competitions</a>
+            </StyledLink>
+          </li>
+          <li className="hideOnMobile">
+            <StyledLink
+              activeClassName="active"
+              href="/parent/notes/conventions"
+            >
+              <a>Conventions</a>
+            </StyledLink>
+          </li>
+          <li className="hideOnDesktop">
+            <button onClick={() => setShowEvents(true)}>Events</button>
+          </li>
+          <li className="hideOnMobile">
+            <StyledLink
+              activeClassName="active"
+              href="/parent/notes/rehearsals"
+            >
+              <a>Rehearsals</a>
+            </StyledLink>
+          </li>
+          <li className="hideOnMobile">
+            <StyledLink activeClassName="active" href="/parent/notes/recital">
+              <a>Recital</a>
+            </StyledLink>
+          </li>
+
           <li>
             <StyledLink href="/parent/createCustomRoutine">
               <a>Add a Routine</a>
             </StyledLink>
           </li>
         </ul>
-        <h2 className="subNav-heading">Dancers?</h2>
-        {/* DancersLink should be own component to hold the query? */}
-        {/* <ul>
-          {dancers &&
-            dancers.map(dancer => (
-              <li key={dancer.id}>
-                <StyledLink
-                  activeClassName="active"
-                  href={`/parent/account/dancers/#${dancer.id}`}
-                >
+        <h2 className="subNav-heading">Dancers</h2>
+        {dancers && (
+          <ul>
+            {dancers.map(dancer => (
+              <li key={dancer.firstName}>
+                <StyledLink activeClassName="active" href={`/parent/dancers`}>
                   <a>{dancer.firstName}</a>
                 </StyledLink>
               </li>
             ))}
-        </ul> */}
+          </ul>
+        )}
       </NotesSubNavStyles>
+      <Modal open={showEvents} setOpen={setShowEvents}>
+        <EventsLinksModal />
+      </Modal>
     </SidebarPosition>
   );
 }

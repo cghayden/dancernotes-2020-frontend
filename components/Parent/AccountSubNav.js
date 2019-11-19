@@ -29,20 +29,17 @@ function AccountSubNav({ dancers }) {
             <Signout />
           </li>
         </ul>
-        <h2 className="subNav-heading">Dancers</h2>
+        {/* <h2 className="subNav-heading">Dancers</h2>
         <ul>
           {dancers &&
             dancers.map(dancer => (
               <li key={dancer.id}>
-                <StyledLink
-                  activeClassName="active"
-                  href={`/parent/account/dancers/#${dancer.id}`}
-                >
+                <StyledLink activeClassName="active" href={`/parent/dancers`}>
                   <a>{dancer.firstName}</a>
                 </StyledLink>
               </li>
             ))}
-        </ul>
+        </ul> */}
       </SubNavStyles>
     </SidebarPosition>
   );
