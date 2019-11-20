@@ -21,8 +21,6 @@ const ContentLayout = styled.div`
   @media (min-width: ${props => props.theme.largeScreen}) {
     margin-top: ${props => props.theme.navHeight};
     display: flex;
-    /* vertical padding for sidebars */
-    padding: 0 3rem;
     main {
       /* position relative to keep transition div 100% within the bounds of main? */
       position: relative;
