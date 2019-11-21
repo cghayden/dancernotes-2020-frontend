@@ -19,10 +19,10 @@ const EventsLinksModal = () => {
         <Link href="/parent/notes/conventions">
           <a>Conventions</a>
         </Link>
-        <Link href="#">
+        <Link href="/parent/notes/rehearsals">
           <a>Rehearsals</a>
         </Link>
-        <Link href="#">
+        <Link href="/parent/notes/recital">
           <a>Recital</a>
         </Link>
       </ModalNav>

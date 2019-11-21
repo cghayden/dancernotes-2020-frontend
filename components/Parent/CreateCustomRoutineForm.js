@@ -184,9 +184,10 @@ class CreateCustomRoutineForm extends Component {
                             <fieldset disabled={loading} aria-busy={loading}>
                               <Error error={error} />
                               <div className="input-item">
-                                <label htmlFor="name">Name </label>
+                                <label htmlFor="name">Name* </label>
                                 <input
                                   required
+                                  pattern="^\S+$"
                                   type="text"
                                   name="name"
                                   placeholder="name"
@@ -196,11 +197,8 @@ class CreateCustomRoutineForm extends Component {
                               </div>
                               <div className="input-item">
                                 <label htmlFor="dancer">
-                                  Dancer:{" "}
-                                  <span>
-                                    (You can add other dancers after creating
-                                    the routine.)
-                                  </span>
+                                  Dancer*
+                                  <p>(You may add other dancers later.)</p>
                                 </label>
 
                                 <select
