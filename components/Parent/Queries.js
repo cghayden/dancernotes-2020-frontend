@@ -55,6 +55,8 @@ const PARENT_USER_QUERY = gql`
         id
         firstName
         avatar
+        # todo: remove when changing dancers page query
+        existingAvatarId
         studios {
           studioName
           id

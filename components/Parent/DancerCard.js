@@ -92,7 +92,8 @@ export default class DancerCard extends Component {
     showStudioSearch: false,
     update: false,
     view: "info",
-    newAvatar: ""
+    newAvatar: "",
+    newAvatarId: ""
   };
 
   toggleStudioSearch = () => {
@@ -119,8 +120,10 @@ export default class DancerCard extends Component {
       }
     );
     const file = await res.json();
+
     this.setState({
-      newAvatar: file.eager[0].secure_url
+      newAvatar: file.eager[0].secure_url,
+      newAvatarId: file.public_id
     });
   };
 
@@ -128,9 +131,7 @@ export default class DancerCard extends Component {
     const { dancer } = this.props;
     const hasDanceClasses = dancer.danceClasses.length > 0;
     const hasAvatar = dancer.avatar;
-    // if (dancer) {
-    //   console.log("dancer classes:", dancer.classes.length);
-    // }
+
     return (
       <RegistrationContextConsumer>
         {({ setBrowsingDancer }) => {
@@ -172,6 +173,8 @@ export default class DancerCard extends Component {
                         hasAvatar={hasAvatar}
                         closeFunc={this.switchView}
                         newAvatar={this.state.newAvatar}
+                        newAvatarId={this.state.newAvatarId}
+                        existingAvatarId={dancer.existingAvatarId}
                         changeAvatar={this.changeAvatar}
                       />
                     ) : (

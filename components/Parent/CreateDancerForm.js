@@ -45,8 +45,12 @@ const ImageDiv = styled.div`
 `;
 
 const CREATE_DANCER = gql`
-  mutation CREATE_DANCER($firstName: String!, $avatar: String) {
-    createDancer(firstName: $firstName, avatar: $avatar) {
+  mutation CREATE_DANCER(
+    $firstName: String!
+    $avatar: String
+    $existingAvatarId: String
+  ) {
+    createDancer(firstName: $firstName, avatar: $avatar, existingAvatarId: $existingAvatarId) {
       id
       firstName
       avatar
@@ -57,7 +61,8 @@ const CREATE_DANCER = gql`
 class CreateDancerForm extends Component {
   state = {
     firstName: "",
-    avatar: ""
+    avatar: "",
+    existingAvatarId: ""
   };
 
   handleChange = e => {
@@ -70,6 +75,8 @@ class CreateDancerForm extends Component {
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
+    // optional:
+    // data.append('tags', 'userUpload')
     data.append("upload_preset", "dancernotes-avatars");
 
     const res = await fetch(
@@ -80,14 +87,16 @@ class CreateDancerForm extends Component {
       }
     );
     const file = await res.json();
+    console.log("file:", file);
     this.setState({
       avatar: file.eager[0].secure_url,
+      existingAvatarId: file.public_id,
       loadingAvatar: false
     });
   };
 
   render() {
-    const { avatar, loadingAvatar, firstName } = this.state;
+    const { avatar, existingAvatarId, loadingAvatar, firstName } = this.state;
     const { toggleAddDancer } = this.props;
     return (
       <Mutation
@@ -99,8 +108,8 @@ class CreateDancerForm extends Component {
           <>
             <h2 style={{ textAlign: "center" }}>Add a Dancer</h2>
             <DancerCardHeaderStyles>
-              <ImageDiv avatar={avatar}>
-                {avatar ? (
+              <ImageDiv>
+                {avatar.length > 0 ? (
                   <img src={avatar} alt={`dancer's picture`} />
                 ) : (
                   <p>{firstName && firstName[0]}</p>
@@ -114,7 +123,8 @@ class CreateDancerForm extends Component {
                 const res = await createDancer();
                 this.setState({
                   firstName: "",
-                  avatar: ""
+                  avatar: "",
+                  existingAvatarId: ""
                 });
                 toggleAddDancer(false);
               }}

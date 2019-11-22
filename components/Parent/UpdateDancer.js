@@ -19,8 +19,16 @@ const UPDATE_DANCER_MUTATION = gql`
     $id: ID!
     $firstName: String
     $avatar: String
+    $existingAvatarId: String
+    $newAvatarId: String
   ) {
-    updateDancer(id: $id, firstName: $firstName, avatar: $avatar) {
+    updateDancer(
+      id: $id
+      firstName: $firstName
+      avatar: $avatar
+      existingAvatarId: $existingAvatarId
+      newAvatarId: $newAvatarId
+    ) {
       id
       firstName
       avatar
@@ -46,26 +54,6 @@ class UpdateDancer extends Component {
       variables: { id: this.props.id, ...this.state }
     });
     this.props.closeFunc();
-  };
-
-  uploadFile = async e => {
-    const files = e.target.files;
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "dancernotes-avatars");
-
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/coreytesting/image/upload",
-      {
-        method: "POST",
-        body: data
-      }
-    );
-    const file = await res.json();
-    this.setState({
-      avatar: file.eager[0].secure_url,
-      changePicture: false
-    });
   };
 
   render() {
@@ -122,6 +110,7 @@ class UpdateDancer extends Component {
                             await this.props.changeAvatar(e);
                             this.setState({
                               avatar: this.props.newAvatar,
+                              existingAvatarId: this.props.existingAvatarId,
                               loadingAvatar: false
                             });
                           }}
