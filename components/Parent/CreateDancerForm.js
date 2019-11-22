@@ -7,6 +7,7 @@ import Error from "../Error";
 import { PARENT_USER_QUERY } from "./ParentUserQuery";
 import styled from "styled-components";
 import { DancerCardHeaderStyles } from "./DancerCard";
+import CancelUpdateDancerButton from "./CancelUpdateDancerButton";
 
 //same as DancerCard
 
@@ -50,7 +51,11 @@ const CREATE_DANCER = gql`
     $avatar: String
     $existingAvatarId: String
   ) {
-    createDancer(firstName: $firstName, avatar: $avatar, existingAvatarId: $existingAvatarId) {
+    createDancer(
+      firstName: $firstName
+      avatar: $avatar
+      existingAvatarId: $existingAvatarId
+    ) {
       id
       firstName
       avatar
@@ -161,12 +166,10 @@ class CreateDancerForm extends Component {
                 </div>
 
                 <button type="submit">Add Dancer to my Account</button>
-                <button
-                  type="button"
-                  onClick={() => this.props.toggleAddDancer(false)}
-                >
-                  Cancel
-                </button>
+                <CancelUpdateDancerButton
+                  toggleAddDancer={toggleAddDancer}
+                  existingAvatarId={existingAvatarId}
+                />
               </fieldset>
             </CardBody>
           </>
