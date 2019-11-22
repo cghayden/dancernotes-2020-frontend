@@ -3,6 +3,7 @@ import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import Form from "../styles/Form";
 import Error from "../../components/Error";
+import CancelUpdateDancerButton from "./CancelUpdateDancerButton";
 
 const UPDATE_DANCER_MUTATION = gql`
   mutation UPDATE_DANCER_MUTATION(
@@ -47,7 +48,7 @@ class UpdateDancer extends Component {
   };
 
   render() {
-    const { dancer } = this.props;
+    const { dancer, closeFunc, hasAvatar, newAvatar, newAvatarId } = this.props;
     return (
       <Mutation mutation={UPDATE_DANCER_MUTATION} variables={this.state}>
         {(updateDancer, { loading, error }) => (
@@ -78,7 +79,7 @@ class UpdateDancer extends Component {
                   })
                 }
               >
-                {this.props.hasAvatar ? `Change Picture` : `Add a picture`}
+                {hasAvatar ? `Change Picture` : `Add a picture`}
               </button>
               {this.state.changePicture && (
                 <div className="input-item">
@@ -92,7 +93,7 @@ class UpdateDancer extends Component {
                       this.setState({ loadingAvatar: true });
                       await this.props.changeAvatar(e);
                       this.setState({
-                        avatar: this.props.newAvatar,
+                        avatar: newAvatar,
                         existingAvatarId: dancer.existingAvatarId,
                         loadingAvatar: false
                       });
@@ -108,9 +109,10 @@ class UpdateDancer extends Component {
                   Sav
                   {loading ? "ing " : "e "} Changes
                 </button>
-                <button type="button" onClick={() => this.props.closeFunc()}>
-                  Cancel
-                </button>
+                <CancelUpdateDancerButton
+                  closeFunc={closeFunc}
+                  targetAvatarId={newAvatarId}
+                />
               </div>
             </fieldset>
           </Form>
