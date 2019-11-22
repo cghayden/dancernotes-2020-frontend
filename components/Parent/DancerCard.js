@@ -169,12 +169,11 @@ export default class DancerCard extends Component {
                   >
                     {this.state.view === "update" ? (
                       <UpdateDancer
-                        id={dancer.id}
+                        dancer={dancer}
                         hasAvatar={hasAvatar}
                         closeFunc={this.switchView}
                         newAvatar={this.state.newAvatar}
                         newAvatarId={this.state.newAvatarId}
-                        existingAvatarId={dancer.existingAvatarId}
                         changeAvatar={this.changeAvatar}
                       />
                     ) : (
