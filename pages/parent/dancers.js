@@ -56,6 +56,7 @@ function DancersPage() {
         item ? (
           <animated.div key={key} style={styles}>
             <CreateDancerForm
+              parentId={parentUser.id}
               style={styles}
               toggleAddDancer={toggleAddDancer}
             />

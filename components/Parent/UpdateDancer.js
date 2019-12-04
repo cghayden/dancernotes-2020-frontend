@@ -42,7 +42,7 @@ class UpdateDancer extends Component {
     e.preventDefault();
     //TODO - delete old avatar image from cloudinary
     const res = await updateDancerMutation({
-      variables: { id: this.props.id, ...this.state }
+      variables: { id: this.props.dancer.id, ...this.state }
     });
     this.props.closeFunc();
   };

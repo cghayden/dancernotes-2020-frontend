@@ -65,23 +65,36 @@ const CREATE_DANCER = gql`
 
 class CreateDancerForm extends Component {
   state = {
+    previewAvatar: "",
     firstName: "",
-    avatar: "",
-    existingAvatarId: ""
+    avatar: ""
   };
 
   handleChange = e => {
-    const { name, type, value } = e.target;
+    const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
-  uploadFile = async e => {
-    this.setState({ loadingAvatar: true });
-    const files = e.target.files;
+  previewAvatar = e => {
+    const avatarFileToUploadToCloudinary = e.target.files[0];
+    this.setState({ avatarFileToUploadToCloudinary });
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = e => {
+      // get img from chosen file render thumbnail/avatar.
+      const readerResult = e.target.result;
+      this.setState({ previewAvatar: readerResult });
+    };
+    // read the image file as a data URL in order to display in html<img>.
+    reader.readAsDataURL(file);
+  };
+
+  //ONLY UPLOAD TO CLOUDINARY ON SAVE
+  uploadFile = async () => {
     const data = new FormData();
-    data.append("file", files[0]);
+    data.append("file", this.state.avatarFileToUploadToCloudinary);
     // optional:
-    // data.append('tags', 'userUpload')
+    data.append("tags", this.props.parentId);
     data.append("upload_preset", "dancernotes-avatars");
 
     const res = await fetch(
@@ -92,21 +105,26 @@ class CreateDancerForm extends Component {
       }
     );
     const file = await res.json();
-    console.log("file:", file);
     this.setState({
       avatar: file.eager[0].secure_url,
-      existingAvatarId: file.public_id,
-      loadingAvatar: false
+      existingAvatarId: file.public_id
+      // loadingAvatar: false
     });
   };
 
   render() {
-    const { avatar, existingAvatarId, loadingAvatar, firstName } = this.state;
+    const {
+      existingAvatarId,
+      loadingAvatar,
+      firstName,
+      previewAvatar
+    } = this.state;
     const { toggleAddDancer } = this.props;
     return (
       <Mutation
         mutation={CREATE_DANCER}
-        variables={this.state}
+        //dont send the previewAvatar, only 'avatar', the url from cloudinary
+        variables={{ ...this.state, previewAvatar: "" }}
         refetchQueries={[{ query: PARENT_USER_QUERY }]}
       >
         {(createDancer, { error, loading }) => (
@@ -114,8 +132,11 @@ class CreateDancerForm extends Component {
             <h2 style={{ textAlign: "center" }}>Add a Dancer</h2>
             <DancerCardHeaderStyles>
               <ImageDiv>
-                {avatar.length > 0 ? (
-                  <img src={avatar} alt={`dancer's picture`} />
+                {previewAvatar ? (
+                  <img
+                    src={previewAvatar}
+                    alt={`preview of dancer's picture to save`}
+                  />
                 ) : (
                   <p>{firstName && firstName[0]}</p>
                 )}
@@ -125,10 +146,13 @@ class CreateDancerForm extends Component {
               method="post"
               onSubmit={async e => {
                 e.preventDefault();
-                const res = await createDancer();
+                //1 .upload avatar
+                await this.uploadFile();
+                await createDancer();
                 this.setState({
                   firstName: "",
                   avatar: "",
+                  avatarPreview: "",
                   existingAvatarId: ""
                 });
                 toggleAddDancer(false);
@@ -153,19 +177,19 @@ class CreateDancerForm extends Component {
 
                 <div className="input-item">
                   <label htmlFor="image">
-                    Add a picture of your dancer easily identify the activities
-                    he/she is involved in.
+                    Add a picture of your dancer to easily identify the
+                    activities he/she is involved in. (ptional)
                   </label>
                   <input
                     type="file"
                     id="image"
                     name="file"
                     placeholder="Upload a picture of your dancer"
-                    onChange={this.uploadFile}
+                    onChange={this.previewAvatar}
                   />
                 </div>
 
-                <button type="submit">Add Dancer to my Account</button>
+                <button type="submit">Save Dancer</button>
                 <CancelUpdateDancerButton
                   toggleAddDancer={toggleAddDancer}
                   existingAvatarId={existingAvatarId}
