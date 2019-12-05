@@ -2,14 +2,10 @@ import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import Form from "../styles/Form";
-import Card from "../styles/Card";
 import Error from "../Error";
 import { PARENT_USER_QUERY } from "./ParentUserQuery";
 import styled from "styled-components";
 import { DancerCardHeaderStyles } from "./DancerCard";
-import CancelUpdateDancerButton from "./CancelUpdateDancerButton";
-
-//same as DancerCard
 
 const CardBody = styled(Form)`
   height: auto;
@@ -97,17 +93,11 @@ class CreateDancerForm extends Component {
     this.setState({
       avatar: file.eager[0].secure_url,
       existingAvatarId: file.public_id
-      // loadingAvatar: false
     });
   };
 
   render() {
-    const {
-      existingAvatarId,
-      loadingAvatar,
-      firstName,
-      previewAvatar
-    } = this.state;
+    const { loadingAvatar, firstName, previewAvatar } = this.state;
     const { toggleAddDancer } = this.props;
     return (
       <Mutation
@@ -179,10 +169,9 @@ class CreateDancerForm extends Component {
                 </div>
 
                 <button type="submit">Save Dancer</button>
-                <CancelUpdateDancerButton
-                  toggleAddDancer={toggleAddDancer}
-                  existingAvatarId={existingAvatarId}
-                />
+                <button type="button" onClick={() => toggleAddDancer(false)}>
+                  Cancel
+                </button>
               </fieldset>
             </CardBody>
           </>

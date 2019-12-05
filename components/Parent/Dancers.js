@@ -18,7 +18,7 @@ const Dancers = ({ hasDancers, dancers, addDancer, toggleAddDancer }) => {
     );
   }
 
-  // if no dacners, show welcome and add dancer/browse studios
+  // if no dancers, show welcome and add dancer/browse studios
   if (!hasDancers) {
     return (
       <WelcomeMessage>

@@ -3,7 +3,6 @@ import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import Form from "../styles/Form";
 import Error from "../../components/Error";
-import CancelUpdateDancerButton from "./CancelUpdateDancerButton";
 
 const UPDATE_DANCER_MUTATION = gql`
   mutation UPDATE_DANCER_MUTATION(
@@ -138,10 +137,9 @@ class UpdateDancer extends Component {
                   Sav
                   {loading ? "ing " : "e "} Changes
                 </button>
-                <CancelUpdateDancerButton
-                  closeFunc={closeFunc}
-                  // targetAvatarId={newAvatarId}
-                />
+                <button type="button" onClick={closeFunc}>
+                  Cancel
+                </button>
               </div>
             </fieldset>
           </Form>

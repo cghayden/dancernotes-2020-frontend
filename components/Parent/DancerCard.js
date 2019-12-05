@@ -23,11 +23,8 @@ const FlipButton = styled.button`
   padding: 0;
   margin: 0;
   box-shadow: none;
-  /* background-color: transparent; */
   border: none;
 `;
-
-const DancerCardMain = styled.div``;
 
 const DancerCardFooter = styled.div`
   display: flex;
@@ -90,10 +87,7 @@ const ImageDiv = styled.div`
 export default class DancerCard extends Component {
   state = {
     showStudioSearch: false,
-    update: false,
     view: "info"
-    // newAvatar: "",
-    // newAvatarId: ""
   };
 
   toggleStudioSearch = () => {
@@ -103,7 +97,9 @@ export default class DancerCard extends Component {
   switchView = () => {
     if (this.state.view === "info") {
       this.setState({ view: "update" });
-    } else this.setState({ view: "info" });
+    } else {
+      this.setState({ view: "info" });
+    }
   };
 
   showAvatarPreview = newAvatar => {
@@ -112,6 +108,7 @@ export default class DancerCard extends Component {
 
   render() {
     const { dancer } = this.props;
+    console.log("dancer:", dancer);
     const hasDanceClasses = dancer.danceClasses.length > 0;
     const hasAvatar = dancer.avatar;
 
@@ -122,7 +119,6 @@ export default class DancerCard extends Component {
             <>
               <DancerCardHeaderStyles id={dancer.id}>
                 <ImageDiv>
-                  {/* todo - new avatar preview */}
                   {this.state.newAvatar ? (
                     <img
                       src={this.state.newAvatar}
@@ -160,7 +156,7 @@ export default class DancerCard extends Component {
                       />
                     ) : (
                       <Card>
-                        <DancerCardMain>
+                        <div>
                           <h2>{dancer.firstName}</h2>
                           {hasDanceClasses ? (
                             <div>
@@ -186,7 +182,7 @@ export default class DancerCard extends Component {
                               classes.
                             </p>
                           )}
-                        </DancerCardMain>
+                        </div>
                         <DancerCardFooter>
                           <button
                             className="btn-dark"
