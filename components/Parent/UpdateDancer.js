@@ -138,7 +138,13 @@ class UpdateDancer extends Component {
                   Sav
                   {loading ? "ing " : "e "} Changes
                 </button>
-                <button type="button" onClick={closeFunc}>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await showAvatarPreview("");
+                    closeFunc();
+                  }}
+                >
                   Cancel
                 </button>
               </div>
