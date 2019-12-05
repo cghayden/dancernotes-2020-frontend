@@ -24,9 +24,6 @@ const Card = styled.div`
       padding: 0.5rem 0;
     }
   }
-  img {
-    margin: 1rem 0;
-  }
   .img-large {
     width: 300px;
     height: 300px;

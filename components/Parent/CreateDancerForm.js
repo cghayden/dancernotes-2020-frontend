@@ -29,14 +29,11 @@ const ImageDiv = styled.div`
   top: -60px;
   left: 0;
   right: 0;
-  margin-left: auto;
-  margin-right: auto;
   border: 5px solid ${props => props.theme.gray0};
   text-align: center;
   z-index: 1;
   img {
     width: 100%;
-    height: 100%;
     border-radius: 50%;
     object-fit: cover;
   }
@@ -46,16 +43,8 @@ const ImageDiv = styled.div`
 `;
 
 const CREATE_DANCER = gql`
-  mutation CREATE_DANCER(
-    $firstName: String!
-    $avatar: String
-    $existingAvatarId: String
-  ) {
-    createDancer(
-      firstName: $firstName
-      avatar: $avatar
-      existingAvatarId: $existingAvatarId
-    ) {
+  mutation CREATE_DANCER($firstName: String!, $avatar: String) {
+    createDancer(firstName: $firstName, avatar: $avatar) {
       id
       firstName
       avatar
@@ -93,9 +82,9 @@ class CreateDancerForm extends Component {
   uploadFile = async () => {
     const data = new FormData();
     data.append("file", this.state.avatarFileToUploadToCloudinary);
-    // optional:
-    data.append("tags", this.props.parentId);
     data.append("upload_preset", "dancernotes-avatars");
+    // tags are optional:
+    data.append("tags", this.props.parentId);
 
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/coreytesting/image/upload",

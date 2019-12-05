@@ -33,28 +33,68 @@ class UpdateDancer extends Component {
   };
 
   handleChange = e => {
-    const { name, type, value } = e.target;
-    // const val = type === "number" ? parseFloat(value) : value;
+    const { name, value } = e.target;
     this.setState({ [name]: value });
+  };
+
+  previewAvatar = (e, showAvatarPreview) => {
+    const avatarFileToUploadToCloudinary = e.target.files[0];
+    this.setState({ avatarFileToUploadToCloudinary });
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = e => {
+      // get img from chosen file render thumbnail/avatar.
+      const readerResult = e.target.result;
+      //send preview url up to dancerCard:
+      showAvatarPreview(readerResult);
+    };
+    // read the image file as a data URL in order to display in html<img>.
+    reader.readAsDataURL(file);
+  };
+
+  uploadNewAvatar = async () => {
+    const data = new FormData();
+    data.append("file", this.state.avatarFileToUploadToCloudinary);
+    data.append("upload_preset", "dancernotes-avatars");
+    //todo - tags
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/coreytesting/image/upload",
+      {
+        method: "POST",
+        body: data
+      }
+    );
+    const file = await res.json();
+
+    this.setState({
+      avatar: file.eager[0].secure_url,
+      newAvatarId: file.public_id
+    });
   };
 
   updateDancer = async (e, updateDancerMutation) => {
     e.preventDefault();
-    //TODO - delete old avatar image from cloudinary
-    const res = await updateDancerMutation({
-      variables: { id: this.props.dancer.id, ...this.state }
+    //if newAvatar, upload img to cloudinary, and get new url form cloudinary into this.state.avatar
+    if (this.state.avatarFileToUploadToCloudinary) {
+      await this.uploadNewAvatar();
+    }
+    await updateDancerMutation({
+      variables: {
+        id: this.props.dancer.id,
+        existingAvatarId: this.props.dancer.existingAvatarId,
+        ...this.state
+      }
     });
     this.props.closeFunc();
   };
 
   render() {
-    const { dancer, closeFunc, hasAvatar, newAvatar, newAvatarId } = this.props;
+    const { dancer, closeFunc, hasAvatar, showAvatarPreview } = this.props;
     return (
       <Mutation mutation={UPDATE_DANCER_MUTATION} variables={this.state}>
         {(updateDancer, { loading, error }) => (
           <Form onSubmit={e => this.updateDancer(e, updateDancer)}>
             <Error error={error} />
-
             <fieldset
               disabled={loading || this.state.loadingAvatar}
               aria-busy={loading || this.state.loadingAvatar}
@@ -89,29 +129,18 @@ class UpdateDancer extends Component {
                     id="image"
                     name="image"
                     placeholder="Image for Avatar"
-                    onChange={async e => {
-                      this.setState({ loadingAvatar: true });
-                      await this.props.changeAvatar(e);
-                      this.setState({
-                        avatar: newAvatar,
-                        existingAvatarId: dancer.existingAvatarId,
-                        loadingAvatar: false
-                      });
-                    }}
+                    onChange={e => this.previewAvatar(e, showAvatarPreview)}
                   />
                 </div>
               )}
               <div className="form-footer">
-                <button
-                  type="submit"
-                  aria-busy={loading || this.state.loadingAvatar}
-                >
+                <button type="submit" aria-busy={loading}>
                   Sav
                   {loading ? "ing " : "e "} Changes
                 </button>
                 <CancelUpdateDancerButton
                   closeFunc={closeFunc}
-                  targetAvatarId={newAvatarId}
+                  // targetAvatarId={newAvatarId}
                 />
               </div>
             </fieldset>

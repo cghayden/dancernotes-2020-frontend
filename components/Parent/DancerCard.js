@@ -91,9 +91,9 @@ export default class DancerCard extends Component {
   state = {
     showStudioSearch: false,
     update: false,
-    view: "info",
-    newAvatar: "",
-    newAvatarId: ""
+    view: "info"
+    // newAvatar: "",
+    // newAvatarId: ""
   };
 
   toggleStudioSearch = () => {
@@ -106,25 +106,8 @@ export default class DancerCard extends Component {
     } else this.setState({ view: "info" });
   };
 
-  changeAvatar = async e => {
-    const files = e.target.files;
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "dancernotes-avatars");
-
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/coreytesting/image/upload",
-      {
-        method: "POST",
-        body: data
-      }
-    );
-    const file = await res.json();
-
-    this.setState({
-      newAvatar: file.eager[0].secure_url,
-      newAvatarId: file.public_id
-    });
+  showAvatarPreview = newAvatar => {
+    this.setState({ newAvatar });
   };
 
   render() {
@@ -139,10 +122,11 @@ export default class DancerCard extends Component {
             <>
               <DancerCardHeaderStyles id={dancer.id}>
                 <ImageDiv>
+                  {/* todo - new avatar preview */}
                   {this.state.newAvatar ? (
                     <img
                       src={this.state.newAvatar}
-                      alt={`preview of new image picture`}
+                      alt={`preview of new avatar image`}
                     />
                   ) : hasAvatar ? (
                     <img
@@ -170,11 +154,9 @@ export default class DancerCard extends Component {
                     {this.state.view === "update" ? (
                       <UpdateDancer
                         dancer={dancer}
-                        hasAvatar={hasAvatar}
                         closeFunc={this.switchView}
-                        newAvatar={this.state.newAvatar}
-                        newAvatarId={this.state.newAvatarId}
-                        changeAvatar={this.changeAvatar}
+                        hasAvatar={hasAvatar}
+                        showAvatarPreview={this.showAvatarPreview}
                       />
                     ) : (
                       <Card>
