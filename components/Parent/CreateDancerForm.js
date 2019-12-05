@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import Form from "../styles/Form";
 import Error from "../Error";
 import { PARENT_USER_QUERY } from "./ParentUserQuery";
+import { UPDATE_DANCER_MUTATION } from "./UpdateDancer";
 import styled from "styled-components";
 import { DancerCardHeaderStyles } from "./DancerCard";
 
@@ -75,12 +76,12 @@ class CreateDancerForm extends Component {
   };
 
   //ONLY UPLOAD TO CLOUDINARY ON SAVE
-  uploadFile = async () => {
+  uploadFile = async dancerId => {
     const data = new FormData();
     data.append("file", this.state.avatarFileToUploadToCloudinary);
     data.append("upload_preset", "dancernotes-avatars");
     // tags are optional:
-    data.append("tags", this.props.parentId);
+    data.append("tags", `dancerId: ${dancerId}`);
 
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/coreytesting/image/upload",
@@ -96,85 +97,112 @@ class CreateDancerForm extends Component {
     });
   };
 
+  saveNewDancer = async (e, createDancerMutation, updateDancerMutation) => {
+    e.preventDefault();
+    //1 .save dancer
+    const newDancer = await createDancerMutation({
+      variables: { ...this.state, previewAvatar: "" }
+    });
+    //2 get dancerId
+    const newDancerId = newDancer.data.createDancer.id;
+
+    //3 upload avatar with tag of dancer id
+    if (this.state.avatarFileToUploadToCloudinary) {
+      await this.uploadFile(newDancerId);
+      const { avatar, existingAvatarId } = this.state;
+      //4 update dancer in prisma with avatar url
+      await updateDancerMutation({
+        variables: { id: newDancerId, avatar, existingAvatarId }
+      });
+    }
+
+    this.setState({
+      firstName: "",
+      avatar: "",
+      avatarPreview: "",
+      existingAvatarId: ""
+    });
+    this.props.toggleAddDancer(false);
+  };
+
   render() {
-    const { loadingAvatar, firstName, previewAvatar } = this.state;
+    const { firstName, previewAvatar } = this.state;
     const { toggleAddDancer } = this.props;
     return (
-      <Mutation
-        mutation={CREATE_DANCER}
-        //dont send the previewAvatar, only 'avatar', the url from cloudinary
-        variables={{ ...this.state, previewAvatar: "" }}
-        refetchQueries={[{ query: PARENT_USER_QUERY }]}
-      >
-        {(createDancer, { error, loading }) => (
-          <>
-            <h2 style={{ textAlign: "center" }}>Add a Dancer</h2>
-            <DancerCardHeaderStyles>
-              <ImageDiv>
-                {previewAvatar ? (
-                  <img
-                    src={previewAvatar}
-                    alt={`preview of dancer's picture to save`}
-                  />
-                ) : (
-                  <p>{firstName && firstName[0]}</p>
-                )}
-              </ImageDiv>
-            </DancerCardHeaderStyles>
-            <CardBody
-              method="post"
-              onSubmit={async e => {
-                e.preventDefault();
-                //1 .upload avatar
-                await this.uploadFile();
-                await createDancer();
-                this.setState({
-                  firstName: "",
-                  avatar: "",
-                  avatarPreview: "",
-                  existingAvatarId: ""
-                });
-                toggleAddDancer(false);
-              }}
-            >
-              <fieldset
-                disabled={loading || loadingAvatar}
-                aria-busy={loading || loadingAvatar}
-              >
-                <Error error={error} />
-                <div className="input-item">
-                  <label htmlFor="firstName">Name</label>
-                  <input
-                    required
-                    type="text"
-                    name="firstName"
-                    placeholder="firstName"
-                    value={firstName}
-                    onChange={this.handleChange}
-                  />
-                </div>
+      <Mutation mutation={UPDATE_DANCER_MUTATION}>
+        {(
+          updateDancer,
+          { error: errorLoadingAvatar, loading: loadingAvatar }
+        ) => (
+          <Mutation
+            mutation={CREATE_DANCER}
+            //dont send the previewAvatar, only 'avatar', the url from cloudinary
+            refetchQueries={[{ query: PARENT_USER_QUERY }]}
+          >
+            {(createDancer, { error, loading }) => (
+              <>
+                <h2 style={{ textAlign: "center" }}>Add a Dancer</h2>
+                <DancerCardHeaderStyles>
+                  <ImageDiv>
+                    {previewAvatar ? (
+                      <img
+                        src={previewAvatar}
+                        alt={`preview of dancer's picture to save`}
+                      />
+                    ) : (
+                      <p>{firstName && firstName[0]}</p>
+                    )}
+                  </ImageDiv>
+                </DancerCardHeaderStyles>
+                <CardBody
+                  method="post"
+                  onSubmit={e =>
+                    this.saveNewDancer(e, createDancer, updateDancer)
+                  }
+                >
+                  <fieldset
+                    disabled={loading || loadingAvatar}
+                    aria-busy={loading || loadingAvatar}
+                  >
+                    <Error error={error || errorLoadingAvatar} />
+                    <div className="input-item">
+                      <label htmlFor="firstName">Name</label>
+                      <input
+                        required
+                        type="text"
+                        name="firstName"
+                        placeholder="firstName"
+                        value={firstName}
+                        onChange={this.handleChange}
+                      />
+                    </div>
 
-                <div className="input-item">
-                  <label htmlFor="image">
-                    Add a picture of your dancer to easily identify the
-                    activities he/she is involved in. (ptional)
-                  </label>
-                  <input
-                    type="file"
-                    id="image"
-                    name="file"
-                    placeholder="Upload a picture of your dancer"
-                    onChange={this.previewAvatar}
-                  />
-                </div>
+                    <div className="input-item">
+                      <label htmlFor="image">
+                        Add a picture of your dancer to easily identify the
+                        activities he/she is involved in. (ptional)
+                      </label>
+                      <input
+                        type="file"
+                        id="image"
+                        name="file"
+                        placeholder="Upload a picture of your dancer"
+                        onChange={this.previewAvatar}
+                      />
+                    </div>
 
-                <button type="submit">Save Dancer</button>
-                <button type="button" onClick={() => toggleAddDancer(false)}>
-                  Cancel
-                </button>
-              </fieldset>
-            </CardBody>
-          </>
+                    <button type="submit">Save Dancer</button>
+                    <button
+                      type="button"
+                      onClick={() => toggleAddDancer(false)}
+                    >
+                      Cancel
+                    </button>
+                  </fieldset>
+                </CardBody>
+              </>
+            )}
+          </Mutation>
         )}
       </Mutation>
     );

@@ -55,7 +55,8 @@ class UpdateDancer extends Component {
     const data = new FormData();
     data.append("file", this.state.avatarFileToUploadToCloudinary);
     data.append("upload_preset", "dancernotes-avatars");
-    //todo - tags
+    data.append("tags", `dancerId: ${this.props.dancerId}`);
+
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/coreytesting/image/upload",
       {
@@ -90,7 +91,7 @@ class UpdateDancer extends Component {
   render() {
     const { dancer, closeFunc, hasAvatar, showAvatarPreview } = this.props;
     return (
-      <Mutation mutation={UPDATE_DANCER_MUTATION} variables={this.state}>
+      <Mutation mutation={UPDATE_DANCER_MUTATION}>
         {(updateDancer, { loading, error }) => (
           <Form onSubmit={e => this.updateDancer(e, updateDancer)}>
             <Error error={error} />
