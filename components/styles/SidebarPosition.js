@@ -10,8 +10,7 @@ const SidebarPosition = styled.div`
   justify-content: center;
   /* needs to be positioned on large screens because it is position fixed. */
   @media (min-width: ${props => props.theme.largeScreen}) {
-    /* justify-content: left; */
-    width: 20vw;
+    padding-left: 3vw;
   }
 `;
 
