@@ -82,7 +82,7 @@ class CreateDancerForm extends Component {
     data.append("file", this.state.avatarFileToUploadToCloudinary);
     data.append("upload_preset", "dancernotes-avatars");
     // tags are optional:
-    data.append("tags", `dancerId: ${dancerId}`);
+    data.append("tags", dancerId);
 
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/coreytesting/image/upload",
