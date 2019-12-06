@@ -109,7 +109,8 @@ const GlobalStyle = createGlobalStyle`
     border-radius: 10px;
     font: inherit;
     padding: 0.6rem;
-    width: 90%;
+    ${"" /* reinstate width if this screws up inputs and selects */}
+    ${"" /* width: 90%; */}
     &:focus {
       border-color: ${theme.cranberry};
     }

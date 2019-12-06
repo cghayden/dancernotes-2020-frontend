@@ -31,6 +31,8 @@ const UpdateCustomRoutine = ({ danceId }) => {
       onSubmit={async e => await updateCustomRoutine(e)}
     >
       <fieldset disabled={loading} aria-busy={loading}>
+        <h2>Update {dance.name}</h2>
+
         {/* <Error error={error} /> */}
         <div className="input-item">
           <label htmlFor="name">Name*</label>
@@ -90,57 +92,53 @@ const UpdateCustomRoutine = ({ danceId }) => {
           </select>
         </div>
 
-        <div className="formGroup">
-          <div className="day formGroup-item">
-            <label htmlFor="day">
-              Day:
-              <select
-                id="day"
-                name="day"
-                defaultValue={dance.day}
-                onChange={handleInputChange}
-              >
-                <option default defaultValue={""} disabled>
-                  Day...
-                </option>
-                <option defaultValue="Mon.">Mon.</option>
-                <option defaultValue="Tue.">Tue.</option>
-                <option defaultValue="Wed.">Wed.</option>
-                <option defaultValue="Thur.">Thur.</option>
-                <option defaultValue="Fri.">Fri.</option>
-                <option defaultValue="Sat.">Sat.</option>
-                <option defaultValue="Sun.">Sun.</option>
-              </select>
-            </label>
+        <div className="form-row">
+          <div className="day form-row-item">
+            <label htmlFor="day">Day:</label>
+            <select
+              className="day"
+              id="day"
+              name="day"
+              defaultValue={dance.day}
+              onChange={handleInputChange}
+            >
+              <option default defaultValue={""} disabled>
+                Day...
+              </option>
+              <option defaultValue="Mon.">Mon.</option>
+              <option defaultValue="Tue.">Tue.</option>
+              <option defaultValue="Wed.">Wed.</option>
+              <option defaultValue="Thur.">Thur.</option>
+              <option defaultValue="Fri.">Fri.</option>
+              <option defaultValue="Sat.">Sat.</option>
+              <option defaultValue="Sun.">Sun.</option>
+            </select>
           </div>
-          <div className="formGroup-item">
-            <label htmlFor="startTime">
-              Start Time:
-              <input
-                type="time"
-                id="startTime"
-                name="startTime"
-                min="0:00"
-                max="23:59"
-                defaultValue={dance.startTime}
-                onChange={handleInputChange}
-              />
-            </label>
+          <div className="form-row-item">
+            <label htmlFor="startTime">Start Time:</label>
+            <input
+              className="day"
+              type="time"
+              id="startTime"
+              name="startTime"
+              min="0:00"
+              max="23:59"
+              defaultValue={dance.startTime}
+              onChange={handleInputChange}
+            />
           </div>
-
-          <div className="formGroup-item">
-            <label htmlFor="endTime">
-              End Time:
-              <input
-                type="time"
-                id="endTime"
-                name="endTime"
-                min="0:00"
-                max="23:59"
-                defaultValue={dance.endTime}
-                onChange={handleInputChange}
-              />
-            </label>
+          <div className="form-row-item">
+            <label htmlFor="endTime">End Time:</label>
+            <input
+              className="day"
+              type="time"
+              id="endTime"
+              name="endTime"
+              min="0:00"
+              max="23:59"
+              defaultValue={dance.endTime}
+              onChange={handleInputChange}
+            />
           </div>
         </div>
         <div className="input-item">
@@ -199,8 +197,8 @@ const UpdateCustomRoutine = ({ danceId }) => {
 
         <div className="form-footer">
           <button type="submit" disabled={loading}>
-            Creat
-            {loading ? "ing " : "e "} Class
+            Sav
+            {loading ? "ing " : "e "} Changes
           </button>
         </div>
       </fieldset>

@@ -18,11 +18,10 @@ const Form = styled.form`
   color: ${props => props.theme.newBlue[90].hsl};
   background: ${props => props.theme.gray1};
   border: 10px solid ${props => props.theme.gray0};
-  padding: 0.5rem;
+  padding: 1rem 0;
   width: 90%;
   min-width: 320px;
   max-width: 550px;
-  margin: 0 auto 1rem auto;
 
   legend,
   h2 {
@@ -39,9 +38,11 @@ const Form = styled.form`
       display: none;
     }
   }
-  input {
+  input,
+  select {
     margin: 0;
     color: ${props => props.theme.newBlue[90].hsl};
+    font-size: 1.25rem;
   }
 
   button,
@@ -62,9 +63,7 @@ const Form = styled.form`
       animation: ${loading} 1s linear infinite;
     }
   }
-  select {
-    color: ${props => props.theme.gray5};
-  }
+
   fieldset {
     border: 0;
     padding: 0;
@@ -89,12 +88,30 @@ const Form = styled.form`
       animation: ${loading} 1s linear infinite;
     }
   }
+  .time,
+  .day {
+    width: 110px;
+    display: block;
+    padding: 0.5rem;
+  }
   .fileLoader {
     background: ${props => props.theme.indigo2};
   }
   .input-item {
     display: grid;
-    margin-bottom: 1rem;
+    width: 90%;
+    margin: 0 auto 1rem auto;
+  }
+  .form-row {
+    margin: 0 auto 1rem auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    .form-row-item {
+      display: grid;
+      place-content: center;
+    }
   }
   .form-footer {
     text-align: center;

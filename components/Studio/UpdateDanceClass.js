@@ -187,8 +187,8 @@ export default class UpdateDanceClass extends Component {
                                 <option value="Trio">Trio</option>
                               </select>
                             </label>
-                            <div className="formGroup">
-                              <div className="day formGroup-item">
+                            <div className="form-row">
+                              <div className="day form-row-item">
                                 <label htmlFor="day">
                                   Day:
                                   <select
@@ -207,7 +207,7 @@ export default class UpdateDanceClass extends Component {
                                   </select>
                                 </label>
                               </div>
-                              <div className="formGroup-item">
+                              <div className="form-row-item">
                                 <label htmlFor="startTime">
                                   Start Time:
                                   <input
@@ -222,7 +222,7 @@ export default class UpdateDanceClass extends Component {
                                 </label>
                               </div>
 
-                              <div className="formGroup-item">
+                              <div className="form-row-item">
                                 <label htmlFor="endTime">
                                   End Time:
                                   <input
@@ -238,8 +238,8 @@ export default class UpdateDanceClass extends Component {
                               </div>
                             </div>
 
-                            <div className="formGroup">
-                              <div className="formGroup-item">
+                            <div className="form-row">
+                              <div className="form-row-item">
                                 <label htmlFor="style">
                                   Style:
                                   <select
@@ -257,7 +257,7 @@ export default class UpdateDanceClass extends Component {
                                   </select>
                                 </label>
                               </div>
-                              <div className="formGroup-item">
+                              <div className="form-row-item">
                                 <label htmlFor="level">
                                   Level:
                                   <select
@@ -275,7 +275,7 @@ export default class UpdateDanceClass extends Component {
                                   </select>
                                 </label>
                               </div>
-                              <div className="formGroup-item">
+                              <div className="form-row-item">
                                 <label htmlFor="division">
                                   Division:
                                   <select

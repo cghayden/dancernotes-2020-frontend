@@ -19,22 +19,6 @@ const StyledCreateClassForm = styled(Form)`
       width: 100px;
     }
   }
-  .formGroup {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-
-    .formGroup-item {
-      display: grid;
-      place-content: center;
-    }
-    select,
-    input {
-      width: 150px;
-      display: block;
-      padding: 0.5rem;
-    }
-  }
 `;
 
 const PARENTS_DANCERS_QUERY = gql`
@@ -199,6 +183,7 @@ class CreateCustomRoutineForm extends Component {
                           >
                             <fieldset disabled={loading} aria-busy={loading}>
                               <Error error={error} />
+                              <h2>Create Your Own Routine</h2>
                               <div className="input-item">
                                 <label htmlFor="name">Name* </label>
                                 <input
@@ -258,57 +243,53 @@ class CreateCustomRoutineForm extends Component {
                                 </select>
                               </div>
 
-                              <div className="formGroup">
-                                <div className="day formGroup-item">
-                                  <label htmlFor="day">
-                                    Day:
-                                    <select
-                                      id="day"
-                                      name="day"
-                                      value={this.state.day}
-                                      onChange={this.handleChange}
-                                    >
-                                      <option default value={""} disabled>
-                                        Day...
-                                      </option>
-                                      <option value="Mon.">Mon.</option>
-                                      <option value="Tue.">Tue.</option>
-                                      <option value="Wed.">Wed.</option>
-                                      <option value="Thur.">Thur.</option>
-                                      <option value="Fri.">Fri.</option>
-                                      <option value="Sat.">Sat.</option>
-                                      <option value="Sun.">Sun.</option>
-                                    </select>
-                                  </label>
+                              <div className="form-row">
+                                <div className="day form-row-item">
+                                  <label htmlFor="day">Day:</label>
+                                  <select
+                                    className="day"
+                                    id="day"
+                                    name="day"
+                                    value={this.state.day}
+                                    onChange={this.handleChange}
+                                  >
+                                    <option default value={""} disabled>
+                                      Day...
+                                    </option>
+                                    <option value="Mon.">Mon.</option>
+                                    <option value="Tue.">Tue.</option>
+                                    <option value="Wed.">Wed.</option>
+                                    <option value="Thur.">Thur.</option>
+                                    <option value="Fri.">Fri.</option>
+                                    <option value="Sat.">Sat.</option>
+                                    <option value="Sun.">Sun.</option>
+                                  </select>
                                 </div>
-                                <div className="formGroup-item">
-                                  <label htmlFor="startTime">
-                                    Start Time:
-                                    <input
-                                      type="time"
-                                      id="startTime"
-                                      name="startTime"
-                                      min="0:00"
-                                      max="23:59"
-                                      value={this.state.startTime}
-                                      onChange={this.handleChange}
-                                    />
-                                  </label>
+                                <div className="form-row-item">
+                                  <label htmlFor="startTime">Start Time:</label>
+                                  <input
+                                    className="day"
+                                    type="time"
+                                    id="startTime"
+                                    name="startTime"
+                                    min="0:00"
+                                    max="23:59"
+                                    value={this.state.startTime}
+                                    onChange={this.handleChange}
+                                  />
                                 </div>
-
-                                <div className="formGroup-item">
-                                  <label htmlFor="endTime">
-                                    End Time:
-                                    <input
-                                      type="time"
-                                      id="endTime"
-                                      name="endTime"
-                                      min="0:00"
-                                      max="23:59"
-                                      value={this.state.endTime}
-                                      onChange={this.handleChange}
-                                    />
-                                  </label>
+                                <div className="form-row-item">
+                                  <label htmlFor="endTime">End Time:</label>
+                                  <input
+                                    className="day"
+                                    type="time"
+                                    id="endTime"
+                                    name="endTime"
+                                    min="0:00"
+                                    max="23:59"
+                                    value={this.state.endTime}
+                                    onChange={this.handleChange}
+                                  />
                                 </div>
                               </div>
                               <div className="input-item">
