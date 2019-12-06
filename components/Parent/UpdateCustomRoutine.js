@@ -1,39 +1,92 @@
 import React, { useState } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { CUSTOM_ROUTINE_QUERY } from "./Queries";
 import { StyledCreateClassForm } from "./CreateCustomRoutineForm";
+import Error from "../Error";
+
+const UPDATE_CUSTOM_ROUTINE = gql`
+  mutation UPDATE_CUSTOM_ROUTINE(
+    $id: ID!
+    $name: String
+    $performanceName: String
+    $day: String
+    $startTime: String
+    $endTime: String
+    $shoes: String
+    $tights: String
+    $notes: String
+    $music: String
+    $dancer: ID
+    $studio: ID
+  ) {
+    updateCustomRoutine(
+      id: $id
+      name: $name
+      performanceName: $performanceName
+      day: $day
+      startTime: $startTime
+      endTime: $endTime
+      shoes: $shoes
+      tights: $tights
+      notes: $notes
+      music: $music
+      dancer: $dancer
+      studio: $studio
+    ) {
+      message
+    }
+  }
+`;
 
 const UpdateCustomRoutine = ({ danceId }) => {
-  const [defaultValues, setValues] = useState({});
-  const { data, error, loading } = useQuery(CUSTOM_ROUTINE_QUERY, {
+  const [values, setValues] = useState({});
+  const {
+    data,
+    loading: loadingRoutine,
+    error: errorLoadingRoutine
+  } = useQuery(CUSTOM_ROUTINE_QUERY, {
     variables: { id: danceId }
   });
+  const [
+    updateCustomRoutine,
+    { loading: loadingMutation, error: mutationError }
+  ] = useMutation(UPDATE_CUSTOM_ROUTINE);
+
   const dance = data ? data.customRoutine : {};
 
-  function onSuccess() {
-    Router.push({
-      pathname: "/parent/notes/routines"
+  const onCompleted = () => {
+    console.log("update complete");
+    // Router.push({
+    //   pathname: "/parent/notes/routines"
+    // });
+  };
+
+  async function saveChanges(e, updateMutation) {
+    e.preventDefault();
+    console.log("update routine");
+    await updateMutation({
+      variables: { ...values, id: danceId },
+      refetchQueries: ["allRs"],
+      awaitRefetchQueries: true,
+      onCompleted: onCompleted
     });
   }
 
-  function updateCustomRoutine(e, updateMutation) {
-    console.log("update routine");
-  }
-
   function handleInputChange(e) {
-    const { name, defaultValue } = e.target;
-    setValues({ ...defaultValues, [name]: defaultValue });
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
   }
 
+  if (loadingRoutine) return <h2>5, 6, 7, 8</h2>;
   return (
     <StyledCreateClassForm
       method="post"
-      onSubmit={async e => await updateCustomRoutine(e)}
+      onSubmit={async e => await saveChanges(e, updateCustomRoutine)}
     >
-      <fieldset disabled={loading} aria-busy={loading}>
+      <fieldset disabled={loadingMutation} aria-busy={loadingMutation}>
         <h2>Update {dance.name}</h2>
-
-        {/* <Error error={error} /> */}
+        <Error error={errorLoadingRoutine || mutationError} />
         <div className="input-item">
           <label htmlFor="name">Name*</label>
           <input
@@ -196,9 +249,9 @@ const UpdateCustomRoutine = ({ danceId }) => {
         </div>
 
         <div className="form-footer">
-          <button type="submit" disabled={loading}>
+          <button type="submit" disabled={loadingMutation}>
             Sav
-            {loading ? "ing " : "e "} Changes
+            {loadingMutation ? "ing " : "e "} Changes
           </button>
         </div>
       </fieldset>
