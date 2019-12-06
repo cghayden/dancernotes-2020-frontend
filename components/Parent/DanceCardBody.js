@@ -26,7 +26,7 @@ export default class DanceCardBody extends Component {
   state = {
     view: "notes",
     addNote: false,
-    editNotes: false,
+    editNotes: false
   };
 
   hideNote = () => {

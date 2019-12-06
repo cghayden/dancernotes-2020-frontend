@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 const ALL_Rs = gql`
   query {
     allRs {
+      custom
       id
       name
       performanceName

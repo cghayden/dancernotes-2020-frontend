@@ -15,7 +15,7 @@ class RoutinesDisplay extends Component {
           hiddenDances,
           hiddenDancers,
           hiddenStudios,
-          hiddenIndependents,
+          hiddenIndependents
         }) => {
           return (
             <Query query={ALL_Rs}>
@@ -33,18 +33,20 @@ class RoutinesDisplay extends Component {
                 }
 
                 const visibleDancersIds = this.props.dancerIds.filter(
-                  id => !hiddenDancers.includes(id),
+                  id => !hiddenDancers.includes(id)
                 );
 
                 return (
                   <>
                     {allRs &&
                       allRs.map(dance => {
+                        console.log("dance:", dance);
+
                         //independent dances...
                         if (!dance.studio) {
                           if (
                             dance.dancerIds.some(dancerId =>
-                              hiddenIndependents.includes(dancerId),
+                              hiddenIndependents.includes(dancerId)
                             )
                           ) {
                             return null;
@@ -52,7 +54,7 @@ class RoutinesDisplay extends Component {
                           if (
                             !hiddenDances.includes(dance.id) &&
                             visibleDancersIds.some(visibleDancerId =>
-                              dance.dancerIds.includes(visibleDancerId),
+                              dance.dancerIds.includes(visibleDancerId)
                             )
                           ) {
                             return (
@@ -74,7 +76,7 @@ class RoutinesDisplay extends Component {
                             !hiddenDances.includes(dance.id) &&
                             !hiddenStudios.includes(dance.studio.id) &&
                             visibleDancersIds.some(visibleDancerId =>
-                              dance.dancerIds.includes(visibleDancerId),
+                              dance.dancerIds.includes(visibleDancerId)
                             )
                           ) {
                             return (

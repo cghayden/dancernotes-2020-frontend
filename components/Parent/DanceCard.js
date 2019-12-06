@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from "react";
+import Link from "next/link";
 import styled from "styled-components";
 import { useSpring, animated } from "react-spring";
 import useMeasure from "../../lib/useMeasure";
@@ -66,7 +67,7 @@ function DanceCard(props) {
   const { dance, visibleDancersIds } = props;
   const [showBody, setShowBody] = useState(false);
   const [showMediaPlayer, setShowMediaPlayer] = useState(false);
-  const [bind, { height, top }] = useMeasure();
+  const [bind, { height }] = useMeasure();
 
   const animation = useSpring({
     overflow: "hidden",
@@ -106,6 +107,11 @@ function DanceCard(props) {
       <DanceCardNav>
         <button onClick={toggleBody}>Details</button>
         <button onClick={toggleMusic}>Music</button>
+        {dance.custom && (
+          <Link href={`/parent/updateDance/${dance.id}`}>
+            <a>Edit</a>
+          </Link>
+        )}
       </DanceCardNav>
 
       <MusicPlayer

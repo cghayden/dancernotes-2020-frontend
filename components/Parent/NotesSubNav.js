@@ -28,7 +28,6 @@ const NotesSubNavStyles = styled(SubNavStyles)`
 
 function NotesSubNav() {
   const { data, loading, error } = useQuery(PARENTS_DANCERS);
-  console.log("data:", data);
   const dancers = data && data.parentsDancers;
   const [showEvents, setShowEvents] = useState(false);
 
