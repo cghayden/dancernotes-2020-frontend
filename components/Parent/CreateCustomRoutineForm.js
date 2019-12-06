@@ -28,9 +28,6 @@ const StyledCreateClassForm = styled(Form)`
       display: grid;
       place-content: center;
     }
-    label {
-      text-align: center;
-    }
     select,
     input {
       width: 150px;
@@ -103,11 +100,16 @@ class CreateCustomRoutineForm extends Component {
     this.setState({ [name]: value });
   };
 
+  setSongtoState = e => {
+    const audioFile = e.target.files[0];
+    this.setState({ audioFile });
+  };
+
   uploadSong = async e => {
-    this.setState({ loadingSong: true });
-    const files = e.target.files;
+    // this.setState({ loadingSong: true });
+    // const files = e.target.files;
     const data = new FormData();
-    data.append("file", files[0]);
+    data.append("file", this.state.audioFile);
     data.append("upload_preset", "dancernotes-music");
 
     const res = await fetch(
@@ -134,6 +136,33 @@ class CreateCustomRoutineForm extends Component {
     });
   };
 
+  saveCustomRoutine = async (e, createCustomRoutineMutation) => {
+    e.preventDefault();
+    //1. createRoutine
+    const newRoutine = await createCustomRoutineMutation({
+      variables: {
+        ...this.state
+      }
+    });
+    //2. get Routine Id
+    //3. upload music with tag of routine
+    //4 update routine
+    console.log("newRoutine:", newRoutine);
+    this.setState({
+      name: "",
+      day: "",
+      startTime: "",
+      endTime: "",
+      performanceName: "",
+      shoes: "",
+      tights: "",
+      notes: "",
+      music: "",
+      dancer: "",
+      studio: ""
+    });
+  };
+
   render() {
     return (
       <Query query={PARENTS_STUDIOS}>
@@ -145,7 +174,6 @@ class CreateCustomRoutineForm extends Component {
                 return (
                   <Mutation
                     mutation={CREATE_CUSTOM_ROUTINE_MUTATION}
-                    variables={this.state}
                     onCompleted={({ createCustomRoutine }) =>
                       this.onSuccess(createCustomRoutine)
                     }
@@ -160,26 +188,14 @@ class CreateCustomRoutineForm extends Component {
                               closeFunc={this.closeSuccessMessage}
                             />
                           )}
-
                           <StyledCreateClassForm
                             method="post"
-                            onSubmit={async e => {
-                              e.preventDefault();
-                              const res = await createCustomRoutine();
-                              this.setState({
-                                name: "",
-                                day: "",
-                                startTime: "",
-                                endTime: "",
-                                performanceName: "",
-                                shoes: "",
-                                tights: "",
-                                notes: "",
-                                music: "",
-                                dancer: "",
-                                studio: ""
-                              });
-                            }}
+                            onSubmit={async e =>
+                              await this.saveCustomRoutine(
+                                e,
+                                createCustomRoutine
+                              )
+                            }
                           >
                             <fieldset disabled={loading} aria-busy={loading}>
                               <Error error={error} />
@@ -187,7 +203,7 @@ class CreateCustomRoutineForm extends Component {
                                 <label htmlFor="name">Name* </label>
                                 <input
                                   required
-                                  pattern="^\S+$"
+                                  pattern="(?!^ +$)^.+$"
                                   type="text"
                                   name="name"
                                   placeholder="name"
@@ -349,7 +365,7 @@ class CreateCustomRoutineForm extends Component {
                                   id="music"
                                   name="music"
                                   placeholder="Upload the music for this dance"
-                                  onChange={this.uploadSong}
+                                  onChange={this.setSongtoState}
                                 />
                               </div>
 
