@@ -102,11 +102,29 @@ const PARENTS_DANCERS = gql`
   }
 `;
 
+const CUSTOM_ROUTINE_QUERY = gql`
+  query CUSTOM_ROUTINE_QUERY($id: ID!) {
+    customRoutine(where: { id: $id }) {
+      id
+      name
+      performanceName
+      day
+      startTime
+      endTime
+      shoes
+      tights
+      notes
+      music
+    }
+  }
+`;
+
 export {
   HIDDEN_DANCERS_QUERY,
   PARENTS_STUDIOS,
   PARENT_USER_QUERY,
   ALL_Rs,
   PARENTS_EVENTS_QUERY,
-  PARENTS_DANCERS
+  PARENTS_DANCERS,
+  CUSTOM_ROUTINE_QUERY
 };
