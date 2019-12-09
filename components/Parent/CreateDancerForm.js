@@ -81,7 +81,6 @@ class CreateDancerForm extends Component {
     const data = new FormData();
     data.append("file", this.state.avatarFileToUploadToCloudinary);
     data.append("upload_preset", "dancernotes-avatars");
-    // tags are optional:
     data.append("tags", dancerId);
 
     const res = await fetch(

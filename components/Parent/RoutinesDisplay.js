@@ -40,8 +40,6 @@ class RoutinesDisplay extends Component {
                   <>
                     {allRs &&
                       allRs.map(dance => {
-                        console.log("dance:", dance);
-
                         //independent dances...
                         if (!dance.studio) {
                           if (

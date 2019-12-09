@@ -55,7 +55,7 @@ class UpdateDancer extends Component {
     const data = new FormData();
     data.append("file", this.state.avatarFileToUploadToCloudinary);
     data.append("upload_preset", "dancernotes-avatars");
-    data.append("tags", this.props.dancerId);
+    data.append("tags", this.props.dancer.id);
 
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/coreytesting/image/upload",

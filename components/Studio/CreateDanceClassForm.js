@@ -2,29 +2,12 @@ import React, { Component } from "react";
 import { Mutation, Query } from "react-apollo";
 import gql from "graphql-tag";
 import Router from "next/router";
-
-import styled from "styled-components";
-import Error from "../Error";
 import Link from "next/link";
-import Form from "../styles/Form";
 import { CATEGORIES_QUERY } from "./EditClassCategories";
 import { ALL_DANCE_CLASSES_QUERY } from "./Queries";
-
+import Error from "../Error";
+import StyledCreateClassForm from "../styles/Form";
 import SuccessMessage from "../SuccessMessage";
-
-const StyledCreateClassForm = styled(Form)`
-  .time {
-    display: flex;
-    justify-content: space-around;
-
-    select,
-    input {
-      width: 150px;
-      display: block;
-      padding: 0.5rem;
-    }
-  }
-`;
 
 const CREATE_DANCE_CLASS_MUTATION = gql`
   mutation CREATE_DANCE_CLASS_MUTATION(
@@ -83,7 +66,7 @@ class CreateDanceClass extends Component {
     showSuccessMessage: false,
     loadingSong: false,
     makeupSet: "none",
-    size: "",
+    size: ""
   };
 
   handleChange = e => {
@@ -97,18 +80,19 @@ class CreateDanceClass extends Component {
     const data = new FormData();
     data.append("file", files[0]);
     data.append("upload_preset", "dancernotes-music");
+    data.append("tag", "studioMusic");
 
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/coreytesting/video/upload",
       {
         method: "POST",
-        body: data,
-      },
+        body: data
+      }
     );
     const file = await res.json();
     this.setState({
       music: file.secure_url,
-      loadingSong: false,
+      loadingSong: false
     });
   };
 
@@ -122,7 +106,7 @@ class CreateDanceClass extends Component {
     } else {
       Router.push({
         pathname: "/studio/addDancers",
-        query: { id: danceClass.id },
+        query: { id: danceClass.id }
       });
     }
   };
@@ -168,7 +152,7 @@ class CreateDanceClass extends Component {
                           tights: "",
                           notes: "",
                           music: "",
-                          makeupSet: "none",
+                          makeupSet: "none"
                         });
                       }}
                     >
@@ -206,56 +190,52 @@ class CreateDanceClass extends Component {
                           </select>
                         </div>
 
-                        <div className="input-item">
-                          <label htmlFor="day">Day: </label>
-                          <select
-                            id="day"
-                            name="day"
-                            value={this.state.day}
-                            onChange={this.handleChange}
-                          >
-                            <option default value={"Day..."} disabled>
-                              Day...
-                            </option>
-                            <option value="Mon.">Mon.</option>
-                            <option value="Tue.">Tue.</option>
-                            <option value="Wed.">Wed.</option>
-                            <option value="Thur.">Thur.</option>
-                            <option value="Fri.">Fri.</option>
-                            <option value="Sat.">Sat.</option>
-                            <option value="Sun.">Sun.</option>
-                          </select>
-                        </div>
-
-                        <div className="time">
-                          <div>
-                            <label htmlFor="startTime">
-                              Start Time:
-                              <input
-                                type="time"
-                                id="startTime"
-                                name="startTime"
-                                min="0:00"
-                                max="23:59"
-                                value={this.state.startTime}
-                                onChange={this.handleChange}
-                              />
-                            </label>
+                        <div className="form-row">
+                          <div className="form-row-item day">
+                            <label htmlFor="day">Day: </label>
+                            <select
+                              id="day"
+                              name="day"
+                              value={this.state.day}
+                              onChange={this.handleChange}
+                            >
+                              <option default value={"Day..."} disabled>
+                                Day...
+                              </option>
+                              <option value="Mon.">Mon.</option>
+                              <option value="Tue.">Tue.</option>
+                              <option value="Wed.">Wed.</option>
+                              <option value="Thur.">Thur.</option>
+                              <option value="Fri.">Fri.</option>
+                              <option value="Sat.">Sat.</option>
+                              <option value="Sun.">Sun.</option>
+                            </select>
                           </div>
 
-                          <div>
-                            <label htmlFor="endTime">
-                              End Time:
-                              <input
-                                type="time"
-                                id="endTime"
-                                name="endTime"
-                                min="0:00"
-                                max="23:59"
-                                value={this.state.endTime}
-                                onChange={this.handleChange}
-                              />
-                            </label>
+                          <div className="form-row-item">
+                            <label htmlFor="startTime">Start Time:</label>
+                            <input
+                              type="time"
+                              id="startTime"
+                              name="startTime"
+                              min="0:00"
+                              max="23:59"
+                              value={this.state.startTime}
+                              onChange={this.handleChange}
+                            />
+                          </div>
+
+                          <div className="form-row-item">
+                            <label htmlFor="endTime">End Time: </label>
+                            <input
+                              type="time"
+                              id="endTime"
+                              name="endTime"
+                              min="0:00"
+                              max="23:59"
+                              value={this.state.endTime}
+                              onChange={this.handleChange}
+                            />
                           </div>
                         </div>
 

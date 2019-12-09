@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Link from "next/link";
 
 const HeaderStyle = styled.div`
   display: grid;
@@ -60,6 +61,9 @@ const DanceCardHeader = ({ dance, setShowBody }) => {
       </HeaderStyle>
       <DanceCardNav>
         <button onClick={() => setShowBody(true)}>Details</button>
+        <Link href={`/studio/updateClass/${dance.id}`}>
+          <a>Edit</a>
+        </Link>
       </DanceCardNav>
     </>
   );

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { CUSTOM_ROUTINE_QUERY } from "./Queries";
-import { StyledCreateClassForm } from "./CreateCustomRoutineForm";
+import { StyledCreateClassForm } from "../styles/Form";
 import Error from "../Error";
 
 const UPDATE_CUSTOM_ROUTINE = gql`
@@ -17,6 +17,7 @@ const UPDATE_CUSTOM_ROUTINE = gql`
     $tights: String
     $notes: String
     $music: String
+    $musicId: String
     $dancer: ID
     $studio: ID
   ) {
@@ -31,16 +32,21 @@ const UPDATE_CUSTOM_ROUTINE = gql`
       tights: $tights
       notes: $notes
       music: $music
+      musicId: $musicId
       dancer: $dancer
       studio: $studio
     ) {
-      message
+      id
+      name
+      music
+      musicId
     }
   }
 `;
 
 const UpdateCustomRoutine = ({ danceId }) => {
   const [values, setValues] = useState({});
+  const [audioFile, setAudioFile] = useState();
   const {
     data,
     loading: loadingRoutine,
@@ -51,7 +57,12 @@ const UpdateCustomRoutine = ({ danceId }) => {
   const [
     updateCustomRoutine,
     { loading: loadingMutation, error: mutationError }
-  ] = useMutation(UPDATE_CUSTOM_ROUTINE);
+  ] = useMutation(UPDATE_CUSTOM_ROUTINE, {
+    variables: { ...values, id: danceId },
+    refetchQueries: ["allRs"],
+    awaitRefetchQueries: true
+    // onCompleted: onCompleted
+  });
 
   const dance = data ? data.customRoutine : {};
 
@@ -62,16 +73,36 @@ const UpdateCustomRoutine = ({ danceId }) => {
     // });
   };
 
-  async function saveChanges(e, updateMutation) {
-    e.preventDefault();
-    console.log("update routine");
-    await updateMutation({
-      variables: { ...values, id: danceId },
-      refetchQueries: ["allRs"],
-      awaitRefetchQueries: true,
-      onCompleted: onCompleted
+  const uploadSong = async routineId => {
+    const data = new FormData();
+    data.append("file", audioFile);
+    data.append("upload_preset", "dancernotes-music");
+    data.append("tags", routineId);
+
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/coreytesting/video/upload",
+      {
+        method: "POST",
+        body: data
+      }
+    );
+    const file = await res.json();
+    setValues({
+      music: file.secure_url,
+      musicId: file.public_id,
+      ...values
     });
-  }
+  };
+
+  const saveChanges = async (e, updateMutation) => {
+    e.preventDefault();
+    // if audioFile, upload and get new Id.
+    if (audioFile) {
+      await uploadSong(danceId);
+    }
+    // update routine with music url from cloudinary
+    await updateMutation();
+  };
 
   function handleInputChange(e) {
     const { name, value } = e.target;
@@ -244,7 +275,7 @@ const UpdateCustomRoutine = ({ danceId }) => {
             id="music"
             name="music"
             placeholder="Upload music for this dance"
-            // onChange={}
+            onChange={e => setAudioFile(e.target.files[0])}
           />
         </div>
 
@@ -253,6 +284,7 @@ const UpdateCustomRoutine = ({ danceId }) => {
             Sav
             {loadingMutation ? "ing " : "e "} Changes
           </button>
+          <button>Cancel</button>
         </div>
       </fieldset>
     </StyledCreateClassForm>
@@ -260,3 +292,4 @@ const UpdateCustomRoutine = ({ danceId }) => {
 };
 
 export default UpdateCustomRoutine;
+export { UPDATE_CUSTOM_ROUTINE };

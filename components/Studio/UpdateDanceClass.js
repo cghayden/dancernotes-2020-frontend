@@ -1,35 +1,12 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Router from "next/router";
-import { Query, Mutation } from "react-apollo";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { CATEGORIES_QUERY } from "./EditClassCategories";
-import { ALL_DANCE_CLASSES_QUERY } from "./Queries";
+import { ALL_DANCE_CLASSES_QUERY, SINGLE_DANCE_QUERY } from "./Queries";
 import Error from "../Error";
-import { StyledCreateClassForm } from "./CreateDanceClassForm";
+import { StyledCreateClassForm } from "../styles/Form";
 import DeleteDanceClass from "./DeleteDanceClass";
-const SINGLE_DANCE_QUERY = gql`
-  query SINGLE_DANCE_QUERY($id: ID!) {
-    danceClass(where: { id: $id }) {
-      id
-      name
-      style
-      level
-      division
-      day
-      startTime
-      endTime
-      shoes
-      tights
-      notes
-      music
-      performanceName
-      makeupSet {
-        name
-      }
-      size
-    }
-  }
-`;
 
 const UPDATE_DANCECLASS_MUTATION = gql`
   mutation UPDATE_DANCECLASS_MUTATION(
@@ -71,322 +48,309 @@ const UPDATE_DANCECLASS_MUTATION = gql`
   }
 `;
 
-export default class UpdateDanceClass extends Component {
-  state = {
-    loadingSong: false,
-    // sizeDefaultOption: "Add or Change Size..."
-  };
-  handleChange = e => {
-    const { name, type, value } = e.target;
-    const val = type === "number" ? parseFloat(value) : value;
-    this.setState({ [name]: val });
-  };
+const UpdateDanceClass = ({ danceClass }) => {
+  const [values, setValues] = useState({});
+  const { data, loading, error } = useQuery(CATEGORIES_QUERY);
+  const [
+    updateDanceClass,
+    { loading: updatingClass, error: errorUpdatingClass }
+  ] = useMutation(
+    UPDATE_DANCECLASS_MUTATION
+    //  {refetchQueries={query: ALL_DANCE_CLASSES_QUERY }
+    // awaitRefetchQueries={true}
+    // }
+  );
 
-  updateDanceClass = async (e, updateDanceClassMutation) => {
+  const saveChanges = async (e, updateDanceClassMutation) => {
     e.preventDefault();
-    const res = await updateDanceClassMutation({
-      variables: { id: this.props.id, ...this.state },
+    //1 if upload song,
+    if (values.audioFile) {
+      await uploadSong(danceClass.id, values.audioFile);
+    }
+    //2 new song url and songId are now in state
+    //3 update class
+    await updateDanceClassMutation({
+      variables: { ...values, id: danceClass.id }
     });
     Router.push({
-      pathname: "/studio/classes",
+      pathname: "/studio/classes"
     });
   };
-  uploadSong = async e => {
-    this.setState({ loadingSong: true });
-    const files = e.target.files;
+
+  const uploadSong = async (routineId, asset) => {
     const data = new FormData();
-    data.append("file", files[0]);
+    data.append("file", asset);
     data.append("upload_preset", "dancernotes-music");
+    data.append("tags", routineId);
 
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/coreytesting/video/upload",
       {
         method: "POST",
-        body: data,
-      },
+        body: data
+      }
     );
     const file = await res.json();
-    this.setState({
+    setValues({
       music: file.secure_url,
-      loadingSong: false,
+      musicId: file.public_id,
+      ...values
     });
   };
 
-  render() {
-    // disable submission of empty state if no updates are made
-    const disableButton = Object.keys(this.state).length < 2;
-
-    return (
-      <Query query={CATEGORIES_QUERY}>
-        {({ data: { studioCategories } = {} }, error, loading) => {
-          return (
-            <Query query={SINGLE_DANCE_QUERY} variables={{ id: this.props.id }}>
-              {({ data: { danceClass } = {}, loading, error }) => {
-                let size = danceClass.size;
-                let defaultMakeupSet = "";
-                if (danceClass.makeupSet) {
-                  defaultMakeupSet = danceClass.makeupSet.name;
-                }
-                if (loading) return <p>Loading...</p>;
-                if (!danceClass)
-                  return (
-                    <p>Error: No DanceClass found for ID {this.props.id}</p>
-                  );
-                return (
-                  <Mutation
-                    mutation={UPDATE_DANCECLASS_MUTATION}
-                    variables={this.state}
-                    refetchQueries={[{ query: ALL_DANCE_CLASSES_QUERY }]}
-                    awaitRefetchQueries={true}
-                  >
-                    {(updateDanceClass, { loading, error }) => {
-                      return (
-                        <StyledCreateClassForm
-                          onSubmit={e =>
-                            this.updateDanceClass(e, updateDanceClass)
-                          }
-                        >
-                          <fieldset
-                            disabled={loading || this.state.loadingSong}
-                            aria-busy={loading || this.state.loadingSong}
-                          >
-                            <Error error={error} />
-                            <label htmlFor="name">
-                              Class Name
-                              <input
-                                required
-                                type="text"
-                                name="name"
-                                placeholder="name"
-                                defaultValue={danceClass.name}
-                                onChange={this.handleChange}
-                              />
-                            </label>
-                            <label htmlFor="performanceName">
-                              Performance Name
-                              <input
-                                type="text"
-                                name="performanceName"
-                                placeholder="Performance Name, or Name of Song"
-                                defaultValue={danceClass.performanceName}
-                                onChange={this.handleChange}
-                              />
-                            </label>
-                            <label htmlFor="size">
-                              {`Size...(Currently ${danceClass.size})`}
-
-                              <select
-                                id="size"
-                                name="size"
-                                defaultValue={danceClass.size}
-                                onChange={this.handleChange}
-                              >
-                                <option value="Group">Group</option>
-                                <option value="Solo">Solo</option>
-                                <option value="Duo">Duo</option>
-                                <option value="Trio">Trio</option>
-                              </select>
-                            </label>
-                            <div className="form-row">
-                              <div className="day form-row-item">
-                                <label htmlFor="day">
-                                  Day:
-                                  <select
-                                    id="day"
-                                    name="day"
-                                    defaultValue={danceClass.day}
-                                    onChange={this.handleChange}
-                                  >
-                                    <option value="Mon.">Mon.</option>
-                                    <option value="Tue.">Tue.</option>
-                                    <option value="Wed.">Wed.</option>
-                                    <option value="Thur.">Thur.</option>
-                                    <option value="Fri.">Fri.</option>
-                                    <option value="Sat.">Sat.</option>
-                                    <option value="Sun.">Sun.</option>
-                                  </select>
-                                </label>
-                              </div>
-                              <div className="form-row-item">
-                                <label htmlFor="startTime">
-                                  Start Time:
-                                  <input
-                                    type="time"
-                                    id="startTime"
-                                    name="startTime"
-                                    min="0:00"
-                                    max="23:59"
-                                    defaultValue={danceClass.startTime}
-                                    onChange={this.handleChange}
-                                  />
-                                </label>
-                              </div>
-
-                              <div className="form-row-item">
-                                <label htmlFor="endTime">
-                                  End Time:
-                                  <input
-                                    type="time"
-                                    id="endTime"
-                                    name="endTime"
-                                    min="0:00"
-                                    max="23:59"
-                                    defaultValue={danceClass.endTime}
-                                    onChange={this.handleChange}
-                                  />
-                                </label>
-                              </div>
-                            </div>
-
-                            <div className="form-row">
-                              <div className="form-row-item">
-                                <label htmlFor="style">
-                                  Style:
-                                  <select
-                                    required
-                                    id="style"
-                                    name="style"
-                                    defaultValue={studioCategories.style}
-                                    onChange={this.handleChange}
-                                  >
-                                    {studioCategories.styles.map(style => (
-                                      <option key={style} value={style}>
-                                        {style}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </label>
-                              </div>
-                              <div className="form-row-item">
-                                <label htmlFor="level">
-                                  Level:
-                                  <select
-                                    required
-                                    id="level"
-                                    name="level"
-                                    defaultValue={studioCategories.level}
-                                    onChange={this.handleChange}
-                                  >
-                                    {studioCategories.levels.map(level => (
-                                      <option key={level} value={level}>
-                                        {level}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </label>
-                              </div>
-                              <div className="form-row-item">
-                                <label htmlFor="division">
-                                  Division:
-                                  <select
-                                    required
-                                    id="division"
-                                    name="division"
-                                    defaultValue={studioCategories.division}
-                                    onChange={this.handleChange}
-                                  >
-                                    {studioCategories.divisions.map(
-                                      division => (
-                                        <option key={division} value={division}>
-                                          {division}
-                                        </option>
-                                      ),
-                                    )}
-                                  </select>
-                                </label>
-                              </div>
-                            </div>
-                            <label htmlFor="tights">
-                              Tights
-                              <input
-                                type="text"
-                                name="tights"
-                                placeholder="The style of tights required..."
-                                defaultValue={danceClass.tights}
-                                onChange={this.handleChange}
-                              />
-                            </label>
-                            <label htmlFor="shoes">
-                              Shoes
-                              <input
-                                type="text"
-                                name="shoes"
-                                placeholder="The style of shoes required..."
-                                defaultValue={danceClass.shoes}
-                                onChange={this.handleChange}
-                              />
-                            </label>
-                            <label htmlFor="notes">
-                              Notes
-                              <textarea
-                                id="notes"
-                                type="text"
-                                name="notes"
-                                rows="5"
-                                defaultValue={danceClass.notes}
-                                onChange={this.handleChange}
-                              />
-                            </label>
-                            <label htmlFor="makeupSet">
-                              Makeup:
-                              <select
-                                id="makeupSet"
-                                name="makeupSet"
-                                defaultValue={defaultMakeupSet}
-                                onChange={this.handleChange}
-                              >
-                                {!defaultMakeupSet && (
-                                  <option default disabled value={""}>
-                                    Makeup...
-                                  </option>
-                                )}
-                                {studioCategories.makeupSets.map(set => (
-                                  <option key={set.id} value={set.id}>
-                                    {set.name}
-                                  </option>
-                                ))}
-                                <option value={"none"}>None</option>
-                              </select>
-                            </label>
-                            <label htmlFor="music">
-                              Add / Change the music for this dance...
-                              <input
-                                type="file"
-                                id="music"
-                                name="music"
-                                placeholder="Upload music for this dance"
-                                onChange={this.uploadSong}
-                              />
-                            </label>
-
-                            <button type="submit" disabled={disableButton}>
-                              SAV
-                              {loading ? "ING " : "E "} Class
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() =>
-                                Router.push({
-                                  pathname: "/studio/classes",
-                                })
-                              }
-                            >
-                              Cancel
-                            </button>
-                            <DeleteDanceClass id={this.props.id}>
-                              Delete this Class
-                            </DeleteDanceClass>
-                          </fieldset>
-                        </StyledCreateClassForm>
-                      );
-                    }}
-                  </Mutation>
-                );
-              }}
-            </Query>
-          );
-        }}
-      </Query>
-    );
+  // disable submission of empty state if no updates are made
+  const disableButton = Object.keys(values).length < 1;
+  let defaultMakeupSet = "";
+  if (danceClass.makeupSet) {
+    defaultMakeupSet = danceClass.makeupSet.name;
   }
-}
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+  if (error) {
+    return <Error error={error || errorLoadingClass} />;
+  }
+  console.log("categories data:", data && data.studioCategories);
+
+  return (
+    // <div>update dance {danceClass.name}</div>
+    <StyledCreateClassForm onSubmit={e => saveChanges(e, updateDanceClass)}>
+      <h2>Update {danceClass.name}</h2>
+      <fieldset disabled={loading} aria-busy={loading}>
+        <Error error={error} />
+        <label htmlFor="name">Class Name </label>
+        <input
+          required
+          type="text"
+          name="name"
+          placeholder="name"
+          defaultValue={danceClass.name}
+          onChange={e => setValues({ ...values, name: e.target.value })}
+        />
+        <button type="submit" disabled={disableButton}>
+          SAV
+          {loading ? "ING " : "E "} Class
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            Router.push({
+              pathname: "/studio/classes"
+            })
+          }
+        >
+          Cancel
+        </button>
+        <DeleteDanceClass id={danceClass.id}>
+          Delete this Class
+        </DeleteDanceClass>
+      </fieldset>
+    </StyledCreateClassForm>
+
+    //                       <label htmlFor="performanceName">
+    //                         Performance Name
+    //                         <input
+    //                           type="text"
+    //                           name="performanceName"
+    //                           placeholder="Performance Name, or Name of Song"
+    //                           defaultValue={danceClass.performanceName}
+    //                           onChange={this.handleChange}
+    //                         />
+    //                       </label>
+    //                       <label htmlFor="size">
+    //                         {`Size...(Currently ${danceClass.size})`}
+
+    //                         <select
+    //                           id="size"
+    //                           name="size"
+    //                           defaultValue={danceClass.size}
+    //                           onChange={this.handleChange}
+    //                         >
+    //                           <option value="Group">Group</option>
+    //                           <option value="Solo">Solo</option>
+    //                           <option value="Duo">Duo</option>
+    //                           <option value="Trio">Trio</option>
+    //                         </select>
+    //                       </label>
+    //                       <div className="form-row">
+    //                         <div className="day form-row-item">
+    //                           <label htmlFor="day">
+    //                             Day:
+    //                             <select
+    //                               id="day"
+    //                               name="day"
+    //                               defaultValue={danceClass.day}
+    //                               onChange={this.handleChange}
+    //                             >
+    //                               <option value="Mon.">Mon.</option>
+    //                               <option value="Tue.">Tue.</option>
+    //                               <option value="Wed.">Wed.</option>
+    //                               <option value="Thur.">Thur.</option>
+    //                               <option value="Fri.">Fri.</option>
+    //                               <option value="Sat.">Sat.</option>
+    //                               <option value="Sun.">Sun.</option>
+    //                             </select>
+    //                           </label>
+    //                         </div>
+    //                         <div className="form-row-item">
+    //                           <label htmlFor="startTime">
+    //                             Start Time:
+    //                             <input
+    //                               type="time"
+    //                               id="startTime"
+    //                               name="startTime"
+    //                               min="0:00"
+    //                               max="23:59"
+    //                               defaultValue={danceClass.startTime}
+    //                               onChange={this.handleChange}
+    //                             />
+    //                           </label>
+    //                         </div>
+
+    //                         <div className="form-row-item">
+    //                           <label htmlFor="endTime">
+    //                             End Time:
+    //                             <input
+    //                               type="time"
+    //                               id="endTime"
+    //                               name="endTime"
+    //                               min="0:00"
+    //                               max="23:59"
+    //                               defaultValue={danceClass.endTime}
+    //                               onChange={this.handleChange}
+    //                             />
+    //                           </label>
+    //                         </div>
+    //                       </div>
+
+    //                       <div className="form-row">
+    //                         <div className="form-row-item">
+    //                           <label htmlFor="style">
+    //                             Style:
+    //                             <select
+    //                               required
+    //                               id="style"
+    //                               name="style"
+    //                               defaultValue={studioCategories.style}
+    //                               onChange={this.handleChange}
+    //                             >
+    //                               {studioCategories.styles.map(style => (
+    //                                 <option key={style} value={style}>
+    //                                   {style}
+    //                                 </option>
+    //                               ))}
+    //                             </select>
+    //                           </label>
+    //                         </div>
+    //                         <div className="form-row-item">
+    //                           <label htmlFor="level">
+    //                             Level:
+    //                             <select
+    //                               required
+    //                               id="level"
+    //                               name="level"
+    //                               defaultValue={studioCategories.level}
+    //                               onChange={this.handleChange}
+    //                             >
+    //                               {studioCategories.levels.map(level => (
+    //                                 <option key={level} value={level}>
+    //                                   {level}
+    //                                 </option>
+    //                               ))}
+    //                             </select>
+    //                           </label>
+    //                         </div>
+    //                         <div className="form-row-item">
+    //                           <label htmlFor="division">
+    //                             Division:
+    //                             <select
+    //                               required
+    //                               id="division"
+    //                               name="division"
+    //                               defaultValue={studioCategories.division}
+    //                               onChange={this.handleChange}
+    //                             >
+    //                               {studioCategories.divisions.map(
+    //                                 division => (
+    //                                   <option key={division} value={division}>
+    //                                     {division}
+    //                                   </option>
+    //                                 )
+    //                               )}
+    //                             </select>
+    //                           </label>
+    //                         </div>
+    //                       </div>
+    //                       <label htmlFor="tights">
+    //                         Tights
+    //                         <input
+    //                           type="text"
+    //                           name="tights"
+    //                           placeholder="The style of tights required..."
+    //                           defaultValue={danceClass.tights}
+    //                           onChange={this.handleChange}
+    //                         />
+    //                       </label>
+    //                       <label htmlFor="shoes">
+    //                         Shoes
+    //                         <input
+    //                           type="text"
+    //                           name="shoes"
+    //                           placeholder="The style of shoes required..."
+    //                           defaultValue={danceClass.shoes}
+    //                           onChange={this.handleChange}
+    //                         />
+    //                       </label>
+    //                       <label htmlFor="notes">
+    //                         Notes
+    //                         <textarea
+    //                           id="notes"
+    //                           type="text"
+    //                           name="notes"
+    //                           rows="5"
+    //                           defaultValue={danceClass.notes}
+    //                           onChange={this.handleChange}
+    //                         />
+    //                       </label>
+    //                       <label htmlFor="makeupSet">
+    //                         Makeup:
+    //                         <select
+    //                           id="makeupSet"
+    //                           name="makeupSet"
+    //                           defaultValue={defaultMakeupSet}
+    //                           onChange={this.handleChange}
+    //                         >
+    //                           {!defaultMakeupSet && (
+    //                             <option default disabled value={""}>
+    //                               Makeup...
+    //                             </option>
+    //                           )}
+    //                           {studioCategories.makeupSets.map(set => (
+    //                             <option key={set.id} value={set.id}>
+    //                               {set.name}
+    //                             </option>
+    //                           ))}
+    //                           <option value={"none"}>None</option>
+    //                         </select>
+    //                       </label>
+    //                       <label htmlFor="music">
+    //                         Add / Change the music for this dance...
+    //                         <input
+    //                           type="file"
+    //                           id="music"
+    //                           name="music"
+    //                           placeholder="Upload music for this dance"
+    //                           onChange={this.uploadSong}
+    //                         />
+    //                       </label>
+  );
+};
+
+export default UpdateDanceClass;
+
+// handleChange = e => {
+//   const { name, type, value } = e.target;
+//   const val = type === "number" ? parseFloat(value) : value;
+//   this.setState({ [name]: val });
+// };

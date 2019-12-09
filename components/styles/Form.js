@@ -141,5 +141,17 @@ const LandingPageForm = styled(Form)`
   }
 `;
 
+const StyledCreateClassForm = styled(Form)`
+  .day {
+    text-align: center;
+    label {
+      display: inline-block;
+    }
+    input {
+      width: 100px;
+    }
+  }
+`;
+
 export default Form;
-export { LandingPageForm };
+export { LandingPageForm, StyledCreateClassForm };
