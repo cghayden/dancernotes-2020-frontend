@@ -20,6 +20,7 @@ const CREATE_DANCE_CLASS_MUTATION = gql`
     $tights: String
     $notes: String
     $music: String
+    $musicId: String
     $level: String
     $style: String
     $division: String
@@ -36,6 +37,7 @@ const CREATE_DANCE_CLASS_MUTATION = gql`
       tights: $tights
       notes: $notes
       music: $music
+      musicId: $musicId
       level: $level
       style: $style
       division: $division
@@ -92,6 +94,7 @@ class CreateDanceClass extends Component {
     const file = await res.json();
     this.setState({
       music: file.secure_url,
+      musicId: file.public_id,
       loadingSong: false
     });
   };

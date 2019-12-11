@@ -3,6 +3,7 @@ import Router from "next/router";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { CATEGORIES_QUERY } from "./EditClassCategories";
+import { DELETE_CLOUDINARY_ASSET } from "../../components/Mutations";
 import { ALL_DANCE_CLASSES_QUERY, SINGLE_DANCE_QUERY } from "./Queries";
 import Error from "../Error";
 import { StyledCreateClassForm } from "../styles/Form";
@@ -22,6 +23,7 @@ const UPDATE_DANCECLASS_MUTATION = gql`
     $tights: String
     $notes: String
     $music: String
+    $musicId: String
     $performanceName: String
     $makeupSet: ID
     $size: String
@@ -39,6 +41,7 @@ const UPDATE_DANCECLASS_MUTATION = gql`
       tights: $tights
       notes: $notes
       music: $music
+      musicId: $musicId
       performanceName: $performanceName
       makeupSet: $makeupSet
       size: $size
@@ -55,23 +58,33 @@ const UpdateDanceClass = ({ danceClass }) => {
     updateDanceClass,
     { loading: updatingClass, error: errorUpdatingClass }
   ] = useMutation(
-    UPDATE_DANCECLASS_MUTATION
+    UPDATE_DANCECLASS_MUTATION,
+    { variables: { ...values, id: danceClass.id } }
     //  {refetchQueries={query: ALL_DANCE_CLASSES_QUERY }
     // awaitRefetchQueries={true}
     // }
   );
+  const [
+    deleteCloudinaryAsset,
+    { loading: deletingAsset, error: errorDeletingAsset }
+  ] = useMutation(DELETE_CLOUDINARY_ASSET);
 
-  const saveChanges = async (e, updateDanceClassMutation) => {
+  const saveChanges = async e => {
     e.preventDefault();
     //1 if upload song,
     if (values.audioFile) {
+      if (danceClass.musicId) {
+        console.log("deleting asset from cloudinary");
+        await deleteCloudinaryAsset({
+          variables: { publicId: danceClass.musicId }
+        });
+      }
+      console.log("uploading asset to cloudinary");
       await uploadSong(danceClass.id, values.audioFile);
+      console.log("upload complete");
     }
-    //2 new song url and songId are now in state
-    //3 update class
-    await updateDanceClassMutation({
-      variables: { ...values, id: danceClass.id }
-    });
+    // 2 update class
+    await updateDanceClass();
     Router.push({
       pathname: "/studio/classes"
     });
@@ -92,9 +105,9 @@ const UpdateDanceClass = ({ danceClass }) => {
     );
     const file = await res.json();
     setValues({
+      ...values,
       music: file.secure_url,
-      musicId: file.public_id,
-      ...values
+      musicId: file.public_id
     });
   };
 
@@ -111,23 +124,39 @@ const UpdateDanceClass = ({ danceClass }) => {
   if (error) {
     return <Error error={error || errorLoadingClass} />;
   }
-  console.log("categories data:", data && data.studioCategories);
+  // console.log("categories data:", data && data.studioCategories);
 
   return (
-    // <div>update dance {danceClass.name}</div>
-    <StyledCreateClassForm onSubmit={e => saveChanges(e, updateDanceClass)}>
+    <StyledCreateClassForm onSubmit={e => saveChanges(e)}>
       <h2>Update {danceClass.name}</h2>
       <fieldset disabled={loading} aria-busy={loading}>
         <Error error={error} />
-        <label htmlFor="name">Class Name </label>
-        <input
-          required
-          type="text"
-          name="name"
-          placeholder="name"
-          defaultValue={danceClass.name}
-          onChange={e => setValues({ ...values, name: e.target.value })}
-        />
+        <div className="input-item">
+          <label htmlFor="name">Class Name </label>
+          <input
+            required
+            type="text"
+            name="name"
+            placeholder="name"
+            defaultValue={danceClass.name}
+            onChange={e => setValues({ ...values, name: e.target.value })}
+          />
+        </div>
+        <div className="input-item">
+          <label htmlFor="music">
+            Add / Change the music for this dance...
+          </label>
+          <input
+            type="file"
+            id="music"
+            name="music"
+            placeholder="Upload music for this dance"
+            onChange={e =>
+              setValues({ ...values, audioFile: e.target.files[0] })
+            }
+          />
+        </div>
+
         <button type="submit" disabled={disableButton}>
           SAV
           {loading ? "ING " : "E "} Class
@@ -334,16 +363,7 @@ const UpdateDanceClass = ({ danceClass }) => {
     //                           <option value={"none"}>None</option>
     //                         </select>
     //                       </label>
-    //                       <label htmlFor="music">
-    //                         Add / Change the music for this dance...
-    //                         <input
-    //                           type="file"
-    //                           id="music"
-    //                           name="music"
-    //                           placeholder="Upload music for this dance"
-    //                           onChange={this.uploadSong}
-    //                         />
-    //                       </label>
+    //
   );
 };
 

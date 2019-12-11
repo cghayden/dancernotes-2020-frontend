@@ -20,6 +20,7 @@ const SINGLE_DANCE_QUERY = gql`
       tights
       notes
       music
+      musicId
       performanceName
       makeupSet {
         name
