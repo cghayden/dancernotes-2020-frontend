@@ -25,7 +25,7 @@ export default function Modal({ children, open, setOpen }) {
   const transition = useTransition(open, null, {
     from: { opacity: 0, transform: "translate3d(-1000px, 0, 0)" },
     enter: { opacity: 1, transform: "translate3d(0, 0, 0)" },
-    leave: { opacity: 0, transform: "translate3d(-1000px, 0, 0)" },
+    leave: { opacity: 0, transform: "translate3d(-1000px, 0, 0)" }
   });
 
   return (
@@ -43,7 +43,7 @@ export default function Modal({ children, open, setOpen }) {
                     </button>
                   </AnimatedModalContainer>
                 </animated.div>
-              ),
+              )
           )}
         </ClientOnlyPortal>
       )}
