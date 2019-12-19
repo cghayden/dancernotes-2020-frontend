@@ -368,7 +368,7 @@ const UpdateDanceClass = ({ danceClass }) => {
 };
 
 export default UpdateDanceClass;
-
+export { UPDATE_DANCECLASS_MUTATION };
 // handleChange = e => {
 //   const { name, type, value } = e.target;
 //   const val = type === "number" ? parseFloat(value) : value;

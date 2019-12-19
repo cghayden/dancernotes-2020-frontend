@@ -30,7 +30,6 @@ const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
     $shoes: String
     $tights: String
     $notes: String
-    $music: String
     $dancer: ID!
     $studio: ID!
   ) {
@@ -43,7 +42,6 @@ const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
       shoes: $shoes
       tights: $tights
       notes: $notes
-      music: $music
       dancer: $dancer
       studio: $studio
     ) {
@@ -63,11 +61,10 @@ class CreateCustomRoutineForm extends Component {
     shoes: "",
     tights: "",
     notes: "",
-    music: "",
-    musicId: "",
     showSuccessMessage: false,
     dancer: "",
-    studio: ""
+    studio: "",
+    loadingSong: false
   };
 
   handleChange = e => {
@@ -81,6 +78,7 @@ class CreateCustomRoutineForm extends Component {
   };
 
   uploadSong = async routineId => {
+    this.setState({ loadingSong: true });
     const data = new FormData();
     data.append("file", this.state.audioFile);
     data.append("upload_preset", "dancernotes-music");
@@ -96,7 +94,8 @@ class CreateCustomRoutineForm extends Component {
     const file = await res.json();
     this.setState({
       music: file.secure_url,
-      musicId: file.public_id
+      musicId: file.public_id,
+      loadingSong: false
     });
   };
 
@@ -105,7 +104,7 @@ class CreateCustomRoutineForm extends Component {
   };
 
   onSuccess = () => {
-    console.log("updated dance with music");
+    console.log("new custom routine created");
     // Router.push({
     //   pathname: "/parent/notes/routines"
     // });
@@ -123,7 +122,6 @@ class CreateCustomRoutineForm extends Component {
         ...this.state
       }
     });
-    console.log("newRoutine:", newRoutine);
     //2. if music file is queued in state,upload music with tag of routineId, then
     //3. update routine
     if (this.state.audioFile) {
