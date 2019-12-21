@@ -16,10 +16,7 @@ const DanceClassesPage = () => {
 
   return (
     <StudioLayout page="Create a New Class">
-      <main>
-        <ContentHeader page={"Create a Class"} />
-        <CreateDanceClassForm studio={studio} />
-      </main>
+      <CreateDanceClassForm studio={studio} />
     </StudioLayout>
   );
 };

@@ -5,6 +5,7 @@ import Router from "next/router";
 import Link from "next/link";
 import { ALL_DANCE_CLASSES_QUERY } from "./Queries";
 import { UPDATE_DANCECLASS_MUTATION } from "./UpdateDanceClass";
+import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
 import Error from "../Error";
 import StyledCreateClassForm from "../styles/Form";
 import useForm from "../../lib/useForm";
@@ -71,11 +72,7 @@ function CreateDanceClass({ studio }) {
   );
 
   const [loadingSong, setLoadingSong] = useState(false);
-
-  const [showMessage, toggleMessage] = useState(false);
-
-  const [newDanceCreated, toggleNewDanceCreated] = useState(false);
-  const [updatedWithSong, toggleUpdatedWithSong] = useState(false);
+  const [showModal, toggleModal] = useState(false);
 
   const [
     createDanceClass,
@@ -86,9 +83,8 @@ function CreateDanceClass({ studio }) {
     }
   ] = useMutation(CREATE_DANCE_CLASS_MUTATION, {
     variables: { ...inputs },
-    onCompleted: () => {
-      console.log("created new dance");
-      toggleNewDanceCreated(true);
+    onCompleted: data => {
+      console.log("created new dance", data);
     },
     refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }]
   });
@@ -96,26 +92,36 @@ function CreateDanceClass({ studio }) {
 
   const [
     updateDanceClass,
-    { error: errorUpdatingDanceClass, loading: updatingDanceClass }
-  ] = useMutation(UPDATE_DANCECLASS_MUTATION, {
-    onCompleted: () => {
-      console.log("updated with song");
-      toggleUpdatedWithSong(true);
+    {
+      data: updatedClass,
+      error: errorUpdatingDanceClass,
+      loading: updatingDanceClass
     }
+  ] = useMutation(UPDATE_DANCECLASS_MUTATION, {
+    onCompleted: data => {
+      console.log("class updated:", data);
+      toggleModal(true);
+    },
+    refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }]
   });
+
+  const [
+    deleteCloudinaryAsset,
+    { error: errorDeletingAsset, loading: deletingAsset }
+  ] = useMutation(DELETE_CLOUDINARY_ASSET);
 
   function setSongtoState(e) {
     const audioFile = e.target.files[0];
     updateInputs({ ...inputs, audioFile });
   }
 
-  async function uploadSong(danceClassId) {
+  async function uploadSongAndUpdateClass(danceClassId) {
     setLoadingSong(true);
     const data = new FormData();
     data.append("file", inputs.audioFile);
     data.append("upload_preset", "dancernotes-music");
     data.append("tag", danceClassId);
-
+    //todo - handle errors loading to cloudinary
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/coreytesting/video/upload",
       {
@@ -124,14 +130,25 @@ function CreateDanceClass({ studio }) {
       }
     );
     const file = await res.json();
+    setLoadingSong(false);
+
+    //todo - delete song if error out on update to class
+    // try - catch - run delete cloudinary asset
     await updateDanceClass({
       variables: {
-        id: danceClassId,
+        // id: danceClassId,
         music: file.secure_url,
         musicId: file.public_id
       }
+    }).catch(error => {
+      console.log("error updating class:", error);
+      deleteCloudinaryAsset({
+        variables: {
+          publicId: file.public_id
+        }
+      });
+      toggleModal(true);
     });
-    setLoadingSong(false);
   }
 
   async function saveNewDanceClass(e) {
@@ -140,13 +157,13 @@ function CreateDanceClass({ studio }) {
     if (inputs.audioFile) {
       const newDanceClass = await createDanceClass();
       const newDanceClassId = newDanceClass.data.createDanceClass.id;
-      await uploadSong(newDanceClassId);
-      toggleMessage(true);
+      await uploadSongAndUpdateClass(newDanceClassId);
     }
     //B. create without music
     else {
       await createDanceClass();
-      toggleMessage(true);
+      //if fail, error thrown
+      toggleModal(true);
     }
     // 4. reset state
     updateInputs(initialInputState);
@@ -155,22 +172,22 @@ function CreateDanceClass({ studio }) {
   const error = errorCreatingDanceClass || errorUpdatingDanceClass;
   const loading = loadingSong || updatingDanceClass || creatingDanceClass;
 
-  function onSuccess(danceClass) {
-    if (danceClass.size === "Group") {
-      toggleMessage(true);
-    } else {
-      Router.push({
-        pathname: "/studio/addDancers",
-        query: { id: danceClass.id }
-      });
-    }
-  }
+  // function onSuccess(danceClass) {
+  //   if (danceClass.size === "Group") {
+  //     toggleModal(true);
+  //   } else {
+  //     Router.push({
+  //       pathname: "/studio/addDancers",
+  //       query: { id: danceClass.id }
+  //     });
+  //   }
+  // }
 
   return (
     <Fragment>
-      <Modal open={showMessage} setOpen={toggleMessage}>
+      <Modal open={showModal} setOpen={toggleModal}>
         <div>
-          <p>Success - you created a class!</p>
+          <p>Success - you created {newDanceClass && newDanceClass.name}</p>
           {errorUpdatingDanceClass && (
             <p>
               Warning: there was a problem uploading your music. Please try
@@ -180,7 +197,7 @@ function CreateDanceClass({ studio }) {
               </Link>
             </p>
           )}
-          <button role="button" onClick={() => toggleMessage(false)}>
+          <button role="button" onClick={() => toggleModal(false)}>
             Create Another Class
           </button>
           <Link href="/studio/classes">
@@ -193,7 +210,6 @@ function CreateDanceClass({ studio }) {
         onSubmit={async e => await saveNewDanceClass(e)}
       >
         <fieldset disabled={loading} aria-busy={loading}>
-          {error && <Error error={error} />}
           <legend>Add A New Dance Class To Your Schedule</legend>
           <Link href="configureClassCategories">
             <a className="btn-dark">Configure Class Categories</a>
@@ -408,6 +424,7 @@ function CreateDanceClass({ studio }) {
           </div>
 
           <div>
+            {error && <Error error={error} />}
             <button type="submit" disabled={loading || loadingSong}>
               Creat
               {loading ? "ing " : "e "} Class

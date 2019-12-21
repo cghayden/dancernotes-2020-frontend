@@ -1,17 +1,31 @@
-import React from "react";
+import React, { Fragment } from "react";
 import StudioMobileStatusBar from "./StudioMobileStatusBar";
 import StudioDesktopNav from "./StudioDesktopNav";
 import StudioMobileNav from "./StudioMobileNav";
 import ContentLayout from "../ContentLayout";
+import ContentHeader from "../ContentHeader";
 
-const StudioLayout = ({ children, page }) => {
+const StudioLayout = ({
+  children,
+  page = "",
+  action = <div />,
+  subnav = <div />,
+  controls = null
+}) => {
   return (
-    <div>
-      <StudioMobileStatusBar page={page} />
-      <StudioDesktopNav />
+    <Fragment>
+      <StudioMobileStatusBar page={page} action={action} />
       <StudioMobileNav />
-      <ContentLayout>{children}</ContentLayout>
-    </div>
+      <StudioDesktopNav />
+      <ContentLayout>
+        {subnav}
+        <main>
+          <ContentHeader page={page} action={action} />
+          {children}
+        </main>
+        {controls}
+      </ContentLayout>
+    </Fragment>
   );
 };
 
