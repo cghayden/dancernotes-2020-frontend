@@ -5,6 +5,8 @@ import gql from "graphql-tag";
 import StudioLayout from "../../../components/Studio/StudioLayout";
 import UpdateDanceClass from "../../../components/Studio/UpdateDanceClass";
 
+import { useStudio } from "../../../components/Studio/useStudio";
+
 const SINGLE_DANCE_QUERY = gql`
   query SINGLE_DANCE_QUERY($id: ID!) {
     danceClass(where: { id: $id }) {
@@ -37,8 +39,9 @@ const updateStudioClassDancePage = () => {
   const { data, loading, error } = useQuery(SINGLE_DANCE_QUERY, {
     variables: { id: classId }
   });
+  const studio = useStudio();
   // console.log("data:", data);
-  if (loading) {
+  if (!studio || loading) {
     return (
       <StudioLayout page={"Update Your Routine"}>
         {loading && <p>Loading...</p>}
@@ -56,7 +59,7 @@ const updateStudioClassDancePage = () => {
 
   return (
     <StudioLayout page={"Update Your Routine"}>
-      <UpdateDanceClass danceClass={data.danceClass} />
+      <UpdateDanceClass studio={studio} danceClass={data.danceClass} />
     </StudioLayout>
   );
 };

@@ -67,9 +67,7 @@ const initialInputState = {
 };
 
 function CreateDanceClass({ studio }) {
-  const { inputs, updateInputs, handleChange, resetForm } = useForm(
-    initialInputState
-  );
+  const { inputs, updateInputs, handleChange } = useForm(initialInputState);
 
   const [loadingSong, setLoadingSong] = useState(false);
   const [showModal, toggleModal] = useState(false);
@@ -83,8 +81,8 @@ function CreateDanceClass({ studio }) {
     }
   ] = useMutation(CREATE_DANCE_CLASS_MUTATION, {
     variables: { ...inputs },
-    onCompleted: data => {
-      console.log("created new dance", data);
+    onCompleted: () => {
+      updateInputs(initialInputState);
     },
     refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }]
   });
@@ -98,10 +96,6 @@ function CreateDanceClass({ studio }) {
       loading: updatingDanceClass
     }
   ] = useMutation(UPDATE_DANCECLASS_MUTATION, {
-    onCompleted: data => {
-      console.log("class updated:", data);
-      toggleModal(true);
-    },
     refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }]
   });
 
@@ -132,22 +126,19 @@ function CreateDanceClass({ studio }) {
     const file = await res.json();
     setLoadingSong(false);
 
-    //todo - delete song if error out on update to class
-    // try - catch - run delete cloudinary asset
     await updateDanceClass({
       variables: {
-        // id: danceClassId,
+        id: danceClassId,
         music: file.secure_url,
         musicId: file.public_id
       }
-    }).catch(error => {
-      console.log("error updating class:", error);
+    }).catch(() => {
+      // delete song file from cloudinary because there was an error updating the dnace class with the song url and id
       deleteCloudinaryAsset({
         variables: {
           publicId: file.public_id
         }
       });
-      toggleModal(true);
     });
   }
 
@@ -161,42 +152,44 @@ function CreateDanceClass({ studio }) {
     }
     //B. create without music
     else {
-      await createDanceClass();
+      await createDanceClass().catch(e => toggleModal(true));
       //if fail, error thrown
-      toggleModal(true);
     }
-    // 4. reset state
-    updateInputs(initialInputState);
+    toggleModal(true);
   }
 
-  const error = errorCreatingDanceClass || errorUpdatingDanceClass;
   const loading = loadingSong || updatingDanceClass || creatingDanceClass;
-
-  // function onSuccess(danceClass) {
-  //   if (danceClass.size === "Group") {
-  //     toggleModal(true);
-  //   } else {
-  //     Router.push({
-  //       pathname: "/studio/addDancers",
-  //       query: { id: danceClass.id }
-  //     });
-  //   }
-  // }
 
   return (
     <Fragment>
       <Modal open={showModal} setOpen={toggleModal}>
         <div>
-          <p>Success - you created {newDanceClass && newDanceClass.name}</p>
-          {errorUpdatingDanceClass && (
+          {errorCreatingDanceClass && (
+            <>
+              <p>
+                Warning: there was a problem saving your class. Please try
+                again:
+              </p>
+              <button role="button" onClick={() => toggleModal(false)}>
+                Try Again
+              </button>
+            </>
+          )}
+
+          {newDanceClass && (
+            <p>Success - you created {newDanceClass && newDanceClass.name}</p>
+          )}
+          {newDanceClass && errorUpdatingDanceClass && (
             <p>
-              Warning: there was a problem uploading your music. Please try
-              again:
+              Warning: there was a problem uploading the music for{" "}
+              {newDanceClass.name}. You can try to add music now or later by
+              updating the dance class:
               <Link href={`/studio/updateClass/${newDanceClass.id}`}>
                 <a>Update Class</a>
               </Link>
             </p>
           )}
+
           <button role="button" onClick={() => toggleModal(false)}>
             Create Another Class
           </button>
@@ -424,7 +417,7 @@ function CreateDanceClass({ studio }) {
           </div>
 
           <div>
-            {error && <Error error={error} />}
+            {/* {error && <Error error={"There was an error crating your class. Please try again"} />} */}
             <button type="submit" disabled={loading || loadingSong}>
               Creat
               {loading ? "ing " : "e "} Class

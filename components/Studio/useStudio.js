@@ -27,7 +27,8 @@ const STUDIO_USER_QUERY = gql`
 `;
 
 function useStudio() {
-  const { data } = useQuery(STUDIO_USER_QUERY);
+  const { data, error } = useQuery(STUDIO_USER_QUERY);
+  if (error) return { status: "error", error };
   if (data) return data.myStudio;
   return null;
 }
