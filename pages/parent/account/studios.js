@@ -2,15 +2,14 @@ import { useQuery } from "@apollo/react-hooks";
 
 import ParentLayout from "../../../components/Parent/ParentLayout";
 import AccountSubNav from "../../../components/Parent/AccountSubNav";
-import { PARENTS_STUDIOS } from "../../../components/Parent/Queries";
+import { STUDIOS_AND_DANCERS } from "../../../components/Parent/Queries";
 import Card from "../../../components/styles/Card";
 import Error from "../../../components/Error";
 import ParentUser from "../../../components/Parent/ParentUserQuery";
 
 function MyStudiosPage() {
-  const { data, loading, error } = useQuery(PARENTS_STUDIOS);
-  console.log("data:", data);
-  const studios = data && data.parentStudios;
+  const { data, loading, error } = useQuery(STUDIOS_AND_DANCERS);
+  const studios = data && data.parentUser.studios;
   if (loading) return <p>5, 6, 7, 8...</p>;
   if (error) return <Error error={error} />;
   if (studios.length < 1) {

@@ -45,7 +45,7 @@ const Form = styled.form`
     font-size: 1.25rem;
   }
 
-  button,
+  button[type="submit"],
   input[type="submit"] {
     border-radius: 10px;
     width: 75%;

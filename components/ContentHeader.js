@@ -7,7 +7,7 @@ const HeaderStyle = styled.header`
   width: 90%;
   display: flex;
   align-items: center;
-  padding: 1rem 8vw;
+  padding: 0 8vw 1rem 8vw;
   @media (max-width: ${props => props.theme.largeScreen}) {
     display: none;
   }

@@ -31,13 +31,13 @@ const ALL_Rs = gql`
 const PARENTS_EVENTS_QUERY = gql`
   query {
     parentUser {
-      dancers {
-        studios {
-          events {
-            name
-            type
-            appliesTo
-          }
+      id
+      studios {
+        id
+        events {
+          name
+          type
+          appliesTo
         }
       }
     }
@@ -79,17 +79,18 @@ const PARENT_USER_QUERY = gql`
   }
 `;
 
-const HIDDEN_DANCERS_QUERY = gql`
+const STUDIOS_AND_DANCERS = gql`
   query {
-    hiddenDancers @client
-  }
-`;
-
-const PARENTS_STUDIOS = gql`
-  query PARENTS_STUDIOS {
-    parentStudios {
-      studioName
+    parentUser {
       id
+      dancers {
+        id
+        firstName
+      }
+      studios {
+        id
+        studioName
+      }
     }
   }
 `;
@@ -120,11 +121,10 @@ const CUSTOM_ROUTINE_QUERY = gql`
 `;
 
 export {
-  HIDDEN_DANCERS_QUERY,
-  PARENTS_STUDIOS,
   PARENT_USER_QUERY,
   ALL_Rs,
   PARENTS_EVENTS_QUERY,
   PARENTS_DANCERS,
-  CUSTOM_ROUTINE_QUERY
+  CUSTOM_ROUTINE_QUERY,
+  STUDIOS_AND_DANCERS
 };
