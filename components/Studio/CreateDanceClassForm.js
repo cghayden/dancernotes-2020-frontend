@@ -63,14 +63,17 @@ const initialInputState = {
   notes: "",
   showSuccessMessage: false,
   makeupSet: "none",
-  size: ""
+  size: "",
+  audioFile: ""
 };
 
 function CreateDanceClass({ studio }) {
   const { inputs, updateInputs, handleChange } = useForm(initialInputState);
-
+  const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState();
   const [loadingSong, setLoadingSong] = useState(false);
   const [showModal, toggleModal] = useState(false);
+  const [status, setStatus] = useState();
+  const [showFileInput, toggleFileInput] = useState(false);
 
   const [
     createDanceClass,
@@ -82,9 +85,10 @@ function CreateDanceClass({ studio }) {
   ] = useMutation(CREATE_DANCE_CLASS_MUTATION, {
     variables: { ...inputs },
     onCompleted: () => {
-      updateInputs(initialInputState);
+      resetForm();
     },
     refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }]
+    // onError: (error) => {toggleModal(true)}
   });
   const newDanceClass = newDance && newDance.createDanceClass;
 
@@ -104,13 +108,40 @@ function CreateDanceClass({ studio }) {
     { error: errorDeletingAsset, loading: deletingAsset }
   ] = useMutation(DELETE_CLOUDINARY_ASSET);
 
+  function resetForm() {
+    updateInputs({ ...initialInputState });
+    toggleFileInput(false);
+    setStatus();
+  }
+
   function setSongtoState(e) {
     const audioFile = e.target.files[0];
     updateInputs({ ...inputs, audioFile });
   }
 
+  async function saveNewDanceClass(e) {
+    e.preventDefault();
+    //A. if music file is queued in state, create dance, upload music with tag of routineId, then update routine with the music url and musicId
+    setStatus("Creating Class...");
+    if (inputs.audioFile) {
+      const newDanceClass = await createDanceClass();
+      const newDanceClassId = newDanceClass.data.createDanceClass.id;
+      await uploadSongAndUpdateClass(newDanceClassId).catch(() => {
+        setStatus();
+        toggleModal(true);
+      });
+    }
+    //B. create without music
+    else {
+      await createDanceClass();
+    }
+    toggleModal(true);
+    resetForm();
+  }
+
   async function uploadSongAndUpdateClass(danceClassId) {
     setLoadingSong(true);
+    setStatus("Uploading Song...");
     const data = new FormData();
     data.append("file", inputs.audioFile);
     data.append("upload_preset", "dancernotes-music");
@@ -122,10 +153,19 @@ function CreateDanceClass({ studio }) {
         method: "POST",
         body: data
       }
-    );
-    const file = await res.json();
-    setLoadingSong(false);
+    ).catch(error => {
+      setCloudinaryUploadError(error);
+    });
 
+    const file = await res.json();
+    console.log("file:", file);
+    if (file.error) {
+      setCloudinaryUploadError(file.error);
+      setLoadingSong(false);
+      throw `Audio Upload failed: ${file.error}`;
+    }
+    setLoadingSong(false);
+    setStatus("Updating class...");
     await updateDanceClass({
       variables: {
         id: danceClassId,
@@ -140,24 +180,11 @@ function CreateDanceClass({ studio }) {
         }
       });
     });
+    setStatus();
   }
 
-  async function saveNewDanceClass(e) {
-    e.preventDefault();
-    //A. if music file is queued in state, create dance, upload music with tag of routineId, then update routine with the music url and musicId
-    if (inputs.audioFile) {
-      const newDanceClass = await createDanceClass();
-      const newDanceClassId = newDanceClass.data.createDanceClass.id;
-      await uploadSongAndUpdateClass(newDanceClassId);
-    }
-    //B. create without music
-    else {
-      await createDanceClass().catch(e => toggleModal(true));
-      //if fail, error thrown
-    }
-    toggleModal(true);
-  }
-
+  const errorUploadingSong =
+    errorUpdatingDanceClass || errorUploadingToCloudinary;
   const loading = loadingSong || updatingDanceClass || creatingDanceClass;
 
   return (
@@ -176,14 +203,12 @@ function CreateDanceClass({ studio }) {
             </>
           )}
 
-          {newDanceClass && (
-            <p>Success - you created {newDanceClass && newDanceClass.name}</p>
-          )}
-          {newDanceClass && errorUpdatingDanceClass && (
+          {newDanceClass && <p>Success - you created {newDanceClass.name}</p>}
+          {newDanceClass && errorUploadingSong && (
             <p>
               Warning: there was a problem uploading the music for{" "}
               {newDanceClass.name}. You can try to add music now or later by
-              updating the dance class:
+              editing the class:
               <Link href={`/studio/updateClass/${newDanceClass.id}`}>
                 <a>Update Class</a>
               </Link>
@@ -405,19 +430,30 @@ function CreateDanceClass({ studio }) {
               <option value={"none"}>None at this time, N/A</option>
             </select>
           </div>
-          <div className="input-item">
-            <label htmlFor="music">Upload the music for this dance...</label>
-            <input
-              type="file"
-              id="music"
-              name="music"
-              placeholder="Upload the music for this dance"
-              onChange={setSongtoState}
-            />
-          </div>
+          <button
+            type="button"
+            className="btn-dark"
+            onClick={() => toggleFileInput(true)}
+          >
+            Add Music
+          </button>
+          {showFileInput && (
+            <div className="input-item">
+              <label htmlFor="audioFile">
+                Upload the music for this dance...
+              </label>
+              <input
+                type="file"
+                id="audioFile"
+                name="audioFile"
+                placeholder="Upload music for this dance"
+                onChange={setSongtoState}
+              />
+            </div>
+          )}
 
           <div>
-            {/* {error && <Error error={"There was an error crating your class. Please try again"} />} */}
+            <p>{status}</p>
             <button type="submit" disabled={loading || loadingSong}>
               Creat
               {loading ? "ing " : "e "} Class

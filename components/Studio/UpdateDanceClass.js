@@ -69,8 +69,7 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
       Router.push({
         pathname: "/studio/classes"
       });
-    },
-    onError: error => setError(error)
+    }
   });
   const [
     deleteCloudinaryAsset,
@@ -83,24 +82,25 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
 
   const saveChanges = async e => {
     e.preventDefault();
-    //1 if a song is set to state from input, upload it to cloudinary, and get url and id
+    //A. update class with audioFile:
     if (values.audioFile) {
-      // if dance already has a song, delete it
+      setLoadingSong(true);
+      // 1. if dance already has a song, delete it
       if (danceClass.musicId) {
-        console.log("deleting asset from cloudinary");
         await deleteCloudinaryAsset({
           variables: { publicId: danceClass.musicId }
         }).catch(error => setError(error));
       }
-      setLoadingSong(true);
-      console.log("uploading asset to cloudinary");
-      await uploadSong(danceClass.id, values.audioFile).catch(error =>
-        setError(error)
-      );
-      console.log("upload complete");
+      //1. upload new song
+      await uploadSong(danceClass.id, values.audioFile);
+
       setLoadingSong(false);
+      await updateDanceClass().catch(error => {
+        deleteCloudinaryAsset({ variables: { publicId: values.musicId } });
+        setError(error);
+      });
     }
-    // 2 update class
+    // B. update class without audiofile
     await updateDanceClass();
   };
 

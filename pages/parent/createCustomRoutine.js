@@ -4,6 +4,7 @@ import CreateCustomRoutineForm from "../../components/Parent/CreateCustomRoutine
 import { STUDIOS_AND_DANCERS } from "../../components/Parent/Queries";
 import Error from "../../components/Error";
 import BackButton from "../../components/BackButton";
+
 function createCustomRoutinePage() {
   const { data: parent, loading, error } = useQuery(STUDIOS_AND_DANCERS);
   if (loading) return "loading";

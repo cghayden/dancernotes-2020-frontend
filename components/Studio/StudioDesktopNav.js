@@ -21,7 +21,7 @@ function StudioDesktopNav(props) {
       <Link href="/studio/home">
         <a>Home</a>
       </Link>
-      <Link href="classes">
+      <Link href="/studio/classes">
         <a>Classes</a>
       </Link>
       <Link href="dancers">
