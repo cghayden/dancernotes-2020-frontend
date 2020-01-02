@@ -1,14 +1,16 @@
 import React, { useState, Fragment } from "react";
-import Router from "next/router";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import { CATEGORIES_QUERY } from "./EditClassCategories";
-import { DELETE_CLOUDINARY_ASSET } from "../../components/Mutations";
+import Link from "next/link";
+import Router from "next/router";
+// import { CATEGORIES_QUERY } from "./EditClassCategories";
 import { ALL_DANCE_CLASSES_QUERY } from "./Queries";
+import { DELETE_CLOUDINARY_ASSET } from "../../components/Mutations";
 import Error from "../Error";
 import { StyledCreateClassForm } from "../styles/Form";
-import DeleteDanceClass from "./DeleteDanceClass";
+import useForm from "../../lib/useForm";
 import Modal from "../Modal";
+import DeleteDanceClass from "./DeleteDanceClass";
 
 const UPDATE_DANCECLASS_MUTATION = gql`
   mutation UPDATE_DANCECLASS_MUTATION(
@@ -47,68 +49,107 @@ const UPDATE_DANCECLASS_MUTATION = gql`
       makeupSet: $makeupSet
       size: $size
     ) {
-      message
+      id
+      name
     }
   }
 `;
 
-const UpdateDanceClass = ({ danceClass, studio }) => {
-  const [values, setValues] = useState({});
+const initialInputState = {};
+
+function UpdateDanceClass({ danceClass, studio }) {
+  const { inputs, updateInputs, handleChange } = useForm(initialInputState);
+  const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState();
   const [loadingSong, setLoadingSong] = useState(false);
   const [showModal, toggleModal] = useState(false);
+  const [status, setStatus] = useState();
+  const [showFileInput, toggleFileInput] = useState(false);
+  //need this error?
   const [error, setError] = useState();
 
   const [
     updateDanceClass,
-    { loading: updatingDanceClass, error: errorUpdatingDanceClass }
+    {
+      data: updatedDance,
+      loading: updatingDanceClass,
+      error: errorUpdatingDanceClass
+    }
   ] = useMutation(UPDATE_DANCECLASS_MUTATION, {
-    variables: { ...values, id: danceClass.id },
-    refetchQueries: { query: ALL_DANCE_CLASSES_QUERY },
+    variables: { ...inputs, id: danceClass.id },
+    refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }],
     awaitRefetchQueries: true,
     onCompleted: () => {
-      Router.push({
-        pathname: "/studio/classes"
-      });
+      resetForm();
     }
   });
+
   const [
     deleteCloudinaryAsset,
     { loading: deletingAsset, error: errorDeletingAsset }
-  ] = useMutation(DELETE_CLOUDINARY_ASSET, {
-    onError: error => setError(error)
-  });
+  ] = useMutation(DELETE_CLOUDINARY_ASSET);
+
+  const updatedDanceClass = updatedDance && updatedDance.updateDanceClass;
 
   const loading = loadingSong || updatingDanceClass || deletingAsset;
 
-  const saveChanges = async e => {
+  function resetForm() {
+    updateInputs({ ...initialInputState });
+    toggleFileInput(false);
+    setStatus();
+  }
+
+  function setSongtoState(e) {
+    const audioFile = e.target.files[0];
+    updateInputs({ ...inputs, audioFile });
+  }
+
+  async function saveChanges(e) {
     e.preventDefault();
     //A. update class with audioFile:
-    if (values.audioFile) {
-      setLoadingSong(true);
+    if (inputs.audioFile) {
       // 1. if dance already has a song, delete it
+      setLoadingSong(true);
       if (danceClass.musicId) {
+        setStatus("Deleting Old Music");
         await deleteCloudinaryAsset({
           variables: { publicId: danceClass.musicId }
-        }).catch(error => setError(error));
+        }).catch(error => console.log(error));
       }
-      //1. upload new song
-      await uploadSong(danceClass.id, values.audioFile);
-
-      setLoadingSong(false);
-      await updateDanceClass().catch(error => {
-        deleteCloudinaryAsset({ variables: { publicId: values.musicId } });
-        setError(error);
+      //2. upload new song
+      setStatus("Uploading Song...");
+      await uploadSong(danceClass.id, inputs.audioFile).catch(err => {
+        //if error uploading to cloudinary, delete from inputs.  Why? because if there are no other updates besides the music, the update does not need to be run, because the music upload to cloudinary has failed.
+        delete inputs.audioFile;
+        setCloudinaryUploadError(err);
       });
+      setLoadingSong(false);
+      //if upload song errored out, and there are other inputs to update, update them
+      if (Object.keys(inputs).length > 0) {
+        setStatus("Updating Class");
+        await updateDanceClass().catch(error => {
+          //if a song was uploaded to cloudinary, but the url and id could not be updated in prisma, delete the song from cloudinary
+          if (inputs.musicId) {
+            deleteCloudinaryAsset({ variables: { publicId: inputs.musicId } });
+          }
+        });
+      }
     }
     // B. update class without audiofile
-    await updateDanceClass();
-  };
+    else {
+      setStatus("Updating Class");
+      await updateDanceClass();
+    }
+    //c. clean up
+    setStatus();
+    toggleModal(true);
+    resetForm();
+  }
 
-  const uploadSong = async (routineId, asset) => {
+  async function uploadSong(danceClassId, asset) {
     const data = new FormData();
     data.append("file", asset);
     data.append("upload_preset", "dancernotes-music");
-    data.append("tags", routineId);
+    data.append("tags", danceClassId);
 
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/coreytesting/video/upload",
@@ -116,26 +157,28 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
         method: "POST",
         body: data
       }
-    );
+    ).catch(error => {
+      setCloudinaryUploadError(error);
+    });
+
     const file = await res.json();
-    setValues({
-      ...values,
+    if (file.error) {
+      setCloudinaryUploadError(file.error);
+      setLoadingSong(false);
+    }
+    updateInputs({
+      ...inputs,
       music: file.secure_url,
       musicId: file.public_id
     });
-  };
+  }
 
   // disable submission of empty state if no updates are made
-  const disableButton = Object.keys(values).length < 1;
+  const disableButton = Object.keys(inputs).length < 1;
   let defaultMakeupSet = "";
   if (danceClass.makeupSet) {
     defaultMakeupSet = danceClass.makeupSet.name;
   }
-
-  if (error) {
-    return <Error error={error} />;
-  }
-  // console.log("categories data:", data && data.studioCategories);
 
   return (
     <Fragment>
@@ -156,19 +199,22 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
             </>
           )}
 
-          {/* {newDanceClass && (
-            <p>Success - you created {newDanceClass && newDanceClass.name}</p>
+          {updatedDanceClass && (
+            <p>
+              Success - you updated
+              {updatedDanceClass.name}
+            </p>
           )}
-          {newDanceClass && errorUpdatingDanceClass && (
+          {updatedDanceClass && errorUploadingToCloudinary && (
             <p>
               Warning: there was a problem uploading the music for{" "}
-              {newDanceClass.name}. You can try to add music now or later by
+              {updateDanceClass.name}. You can try to add music now or later by
               updating the dance class:
               <Link href={`/studio/updateClass/${newDanceClass.id}`}>
                 <a>Update Class</a>
               </Link>
             </p>
-          )} */}
+          )}
         </div>
       </Modal>
       <StyledCreateClassForm onSubmit={e => saveChanges(e)}>
@@ -183,7 +229,7 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
               name="name"
               placeholder="name"
               defaultValue={danceClass.name}
-              onChange={e => setValues({ ...values, name: e.target.value })}
+              onChange={handleChange}
             />
           </div>
           <div className="input-item">
@@ -193,23 +239,30 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
               name="performanceName"
               placeholder="Performance Name, or Name of Song"
               defaultValue={danceClass.performanceName}
-              onChange={e => setValues({ ...values, name: e.target.value })}
+              onChange={handleChange}
             />
           </div>
-          <div className="input-item">
-            <label htmlFor="music">
-              Add / Change the music for this dance...
-            </label>
-            <input
-              type="file"
-              id="music"
-              name="music"
-              placeholder="Upload music for this dance"
-              onChange={e =>
-                setValues({ ...values, audioFile: e.target.files[0] })
-              }
-            />
-          </div>
+          <button
+            type="button"
+            className="btn-dark"
+            onClick={() => toggleFileInput(true)}
+          >
+            Add/Change Music
+          </button>
+          {showFileInput && (
+            <div className="input-item">
+              <label htmlFor="audioFile">
+                Upload the music for this dance...
+              </label>
+              <input
+                type="file"
+                id="audioFile"
+                name="audioFile"
+                placeholder="Upload music for this dance"
+                onChange={setSongtoState}
+              />
+            </div>
+          )}
           <div className="input-item">
             <label htmlFor="size">
               {`Size...(Currently ${danceClass.size})`}
@@ -218,7 +271,7 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
               id="size"
               name="size"
               defaultValue={danceClass.size}
-              onChange={e => setValues({ ...values, name: e.target.value })}
+              onChange={handleChange}
             >
               <option value="Group">Group</option>
               <option value="Solo">Solo</option>
@@ -234,7 +287,7 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
                 id="day"
                 name="day"
                 defaultValue={danceClass.day}
-                onChange={e => setValues({ ...values, name: e.target.value })}
+                onChange={handleChange}
               >
                 <option value="Mon.">Mon.</option>
                 <option value="Tue.">Tue.</option>
@@ -254,7 +307,7 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
                 min="0:00"
                 max="23:59"
                 defaultValue={danceClass.startTime}
-                onChange={e => setValues({ ...values, name: e.target.value })}
+                onChange={handleChange}
               />
             </div>
 
@@ -268,7 +321,7 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
                 min="0:00"
                 max="23:59"
                 defaultValue={danceClass.endTime}
-                onChange={e => setValues({ ...values, name: e.target.value })}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -282,7 +335,7 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
                 id="style"
                 name="style"
                 defaultValue={danceClass.style}
-                onChange={e => setValues({ ...values, name: e.target.value })}
+                onChange={handleChange}
               >
                 {studio.styles.map(style => (
                   <option key={style} value={style}>
@@ -299,7 +352,7 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
                 id="level"
                 name="level"
                 defaultValue={danceClass.level}
-                onChange={e => setValues({ ...values, name: e.target.value })}
+                onChange={handleChange}
               >
                 {studio.levels.map(level => (
                   <option key={level} value={level}>
@@ -316,7 +369,7 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
                 id="division"
                 name="division"
                 defaultValue={danceClass.division}
-                onChange={e => setValues({ ...values, name: e.target.value })}
+                onChange={handleChange}
               >
                 {studio.divisions.map(division => (
                   <option key={division} value={division}>
@@ -335,7 +388,7 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
                 name="tights"
                 placeholder="The style of tights required..."
                 defaultValue={danceClass.tights}
-                onChange={e => setValues({ ...values, name: e.target.value })}
+                onChange={handleChange}
               />
             </div>
 
@@ -346,7 +399,7 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
                 name="shoes"
                 placeholder="The style of shoes required..."
                 defaultValue={danceClass.shoes}
-                onChange={e => setValues({ ...values, name: e.target.value })}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -360,7 +413,7 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
               name="notes"
               rows="5"
               defaultValue={danceClass.notes}
-              onChange={e => setValues({ ...values, name: e.target.value })}
+              onChange={handleChange}
             />
           </div>
 
@@ -371,7 +424,7 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
               id="makeupSet"
               name="makeupSet"
               defaultValue={defaultMakeupSet}
-              onChange={e => setValues({ ...values, name: e.target.value })}
+              onChange={handleChange}
             >
               {!defaultMakeupSet && (
                 <option default disabled value={""}>
@@ -386,29 +439,32 @@ const UpdateDanceClass = ({ danceClass, studio }) => {
               <option value={"none"}>None</option>
             </select>
           </div>
+          <div>
+            <p>{status}</p>
 
-          <button type="submit" disabled={disableButton}>
-            SAV
-            {loading ? "ING " : "E "} Class
-          </button>
-          <button
-            type="button"
-            onClick={() =>
-              Router.push({
-                pathname: "/studio/classes"
-              })
-            }
-          >
-            Cancel
-          </button>
-          <DeleteDanceClass id={danceClass.id}>
-            Delete this Class
-          </DeleteDanceClass>
+            <button type="submit" disabled={disableButton}>
+              SAV
+              {loading ? "ING " : "E "} Class
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                Router.push({
+                  pathname: "/studio/classes"
+                })
+              }
+            >
+              Cancel
+            </button>
+            <DeleteDanceClass id={danceClass.id}>
+              Delete this Class
+            </DeleteDanceClass>
+          </div>
         </fieldset>
       </StyledCreateClassForm>
     </Fragment>
   );
-};
+}
 
 export default UpdateDanceClass;
 export { UPDATE_DANCECLASS_MUTATION };

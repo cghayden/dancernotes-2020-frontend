@@ -1,13 +1,12 @@
 import React, { useState, Fragment } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import Router from "next/router";
 import Link from "next/link";
 import { ALL_DANCE_CLASSES_QUERY } from "./Queries";
 import { UPDATE_DANCECLASS_MUTATION } from "./UpdateDanceClass";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
 import Error from "../Error";
-import StyledCreateClassForm from "../styles/Form";
+import { StyledCreateClassForm } from "../styles/Form";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 
@@ -79,17 +78,18 @@ function CreateDanceClass({ studio }) {
     createDanceClass,
     {
       data: newDance,
-      error: errorCreatingDanceClass,
-      loading: creatingDanceClass
+      loading: creatingDanceClass,
+      error: errorCreatingDanceClass
     }
   ] = useMutation(CREATE_DANCE_CLASS_MUTATION, {
     variables: { ...inputs },
     onCompleted: () => {
       resetForm();
     },
-    refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }]
-    // onError: (error) => {toggleModal(true)}
+    refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }],
+    awaitRefetchQueries: true
   });
+
   const newDanceClass = newDance && newDance.createDanceClass;
 
   const [
@@ -158,7 +158,6 @@ function CreateDanceClass({ studio }) {
     });
 
     const file = await res.json();
-    console.log("file:", file);
     if (file.error) {
       setCloudinaryUploadError(file.error);
       setLoadingSong(false);
