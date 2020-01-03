@@ -24,19 +24,19 @@ function StudioDesktopNav(props) {
       <Link href="/studio/classes">
         <a>Classes</a>
       </Link>
-      <Link href="dancers">
+      <Link href="/studio/dancers">
         <a>Dancers</a>
       </Link>
-      <Link href="makeup">
+      <Link href="/studio/makeup">
         <a>Makeup</a>
       </Link>
-      <Link href="hairstyles">
+      <Link href="/studio/hairstyles">
         <a>Hairstyles</a>
       </Link>
-      <Link href="events">
+      <Link href="/studio/events">
         <a>Events</a>
       </Link>
-      <Link href="account">
+      <Link href="/studio/account">
         <a>Account</a>
       </Link>
       <RequestsNavLink />

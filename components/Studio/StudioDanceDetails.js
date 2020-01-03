@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
+import Link from "next/link";
 import Card from "../styles/Card";
 
 const DanceCardBodyStyles = styled(Card)`
@@ -30,66 +31,69 @@ const AudioPlayer = styled.audio`
   max-width: 475px;
 `;
 
-export default class StudioDanceDetails extends Component {
-  render() {
-    const { dance } = this.props;
-
-    return (
-      <DanceCardBodyStyles>
-        <h1>dance.name</h1>
+function StudioDanceDetails({ dance }) {
+  return (
+    <DanceCardBodyStyles>
+      <h1>{dance.name}</h1>
+      {dance.music && (
         <AudioPlayer
           id="musicPlayer"
           autoPlay={false}
           controls
           src={dance.music}
-        />{" "}
-        <dl>
-          <NoteItem>
-            <dt>divsion:</dt> <NoteContent>{dance.divsion}</NoteContent>
-          </NoteItem>
-          <NoteItem>
-            <dt>level:</dt> <NoteContent>{dance.level}</NoteContent>
-          </NoteItem>
-          <NoteItem>
-            <dt>Style:</dt> <NoteContent>{dance.style}</NoteContent>
-          </NoteItem>
-          <NoteItem>
-            <dt>Size:</dt> <NoteContent>{dance.size}</NoteContent>
-          </NoteItem>
-          <NoteItem>
-            <dt>Shoes:</dt> <NoteContent>{dance.shoes}</NoteContent>
-          </NoteItem>
-          <NoteItem>
-            <dt>Tights:</dt> <NoteContent>{dance.tights}</NoteContent>
-          </NoteItem>
-          <NoteItem>
-            <dt>Notes:</dt> <NoteContent>{dance.notes}</NoteContent>
-          </NoteItem>
-          <NoteItem>
-            <dt>Makeup:</dt>{" "}
-            <NoteContent>
-              {dance.MakeupSet ? dance.makeupSet.name : "N/A"}
-            </NoteContent>
-          </NoteItem>
-          <NoteItem>
-            <dt>Hair:</dt>{" "}
-            <NoteContent>
-              {dance.hairStyle ? dance.hairStyle : "N/A"}
-            </NoteContent>
-          </NoteItem>
-          <NoteItem>
-            <dt>Dancers:</dt>
-            <NoteContent>
-              {dance.dancers.map((dancer, index) => (
-                <p key={index}>{dancer.firstName}</p>
-              ))}
-            </NoteContent>
-          </NoteItem>
-          {/* {this.state.addNote && (
+        />
+      )}
+      <dl>
+        <NoteItem>
+          <dt>divsion:</dt> <NoteContent>{dance.divsion}</NoteContent>
+        </NoteItem>
+        <NoteItem>
+          <dt>level:</dt> <NoteContent>{dance.level}</NoteContent>
+        </NoteItem>
+        <NoteItem>
+          <dt>Style:</dt> <NoteContent>{dance.style}</NoteContent>
+        </NoteItem>
+        <NoteItem>
+          <dt>Size:</dt> <NoteContent>{dance.size}</NoteContent>
+        </NoteItem>
+        <NoteItem>
+          <dt>Shoes:</dt> <NoteContent>{dance.shoes}</NoteContent>
+        </NoteItem>
+        <NoteItem>
+          <dt>Tights:</dt> <NoteContent>{dance.tights}</NoteContent>
+        </NoteItem>
+        <NoteItem>
+          <dt>Notes:</dt> <NoteContent>{dance.notes}</NoteContent>
+        </NoteItem>
+        <NoteItem>
+          <dt>Makeup:</dt>{" "}
+          <NoteContent>
+            {dance.MakeupSet ? dance.makeupSet.name : "N/A"}
+          </NoteContent>
+        </NoteItem>
+        <NoteItem>
+          <dt>Hair:</dt>{" "}
+          <NoteContent>{dance.hairStyle ? dance.hairStyle : "N/A"}</NoteContent>
+        </NoteItem>
+        <NoteItem>
+          <dt>Dancers:</dt>
+          <NoteContent>
+            {dance.dancers.map((dancer, index) => (
+              <p key={index}>{dancer.firstName}</p>
+            ))}
+          </NoteContent>
+        </NoteItem>
+        {/* {this.state.addNote && (
             <AddNote hideNote={this.hideNote} danceId={dance.id} />
           )} */}
-        </dl>
-      </DanceCardBodyStyles>
-    );
-  }
+      </dl>
+      <div>
+        <Link href={`/studio/updateClass/${dance.id}`}>
+          <a>Edit</a>
+        </Link>
+      </div>
+    </DanceCardBodyStyles>
+  );
 }
+
+export default StudioDanceDetails;

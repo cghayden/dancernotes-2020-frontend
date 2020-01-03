@@ -21,7 +21,7 @@ const colors = {
   gray8: "#323F4B",
   gray9: "#1F2933",
 
-  blackText: "#3d5866",
+  blackText: "#3d5866"
 };
 
 const theme = {
@@ -87,7 +87,7 @@ const theme = {
   parentBackground: colors["gray0"],
   textColor: colors["blackText"],
   disabledText: colors["gray3"],
-  background: colors["gray1"],
+  background: colors["gray2"],
   border: colors["vividBlue4"],
 
   sidebarWidth: "20vw",
@@ -125,8 +125,8 @@ const theme = {
       rgb: {
         r: 252,
         g: 252,
-        b: 255,
-      },
+        b: 255
+      }
     },
     "10": {
       hex: "#d3d6fc",
@@ -135,8 +135,8 @@ const theme = {
       rgb: {
         r: 211,
         g: 214,
-        b: 252,
-      },
+        b: 252
+      }
     },
     "20": {
       hex: "#c2c7fb",
@@ -145,8 +145,8 @@ const theme = {
       rgb: {
         r: 194,
         g: 199,
-        b: 251,
-      },
+        b: 251
+      }
     },
     "30": {
       hex: "#a5acf9",
@@ -155,8 +155,8 @@ const theme = {
       rgb: {
         r: 165,
         g: 172,
-        b: 249,
-      },
+        b: 249
+      }
     },
     "40": {
       hex: "#8792f7",
@@ -165,8 +165,8 @@ const theme = {
       rgb: {
         r: 135,
         g: 146,
-        b: 247,
-      },
+        b: 247
+      }
     },
     "50": {
       hex: "#6778f5",
@@ -175,8 +175,8 @@ const theme = {
       rgb: {
         r: 103,
         g: 120,
-        b: 245,
-      },
+        b: 245
+      }
     },
     "60": {
       hex: "#425df1",
@@ -185,8 +185,8 @@ const theme = {
       rgb: {
         r: 66,
         g: 93,
-        b: 241,
-      },
+        b: 241
+      }
     },
     "70": {
       hex: "#2145da",
@@ -195,8 +195,8 @@ const theme = {
       rgb: {
         r: 33,
         g: 69,
-        b: 218,
-      },
+        b: 218
+      }
     },
     "80": {
       hex: "#1734ab",
@@ -205,8 +205,8 @@ const theme = {
       rgb: {
         r: 23,
         g: 52,
-        b: 171,
-      },
+        b: 171
+      }
     },
     "90": {
       hex: "#0e247e",
@@ -215,8 +215,8 @@ const theme = {
       rgb: {
         r: 14,
         g: 36,
-        b: 126,
-      },
+        b: 126
+      }
     },
     "100": {
       hex: "#061554",
@@ -225,9 +225,9 @@ const theme = {
       rgb: {
         r: 6,
         g: 21,
-        b: 84,
-      },
-    },
+        b: 84
+      }
+    }
   },
   colorBox213: {
     "0": "#f5f9ff",
@@ -243,8 +243,8 @@ const theme = {
     "90": "#0b67d7",
     "100": "#055ecc",
     "110": "#0057c1",
-    "120": "#0051b5",
-  },
+    "120": "#0051b5"
+  }
 };
 
 export { theme };

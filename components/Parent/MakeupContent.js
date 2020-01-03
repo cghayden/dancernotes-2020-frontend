@@ -3,8 +3,8 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import Card from "../styles/Card";
 
-const MAKEUP_QUERY = gql`
-  query MAKEUP_QUERY {
+const STUDIO_MAKEUP_QUERY = gql`
+  query STUDIO_MAKEUP_QUERY {
     allRs {
       name
       dancers {
@@ -41,7 +41,7 @@ class MakeupContent extends Component {
 
   render() {
     return (
-      <Query query={MAKEUP_QUERY}>
+      <Query query={STUDIO_MAKEUP_QUERY}>
         {({ data: { allRs } = {}, error, loading }) => {
           if (loading) return <p>loading...</p>;
           if (error) return <p>Error! {error}</p>;

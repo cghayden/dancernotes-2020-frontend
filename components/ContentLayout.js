@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const ContentLayout = styled.div`
-  background: ${props => props.theme.background};
+  background: ${props => props.theme.gray2};
   margin: ${props => props.theme.mobileStatusBarHeight} auto 0 auto;
   height: calc(100vh - ${props => props.theme.navHeight});
 
@@ -9,7 +9,7 @@ const ContentLayout = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: calc(100vh - ${props => props.theme.navHeight});
+    height: calc(170vh - ${props => props.theme.navHeight});
     overflow-y: scroll;
     padding-bottom: 200px;
     padding-top: 1rem;

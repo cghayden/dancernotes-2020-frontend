@@ -19,9 +19,7 @@ const AnimatedModalContainer = styled(animated.div)`
   }
 `;
 
-export default function Modal({ children, open, setOpen }) {
-  // const [open, setOpen] = useState(false);
-
+export default function Modal({ children, open }) {
   const transition = useTransition(open, null, {
     from: { opacity: 0, transform: "translate3d(-1000px, 0, 0)" },
     enter: { opacity: 1, transform: "translate3d(0, 0, 0)" },
@@ -36,12 +34,7 @@ export default function Modal({ children, open, setOpen }) {
             ({ item, key, props: animation }) =>
               item && (
                 <animated.div className="modal-backdrop" style={animation}>
-                  <AnimatedModalContainer>
-                    {children}
-                    <button type="button" onClick={() => setOpen(false)}>
-                      Close Modal
-                    </button>
-                  </AnimatedModalContainer>
+                  <AnimatedModalContainer>{children}</AnimatedModalContainer>
                 </animated.div>
               )
           )}

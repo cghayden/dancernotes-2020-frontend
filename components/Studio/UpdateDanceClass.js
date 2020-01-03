@@ -206,15 +206,24 @@ function UpdateDanceClass({ danceClass, studio }) {
             </p>
           )}
           {updatedDanceClass && errorUploadingToCloudinary && (
-            <p>
-              Warning: there was a problem uploading the music for{" "}
-              {updateDanceClass.name}. You can try to add music now or later by
-              updating the dance class:
-              <Link href={`/studio/updateClass/${newDanceClass.id}`}>
-                <a>Update Class</a>
-              </Link>
-            </p>
+            <>
+              <p>
+                Success - you updated
+                {updatedDanceClass.name}
+              </p>
+              <p>
+                Warning: there was a problem uploading the music for
+                {updateDanceClass.name}. You can try to add music now or later
+                by updating the dance class:
+                <Link href={`/studio/updateClass/${newDanceClass.id}`}>
+                  <a>Update Class</a>
+                </Link>
+              </p>
+            </>
           )}
+          <Link href="/studio/classes">
+            <a>Return to Classes</a>
+          </Link>
         </div>
       </Modal>
       <StyledCreateClassForm onSubmit={e => saveChanges(e)}>
