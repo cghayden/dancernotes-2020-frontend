@@ -16,6 +16,7 @@ const STUDIO_USER_QUERY = gql`
         name
       }
       makeupSets {
+        id
         name
       }
       dancers {

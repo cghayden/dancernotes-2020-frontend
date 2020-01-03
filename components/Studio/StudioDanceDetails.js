@@ -68,7 +68,7 @@ function StudioDanceDetails({ dance }) {
         <NoteItem>
           <dt>Makeup:</dt>{" "}
           <NoteContent>
-            {dance.MakeupSet ? dance.makeupSet.name : "N/A"}
+            {dance.makeupSet ? dance.makeupSet.name : "N/A"}
           </NoteContent>
         </NoteItem>
         <NoteItem>

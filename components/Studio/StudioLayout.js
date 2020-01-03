@@ -4,6 +4,12 @@ import StudioDesktopNav from "./StudioDesktopNav";
 import StudioMobileNav from "./StudioMobileNav";
 import ContentLayout from "../ContentLayout";
 import ContentHeader from "../ContentHeader";
+import styled from "styled-components";
+
+const MainContentWrapper = styled.div`
+  padding-bottom: 200px;
+  width: 100%;
+`;
 
 const StudioLayout = ({
   children,
@@ -21,7 +27,7 @@ const StudioLayout = ({
         {subnav}
         <main>
           <ContentHeader page={page} action={action} />
-          {children}
+          <MainContentWrapper>{children}</MainContentWrapper>
         </main>
         {controls}
       </ContentLayout>

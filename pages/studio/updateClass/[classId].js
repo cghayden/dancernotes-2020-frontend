@@ -25,6 +25,7 @@ const SINGLE_DANCE_QUERY = gql`
       musicId
       performanceName
       makeupSet {
+        id
         name
       }
       size
