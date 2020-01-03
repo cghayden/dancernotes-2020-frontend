@@ -32,7 +32,7 @@ const ParentLayout = ({
         {subnav}
         <main>
           <ContentHeader page={page} action={action} />
-          {children}
+          <div>{children}</div>
         </main>
         {controls}
       </ContentLayout>

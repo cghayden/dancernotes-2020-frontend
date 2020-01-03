@@ -106,7 +106,7 @@ function DanceCard(props) {
       </DanceCardHeader>
       <DanceCardNav>
         <button onClick={toggleBody}>Details</button>
-        <button onClick={toggleMusic}>Music</button>
+        {dance.music && <button onClick={toggleMusic}>Music</button>}
         {dance.custom && (
           <Link href={`/parent/updateDance/${dance.id}`}>
             <a>Edit</a>
@@ -114,11 +114,9 @@ function DanceCard(props) {
         )}
       </DanceCardNav>
 
-      <MusicPlayer
-        open={showMediaPlayer}
-        danceName={dance.name}
-        src={dance.music}
-      />
+      {showMediaPlayer && (
+        <MusicPlayer danceName={dance.name} src={dance.music} />
+      )}
 
       <animated.div style={animation}>
         <div {...bind}>

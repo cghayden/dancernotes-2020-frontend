@@ -62,7 +62,13 @@ export default class EnrolledDancers extends Component {
 
           if (visible) {
             if (dancer.avatar) {
-              return <Avatar key={dancer.id} src={dancer.avatar} />;
+              return (
+                <Avatar
+                  key={dancer.id}
+                  src={dancer.avatar}
+                  alt={dancer.firstName}
+                />
+              );
             } else {
               return (
                 <Initial key={dancer.id}>
@@ -73,7 +79,13 @@ export default class EnrolledDancers extends Component {
           }
           if (!visible) {
             if (dancer.avatar) {
-              return <InactiveAvatar key={dancer.id} src={dancer.avatar} />;
+              return (
+                <InactiveAvatar
+                  key={dancer.id}
+                  src={dancer.avatar}
+                  alt={dancer.firstName}
+                />
+              );
             } else {
               return (
                 <InactiveInitial key={dancer.id}>
