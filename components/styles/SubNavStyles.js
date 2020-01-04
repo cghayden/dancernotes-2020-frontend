@@ -2,37 +2,23 @@ import styled from "styled-components";
 
 const SubNavStyles = styled.nav`
   color: ${props => props.theme.blackText};
+  background: ${props => props.theme.background};
   padding: 0.5rem 0;
-  /* overflow-x: scroll; */
-  /* blurs not being used - not working on Safari */
-  .blur-right {
-    position: absolute;
-    right: 0;
-    width: 30px;
-    height: 2rem;
-    background: linear-gradient(
-      to right,
-      transparent,
-      ${props => props.theme.background} 85%
-    );
-  }
-  .blur-left {
-    position: absolute;
-    left: 0;
-    width: 30px;
-    height: 2rem;
-    background: linear-gradient(
-      to left,
-      transparent,
-      ${props => props.theme.background} 85%
-    );
-  }
-  .subNav-heading {
+  height: 5rem;
+  position: fixed;
+  top: ${props => props.theme.navHeight};
+  left: 0;
+  right: 0;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     display: none;
   }
 
   .active {
-    /* font-weight: bold; */
     color: ${props => props.theme.vividBlue6};
   }
 
@@ -60,28 +46,26 @@ const SubNavStyles = styled.nav`
   }
   @media (min-width: ${props => props.theme.largeScreen}) {
     padding-top: 1rem;
-    /* overflow-x: hidden; */
-
-    .subNav-heading {
+    height: unset;
+    width: 18vw;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-size: 1.35rem;
       display: block;
+      right: unset;
       text-align: left;
       padding-bottom: 1rem;
     }
     ul {
       padding-left: 1rem;
       padding-bottom: 1rem;
-
       flex-direction: column;
       align-items: flex-start;
       font-size: 1rem;
-    }
-    h2 {
-      font-size: 1.35rem;
-      text-align: center;
-    }
-    .blur-right,
-    .blur-left {
-      display: none;
     }
   }
 `;

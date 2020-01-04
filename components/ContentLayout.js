@@ -2,15 +2,18 @@ import styled from "styled-components";
 
 const ContentLayout = styled.div`
   background: ${props => props.theme.gray2};
-  margin: ${props => props.theme.mobileStatusBarHeight} auto 0 auto;
-  height: calc(100vh - ${props => props.theme.navHeight});
+  margin: 10rem auto 0 auto;
+  height: calc(150vh - ${props => props.theme.navHeight});
+  display: grid;
+  grid-template-columns: 1fr;
 
   main {
+    justify-self: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    height: calc(170vh - ${props => props.theme.navHeight});
-    overflow-y: scroll;
+    /* align-items: center; */
+    /* height: calc(${props => props.theme.navHeight}); */
+    /* overflow-y: scroll; */
     padding-bottom: 200px;
     padding-top: 1rem;
 
@@ -20,12 +23,13 @@ const ContentLayout = styled.div`
   }
 
   @media (min-width: ${props => props.theme.largeScreen}) {
-    margin-top: ${props => props.theme.navHeight};
-    display: flex;
+    margin-top: 5rem;
+    width: 60vw;
+    /* display: flex; */
     main {
       /* position relative to keep transition div 100% within the bounds of main? */
       position: relative;
-      flex-grow: 2;
+      /* flex-grow: 2; */
     }
   }
 `;

@@ -1,38 +1,33 @@
 import React from "react";
 import styled from "styled-components";
-import { ParentDisplayConsumer } from "../../components/ParentDisplayProvider";
+import { ParentDisplayConsumer } from "../ParentDisplayProvider";
 
-// container for StudioLabel and the dances of rthe studio
+// container for StudioLabel and the checkboxed dances of the studio
 const StudioCheckboxes = styled.div`
-  justify-self: center;
-  margin: 1rem 0;
+  margin-bottom: 1rem;
 `;
-
-//bold the studio Name
+//studio Name styles
 const StudioLabel = styled.label`
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: ${props => (props.disabled ? props.theme.disabledText : "inherit")};
 `;
-// checkbox and label of each dance for the studio
-const DancesOfStudio = styled.div`
+// styles for checkbox and label of each dance for the studio
+const Checkboxes = styled.div`
   padding-left: 1rem;
+  input,
   label {
     color: ${props => (props.disabled ? props.theme.disabledText : "inherit")};
+    margin-bottom: 0.5rem;
   }
 `;
 
-//each checkbox item including studio and dances
-const CheckboxItem = styled.div`
-  padding-bottom: 0.5rem;
-`;
-
-const DanceDisplayByStudio = ({
+function StudioRoutinesCheckboxes({
   allRoutines,
   studioName,
   studioId,
   dancerId
-}) => {
+}) {
   const studioRoutines = allRoutines.filter(
     routine => routine.studio && routine.studio.id === studioId
   );
@@ -50,21 +45,19 @@ const DanceDisplayByStudio = ({
           hiddenStudios.includes(studioId) || hiddenDancers.includes(dancerId);
         return (
           <StudioCheckboxes disabled={hiddenDancers.includes(dancerId)}>
-            <CheckboxItem>
-              <input
-                disabled={hiddenDancers.includes(dancerId)}
-                checked={!hiddenStudios.includes(studioId)}
-                onChange={() => toggleStudio(studioId, hiddenStudios)}
-                type="checkbox"
-                id={studioName}
-                name={studioName}
-                value={studioName}
-              />
-              <StudioLabel htmlFor={studioName}>{studioName}</StudioLabel>
-            </CheckboxItem>
-            <DancesOfStudio disabled={disabled}>
+            <input
+              disabled={hiddenDancers.includes(dancerId)}
+              checked={!hiddenStudios.includes(studioId)}
+              onChange={() => toggleStudio(studioId, hiddenStudios)}
+              type="checkbox"
+              id={studioName}
+              name={studioName}
+              value={studioName}
+            />
+            <StudioLabel htmlFor={studioName}>{studioName}</StudioLabel>
+            <Checkboxes disabled={disabled}>
               {studioRoutines.map(routine => (
-                <CheckboxItem key={routine.id}>
+                <div key={routine.id}>
                   <input
                     disabled={disabled}
                     checked={!hiddenDances.includes(routine.id)}
@@ -75,14 +68,15 @@ const DanceDisplayByStudio = ({
                     onChange={() => toggleDance(routine.id, hiddenDances)}
                   />
                   <label htmlFor={routine.name}>{routine.name}</label>
-                </CheckboxItem>
+                </div>
               ))}
-            </DancesOfStudio>
+            </Checkboxes>
           </StudioCheckboxes>
         );
       }}
     </ParentDisplayConsumer>
   );
-};
+}
 
-export default DanceDisplayByStudio;
+export default StudioRoutinesCheckboxes;
+export { StudioCheckboxes, StudioLabel, Checkboxes };

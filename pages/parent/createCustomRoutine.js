@@ -1,9 +1,10 @@
-import ParentLayout from "../../components/Parent/ParentLayout";
+import SubNavMainLayout from "../../components/SubNavMainLayout";
 import { useQuery } from "@apollo/react-hooks";
 import CreateCustomRoutineForm from "../../components/Parent/CreateCustomRoutineForm";
 import { STUDIOS_AND_DANCERS } from "../../components/Parent/Queries";
 import Error from "../../components/Error";
 import BackButton from "../../components/BackButton";
+import NotesSubNav from "../../components/Parent/NotesSubNav";
 
 function createCustomRoutinePage() {
   const { data: parent, loading, error } = useQuery(STUDIOS_AND_DANCERS);
@@ -11,12 +12,15 @@ function createCustomRoutinePage() {
   if (error) return <Error error={error} />;
 
   return (
-    <ParentLayout
-      page={"Create Your own Routine"}
-      action={<BackButton text={"Cancel"} />}
-    >
-      <CreateCustomRoutineForm parent={parent.parentUser} />
-    </ParentLayout>
+    <>
+      <NotesSubNav />
+      <SubNavMainLayout
+        page={"Create Your own Routine"}
+        action={<BackButton text={"Cancel"} />}
+      >
+        <CreateCustomRoutineForm parent={parent.parentUser} />
+      </SubNavMainLayout>
+    </>
   );
 }
 

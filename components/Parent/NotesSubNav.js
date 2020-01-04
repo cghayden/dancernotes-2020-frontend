@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import SubNavStyles from "../styles/SubNavStyles";
 import StyledLink from "../StyledLink";
-import SidebarPosition from "../styles/SidebarPosition";
+// import LeftSidebar from "../styles/LeftSidebar";
 import styled from "styled-components";
 import Modal from "../Modal";
 import EventsLinksModal from "./EventsLinksModal";
@@ -32,9 +32,9 @@ function NotesSubNav() {
   const [showEvents, setShowEvents] = useState(false);
 
   return (
-    <SidebarPosition>
+    <>
       <NotesSubNavStyles>
-        <h2 className="subNav-heading">Notes</h2>
+        <h2>Notes</h2>
         <ul>
           <li>
             <StyledLink activeClassName="active" href="/parent/notes/routines">
@@ -109,7 +109,7 @@ function NotesSubNav() {
       <Modal open={showEvents} setOpen={setShowEvents}>
         <EventsLinksModal />
       </Modal>
-    </SidebarPosition>
+    </>
   );
 }
 export default NotesSubNav;

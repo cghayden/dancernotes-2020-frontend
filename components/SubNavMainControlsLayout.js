@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
-import MobileStatusBar from "./MobileStatusBar";
-import MobileNav from "./MobileNav";
-import DesktopNav from "./DesktopNav";
-import ContentLayout from "../ContentLayout";
-import ContentHeader from "../ContentHeader";
+import MobileStatusBar from "./Parent/MobileStatusBar";
+import MobileNav from "./Parent/MobileNav";
+import DesktopNav from "./Parent/DesktopNav";
+// import ContentLayout from "../ContentLayout";
+import ContentHeader from "./ContentHeader";
 import styled from "styled-components";
 
-const SubNavMainLayout = styled.main`
+const MainStyle = styled.main`
   margin-top: 9rem;
   display: flex;
   flex-direction: column;
@@ -14,22 +14,25 @@ const SubNavMainLayout = styled.main`
   align-items: center;
   @media (min-width: ${props => props.theme.largeScreen}) {
     margin-top: ${props => props.theme.navHeight};
+    margin-left: 18vw;
+    /* right margin to give room for control panel */
+    margin-right: 18vw;
   }
 `;
 
 //action is a component that triggers an action for the page, i.e add a dancer, or create a new dance
-const ParentLayout = ({ children, page = "", action = null }) => {
+const SubNavMainLayout = ({ children, page = "", action = null }) => {
   return (
     <Fragment>
       <MobileStatusBar page={page} action={action} />
       <MobileNav />
       <DesktopNav />
-      <SubNavMainLayout>
+      <MainStyle>
         <ContentHeader page={page} action={action} />
         {children}
-      </SubNavMainLayout>
+      </MainStyle>
     </Fragment>
   );
 };
 
-export default ParentLayout;
+export default SubNavMainLayout;

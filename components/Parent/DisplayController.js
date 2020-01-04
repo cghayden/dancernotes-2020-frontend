@@ -3,7 +3,7 @@ import { Query } from "react-apollo";
 import styled from "styled-components";
 
 import DancerToggler from "./DancerToggler";
-import DanceDisplayByStudio from "./DanceDisplayByStudio";
+import StudioRoutinesCheckboxes from "./StudioRoutinesCheckboxes";
 import IndependentRoutinesCheckboxes from "./IndependentRoutinesCheckboxes";
 import { DANCER_QUERY } from "./DancerQuery";
 
@@ -16,7 +16,7 @@ import { DANCER_QUERY } from "./DancerQuery";
 }
 
 const DancerControlsStyle = styled.div`
-  background-color: ${props => props.theme.gray1};
+  background-color: ${props => props.theme.background};
   display: grid;
   justify-items: start;
   border-radius: 5px;
@@ -49,7 +49,7 @@ class DisplayController extends Component {
 
               {dancer.studios &&
                 dancer.studios.map(studio => (
-                  <DanceDisplayByStudio
+                  <StudioRoutinesCheckboxes
                     allRoutines={dancer.allRoutines}
                     studioName={studio.studioName}
                     studioId={studio.id}

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { animated, useTransition } from "react-spring";
 
-import ParentLayout from "../../../components/Parent/ParentLayout";
+import SubNavMainControlsLayout from "../../../components/SubNavMainControlsLayout";
 import RoutinesDisplay from "../../../components/Parent/RoutinesDisplay";
 import CreateDancerForm from "../../../components/Parent/CreateDancerForm";
 import NotesSubNav from "../../../components/Parent/NotesSubNav";
@@ -30,7 +30,7 @@ const ParentHome = () => {
   if (loading) return <p>loading...</p>;
   if (!parentUser.dancers || parentUser.dancers.length < 1) {
     return (
-      <ParentLayout page="Routines">
+      <SubNavMainControlsLayout page="Routines">
         <p>Welcome to dancernotes!</p>
 
         <button onClick={() => toggleAddDancer(!addDancer)}>
@@ -45,23 +45,20 @@ const ParentHome = () => {
               </animated.div>
             )
         )}
-      </ParentLayout>
+      </SubNavMainControlsLayout>
     );
   }
   return (
-    <ParentLayout
-      page="Routines"
-      action={<OffScreenControlsToggler text="Display" />}
-      subnav={<NotesSubNav />}
-      controls={
-        <ControlPanel
-          dancerIds={parentUser.dancersIds}
-          dancers={parentUser.dancers}
-        />
-      }
-    >
-      <RoutinesDisplay dancerIds={parentUser.dancersIds} />
-    </ParentLayout>
+    <>
+      <NotesSubNav />
+      <SubNavMainControlsLayout
+        page="Routines"
+        action={<OffScreenControlsToggler text="Display" />}
+      >
+        <RoutinesDisplay dancerIds={parentUser.dancersIds} />
+      </SubNavMainControlsLayout>
+      <ControlPanel dancerIds={parentUser.dancersIds} />
+    </>
   );
 };
 
