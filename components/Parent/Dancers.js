@@ -6,7 +6,7 @@ const WelcomeMessage = styled(Card)`
   background: transparent;
 `;
 
-const Dancers = ({ hasDancers, dancers, addDancer, toggleAddDancer }) => {
+const Dancers = ({ hasDancers, dancers }) => {
   // if has dancers, show dancers cards
   if (hasDancers) {
     return (
@@ -28,12 +28,9 @@ const Dancers = ({ hasDancers, dancers, addDancer, toggleAddDancer }) => {
             simply browse classes at a participating studio near you
           </p>
         </div>
-        <button
-          className="btn-dark"
-          onClick={() => toggleAddDancer(!addDancer)}
-        >
-          {!addDancer ? `Add a Dancer` : `Cancel`}
-        </button>
+        <Link href="addDancer">
+          <a>Add a Dancer</a>
+        </Link>
       </WelcomeMessage>
     );
   }

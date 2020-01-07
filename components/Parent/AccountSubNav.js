@@ -9,7 +9,7 @@ function AccountSubNav({ dancers }) {
       <h2 className="subNav-heading">Account</h2>
       <ul>
         <li>
-          <StyledLink activeClassName="active" href="/parent/dancers">
+          <StyledLink activeClassName="active" href="/parent/account/dancers">
             <a>Dancers</a>
           </StyledLink>
         </li>

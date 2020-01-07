@@ -98,7 +98,10 @@ function NotesSubNav() {
           <ul>
             {dancers.map(dancer => (
               <li key={dancer.firstName}>
-                <StyledLink activeClassName="active" href={`/parent/dancers`}>
+                <StyledLink
+                  activeClassName="active"
+                  href={`/parent/account/dancers`}
+                >
                   <a>{dancer.firstName}</a>
                 </StyledLink>
               </li>

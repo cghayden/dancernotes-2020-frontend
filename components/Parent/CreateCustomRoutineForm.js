@@ -2,7 +2,6 @@ import React, { useState, Fragment } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import Link from "next/link";
-import Error from "../Error";
 import { ALL_Rs } from "./Queries";
 import { UPDATE_CUSTOM_ROUTINE } from "./UpdateCustomRoutine";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
@@ -42,7 +41,7 @@ const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
   }
 `;
 
-const initialInputs = {
+const initialInputState = {
   name: "",
   performanceName: "",
   dancer: "",
@@ -56,7 +55,7 @@ const initialInputs = {
 };
 
 function CreateCustomRoutineForm({ parent }) {
-  const { inputs, updateInputs, handleChange } = useForm(initialInputs);
+  const { inputs, updateInputs, handleChange } = useForm(initialInputState);
   const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState();
   const [loadingSong, setLoadingSong] = useState(false);
   const [showModal, toggleModal] = useState(false);
@@ -363,16 +362,25 @@ function CreateCustomRoutineForm({ parent }) {
               onChange={handleChange}
             />
           </div>
-          <div className="input-item">
-            <label htmlFor="music">Upload the music for this dance...</label>
-            <input
-              type="file"
-              id="music"
-              name="music"
-              placeholder="Upload the music for this dance"
-              onChange={setSongtoState}
-            />
-          </div>
+          <button
+            type="button"
+            className="btn-dark"
+            onClick={() => toggleFileInput(true)}
+          >
+            Add Music
+          </button>
+          {showFileInput && (
+            <div className="input-item">
+              <label htmlFor="music">Upload the music for this dance...</label>
+              <input
+                type="file"
+                id="music"
+                name="music"
+                placeholder="Upload the music for this dance"
+                onChange={setSongtoState}
+              />
+            </div>
+          )}
 
           <div className="form-footer">
             <p>{status}</p>

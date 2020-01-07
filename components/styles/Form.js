@@ -17,7 +17,7 @@ const Form = styled.form`
   border-radius: ${props => props.theme.borderRadius};
   color: ${props => props.theme.newBlue[90].hsl};
   background: ${props => props.theme.gray0};
-  box-shadow: ${props => props.theme.dropShadow1};
+  /* box-shadow: ${props => props.theme.dropShadow1}; */
   padding: 1rem 0;
   width: 90%;
   min-width: 320px;

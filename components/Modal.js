@@ -19,6 +19,20 @@ const AnimatedModalContainer = styled(animated.div)`
   }
 `;
 
+const ModalBackdrop = styled(animated.div)`
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.7);
+  top: 9rem;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10000;
+  @media (min-width: ${props => props.theme.largeScreen}) {
+    margin-top: ${props => props.theme.navHeight};
+    margin-left: 18vw;
+  }
+`;
+
 export default function Modal({ children, open }) {
   const transition = useTransition(open, null, {
     from: { opacity: 0, transform: "translate3d(-1000px, 0, 0)" },
@@ -33,9 +47,9 @@ export default function Modal({ children, open }) {
           {transition.map(
             ({ item, key, props: animation }) =>
               item && (
-                <animated.div className="modal-backdrop" style={animation}>
+                <ModalBackdrop style={animation}>
                   <AnimatedModalContainer>{children}</AnimatedModalContainer>
-                </animated.div>
+                </ModalBackdrop>
               )
           )}
         </ClientOnlyPortal>

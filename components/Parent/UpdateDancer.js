@@ -3,6 +3,12 @@ import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import Form from "../styles/Form";
 import Error from "../../components/Error";
+import styled from "styled-components";
+
+const UpdateDancerForm = styled(Form)`
+  box-shadow: none;
+  padding: 0;
+`;
 
 const UPDATE_DANCER_MUTATION = gql`
   mutation UPDATE_DANCER_MUTATION(
@@ -93,7 +99,7 @@ class UpdateDancer extends Component {
     return (
       <Mutation mutation={UPDATE_DANCER_MUTATION}>
         {(updateDancer, { loading, error }) => (
-          <Form onSubmit={e => this.updateDancer(e, updateDancer)}>
+          <UpdateDancerForm onSubmit={e => this.updateDancer(e, updateDancer)}>
             <Error error={error} />
             <fieldset
               disabled={loading || this.state.loadingAvatar}
@@ -149,7 +155,7 @@ class UpdateDancer extends Component {
                 </button>
               </div>
             </fieldset>
-          </Form>
+          </UpdateDancerForm>
         )}
       </Mutation>
     );
