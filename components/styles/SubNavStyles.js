@@ -1,14 +1,21 @@
 import styled from "styled-components";
 
 const SubNavStyles = styled.nav`
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
   color: ${props => props.theme.blackText};
   background: ${props => props.theme.background};
-  padding: 0.5rem 0;
+  padding: 1rem 0 0.5rem 1rem;
   height: 5rem;
   position: fixed;
   top: ${props => props.theme.navHeight};
   left: 0;
   right: 0;
+  z-index: 1000;
+  /* z-index to keep it on top of main, to allow click events on navlinks */
   h1,
   h2,
   h3,
@@ -16,6 +23,8 @@ const SubNavStyles = styled.nav`
   h5,
   h6 {
     display: none;
+    align-self: flex-start;
+    padding-left: 1rem;
   }
 
   .active {

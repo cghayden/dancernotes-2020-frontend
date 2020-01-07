@@ -8,13 +8,6 @@ import { UPDATE_DANCER_MUTATION } from "./UpdateDancer";
 import styled from "styled-components";
 import { DancerCardHeaderStyles } from "./DancerCard";
 
-const CardBody = styled(Form)`
-  height: auto;
-  border-radius: 0 0 5px 5px;
-  margin-top: -1rem;
-  background: ${props => props.theme.gray0};
-`;
-
 //same as DancerCard with z-index to put it on top of cardBody(form)
 const ImageDiv = styled.div`
   width: 120px;
@@ -141,7 +134,6 @@ class CreateDancerForm extends Component {
           >
             {(createDancer, { error, loading }) => (
               <>
-                <h2 style={{ textAlign: "center" }}>Add a Dancer</h2>
                 <DancerCardHeaderStyles>
                   <ImageDiv>
                     {previewAvatar ? (
@@ -154,7 +146,7 @@ class CreateDancerForm extends Component {
                     )}
                   </ImageDiv>
                 </DancerCardHeaderStyles>
-                <CardBody
+                <Form
                   method="post"
                   onSubmit={e =>
                     this.saveNewDancer(e, createDancer, updateDancer)
@@ -164,6 +156,8 @@ class CreateDancerForm extends Component {
                     disabled={loading || loadingAvatar}
                     aria-busy={loading || loadingAvatar}
                   >
+                    {" "}
+                    <h2 style={{ textAlign: "center" }}>Add a Dancer</h2>
                     <Error error={error || errorLoadingAvatar} />
                     <div className="input-item">
                       <label htmlFor="firstName">Name</label>
@@ -176,7 +170,6 @@ class CreateDancerForm extends Component {
                         onChange={this.handleChange}
                       />
                     </div>
-
                     <div className="input-item">
                       <label htmlFor="image">
                         Add a picture of your dancer to easily identify the
@@ -190,7 +183,6 @@ class CreateDancerForm extends Component {
                         onChange={this.previewAvatar}
                       />
                     </div>
-
                     <button type="submit">Save Dancer</button>
                     <button
                       type="button"
@@ -199,7 +191,7 @@ class CreateDancerForm extends Component {
                       Cancel
                     </button>
                   </fieldset>
-                </CardBody>
+                </Form>
               </>
             )}
           </Mutation>

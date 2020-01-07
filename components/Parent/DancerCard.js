@@ -7,7 +7,7 @@ import SearchForStudio from "../SearchForStudio";
 import Card from "../styles/Card";
 import Edit from "../Icons/Edit";
 import UpdateDancer from "./UpdateDancer";
-
+import Form from "../styles/Form";
 import { RegistrationContextConsumer } from "./RegistrationContext";
 
 const DancerCardHeaderStyles = styled(Card)`
@@ -17,6 +17,8 @@ const DancerCardHeaderStyles = styled(Card)`
   padding: 1rem;
   margin-top: 80px;
   margin-bottom: -20px;
+  z-index: 100;
+  /* z-index to hide top box shadow of edit dancer form */
 `;
 
 const FlipButton = styled.button`
@@ -31,7 +33,7 @@ const DancerCardFooter = styled.div`
   flex-direction: column;
 `;
 
-const CardFlipAnimation = styled(Card)`
+const CardFlipAnimation = styled.div`
   display: flex;
   justify-content: center;
   position: relative;

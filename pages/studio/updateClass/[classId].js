@@ -41,11 +41,11 @@ const updateStudioClassDancePage = () => {
     variables: { id: classId }
   });
   const studio = useStudio();
-  // console.log("data:", data);
+
   if (!studio || loading) {
     return (
       <StudioLayout page={"Update Your Routine"}>
-        {loading && <p>Loading...</p>}
+        <p>Loading...</p>
       </StudioLayout>
     );
   }

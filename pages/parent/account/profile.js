@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/react-hooks";
 import { PARENT_USER_QUERY } from "../../../components/Parent/Queries";
 
-import ParentLayout from "../../../components/Parent/ParentLayout";
+import SubNavMainLayout from "../../../components/SubNavMainLayout";
 import AccountSubNav from "../../../components/Parent/AccountSubNav";
 import MyProfile from "../../../components/Parent/MyProfile";
 
@@ -30,13 +30,12 @@ const Profile = () => {
   const parentUser = data ? data.parentUser : {};
 
   return (
-    <ParentLayout
-      page={"My Account"}
-      action={"Edit button"}
-      subnav={<AccountSubNav dancers={parentUser.dancers} />}
-    >
-      <MyProfile user={parentUser} />
-    </ParentLayout>
+    <>
+      <AccountSubNav dancers={parentUser.dancers} />
+      <SubNavMainLayout page={"My Account"} action={"Edit button"}>
+        <MyProfile user={parentUser} />
+      </SubNavMainLayout>
+    </>
   );
 
   // return (

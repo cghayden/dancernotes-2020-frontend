@@ -144,21 +144,16 @@ input[type='checkbox']{
   .modal-backdrop {
     position: fixed;
     background-color: rgba(0, 0, 0, 0.7);
-    top: 0;
+    top: 9rem;
     right: 0;
     bottom: 0;
     left: 0;
+    @media (min-width: ${theme.largeScreen}) {
+    margin-top: ${theme.navHeight};
+    margin-left: 18vw;
+  }
   }
 
-  .modal-container {
-    background-color: white;
-    position: absolute;
-    top: 10%;
-    right: 10%;
-    bottom: 10%;
-    left: 10%;
-    padding: 1em;
-  }
 `;
 
 export default class GlobalStyles extends Component {

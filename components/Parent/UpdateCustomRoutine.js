@@ -1,12 +1,15 @@
 import React, { Fragment, useState } from "react";
-import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import { StyledCreateClassForm } from "../styles/Form";
-import { STUDIOS_AND_DANCERS } from "./Queries";
-import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
+import gql from "graphql-tag";
+import Link from "next/link";
+import Router from "next/router";
 import Error from "../Error";
-import BackButton from "../BackButton";
+import { StyledCreateClassForm } from "../styles/Form";
+import useForm from "../../lib/useForm";
 import Modal from "../Modal";
+import BackButton from "../BackButton";
+import DeleteDanceClass from "../DeleteDanceClass";
+import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
 
 const UPDATE_CUSTOM_ROUTINE = gql`
   mutation UPDATE_CUSTOM_ROUTINE(
@@ -46,37 +49,94 @@ const UPDATE_CUSTOM_ROUTINE = gql`
     }
   }
 `;
+const initialInputState = {};
 
-const UpdateCustomRoutine = ({ dance }) => {
-  const [values, setValues] = useState({});
-  const [audioFile, setAudioFile] = useState();
+function UpdateCustomRoutine({ dance, parent }) {
+  const [inputs, updateInputs, handleChange] = useState({});
+  const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState();
   const [loadingSong, setLoadingSong] = useState(false);
   const [showModal, toggleModal] = useState(false);
-  const [error, setError] = useState();
-  const {
-    data: parent,
-    loading: loadingParent,
-    error: errorLoadingParent
-  } = useQuery(STUDIOS_AND_DANCERS);
+  const [status, setStatus] = useState();
+  const [showFileInput, toggleFileInput] = useState(false);
 
   const [
     updateCustomRoutine,
-    { loading: loadingUpdate, error: errorUpdatingDanceClass }
+    {
+      data: updatedRoutine,
+      loading: updatingRoutine,
+      error: errorUpdatingRoutine
+    }
   ] = useMutation(UPDATE_CUSTOM_ROUTINE, {
-    variables: { ...values, id: dance.id },
+    variables: { ...inputs, id: dance.id },
     refetchQueries: ["allRs"],
-    awaitRefetchQueries: true
-    // onCompleted: onCompleted
+    awaitRefetchQueries: true,
+    onCompleted: () => {
+      resetForm();
+    }
   });
 
   const [
     deleteCloudinaryAsset,
     { loading: deletingAsset, error: errorDeletingAsset }
-  ] = useMutation(DELETE_CLOUDINARY_ASSET, {
-    onError: error => setError(error)
-  });
+  ] = useMutation(DELETE_CLOUDINARY_ASSET);
 
-  const uploadSong = async routineId => {
+  const updatedDanceClass =
+    updatedRoutine && updatedRoutine.updateCustomRoutine;
+  const loading = loadingSong || updatingRoutine || deletingAsset;
+  function resetForm() {
+    updateInputs({ ...initialInputState });
+    toggleFileInput(false);
+    setStatus();
+  }
+
+  function setSongtoState(e) {
+    const audioFile = e.target.files[0];
+    updateInputs({ ...inputs, audioFile });
+  }
+
+  const saveChanges = async (e, updateMutation) => {
+    e.preventDefault();
+    //A. update class with audioFile:
+    if (inputs.audioFile) {
+      // if dance already has a song, delete it
+      setLoadingSong(true);
+      if (dance.musicId) {
+        setStatus("Deleting Old Music");
+        await deleteCloudinaryAsset({
+          variables: { publicId: danceClass.musicId }
+        }).catch(error => console.log(error));
+      }
+      //upload song to cloudinary and set id and url to state
+      setStatus("Uploading Song...");
+      await uploadSong(dance.id, inputs.audioFile).catch(err => {
+        //if error uploading to cloudinary, delete from inputs.  Why? because if there are no other updates besides the music, the update does not need to be run, because the music upload to cloudinary has failed.
+        delete inputs.audioFile;
+        setCloudinaryUploadError(err);
+      });
+      setLoadingSong(false);
+      //if upload song errored out, and there are other inputs to update, update them
+      if (Object.keys(inputs).length > 0) {
+        setStatus("Updating Class");
+        await updateDanceClass().catch(error => {
+          //if a song was uploaded to cloudinary, but the url and id could not be updated in prisma, delete the song from cloudinary
+          if (inputs.musicId) {
+            deleteCloudinaryAsset({ variables: { publicId: inputs.musicId } });
+          }
+        });
+      }
+    }
+    // B. update class without audiofile
+    else {
+      setStatus("Updating Class");
+      await updateCustomRoutine();
+    }
+    //c. clean up
+    setStatus();
+    toggleModal(true);
+    resetForm();
+  };
+
+  async function uploadSong(danceClassId, asset) {
     const data = new FormData();
     data.append("file", audioFile);
     data.append("upload_preset", "dancernotes-music");
@@ -88,52 +148,28 @@ const UpdateCustomRoutine = ({ dance }) => {
         method: "POST",
         body: data
       }
-    );
-    const file = await res.json();
-    setValues({
-      music: file.secure_url,
-      musicId: file.public_id,
-      ...values
+    ).catch(error => {
+      setCloudinaryUploadError(error);
     });
-  };
-
-  const saveChanges = async (e, updateMutation) => {
-    e.preventDefault();
-    // if audioFile, upload and get new Id.
-    if (audioFile) {
-      // if dance already has a song, delete it
-      if (dance.musicId) {
-        setLoadingSong(true);
-        await deleteCloudinaryAsset({
-          variables: { publicId: danceClass.musicId }
-        }).catch(error => setError(error));
-      }
-      //upload song to cloudinary and set id and url to state
-      await uploadSong(dance.id, audioFile).catch(error => setError(error));
+    const file = await res.json();
+    if (file.error) {
+      setCloudinaryUploadError(file.error);
       setLoadingSong(false);
     }
-    // update routine with values in state
-    await updateMutation().catch(error => {
-      // delete song file from cloudinary because there was an error updating the class with the song url and id
-      deleteCloudinaryAsset({
-        variables: {
-          publicId: file.public_id
-        }
-      });
-      setError(error);
+    updateInputs({
+      ...inputs,
+      music: file.secure_url,
+      musicId: file.public_id
     });
-  };
-
-  function handleInputChange(e) {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
   }
+  // disable submission of empty state if no updates are made
+  const disableButton = Object.keys(inputs).length < 1;
 
   return (
     <Fragment>
       <Modal open={showModal} setOpen={toggleModal}>
         <div>
-          {errorUpdatingDanceClass && (
+          {errorUpdatingRoutine && (
             <>
               <p>
                 Warning: there was a problem saving your class. Please try
@@ -142,23 +178,45 @@ const UpdateCustomRoutine = ({ dance }) => {
               <button role="button" onClick={() => toggleModal(false)}>
                 Try Again
               </button>
-              <Link href={`/studio/home`}>
+              <Link href={`/parent/notes/routines`}>
                 <a>Never Mind!</a>
               </Link>
             </>
           )}
+          {updatedDanceClass && (
+            <p>
+              Success - you updated
+              {updatedDanceClass.name}
+            </p>
+          )}
+          {updatedDanceClass && errorUploadingToCloudinary && (
+            <>
+              <p>
+                Success - you updated
+                {updatedDanceClass.name}
+              </p>
+              <p>
+                Warning: there was a problem uploading the music for
+                {updatedDanceClass.name}. You can try to add music now or later
+                by updating the dance class:
+                <Link href={`/parent/updateDance/${updatedDanceClass.id}`}>
+                  <a>Update Class</a>
+                </Link>
+              </p>
+            </>
+          )}
+          <Link href="/parent/notes/routines">
+            <a>Return to Routines</a>
+          </Link>
         </div>
       </Modal>
       <StyledCreateClassForm
         method="post"
         onSubmit={async e => await saveChanges(e, updateCustomRoutine)}
       >
-        <fieldset
-          disabled={loadingUpdate || loadingSong}
-          aria-busy={loadingUpdate || loadingSong}
-        >
+        <fieldset disabled={loading} aria-busy={loading}>
           <h2>Update {dance.name}</h2>
-          <Error error={errorUpdatingDanceClass} />
+          {/* <Error error={errorUpdatingRoutine} /> */}
           <div className="input-item">
             <label htmlFor="name">Name*</label>
             <input
@@ -167,7 +225,7 @@ const UpdateCustomRoutine = ({ dance }) => {
               type="text"
               name="name"
               defaultValue={dance.name}
-              onChange={handleInputChange}
+              onChange={handleChange}
             />
           </div>
           <div className="input-item">
@@ -176,17 +234,16 @@ const UpdateCustomRoutine = ({ dance }) => {
               id="dancer"
               name="dancer"
               defaultValue={dance.dancer}
-              onChange={handleInputChange}
+              onChange={handleChange}
             >
               <option default defaultValue={""} disabled>
                 Dancer...
               </option>
-              {parent &&
-                parent.parentUser.dancers.map(dancer => (
-                  <option key={dancer.id} defaultValue={dancer.id}>
-                    {dancer.firstName}
-                  </option>
-                ))}
+              {parent.dancers.map(dancer => (
+                <option key={dancer.id} defaultValue={dancer.id}>
+                  {dancer.firstName}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -197,17 +254,16 @@ const UpdateCustomRoutine = ({ dance }) => {
               id="studio"
               name="studio"
               defaultValue={dance.studio}
-              onChange={handleInputChange}
+              onChange={handleChange}
             >
               <option default defaultValue={""} disabled>
                 Studio...
               </option>
-              {parent &&
-                parent.parentUser.studios.map(studio => (
-                  <option key={studio.id} defaultValue={studio.id}>
-                    {studio.studioName}
-                  </option>
-                ))}
+              {parent.studios.map(studio => (
+                <option key={studio.id} defaultValue={studio.id}>
+                  {studio.studioName}
+                </option>
+              ))}
               <option defaultValue={"None"}>None</option>
             </select>
           </div>
@@ -220,7 +276,7 @@ const UpdateCustomRoutine = ({ dance }) => {
                 id="day"
                 name="day"
                 defaultValue={dance.day}
-                onChange={handleInputChange}
+                onChange={handleChange}
               >
                 <option default defaultValue={""} disabled>
                   Day...
@@ -244,7 +300,7 @@ const UpdateCustomRoutine = ({ dance }) => {
                 min="0:00"
                 max="23:59"
                 defaultValue={dance.startTime}
-                onChange={handleInputChange}
+                onChange={handleChange}
               />
             </div>
             <div className="form-row-item">
@@ -257,7 +313,7 @@ const UpdateCustomRoutine = ({ dance }) => {
                 min="0:00"
                 max="23:59"
                 defaultValue={dance.endTime}
-                onChange={handleInputChange}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -268,7 +324,7 @@ const UpdateCustomRoutine = ({ dance }) => {
               name="performanceName"
               placeholder="Performance Name, or Name of Song"
               defaultValue={dance.performanceName}
-              onChange={handleInputChange}
+              onChange={handleChange}
             />
           </div>
 
@@ -279,7 +335,7 @@ const UpdateCustomRoutine = ({ dance }) => {
               name="tights"
               placeholder="The style of tights required..."
               defaultValue={dance.tights}
-              onChange={handleInputChange}
+              onChange={handleChange}
             />
           </div>
 
@@ -290,7 +346,7 @@ const UpdateCustomRoutine = ({ dance }) => {
               name="shoes"
               placeholder="The style of shoes required..."
               defaultValue={dance.shoes}
-              onChange={handleInputChange}
+              onChange={handleChange}
             />
           </div>
           <div className="input-item">
@@ -301,24 +357,32 @@ const UpdateCustomRoutine = ({ dance }) => {
               name="notes"
               rows="5"
               defaultValue={dance.notes}
-              onChange={handleInputChange}
+              onChange={handleChange}
             />
           </div>
-          <div className="input-item">
-            <label htmlFor="music">Upload music for this dance...</label>
-            <input
-              type="file"
-              id="music"
-              name="music"
-              placeholder="Upload music for this dance"
-              onChange={e => setAudioFile(e.target.files[0])}
-            />
-          </div>
-
+          <button
+            type="button"
+            className="btn-dark"
+            onClick={() => toggleFileInput(true)}
+          >
+            Add/Change Music
+          </button>
+          {showFileInput && (
+            <div className="input-item">
+              <label htmlFor="audioFile">Upload music for this dance...</label>
+              <input
+                type="file"
+                id="audioFile"
+                name="audioFile"
+                placeholder="Upload music for this dance"
+                onChange={setSongtoState}
+              />
+            </div>
+          )}
           <div className="form-footer">
-            <button type="submit" disabled={loadingUpdate || loadingSong}>
+            <button type="submit" disabled={updatingRoutine || loadingSong}>
               Sav
-              {loadingUpdate ? "ing " : "e "} Changes
+              {updatingRoutine ? "ing " : "e "} Changes
             </button>
             <BackButton text="Cancel" classNames="btn-danger" />{" "}
           </div>
@@ -326,7 +390,7 @@ const UpdateCustomRoutine = ({ dance }) => {
       </StyledCreateClassForm>
     </Fragment>
   );
-};
+}
 
 export default UpdateCustomRoutine;
 export { UPDATE_CUSTOM_ROUTINE };

@@ -6,7 +6,7 @@ import Error from "../Error";
 import { ALL_Rs } from "./Queries";
 import { UPDATE_CUSTOM_ROUTINE } from "./UpdateCustomRoutine";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
-import StyledCreateClassForm from "../styles/Form";
+import { StyledCreateClassForm } from "../styles/Form";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 import BackButton from "../BackButton";
@@ -57,23 +57,26 @@ const initialInputs = {
 
 function CreateCustomRoutineForm({ parent }) {
   const { inputs, updateInputs, handleChange } = useForm(initialInputs);
-
+  const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState();
   const [loadingSong, setLoadingSong] = useState(false);
   const [showModal, toggleModal] = useState(false);
+  const [status, setStatus] = useState();
+  const [showFileInput, toggleFileInput] = useState(false);
 
   const [
     createCustomRoutine,
     {
       data: newCustomRoutine,
-      error: errorCreatingDanceClass,
-      loading: creatingRoutine
+      error: errorCreatingCustomRoutine,
+      loading: creatingCustomRoutine
     }
   ] = useMutation(CREATE_CUSTOM_ROUTINE_MUTATION, {
     variables: { ...inputs },
     onCompleted: () => {
-      updateInputs(initialInputs);
+      resetForm();
     },
-    refetchQueries: [{ query: ALL_Rs }]
+    refetchQueries: [{ query: ALL_Rs }],
+    awaitRefetchQueries: true
   });
 
   const [
@@ -92,33 +95,46 @@ function CreateCustomRoutineForm({ parent }) {
     { error: errorDeletingAsset, loading: deletingAsset }
   ] = useMutation(DELETE_CLOUDINARY_ASSET);
 
-  function setSongtoState(e) {
-    const audioFile = e.target.files[0];
-    updateInputs({ ...inputs, audioFile });
-  }
   const newDanceClass =
     newCustomRoutine && newCustomRoutine.createCustomRoutine;
 
   const loading =
-    loadingSong || creatingRoutine || updatingDanceClass || deletingAsset;
-
+    loadingSong || creatingCustomRoutine || updatingDanceClass || deletingAsset;
+  const errorUploadingSong =
+    errorUpdatingDanceClass || errorUploadingToCloudinary;
+  function resetForm() {
+    updateInputs({ ...initialInputState });
+    toggleFileInput(false);
+    setStatus();
+  }
+  function setSongtoState(e) {
+    const audioFile = e.target.files[0];
+    updateInputs({ ...inputs, audioFile });
+  }
   async function uploadSongAndUpdateRoutine(danceClassId) {
     setLoadingSong(true);
+    setStatus("Uploading Song...");
     const data = new FormData();
     data.append("file", inputs.audioFile);
     data.append("upload_preset", "dancernotes-music");
     data.append("tag", danceClassId);
-    //todo - handle errors loading to cloudinary
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/coreytesting/video/upload",
       {
         method: "POST",
         body: data
       }
-    );
+    ).catch(error => {
+      setCloudinaryUploadError(error);
+    });
     const file = await res.json();
+    if (file.error) {
+      setCloudinaryUploadError(file.error);
+      setLoadingSong(false);
+      throw `Audio Upload failed: ${file.error}`;
+    }
     setLoadingSong(false);
-
+    setStatus("Updating class...");
     await updateCustomRoutine({
       variables: {
         id: danceClassId,
@@ -133,29 +149,35 @@ function CreateCustomRoutineForm({ parent }) {
         }
       });
     });
+    setStatus();
   }
 
   async function saveNewCustomRoutine(e) {
     e.preventDefault();
     //A. if music file is queued in state, create dance, upload music with tag of routineId, then update routine with the music url and musicId
+    setStatus("Creating Class...");
     if (inputs.audioFile) {
       const newCustomRoutine = await createCustomRoutine();
       const newCustomRoutineId = newCustomRoutine.data.createCustomRoutine.id;
-      await uploadSongAndUpdateRoutine(newCustomRoutineId);
+      await uploadSongAndUpdateRoutine(newCustomRoutineId).catch(() => {
+        setStatus();
+        toggleModal(true);
+      });
     }
     //B. create without music
     else {
-      await createCustomRoutine().catch(e => toggleModal(true));
+      await createCustomRoutine();
       //if fail, error thrown
     }
     toggleModal(true);
+    resetForm();
   }
 
   return (
     <Fragment>
       <Modal open={showModal} setOpen={toggleModal}>
         <div>
-          {errorCreatingDanceClass && (
+          {errorCreatingCustomRoutine && (
             <>
               <p>
                 Warning: there was a problem saving your class. Please try
@@ -168,7 +190,7 @@ function CreateCustomRoutineForm({ parent }) {
           )}
 
           {newDanceClass && <p>Success - you created {newDanceClass.name}</p>}
-          {newDanceClass && errorUpdatingDanceClass && (
+          {newDanceClass && errorUploadingSong && (
             <p>
               Warning: there was a problem uploading the music for{" "}
               {newDanceClass.name}. You can try to add music now or later by
@@ -353,6 +375,8 @@ function CreateCustomRoutineForm({ parent }) {
           </div>
 
           <div className="form-footer">
+            <p>{status}</p>
+
             <button type="submit" disabled={loading}>
               Creat
               {loading ? "ing " : "e "} Class

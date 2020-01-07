@@ -10,9 +10,9 @@ const AnimatedModalContainer = styled(animated.div)`
   right: 10%;
   bottom: 10%;
   left: 10%;
-  padding: 1em;
+  /* padding: 1em; */
 
-  @media (max-width: ${props => props.theme.largeScreen}) {
+  @media (min-width: ${props => props.theme.largeScreen}) {
     left: 3%;
     right: 3%;
     padding: 0.5rem;

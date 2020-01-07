@@ -7,9 +7,11 @@ import ContentHeader from "./ContentHeader";
 import styled from "styled-components";
 
 const MainStyle = styled.main`
+  padding-top: 1rem;
   margin-top: 9rem;
   display: flex;
   flex-direction: column;
+  padding-top: 1rem;
   padding-bottom: 100px;
   align-items: center;
   @media (min-width: ${props => props.theme.largeScreen}) {

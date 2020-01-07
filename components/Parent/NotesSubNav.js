@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import SubNavStyles from "../styles/SubNavStyles";
 import StyledLink from "../StyledLink";
-// import LeftSidebar from "../styles/LeftSidebar";
 import styled from "styled-components";
-import Modal from "../Modal";
-import EventsLinksModal from "./EventsLinksModal";
+// import Modal from "../Modal";
+// import EventsLinksModal from "./EventsLinksModal";
 import { PARENTS_DANCERS } from "./Queries";
 
 const NotesSubNavStyles = styled(SubNavStyles)`
@@ -29,7 +28,6 @@ const NotesSubNavStyles = styled(SubNavStyles)`
 function NotesSubNav() {
   const { data, loading, error } = useQuery(PARENTS_DANCERS);
   const dancers = data && data.parentsDancers;
-  const [showEvents, setShowEvents] = useState(false);
 
   return (
     <>
@@ -70,8 +68,10 @@ function NotesSubNav() {
               <a>Conventions</a>
             </StyledLink>
           </li>
-          <li className="hideOnDesktop">
-            <button onClick={() => setShowEvents(true)}>Events</button>
+          <li>
+            <StyledLink activeClassName="active" href="/parent/notes/events">
+              <a>Events</a>
+            </StyledLink>
           </li>
           <li className="hideOnMobile">
             <StyledLink
@@ -106,9 +106,9 @@ function NotesSubNav() {
           </ul>
         )}
       </NotesSubNavStyles>
-      <Modal open={showEvents} setOpen={setShowEvents}>
+      {/* <Modal open={showEvents} setOpen={setShowEvents}>
         <EventsLinksModal />
-      </Modal>
+      </Modal> */}
     </>
   );
 }

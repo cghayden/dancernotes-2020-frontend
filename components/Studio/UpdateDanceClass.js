@@ -3,14 +3,13 @@ import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import Link from "next/link";
 import Router from "next/router";
-// import { CATEGORIES_QUERY } from "./EditClassCategories";
-import { ALL_DANCE_CLASSES_QUERY } from "./Queries";
-import { DELETE_CLOUDINARY_ASSET } from "../../components/Mutations";
 import Error from "../Error";
 import { StyledCreateClassForm } from "../styles/Form";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
-import DeleteDanceClass from "./DeleteDanceClass";
+import DeleteDanceClass from "../DeleteDanceClass";
+import { DELETE_CLOUDINARY_ASSET } from "../../components/Mutations";
+import { ALL_DANCE_CLASSES_QUERY } from "./Queries";
 
 const UPDATE_DANCECLASS_MUTATION = gql`
   mutation UPDATE_DANCECLASS_MUTATION(
@@ -64,8 +63,7 @@ function UpdateDanceClass({ danceClass, studio }) {
   const [showModal, toggleModal] = useState(false);
   const [status, setStatus] = useState();
   const [showFileInput, toggleFileInput] = useState(false);
-  //need this error?
-  const [error, setError] = useState();
+  // const [error, setError] = useState();
 
   const [
     updateDanceClass,
@@ -89,7 +87,6 @@ function UpdateDanceClass({ danceClass, studio }) {
   ] = useMutation(DELETE_CLOUDINARY_ASSET);
 
   const updatedDanceClass = updatedDance && updatedDance.updateDanceClass;
-
   const loading = loadingSong || updatingDanceClass || deletingAsset;
 
   function resetForm() {
@@ -213,9 +210,9 @@ function UpdateDanceClass({ danceClass, studio }) {
               </p>
               <p>
                 Warning: there was a problem uploading the music for
-                {updateDanceClass.name}. You can try to add music now or later
+                {updatedDanceClass.name}. You can try to add music now or later
                 by updating the dance class:
-                <Link href={`/studio/updateClass/${newDanceClass.id}`}>
+                <Link href={`/studio/updateClass/${updatedDanceClass.id}`}>
                   <a>Update Class</a>
                 </Link>
               </p>
@@ -229,7 +226,7 @@ function UpdateDanceClass({ danceClass, studio }) {
       <StyledCreateClassForm onSubmit={e => saveChanges(e)}>
         <h2>Update {danceClass.name}</h2>
         <fieldset disabled={loading} aria-busy={loading}>
-          <Error error={error} />
+          {/* <Error error={error} /> */}
           <div className="input-item">
             <label htmlFor="name">Class Name </label>
             <input

@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { PARENT_USER_QUERY } from "../../components/Parent/Queries";
 
 import AccountSubNav from "../../components/Parent/AccountSubNav";
-import ParentLayout from "../../components/Parent/ParentLayout";
+import SubNavMainLayout from "../../components/SubNavMainLayout";
 import CreateDancerForm from "../../components/Parent/CreateDancerForm";
 import Dancers from "../../components/Parent/Dancers";
 
@@ -47,33 +47,32 @@ function DancersPage() {
   );
   const hasDancers = parentUser.dancers.length > 0;
   return (
-    <ParentLayout
-      page={"My Dancers"}
-      action={AddDancerButton}
-      subnav={<AccountSubNav dancers={parentUser.dancers} />}
-    >
-      {transition.map(({ item, key, props: styles }) =>
-        item ? (
-          <animated.div key={key} style={styles}>
-            <CreateDancerForm
-              parentId={parentUser.id}
-              style={styles}
-              toggleAddDancer={toggleAddDancer}
-            />
-          </animated.div>
-        ) : (
-          <animated.div key={key} style={styles}>
-            <Dancers
-              addDancer={addDancer}
-              toggleAddDancer={toggleAddDancer}
-              style={styles}
-              hasDancers={hasDancers}
-              dancers={parentUser.dancers}
-            />
-          </animated.div>
-        )
-      )}
-    </ParentLayout>
+    <>
+      <SubNavMainLayout action={AddDancerButton} page="My Dancers">
+        <AccountSubNav dancers={parentUser.dancers} />
+        {transition.map(({ item, key, props: styles }) =>
+          item ? (
+            <animated.div key={key} style={styles}>
+              <CreateDancerForm
+                parentId={parentUser.id}
+                style={styles}
+                toggleAddDancer={toggleAddDancer}
+              />
+            </animated.div>
+          ) : (
+            <animated.div key={key} style={styles}>
+              <Dancers
+                addDancer={addDancer}
+                toggleAddDancer={toggleAddDancer}
+                style={styles}
+                hasDancers={hasDancers}
+                dancers={parentUser.dancers}
+              />
+            </animated.div>
+          )
+        )}
+      </SubNavMainLayout>
+    </>
   );
 }
 

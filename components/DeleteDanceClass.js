@@ -3,7 +3,7 @@ import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import Router from "next/router";
 
-import { ALL_DANCE_CLASSES_QUERY } from "./Queries";
+import { ALL_DANCE_CLASSES_QUERY } from "./Studio/Queries";
 
 const DELETE_DANCECLASS_MUTATION = gql`
   mutation DELETE_DANCECLASS_MUTATION($id: ID!) {
@@ -23,7 +23,7 @@ class DeleteDanceButton extends Component {
         awaitRefetchQueries={true}
         onCompleted={() =>
           Router.push({
-            pathname: "/studio/classes",
+            pathname: "/studio/classes"
           })
         }
       >
