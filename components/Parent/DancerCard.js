@@ -11,7 +11,6 @@ import { RegistrationContextConsumer } from "./RegistrationContext";
 
 const DancerCardContainer = styled(Card)`
   padding-bottom: 0;
-  margin-bottom: 5rem;
   margin-top: 4rem;
 `;
 const DancerCardHeaderStyles = styled.div`
