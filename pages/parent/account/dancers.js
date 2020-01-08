@@ -13,7 +13,7 @@ function DancersPage() {
   if (error) return `Error! ${error.message}`;
 
   const AddDancerButton = (
-    <Link href="account/addDancer">
+    <Link href="addDancer">
       <a>Add a Dancer</a>
     </Link>
   );

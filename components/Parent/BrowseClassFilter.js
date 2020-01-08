@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import CategoryFilter from "./CategoryFilter";
 import Card from "../styles/Card";
-import { ControlPanelStyles } from "../styles/ControlPanelStyles";
+import { ControlPanelStyles } from "./ControlPanel";
 
 const FilterPanelStyles = styled(ControlPanelStyles)`
   justify-items: start;
@@ -83,7 +83,7 @@ const BrowseClassFilter = ({
   filter,
   setFilter,
   open,
-  closeControls,
+  closeControls
 }) => {
   const filterOptions = ["style", "level", "division", "day"];
   const days = ["Mon.", "Tue.", "Wed.", "Thur.", "Fri", "Sat.", "Sun."];

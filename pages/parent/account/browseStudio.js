@@ -2,9 +2,9 @@ import { useRouter } from "next/router";
 import { useQuery } from "@apollo/react-hooks";
 import { useState, useContext } from "react";
 import gql from "graphql-tag";
-
+import AccountSubNav from "../../../components/Parent/AccountSubNav";
 import BrowseStudioClasses from "../../../components/Parent/BrowseStudioClasses";
-import ParentLayout from "../../../components/Parent/ParentLayout";
+import SubNavMainControlsLayout from "../../../components/SubNavMainControlsLayout";
 import BrowseClassFilter from "../../../components/Parent/BrowseClassFilter";
 import { ParentDisplayConsumer } from "../../../components/ParentDisplayProvider";
 import OffScreenControlsToggler from "../../../components/Parent/OffscreenControlsToggler";
@@ -61,9 +61,19 @@ const BrowseStudioPage = () => {
     <ParentDisplayConsumer>
       {({ showControlPanel, toggleControlPanel }) => {
         return (
-          <ParentLayout
-            page={`Classes at ${studio.studioName}`}
-            controls={
+          <>
+            <AccountSubNav />
+            <SubNavMainControlsLayout
+              page={`Classes at ${studio.studioName}`}
+              action={<OffScreenControlsToggler text="Filter" />}
+            >
+              <BrowseStudioClasses
+                // dancerName={dancerName}
+                classFilter={classFilter}
+                studio={studio}
+                // dancerId={router.query.dancerId}
+                toggleControls={toggleControlPanel}
+              />
               <BrowseClassFilter
                 studio={studio}
                 filter={classFilter}
@@ -71,17 +81,8 @@ const BrowseStudioPage = () => {
                 open={showControlPanel}
                 closeControls={toggleControlPanel}
               />
-            }
-            action={<OffScreenControlsToggler text="Filter" />}
-          >
-            <BrowseStudioClasses
-              // dancerName={dancerName}
-              classFilter={classFilter}
-              studio={studio}
-              // dancerId={router.query.dancerId}
-              toggleControls={toggleControlPanel}
-            />
-          </ParentLayout>
+            </SubNavMainControlsLayout>
+          </>
         );
       }}
     </ParentDisplayConsumer>

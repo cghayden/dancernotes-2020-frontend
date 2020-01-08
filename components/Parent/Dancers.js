@@ -28,7 +28,7 @@ const Dancers = ({ hasDancers, dancers }) => {
             simply browse classes at a participating studio near you
           </p>
         </div>
-        <Link href="addDancer">
+        <Link href="/parent/account/addDancer">
           <a>Add a Dancer</a>
         </Link>
       </WelcomeMessage>

@@ -3,7 +3,7 @@ import Router from "next/router";
 
 const BackButton = ({ text, classNames }) => {
   return (
-    <button role="button" className={classNames} onClick={() => Router.back()}>
+    <button type="button" className={classNames} onClick={() => Router.back()}>
       {text}
     </button>
   );

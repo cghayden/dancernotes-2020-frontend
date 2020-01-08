@@ -74,3 +74,4 @@ const ControlPanel = ({ dancerIds }) => {
 };
 
 export default ControlPanel;
+export { ControlPanelStyles };

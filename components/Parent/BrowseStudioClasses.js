@@ -13,6 +13,7 @@ import { DANCER_QUERY } from "./DancerQuery";
 
 import { RegistrationContext } from "./RegistrationContext";
 import Cookies from "js-cookie";
+import Card from "../styles/Card";
 
 // 1. get all classes from studio
 //2. get filters
@@ -32,22 +33,25 @@ const LargeScreenActiveFilters = styled(ActiveFilters)`
   }
 `;
 
-function BrowseStudioClasses({classFilter, studio}) {
+function BrowseStudioClasses({ classFilter, studio }) {
   const BrowsingContext = useContext(RegistrationContext);
   // const activeDancerName = BrowsingContext.browsingDancerName;
   //activeDancerId to set active Tab
   // const activeDancerId = BrowsingContext.browsingDancerId;
   const setBrowsingDancer = BrowsingContext.setBrowsingDancer;
+  console.log("setBrowsingDancer:", setBrowsingDancer);
 
-  //get browsing dancer fro cookies so it will still be available if page is refreshed
-  const activeDancerId = Cookies.get('browsingDancerId');
-  const activeDancerName = Cookies.get('browsingDancerName');
-  
+  //get browsing dancer from cookies so it will still be available if page is refreshed
+  const activeDancerId = Cookies.get("browsingDancerId");
+  console.log("activeDancerId:", activeDancerId);
+  const activeDancerName = Cookies.get("browsingDancerName");
+  console.log("activeDancerName:", activeDancerName);
+
   const { data: parentData } = useQuery(PARENT_USER_QUERY);
   const parentUser = parentData ? parentData.parentUser : {};
 
   const { data: dancerData, loading, error } = useQuery(DANCER_QUERY, {
-    variables: { id: activeDancerId },
+    variables: { id: activeDancerId }
   });
   const dancer = dancerData ? dancerData.dancer : {};
 
@@ -65,18 +69,19 @@ function BrowseStudioClasses({classFilter, studio}) {
 
   const filteredClasses = studio.danceClasses
     ? studio.danceClasses.filter(danceClass =>
-        compareDanceToFilter(danceClass, classFilter),
+        compareDanceToFilter(danceClass, classFilter)
       )
     : [];
 
   const activeFilters = [].concat.apply([], Object.values(classFilter));
 
-  const BrowsingContent = styled.div`
-    background: white;
-  `;
-  const DancerTabs = styled.div`
+  const DancerTabs = styled(Card)`
     display: flex;
     align-items: center;
+    box-shadow: none;
+    margin-bottom: 0;
+    padding: 0;
+    background: transparent;
   `;
   const Tab = styled.button`
     border-radius: 5px 5px 0 0;
@@ -86,12 +91,16 @@ function BrowseStudioClasses({classFilter, studio}) {
     border-color: ${props =>
       props.active ? props.theme.gray0 : "transparent"};
     border-width: ${props => (props.active ? `2px 2px 0 2px` : `0`)};
-    background-color: ${props => (props.active ? "white" : props.theme.gray2)};
+    background-color: ${props =>
+      props.active ? props.theme.gray0 : props.theme.gray1};
     :hover {
       background-color: ${props => props.theme.gray1};
     }
   `;
 
+  const BrowsingContent = styled.div`
+    background: white;
+  `;
   const BrowsingHeader = styled.div`
     width: 90%;
     margin: 0 auto;
@@ -100,7 +109,6 @@ function BrowseStudioClasses({classFilter, studio}) {
   return (
     <div>
       <span>Browse for:</span>
-
       <DancerTabs>
         {parentUser.dancers &&
           parentUser.dancers.map(dancer => (
@@ -113,8 +121,7 @@ function BrowseStudioClasses({classFilter, studio}) {
             </Tab>
           ))}
       </DancerTabs>
-
-      <BrowsingContent>
+      <Card>
         <BrowsingHeader>
           <p>
             To register {activeDancerName} for classes, or manage classes he/she
@@ -158,7 +165,7 @@ function BrowseStudioClasses({classFilter, studio}) {
             );
           }
         })}
-      </BrowsingContent>
+      </Card>{" "}
     </div>
   );
 }
