@@ -47,7 +47,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   a, button {
-  padding: .5rem;
+  padding: .5rem 1rem;
   margin: .5rem;
   border: none;
   font: inherit;
@@ -65,6 +65,18 @@ const GlobalStyle = createGlobalStyle`
       background-color: ${theme.gray4};
       color: ${theme.gray2};
       cursor: not-allowed;
+    }
+    &.btn-action {
+      background-color: ${theme.newBlue[70].hsl};
+    color: ${theme.newBlue[0].hsl};
+    :hover {
+      background-color: ${theme.newBlue[60].hsl};
+      } 
+      :disabled{
+      background-color: ${theme.gray4};
+      color: ${theme.gray2};
+      cursor: not-allowed;
+    }
     }
 
     &.btn-light{

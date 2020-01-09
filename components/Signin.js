@@ -18,7 +18,7 @@ const SIGNIN_MUTATION = gql`
 class Signin extends Component {
   state = {
     email: "",
-    password: "",
+    password: ""
   };
   saveToState = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -29,6 +29,7 @@ class Signin extends Component {
         mutation={SIGNIN_MUTATION}
         variables={this.state}
         onCompleted={async data => {
+          console.log("complete");
           if (data.signin.userType === "parent") {
             Router.push(`/parent/notes/routines`);
           }

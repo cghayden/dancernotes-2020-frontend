@@ -19,7 +19,10 @@ import Card from "../styles/Card";
 //2. get filters
 //3. filter classes array
 //4. render classes
-
+const ClassListCard = styled(Card)`
+  background: ${props => props.theme.gray0};
+  max-width: 900px;
+`;
 const LargeScreenActiveFilters = styled(ActiveFilters)`
   h2 {
     font-size: 1rem;
@@ -39,13 +42,10 @@ function BrowseStudioClasses({ classFilter, studio }) {
   //activeDancerId to set active Tab
   // const activeDancerId = BrowsingContext.browsingDancerId;
   const setBrowsingDancer = BrowsingContext.setBrowsingDancer;
-  console.log("setBrowsingDancer:", setBrowsingDancer);
 
   //get browsing dancer from cookies so it will still be available if page is refreshed
   const activeDancerId = Cookies.get("browsingDancerId");
-  console.log("activeDancerId:", activeDancerId);
   const activeDancerName = Cookies.get("browsingDancerName");
-  console.log("activeDancerName:", activeDancerName);
 
   const { data: parentData } = useQuery(PARENT_USER_QUERY);
   const parentUser = parentData ? parentData.parentUser : {};
@@ -83,10 +83,13 @@ function BrowseStudioClasses({ classFilter, studio }) {
     padding: 0;
     background: transparent;
   `;
-  const Tab = styled.button`
+  const Tab = styled.div`
+    width: auto;
+    max-width: 160px;
+    min-width: 80px;
     border-radius: 5px 5px 0 0;
     margin: 0 1px 0 0;
-    padding: 0.5rem 2rem;
+    padding-right: 10px;
     border-style: solid;
     border-color: ${props =>
       props.active ? props.theme.gray0 : "transparent"};
@@ -95,6 +98,17 @@ function BrowseStudioClasses({ classFilter, studio }) {
       props.active ? props.theme.gray0 : props.theme.gray1};
     :hover {
       background-color: ${props => props.theme.gray1};
+    }
+    button {
+      background: inherit;
+      margin: 0;
+      overflow: hidden;
+      /* text-overflow: ellipsis; */
+      white-space: nowrap;
+      width: 100%;
+      :hover {
+        background-color: ${props => props.theme.gray1};
+      }
     }
   `;
 
@@ -115,13 +129,16 @@ function BrowseStudioClasses({ classFilter, studio }) {
             <Tab
               key={dancer.firstName}
               active={dancer.id === activeDancerId ? true : false}
-              onClick={() => setBrowsingDancer(dancer.id, dancer.firstName)}
             >
-              {dancer.firstName}
+              <button
+                onClick={() => setBrowsingDancer(dancer.id, dancer.firstName)}
+              >
+                {dancer.firstName}
+              </button>
             </Tab>
           ))}
       </DancerTabs>
-      <Card>
+      <ClassListCard>
         <BrowsingHeader>
           <p>
             To register {activeDancerName} for classes, or manage classes he/she
@@ -165,7 +182,7 @@ function BrowseStudioClasses({ classFilter, studio }) {
             );
           }
         })}
-      </Card>{" "}
+      </ClassListCard>{" "}
     </div>
   );
 }
