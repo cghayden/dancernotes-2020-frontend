@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.25;
     font-family: "Open Sans",'source-sans-pro';
     font-weight: 400;
-    color: ${theme.textColor};
+    color: ${theme.blackText};
   }
   
   h1,

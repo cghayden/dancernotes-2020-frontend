@@ -22,6 +22,56 @@ import Card from "../styles/Card";
 const ClassListCard = styled(Card)`
   background: ${props => props.theme.gray0};
   max-width: 900px;
+  /* margin-top: -2px; */
+  border-radius: 0 5px 5px 5px;
+`;
+const DancerTabs = styled(Card)`
+  display: flex;
+  align-items: center;
+  box-shadow: none;
+  margin-bottom: 0;
+  padding: 0;
+  background: transparent;
+`;
+const Tab = styled.div`
+    width: auto;
+    max-width: 160px;
+    min-width: 80px;
+    border-radius: 5px 5px 0 0;
+    margin: 0 1px 0 0;
+    color: ${props =>
+      props.active ? props.theme.highlightedText : props.theme.blackText};
+    /* border-style: solid;
+    border-color: ${props =>
+      props.active ? props.theme.gray0 : "transparent"}; */
+    /* border-width: ${props => (props.active ? `2px 2px 0 2px` : `0`)}; */
+    background-color: ${props =>
+      props.active ? props.theme.gray0 : props.theme.gray1};
+    /* :hover {
+      background-color: ${props => props.theme.gray1};
+    } */
+    button {
+      background: inherit;
+      margin: 0;
+      overflow: hidden;
+      /* text-overflow: ellipsis; */
+      white-space: nowrap;
+      width: 100%;
+      :focus {
+        outline: ${props => (props.active ? "none" : "auto")};
+        background-color: ${props => props.theme.gray0};
+        /* color: ${props => (props.active ? "inherit" : props.theme.teal9)}; */
+      }
+    }
+  `;
+
+const BrowsingContent = styled.div`
+  background: white;
+`;
+const BrowsingHeader = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  padding: 1rem;
 `;
 const LargeScreenActiveFilters = styled(ActiveFilters)`
   h2 {
@@ -75,51 +125,6 @@ function BrowseStudioClasses({ classFilter, studio }) {
 
   const activeFilters = [].concat.apply([], Object.values(classFilter));
 
-  const DancerTabs = styled(Card)`
-    display: flex;
-    align-items: center;
-    box-shadow: none;
-    margin-bottom: 0;
-    padding: 0;
-    background: transparent;
-  `;
-  const Tab = styled.div`
-    width: auto;
-    max-width: 160px;
-    min-width: 80px;
-    border-radius: 5px 5px 0 0;
-    margin: 0 1px 0 0;
-    padding-right: 10px;
-    border-style: solid;
-    border-color: ${props =>
-      props.active ? props.theme.gray0 : "transparent"};
-    border-width: ${props => (props.active ? `2px 2px 0 2px` : `0`)};
-    background-color: ${props =>
-      props.active ? props.theme.gray0 : props.theme.gray1};
-    :hover {
-      background-color: ${props => props.theme.gray1};
-    }
-    button {
-      background: inherit;
-      margin: 0;
-      overflow: hidden;
-      /* text-overflow: ellipsis; */
-      white-space: nowrap;
-      width: 100%;
-      :hover {
-        background-color: ${props => props.theme.gray1};
-      }
-    }
-  `;
-
-  const BrowsingContent = styled.div`
-    background: white;
-  `;
-  const BrowsingHeader = styled.div`
-    width: 90%;
-    margin: 0 auto;
-    padding: 1rem;
-  `;
   return (
     <div>
       <span>Browse for:</span>

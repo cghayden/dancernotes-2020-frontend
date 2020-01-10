@@ -21,6 +21,7 @@ const colors = {
   gray8: "#323F4B",
   gray9: "#1F2933",
 
+  blackText: "#3d5866",
   blackText: "#3d5866"
 };
 
@@ -80,18 +81,19 @@ const theme = {
   teal8: "#0C6B58",
   teal9: "#014D40",
 
-  blackText: "#3d5866",
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64, 96],
 
   parentBackground: colors["gray0"],
-  textColor: colors["blackText"],
+  // text Colors...
+  blackText: colors["blackText"],
+  highlightedText: colors.indigo9,
   disabledText: colors["gray3"],
   background: colors["gray2"],
   border: colors["vividBlue4"],
 
   sidebarWidth: "20vw",
-  controlPanelWidth: "20vw",
+  // controlPanelWidth: "20vw",
   black: "#393939",
   bs: "0 12px 24px 0 rgba(0, 0, 0, 0.09)",
   dropShadow1: "0 0 5px 3px rgba(0, 0, 0, 0.05)",
