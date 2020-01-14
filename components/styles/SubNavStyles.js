@@ -8,13 +8,14 @@ const SubNavStyles = styled.nav`
   align-items: center;
   color: ${props => props.theme.blackText};
   background: ${props => props.theme.background};
-  padding: 1rem 0 0.5rem 1rem;
+  padding: 0.5rem;
+  box-shadow: ${props => props.theme.dropShadow1};
   height: 5rem;
   position: fixed;
-  top: ${props => props.theme.navHeight};
+  top: ${props => props.theme.mobileStatusBarHeight};
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 120;
   /* z-index to keep it on top of main, to allow click events on navlinks */
   h1,
   h2,
@@ -23,8 +24,6 @@ const SubNavStyles = styled.nav`
   h5,
   h6 {
     display: none;
-    align-self: flex-start;
-    padding-left: 1rem;
   }
 
   .active {
@@ -54,8 +53,13 @@ const SubNavStyles = styled.nav`
     }
   }
   @media (min-width: ${props => props.theme.largeScreen}) {
+    align-items: unset;
     padding-top: 1rem;
-    height: unset;
+    top: ${props => props.theme.navHeight};
+    padding-left: 4vw;
+    box-shadow: none;
+    height: 100vw;
+    overflow-y: scroll;
     width: 18vw;
     h1,
     h2,
@@ -63,14 +67,15 @@ const SubNavStyles = styled.nav`
     h4,
     h5,
     h6 {
+      /* padding-left: 1rem; */
       font-size: 1.35rem;
       display: block;
-      right: unset;
-      text-align: left;
+      /* right: unset; */
+      /* text-align: left; */
       padding-bottom: 1rem;
     }
     ul {
-      padding-left: 1rem;
+      /* padding-left: 1rem; */
       padding-bottom: 1rem;
       flex-direction: column;
       align-items: flex-start;

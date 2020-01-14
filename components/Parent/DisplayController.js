@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import styled from "styled-components";
 import Link from "next/link";
@@ -21,6 +21,9 @@ const DancerControlsStyle = styled.div`
   justify-items: start;
   border-radius: 5px;
   padding-bottom: 0;
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: ${props => props.theme.dropShadow1};
 
   input[type="checkbox"] {
     margin-right: 0.5rem;

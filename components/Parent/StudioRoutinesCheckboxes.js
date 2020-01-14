@@ -41,10 +41,8 @@ function StudioRoutinesCheckboxes({
         hiddenStudios,
         toggleStudio
       }) => {
-        const disabled =
-          hiddenStudios.includes(studioId) || hiddenDancers.includes(dancerId);
         return (
-          <StudioCheckboxes disabled={hiddenDancers.includes(dancerId)}>
+          <StudioCheckboxes>
             <input
               disabled={hiddenDancers.includes(dancerId)}
               checked={!hiddenStudios.includes(studioId)}
@@ -55,11 +53,20 @@ function StudioRoutinesCheckboxes({
               value={studioName}
             />
             <StudioLabel htmlFor={studioName}>{studioName}</StudioLabel>
-            <Checkboxes disabled={disabled}>
+
+            <Checkboxes
+              disabled={
+                hiddenStudios.includes(studioId) ||
+                hiddenDancers.includes(dancerId)
+              }
+            >
               {studioRoutines.map(routine => (
                 <div key={routine.id}>
                   <input
-                    disabled={disabled}
+                    disabled={
+                      hiddenStudios.includes(studioId) ||
+                      hiddenDancers.includes(dancerId)
+                    }
                     checked={!hiddenDances.includes(routine.id)}
                     type="checkbox"
                     id={routine.name}

@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import Form from "../styles/Form";
 import Error from "../../components/Error";
 import styled from "styled-components";
+import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
 
 const UpdateDancerForm = styled(Form)`
   box-shadow: none;
@@ -15,15 +16,13 @@ const UPDATE_DANCER_MUTATION = gql`
     $id: ID!
     $firstName: String
     $avatar: String
-    $existingAvatarId: String
-    $newAvatarId: String
+    $avatarId: String
   ) {
     updateDancer(
       id: $id
       firstName: $firstName
       avatar: $avatar
-      existingAvatarId: $existingAvatarId
-      newAvatarId: $newAvatarId
+      avatarId: $avatarId
     ) {
       id
       firstName
@@ -87,7 +86,7 @@ class UpdateDancer extends Component {
     await updateDancerMutation({
       variables: {
         id: this.props.dancer.id,
-        existingAvatarId: this.props.dancer.existingAvatarId,
+        avatarId: this.props.dancer.avatarId,
         ...this.state
       }
     });

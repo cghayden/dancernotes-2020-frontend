@@ -9,6 +9,7 @@ import { StyledCreateClassForm } from "../styles/Form";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 import BackButton from "../BackButton";
+import { DANCER_QUERY } from "./DancerQuery";
 
 const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
   mutation CREATE_CUSTOM_ROUTINE_MUTATION(
@@ -74,7 +75,10 @@ function CreateCustomRoutineForm({ parent }) {
     onCompleted: () => {
       resetForm();
     },
-    refetchQueries: [{ query: ALL_Rs }],
+    refetchQueries: [
+      { query: ALL_Rs },
+      { query: DANCER_QUERY, variables: { id: inputs.dancer } }
+    ],
     awaitRefetchQueries: true
   });
 

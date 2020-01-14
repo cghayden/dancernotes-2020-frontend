@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import DanceClassInquiryCard from "./DanceClassInquiryCard";
 import Error from "../Error";
 import EnrollmentRequestsCart from "./EnrollmentRequestsCart";
@@ -10,7 +10,7 @@ import { PARENT_USER_QUERY } from "./Queries";
 
 import { ActiveFilters } from "./BrowseClassFilter";
 import { DANCER_QUERY } from "./DancerQuery";
-
+import { REQUEST_STUDIO_ACCESS } from "./Mutations";
 import { RegistrationContext } from "./RegistrationContext";
 import Cookies from "js-cookie";
 import Card from "../styles/Card";
@@ -65,9 +65,6 @@ const Tab = styled.div`
     }
   `;
 
-const BrowsingContent = styled.div`
-  background: white;
-`;
 const BrowsingHeader = styled.div`
   width: 90%;
   margin: 0 auto;
@@ -88,9 +85,6 @@ const LargeScreenActiveFilters = styled(ActiveFilters)`
 
 function BrowseStudioClasses({ classFilter, studio }) {
   const BrowsingContext = useContext(RegistrationContext);
-  // const activeDancerName = BrowsingContext.browsingDancerName;
-  //activeDancerId to set active Tab
-  // const activeDancerId = BrowsingContext.browsingDancerId;
   const setBrowsingDancer = BrowsingContext.setBrowsingDancer;
 
   //get browsing dancer from cookies so it will still be available if page is refreshed
@@ -99,11 +93,17 @@ function BrowseStudioClasses({ classFilter, studio }) {
 
   const { data: parentData } = useQuery(PARENT_USER_QUERY);
   const parentUser = parentData ? parentData.parentUser : {};
+  console.log("parentUser:", parentUser);
 
   const { data: dancerData, loading, error } = useQuery(DANCER_QUERY, {
     variables: { id: activeDancerId }
   });
   const dancer = dancerData ? dancerData.dancer : {};
+
+  const [
+    requestStudioAccess,
+    { loading: loadingAccessRequest, error: AccessRequestError }
+  ] = useMutation(REQUEST_STUDIO_ACCESS);
 
   function compareDanceToFilter(danceClass, filter) {
     let pass = true;
@@ -125,9 +125,37 @@ function BrowseStudioClasses({ classFilter, studio }) {
 
   const activeFilters = [].concat.apply([], Object.values(classFilter));
 
+  async function sendRequest() {
+    parentUser.accessRequests.push(studio.id);
+    await requestStudioAccess({
+      variables: {
+        studioId: studio.id,
+        accessRequests: parentUser.accessRequests
+      }
+    });
+  }
+
   return (
-    <div>
-      <span>Browse for:</span>
+    <>
+      <p>Browse for:</p>
+      {!parentUser.accessRequests.includes(studio.id) && (
+        <>
+          <p>
+            If you are keeping your own notes, you can request access to the
+            studios Hair, Makeup and Event notes.
+          </p>
+          <button
+            type="button"
+            disabled={loadingAccessRequest}
+            onClick={sendRequest}
+          >
+            Request Studio Notes
+          </button>
+        </>
+      )}
+      {parentUser.accessRequests.includes(studio.id) && (
+        <p>Access to studio has been requested</p>
+      )}
       <DancerTabs>
         {parentUser.dancers &&
           parentUser.dancers.map(dancer => (
@@ -188,7 +216,7 @@ function BrowseStudioClasses({ classFilter, studio }) {
           }
         })}
       </ClassListCard>{" "}
-    </div>
+    </>
   );
 }
 export default BrowseStudioClasses;

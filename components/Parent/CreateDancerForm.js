@@ -6,7 +6,7 @@ import Form from "../styles/Form";
 import Link from "next/link";
 import Modal from "../Modal";
 import BackButton from "../BackButton";
-
+import { PARENT_USER_QUERY } from "./Queries";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
 
 import { UPDATE_DANCER_MUTATION } from "./UpdateDancer";
@@ -76,7 +76,8 @@ function CreateDancerForm() {
     variables: { ...inputs },
     onCompleted: () => {
       resetForm();
-    }
+    },
+    refetchQueries: [{ query: PARENT_USER_QUERY }]
   });
 
   const [

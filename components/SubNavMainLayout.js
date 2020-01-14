@@ -7,16 +7,15 @@ import ContentHeader from "./ContentHeader";
 import styled from "styled-components";
 
 const MainStyle = styled.main`
+  margin-top: ${props => props.theme.mobileMainTop};
   padding-top: 1rem;
-  margin-top: 9rem;
   display: flex;
   flex-direction: column;
-  padding-top: 1rem;
   padding-bottom: 100px;
   align-items: center;
   @media (min-width: ${props => props.theme.largeScreen}) {
     margin-top: ${props => props.theme.navHeight};
-    margin-left: 18vw;
+    margin-left: ${props => props.theme.sidebarWidth};
   }
 `;
 

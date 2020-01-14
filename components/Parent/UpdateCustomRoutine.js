@@ -52,7 +52,7 @@ const UPDATE_CUSTOM_ROUTINE = gql`
 const initialInputState = {};
 
 function UpdateCustomRoutine({ dance, parent }) {
-  const [inputs, updateInputs, handleChange] = useState({});
+  const { inputs, updateInputs, handleChange } = useForm();
   const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState();
   const [loadingSong, setLoadingSong] = useState(false);
   const [showModal, toggleModal] = useState(false);
@@ -236,11 +236,11 @@ function UpdateCustomRoutine({ dance, parent }) {
               defaultValue={dance.dancer}
               onChange={handleChange}
             >
-              <option default defaultValue={""} disabled>
+              {/* <option default defaultValue={""} disabled>
                 Dancer...
-              </option>
+              </option> */}
               {parent.dancers.map(dancer => (
-                <option key={dancer.id} defaultValue={dancer.id}>
+                <option key={dancer.id} value={dancer.id}>
                   {dancer.firstName}
                 </option>
               ))}
@@ -250,21 +250,24 @@ function UpdateCustomRoutine({ dance, parent }) {
           <div className="input-item">
             <label htmlFor="studio">Studio:</label>
             <select
-              required
               id="studio"
               name="studio"
-              defaultValue={dance.studio}
+              value={inputs.studio}
+              defaultValue={dance.studio ? dance.studio : "None"}
               onChange={handleChange}
             >
-              <option default defaultValue={""} disabled>
-                Studio...
-              </option>
+              {/* <option
+                default
+                alue={dance.studio ? dance.studio : "None"}
+              >
+                {dance.studio ? dance.studio : "None"}
+              </option> */}
               {parent.studios.map(studio => (
-                <option key={studio.id} defaultValue={studio.id}>
+                <option key={studio.id} value={studio.id}>
                   {studio.studioName}
                 </option>
               ))}
-              <option defaultValue={"None"}>None</option>
+              <option value={"None"}>None</option>
             </select>
           </div>
 

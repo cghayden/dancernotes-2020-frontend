@@ -56,8 +56,8 @@ const PARENT_USER_QUERY = gql`
         id
         firstName
         avatar
+        avatarId
         # todo: remove when changing dancers page query
-        existingAvatarId
         studios {
           studioName
           id
@@ -75,6 +75,7 @@ const PARENT_USER_QUERY = gql`
           }
         }
       }
+      accessRequests
     }
   }
 `;

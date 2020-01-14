@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Card from "../../components/styles/Card";
 import DancerCard from "../../components/Parent/DancerCard";
+import Link from "next/link";
 const WelcomeMessage = styled(Card)`
   background: transparent;
 `;

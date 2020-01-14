@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const MobileStatusBarStyles = styled.div`
-  height: ${props => props.theme.navHeight};
+  height: ${props => props.theme.mobileStatusBarHeight};
   width: 100%;
   position: fixed;
   top: 0;
