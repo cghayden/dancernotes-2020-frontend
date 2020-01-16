@@ -2,7 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 import { ParentDisplayConsumer } from "../../components/ParentDisplayProvider";
-import { CheckboxLabel, Checkboxes } from "./StudioRoutinesCheckboxes";
+import {
+  CheckboxLabel,
+  Checkboxes,
+  StudioHeading
+} from "./StudioRoutinesCheckboxes";
 
 function IndependentRoutinesCheckboxes({ routines, dancerId }) {
   return (
@@ -18,7 +22,15 @@ function IndependentRoutinesCheckboxes({ routines, dancerId }) {
       }) => {
         return (
           <div>
-            <h4>Independent</h4>
+            <StudioHeading
+              disabled={
+                hiddenIndependents.includes(dancerId) ||
+                hiddenIndependents.includes("all") ||
+                hiddenDancers.includes(dancerId)
+              }
+            >
+              Independent
+            </StudioHeading>
             <Checkboxes>
               {routines.map(routine => (
                 <div key={routine.id}>

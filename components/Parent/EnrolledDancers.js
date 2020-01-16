@@ -24,10 +24,14 @@ const Avatar = styled.img`
 `;
 
 const InactiveAvatar = styled(Avatar)`
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   filter: grayscale(80%);
   border: 2px solid ${props => props.theme.gray3};
+  @media (min-width: ${props => props.theme.largeScreen}) {
+    width: 38px;
+    height: 38px;
+  }
 `;
 
 const Initial = styled.div`
@@ -39,15 +43,22 @@ const Initial = styled.div`
   place-items: center;
   font-size: 1.2em;
   color: ${props => props.theme.indigo9};
-  background-color: ${props => props.theme.teal5};
+  background-color: ${props => props.theme.teal3};
+  @media (min-width: ${props => props.theme.largeScreen}) {
+    width: 42px;
+    height: 42px;
+  }
 `;
 const InactiveInitial = styled(Initial)`
-  width: 28px;
-  height: 28px;
-  font-size: 0.825rem;
+  width: 32px;
+  height: 32px;
   filter: grayscale(80%);
   color: ${props => props.theme.gray3};
   background-color: ${props => props.theme.gray2};
+  @media (min-width: ${props => props.theme.largeScreen}) {
+    width: 38px;
+    height: 38px;
+  }
 `;
 
 export default class EnrolledDancers extends Component {

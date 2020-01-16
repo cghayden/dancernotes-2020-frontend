@@ -10,6 +10,9 @@ const Checkboxes = styled.div`
     margin-bottom: 0.5rem;
   }
 `;
+const StudioHeading = styled.h4`
+  color: ${props => (props.disabled ? props.theme.disabledText : "inherit")};
+`;
 const CheckboxLabel = styled.label`
   color: ${props => (props.disabled ? props.theme.disabledText : "inherit")};
   margin-bottom: 0.5rem;
@@ -35,7 +38,14 @@ function StudioRoutinesCheckboxes({
       }) => {
         return (
           <div>
-            <h4>{studioName}</h4>
+            <StudioHeading
+              disabled={
+                hiddenStudios.includes(studioId) ||
+                hiddenDancers.includes(dancerId)
+              }
+            >
+              {studioName}
+            </StudioHeading>
             <Checkboxes>
               {studioRoutines.map(routine => (
                 <div key={routine.id}>
@@ -71,4 +81,4 @@ function StudioRoutinesCheckboxes({
 }
 
 export default StudioRoutinesCheckboxes;
-export { CheckboxLabel, Checkboxes };
+export { CheckboxLabel, Checkboxes, StudioHeading };

@@ -88,7 +88,7 @@ const theme = {
   // text Colors...
   blackText: colors["blackText"],
   highlightedText: colors.indigo9,
-  disabledText: colors["gray5"],
+  disabledText: colors["gray4"],
   background: colors["gray2"],
   border: colors["vividBlue4"],
 
