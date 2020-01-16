@@ -52,6 +52,17 @@ const PARENT_USER_QUERY = gql`
       id
       email
       dancersIds
+      customRoutines {
+        id
+        name
+        studio {
+          id
+        }
+      }
+      studios {
+        id
+        studioName
+      }
       dancers {
         id
         firstName

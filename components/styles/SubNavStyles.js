@@ -24,6 +24,7 @@ const SubNavStyles = styled.nav`
   h5,
   h6 {
     display: none;
+    text-transform: none;
   }
 
   .active {

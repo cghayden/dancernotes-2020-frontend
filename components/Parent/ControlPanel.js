@@ -1,16 +1,12 @@
 import React, { useContext } from "react";
 import DisplayController from "./DisplayController";
 import { ParentDisplayContext } from "../ParentDisplayProvider";
+import { ParentDisplayConsumer } from "../ParentDisplayProvider";
 
 import styled from "styled-components";
 
 const ControlPanelStyles = styled.div`
-  /* justify-self: center; */
-  display: grid;
-  padding: 1rem 1rem 100px 0.5rem;
-  grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-template-rows: min-content min-content;
+  padding: 1rem 0.5rem 100px 0.5rem;
   transform: ${props =>
     props.showControlPanel ? "translateX(0%)" : "translateX(150%)"};
   transition: all 0.4s;
@@ -26,25 +22,11 @@ const ControlPanelStyles = styled.div`
   z-index: 130;
   overflow-y: scroll;
 
-  ul {
-    display: flex;
-    flex-direction: column;
-    font-size: 0.825rem;
-    li {
-      padding: 0.25rem 0;
-    }
-  }
-  .controls-heading {
-    grid-column: 1/-1;
-    padding-bottom: 1rem;
-  }
-
   @media (min-width: ${props => props.theme.largeScreen}) {
-    /* in desktop animation-fill-mode, padding is provided by Content Layout.  In ::-moz-list-bullet, it needs padding because it is its own self contained offscreen/onscreen container */
-    /* padding-left: 0;
-    padding-right: 0; */
     background-color: ${props => props.theme.background};
     width: ${props => props.theme.controlPanelWidth};
+    height: 90vh;
+    padding: 1rem 1rem 100px 3vw;
     transform: translateX(0%);
     border-radius: 0;
     box-shadow: none;
@@ -59,17 +41,108 @@ const ControlPanelStyles = styled.div`
   }
 `;
 
-const ControlPanel = ({ dancerIds }) => {
+const AllStudioCheckboxes = styled.div`
+  padding-bottom: 1.2rem;
+  padding-top: 1rem;
+`;
+
+const StudioLabel = styled.label`
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: ${props => (props.disabled ? props.theme.disabledText : "inherit")};
+`;
+
+const DancerCheckboxes = styled.div`
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin-bottom: 100px;
+  ul {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.825rem;
+    li {
+      padding: 0.25rem 0;
+    }
+  }
+
+  @media (min-width: ${props => props.theme.largeScreen}) {
+    margin-bottom: 0;
+    ul {
+      font-size: 1rem;
+      align-items: start;
+    }
+  }
+`;
+
+const ControlPanel = ({ dancerIds, studios, customRoutines }) => {
   const DisplayContext = useContext(ParentDisplayContext);
   const showControlPanel = DisplayContext.showControlPanel;
-
+  const independents = customRoutines.filter(routine => !routine.studio);
+  const hasStudioAndIndependents =
+    studios.length > 0 && independents.length > 0;
+  const showAllStudioFilter = studios.length > 1 || hasStudioAndIndependents;
   return (
-    <ControlPanelStyles showControlPanel={showControlPanel}>
-      <h2 className="controls-heading">Display:</h2>
-      {dancerIds.map(id => {
-        return <DisplayController key={id} dancerId={id} />;
-      })}
-    </ControlPanelStyles>
+    <ParentDisplayConsumer>
+      {({
+        hiddenDances,
+        hiddenDancers,
+        toggleDance,
+        toggleIndependent,
+        hiddenIndependents,
+        hiddenStudios,
+        toggleStudio
+      }) => {
+        return (
+          <ControlPanelStyles showControlPanel={showControlPanel}>
+            <h3>Display:</h3>
+            {/* checkbox for each parent studio */}
+            {showAllStudioFilter && (
+              <AllStudioCheckboxes>
+                {studios.map(studio => (
+                  <div key={studio.id}>
+                    <input
+                      checked={!hiddenStudios.includes(studio.id)}
+                      onChange={() => toggleStudio(studio.id, hiddenStudios)}
+                      type="checkbox"
+                      id={studio.studioName}
+                      name={studio.studioName}
+                      value={studio.studioName}
+                    />
+                    <StudioLabel htmlFor={studio.studioName}>
+                      {studio.studioName}
+                    </StudioLabel>
+                  </div>
+                ))}
+                {independents.length > 0 && (
+                  <div>
+                    <input
+                      checked={!hiddenIndependents.includes("all")}
+                      onChange={() => {
+                        toggleIndependent("all", hiddenIndependents);
+                      }}
+                      type="checkbox"
+                      id={"allIndependent"}
+                      name={"allIndependent"}
+                      value={"allIndependent"}
+                    />
+                    <StudioLabel htmlFor={"allIndependent"}>
+                      Independents
+                    </StudioLabel>
+                  </div>
+                )}
+              </AllStudioCheckboxes>
+            )}
+
+            <DancerCheckboxes>
+              {dancerIds.map(id => {
+                return <DisplayController key={id} dancerId={id} />;
+              })}
+            </DancerCheckboxes>
+          </ControlPanelStyles>
+        );
+      }}
+    </ParentDisplayConsumer>
   );
 };
 

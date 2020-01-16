@@ -16,12 +16,17 @@ import { DANCER_QUERY } from "./DancerQuery";
 }
 
 const DancerControlsStyle = styled.div`
-  background-color: ${props => props.theme.background};
-  display: grid;
-  justify-items: start;
+  background-color: ${props => props.theme.gray1};
+  display: flex;
+  flex-direction: column;
+  /* grid-gap: 1rem; */
+  /* justify-items: start; */
+  align-items: center;
   border-radius: 5px;
-  padding-bottom: 0;
+  padding-bottom: 1rem;
+  padding-right: 1rem;
   padding-left: 1rem;
+  padding-top: 0.5rem;
   margin-bottom: 1rem;
   box-shadow: ${props => props.theme.dropShadow1};
 

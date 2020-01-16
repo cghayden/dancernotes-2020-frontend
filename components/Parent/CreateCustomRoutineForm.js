@@ -2,7 +2,7 @@ import React, { useState, Fragment } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import Link from "next/link";
-import { ALL_Rs } from "./Queries";
+import { ALL_Rs, PARENT_USER_QUERY } from "./Queries";
 import { UPDATE_CUSTOM_ROUTINE } from "./UpdateCustomRoutine";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
 import { StyledCreateClassForm } from "../styles/Form";
@@ -77,6 +77,7 @@ function CreateCustomRoutineForm({ parent }) {
     },
     refetchQueries: [
       { query: ALL_Rs },
+      { query: PARENT_USER_QUERY },
       { query: DANCER_QUERY, variables: { id: inputs.dancer } }
     ],
     awaitRefetchQueries: true
@@ -264,7 +265,7 @@ function CreateCustomRoutineForm({ parent }) {
             />
           </div>
           <div className="input-item">
-            <label htmlFor="studio">Studio:</label>
+            <label htmlFor="studio">Studio:*</label>
             <select
               required
               id="studio"
@@ -281,7 +282,7 @@ function CreateCustomRoutineForm({ parent }) {
                     {studio.studioName}
                   </option>
                 ))}
-              <option value={"None"}>None</option>
+              <option value={"none"}>None / Other</option>
             </select>
           </div>
 

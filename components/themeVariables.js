@@ -88,12 +88,12 @@ const theme = {
   // text Colors...
   blackText: colors["blackText"],
   highlightedText: colors.indigo9,
-  disabledText: colors["gray3"],
+  disabledText: colors["gray5"],
   background: colors["gray2"],
   border: colors["vividBlue4"],
 
   sidebarWidth: "18vw",
-  controlPanelWidth: "20vw",
+  controlPanelWidth: "22vw",
   black: "#393939",
   bs: "0 12px 24px 0 rgba(0, 0, 0, 0.09)",
   dropShadow1: "1px 1px 7px 5px rgba(0, 0, 0, 0.1)",

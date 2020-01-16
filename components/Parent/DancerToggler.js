@@ -18,7 +18,7 @@ const ActiveDancerButton = styled.button`
     border-radius: 50%;
   }
   p {
-    font-size: 1.7rem;
+    font-size: 1.4rem;
   }
 `;
 const InActiveDancerButton = styled.button`

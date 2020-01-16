@@ -100,18 +100,19 @@ function DanceClassInquiryCard({
     // refetchQueries: [{ query: DANCER_QUERY, variables: { id: dancerId } }]
   });
 
-  const [requestDance, { error, loading }] = useMutation(
-    ADD_DANCE_TO_REQUESTS,
-    {
-      variables: {
-        requestId: dancersRequestsId || "new",
-        danceId: dance.id,
-        dancerId: dancerId,
-        studioId: studioId
-      },
-      refetchQueries: [{ query: DANCER_QUERY, variables: { id: dancerId } }]
-    }
-  );
+  const [
+    requestDance,
+    { error: errorRequestingDance, loading: requestingDance }
+  ] = useMutation(ADD_DANCE_TO_REQUESTS, {
+    variables: {
+      requestId: dancersRequestsId || "new",
+      danceId: dance.id,
+      dancerId: dancerId,
+      studioId: studioId
+    },
+    refetchQueries: [{ query: DANCER_QUERY, variables: { id: dancerId } }]
+  });
+  const loading = requestingDance || removeRequestLoading;
 
   function isEnrolled(dancerId, dancers) {
     let dancersInDance = [];

@@ -27,8 +27,8 @@ function AccountSubNav({ dancers }) {
           <Signout />
         </li>
       </ul>
-      <h2 className="subNav-heading">Dancers</h2>
-      <ul>
+
+      {/* <ul>
         {dancers &&
           dancers.map(dancer => (
             <li key={dancer.id}>
@@ -37,7 +37,7 @@ function AccountSubNav({ dancers }) {
               </StyledLink>
             </li>
           ))}
-      </ul>
+      </ul> */}
     </SubNavStyles>
   );
 }

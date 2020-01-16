@@ -22,6 +22,7 @@ import Card from "../styles/Card";
 const ClassListCard = styled(Card)`
   background: ${props => props.theme.gray0};
   max-width: 900px;
+  box-shadow: none;
   /* margin-top: -2px; */
   border-radius: 0 5px 5px 5px;
 `;
@@ -93,17 +94,16 @@ function BrowseStudioClasses({ classFilter, studio }) {
 
   const { data: parentData } = useQuery(PARENT_USER_QUERY);
   const parentUser = parentData ? parentData.parentUser : {};
-  console.log("parentUser:", parentUser);
 
   const { data: dancerData, loading, error } = useQuery(DANCER_QUERY, {
     variables: { id: activeDancerId }
   });
   const dancer = dancerData ? dancerData.dancer : {};
 
-  const [
-    requestStudioAccess,
-    { loading: loadingAccessRequest, error: AccessRequestError }
-  ] = useMutation(REQUEST_STUDIO_ACCESS);
+  // const [
+  //   requestStudioAccess,
+  //   { loading: loadingAccessRequest, error: AccessRequestError }
+  // ] = useMutation(REQUEST_STUDIO_ACCESS);
 
   function compareDanceToFilter(danceClass, filter) {
     let pass = true;
@@ -125,20 +125,20 @@ function BrowseStudioClasses({ classFilter, studio }) {
 
   const activeFilters = [].concat.apply([], Object.values(classFilter));
 
-  async function sendRequest() {
-    parentUser.accessRequests.push(studio.id);
-    await requestStudioAccess({
-      variables: {
-        studioId: studio.id,
-        accessRequests: parentUser.accessRequests
-      }
-    });
-  }
+  // async function sendRequest() {
+  //   parentUser.accessRequests.push(studio.id);
+  //   await requestStudioAccess({
+  //     variables: {
+  //       studioId: studio.id,
+  //       accessRequests: parentUser.accessRequests
+  //     }
+  //   });
+  // }
 
   return (
     <>
       <p>Browse for:</p>
-      {!parentUser.accessRequests.includes(studio.id) && (
+      {/* {!parentUser.accessRequests.includes(studio.id) && (
         <>
           <p>
             If you are keeping your own notes, you can request access to the
@@ -155,7 +155,7 @@ function BrowseStudioClasses({ classFilter, studio }) {
       )}
       {parentUser.accessRequests.includes(studio.id) && (
         <p>Access to studio has been requested</p>
-      )}
+      )} */}
       <DancerTabs>
         {parentUser.dancers &&
           parentUser.dancers.map(dancer => (

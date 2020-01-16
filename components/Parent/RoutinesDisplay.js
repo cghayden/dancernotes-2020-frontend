@@ -43,6 +43,7 @@ class RoutinesDisplay extends Component {
                         //independent dances...
                         if (!dance.studio) {
                           if (
+                            hiddenIndependents.includes("all") ||
                             dance.dancerIds.some(dancerId =>
                               hiddenIndependents.includes(dancerId)
                             )

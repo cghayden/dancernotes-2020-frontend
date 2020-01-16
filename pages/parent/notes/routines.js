@@ -15,6 +15,7 @@ const ParentHome = () => {
   const [addDancer, toggleAddDancer] = useState(false);
   const { data, loading, error } = useQuery(PARENT_USER_QUERY);
   const parentUser = data ? data.parentUser : {};
+  console.log("parentUser:", parentUser);
 
   const transition = useTransition(addDancer, null, {
     from: {
@@ -57,7 +58,11 @@ const ParentHome = () => {
       >
         <RoutinesDisplay dancerIds={parentUser.dancersIds} />
       </SubNavMainControlsLayout>
-      <ControlPanel dancerIds={parentUser.dancersIds} />
+      <ControlPanel
+        studios={parentUser.studios}
+        dancerIds={parentUser.dancersIds}
+        customRoutines={parentUser.customRoutines}
+      />
     </>
   );
 };
