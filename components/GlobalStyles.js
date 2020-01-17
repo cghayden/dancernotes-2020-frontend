@@ -66,9 +66,10 @@ const GlobalStyle = createGlobalStyle`
       color: ${theme.gray2};
       cursor: not-allowed;
     }
-    &.btn-action {
-      background-color: ${theme.newBlue[70].hsl};
-    color: ${theme.newBlue[0].hsl};
+    
+    &.btn-action-secondary{
+      background-color: ${theme.newBlue[10].hsl};
+    color: ${theme.newBlue[70].hsl};
     :hover {
       background-color: ${theme.newBlue[60].hsl};
       } 
@@ -80,13 +81,14 @@ const GlobalStyle = createGlobalStyle`
     }
 
     &.btn-light{
-      background-color: ${theme.gray2}; 
+      background-color: ${theme.gray2};
     color: ${theme.indigo9};
     :hover {
       background-color: ${theme.indigo8}; 
     color: white;
     }
     }
+
     &.btn-danger{
       background-color: ${theme.red5};
       color: white;
@@ -104,6 +106,7 @@ const GlobalStyle = createGlobalStyle`
       cursor: not-allowed;
     }
     }
+
   &.landingPage{
     font-size: 1.5rem;
     width: 200px;

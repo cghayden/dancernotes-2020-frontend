@@ -90,7 +90,7 @@ function BrowseStudioClasses({ classFilter, studio }) {
 
   //get browsing dancer from cookies so it will still be available if page is refreshed
   const activeDancerId = Cookies.get("browsingDancerId");
-  const activeDancerName = Cookies.get("browsingDancerName");
+  // const activeDancerName = Cookies.get("browsingDancerName");
 
   const { data: parentData } = useQuery(PARENT_USER_QUERY);
   const parentUser = parentData ? parentData.parentUser : {};
@@ -99,11 +99,6 @@ function BrowseStudioClasses({ classFilter, studio }) {
     variables: { id: activeDancerId }
   });
   const dancer = dancerData ? dancerData.dancer : {};
-
-  // const [
-  //   requestStudioAccess,
-  //   { loading: loadingAccessRequest, error: AccessRequestError }
-  // ] = useMutation(REQUEST_STUDIO_ACCESS);
 
   function compareDanceToFilter(danceClass, filter) {
     let pass = true;
@@ -125,37 +120,10 @@ function BrowseStudioClasses({ classFilter, studio }) {
 
   const activeFilters = [].concat.apply([], Object.values(classFilter));
 
-  // async function sendRequest() {
-  //   parentUser.accessRequests.push(studio.id);
-  //   await requestStudioAccess({
-  //     variables: {
-  //       studioId: studio.id,
-  //       accessRequests: parentUser.accessRequests
-  //     }
-  //   });
-  // }
-
   return (
     <>
       <p>Browse for:</p>
-      {/* {!parentUser.accessRequests.includes(studio.id) && (
-        <>
-          <p>
-            If you are keeping your own notes, you can request access to the
-            studios Hair, Makeup and Event notes.
-          </p>
-          <button
-            type="button"
-            disabled={loadingAccessRequest}
-            onClick={sendRequest}
-          >
-            Request Studio Notes
-          </button>
-        </>
-      )}
-      {parentUser.accessRequests.includes(studio.id) && (
-        <p>Access to studio has been requested</p>
-      )} */}
+
       <DancerTabs>
         {parentUser.dancers &&
           parentUser.dancers.map(dancer => (
@@ -163,9 +131,7 @@ function BrowseStudioClasses({ classFilter, studio }) {
               key={dancer.firstName}
               active={dancer.id === activeDancerId ? true : false}
             >
-              <button
-                onClick={() => setBrowsingDancer(dancer.id, dancer.firstName)}
-              >
+              <button onClick={() => setBrowsingDancer(dancer.id)}>
                 {dancer.firstName}
               </button>
             </Tab>
@@ -174,7 +140,8 @@ function BrowseStudioClasses({ classFilter, studio }) {
       <ClassListCard>
         <BrowsingHeader>
           <p>
-            To register {activeDancerName} for classes, or manage classes he/she
+            {/* To register {activeDancerName} for classes, or manage classes he/she */}
+            To register {dancer.firstName} for classes, or manage classes he/she
             is enrolled in or has requested, follow the links below.
           </p>
         </BrowsingHeader>
@@ -199,7 +166,8 @@ function BrowseStudioClasses({ classFilter, studio }) {
           if (dance.size === "Group") {
             return (
               <DanceClassInquiryCard
-                dancerName={activeDancerName}
+                dancerName={dancer.firstName}
+                // dancerName={activeDancerName}
                 dance={dance}
                 dancerId={activeDancerId}
                 studioId={studio.id}
@@ -215,7 +183,7 @@ function BrowseStudioClasses({ classFilter, studio }) {
             );
           }
         })}
-      </ClassListCard>{" "}
+      </ClassListCard>
     </>
   );
 }
@@ -277,4 +245,33 @@ export default BrowseStudioClasses;
                         </div>
                       )}
                     </Card> */
+}
+// async function sendRequest() {
+//   parentUser.accessRequests.push(studio.id);
+//   await requestStudioAccess({
+//     variables: {
+//       studioId: studio.id,
+//       accessRequests: parentUser.accessRequests
+//     }
+//   });
+// }
+{
+  /* {!parentUser.accessRequests.includes(studio.id) && (
+        <>
+          <p>
+            If you are keeping your own notes, you can request access to the
+            studios Hair, Makeup and Event notes.
+          </p>
+          <button
+            type="button"
+            disabled={loadingAccessRequest}
+            onClick={sendRequest}
+          >
+            Request Studio Notes
+          </button>
+        </>
+      )}
+      {parentUser.accessRequests.includes(studio.id) && (
+        <p>Access to studio has been requested</p>
+      )} */
 }

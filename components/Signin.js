@@ -29,7 +29,7 @@ class Signin extends Component {
         mutation={SIGNIN_MUTATION}
         variables={this.state}
         onCompleted={async data => {
-          console.log("complete");
+          // console.log("data:", data);
           if (data.signin.userType === "parent") {
             Router.push(`/parent/notes/routines`);
           }

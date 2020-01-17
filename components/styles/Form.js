@@ -13,14 +13,15 @@ const loading = keyframes`
 `;
 
 const Form = styled.form`
+   /* each form should be inside a card */
   text-align: center;
   border-radius: ${props => props.theme.borderRadius};
   color: ${props => props.theme.newBlue[90].hsl};
   background: ${props => props.theme.gray0};
   /* box-shadow: ${props => props.theme.dropShadow1}; */
   padding: 1rem 0;
-  width: 90%;
-  min-width: 320px;
+  width: 100%;
+  /* min-width: 320px; */
   max-width: 550px;
   margin: 0 auto 1rem auto;
   legend,
@@ -49,7 +50,7 @@ const Form = styled.form`
 
   button[type="submit"],
   input[type="submit"] {
-    border-radius: 10px;
+    /* border-radius: 10px; */
     width: 75%;
     max-width: 300px;
     background: ${props => props.theme.newBlue[80].hsl};
@@ -116,7 +117,9 @@ const Form = styled.form`
     }
   }
   .form-footer {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+
   }
 `;
 

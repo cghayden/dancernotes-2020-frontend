@@ -217,7 +217,6 @@ function CreateDancerForm() {
         </DancerCardHeaderStyles>
         <FormInCard method="post" onSubmit={e => saveNewDancer(e)}>
           <fieldset disabled={loading} aria-busy={loading}>
-            <h2>Add a Dancer</h2>
             {/* <Error error={error || errorLoadingAvatar} /> */}
             <div className="input-item">
               <label htmlFor="firstName">Name</label>
@@ -233,7 +232,7 @@ function CreateDancerForm() {
             <button
               type="button"
               className="btn-dark"
-              onClick={() => toggleFileInput(true)}
+              onClick={() => toggleFileInput(!showFileInput)}
             >
               Add Image
             </button>
@@ -252,8 +251,8 @@ function CreateDancerForm() {
                 />
               </div>
             )}
+            <p>{status}</p>
             <div className="form-footer">
-              <p>{status}</p>
               <button type="submit">Save Dancer</button>
               <BackButton text="Cancel" classNames="btn-danger" />
             </div>

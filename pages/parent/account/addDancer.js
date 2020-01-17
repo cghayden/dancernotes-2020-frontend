@@ -6,7 +6,7 @@ function AddDancerPage() {
   return (
     <>
       <AccountSubNav />
-      <SubNavMainLayout page="My Dancers">
+      <SubNavMainLayout page="Add a Dancer">
         <CreateDancerForm />
       </SubNavMainLayout>
     </>

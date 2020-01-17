@@ -3,9 +3,8 @@ import styled from "styled-components";
 import Card from "../../components/styles/Card";
 import DancerCard from "../../components/Parent/DancerCard";
 import Link from "next/link";
-const WelcomeMessage = styled(Card)`
-  background: transparent;
-`;
+import CreateDancerForm from "./CreateDancerForm";
+const WelcomeMessage = styled(Card)``;
 
 const Dancers = ({ hasDancers, dancers }) => {
   // if has dancers, show dancers cards
@@ -22,17 +21,18 @@ const Dancers = ({ hasDancers, dancers }) => {
   // if no dancers, show welcome and add dancer/browse studios
   if (!hasDancers) {
     return (
-      <WelcomeMessage>
-        <div className="card__section">
+      <>
+        <WelcomeMessage>
           <p>
-            Welcome to Dancernotes! To begin, add a Dancer to your account, or
-            simply browse classes at a participating studio near you
+            Welcome to Dancernotes! To begin, use the form below to add a Dancer
+            to your account.
           </p>
-        </div>
-        <Link href="/parent/account/addDancer">
-          <a>Add a Dancer</a>
-        </Link>
-      </WelcomeMessage>
+          {/* <Link href="/parent/account/addDancer">
+      <a>Add a Dancer</a>
+      </Link> */}
+        </WelcomeMessage>
+        <CreateDancerForm />
+      </>
     );
   }
 };

@@ -9,19 +9,22 @@ class RegistrationContextProvider extends Component {
     browsingDancerName: ""
   };
 
-  setBrowsingDancer = (id, name) => {
-    console.log(" set browsing dancer:", name);
+  setBrowsingDancer = id => {
+    // console.log(" set browsing dancer:", name);
     Cookies.set("browsingDancerId", id);
-    Cookies.set("browsingDancerName", name);
-    this.setState({ browsingDancerId: id, browsingDancerName: name });
+    // Cookies.set("browsingDancerName", name);
+    this.setState({ browsingDancerId: id });
   };
   render() {
-    const { browsingDancerId, browsingDancerName } = this.state;
+    const {
+      browsingDancerId
+      // browsingDancerName
+    } = this.state;
     return (
       <RegistrationContext.Provider
         value={{
           browsingDancerId,
-          browsingDancerName,
+          // browsingDancerName,
           setBrowsingDancer: this.setBrowsingDancer
         }}
       >

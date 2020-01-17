@@ -94,7 +94,7 @@ function DanceClassInquiryCard({
 }) {
   const [
     removeClassFromRequest,
-    { error: removeRequestError, loading: removeRequestLoading }
+    { error: errorRemovingRequest, loading: removeRequestLoading }
   ] = useMutation(REMOVE_CLASS_FROM_REQUESTS, {
     variables: { requestId: dancersRequestsId, danceClassId: dance.id }
     // refetchQueries: [{ query: DANCER_QUERY, variables: { id: dancerId } }]
@@ -113,7 +113,7 @@ function DanceClassInquiryCard({
     refetchQueries: [{ query: DANCER_QUERY, variables: { id: dancerId } }]
   });
   const loading = requestingDance || removeRequestLoading;
-
+  const error = errorRequestingDance || errorRemovingRequest;
   function isEnrolled(dancerId, dancers) {
     let dancersInDance = [];
     for (const dancer of dancers) {
@@ -170,12 +170,11 @@ function DanceClassInquiryCard({
         {removeRequestLoading && <p>Removing request...</p>}
         {loading && <p>Submitting request...</p>}
         {error && <Error error={error} />}
-        {removeRequestError && <Error error={removeRequestError} />}
       </DanceClassInfo>
       <DanceClassOptions>
         {status === "available" && (
           <button
-            className="btn-action"
+            className="btn-dark"
             disabled={loading}
             onClick={async () => {
               await requestDance();
