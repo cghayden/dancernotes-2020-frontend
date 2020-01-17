@@ -80,13 +80,6 @@ function DanceCard(props) {
     setShowBody(!showBody);
   }
 
-  function toggleMusic() {
-    // if (!showBody) {
-    //   setShowBody(true);
-    // }
-    setShowMediaPlayer(!showMediaPlayer);
-  }
-
   return (
     <DanceCardStyles>
       <DanceCardHeader>
@@ -106,7 +99,9 @@ function DanceCard(props) {
       </DanceCardHeader>
       <DanceCardNav>
         <button onClick={toggleBody}>Details</button>
-        {dance.music && <button onClick={toggleMusic}>Music</button>}
+        <button onClick={() => setShowMediaPlayer(!showMediaPlayer)}>
+          Music
+        </button>
         {dance.custom && (
           <Link href={`/parent/updateDance/${dance.id}`}>
             <a>Edit</a>

@@ -2,19 +2,22 @@ import React, { useState } from "react";
 
 const MusicPlayer = ({ src }) => {
   const [error, setError] = useState(false);
-  return (
-    <>
-      {error && <p>Error!{error}</p>}
-      <audio
-        preload="none"
-        id="musicPlayer"
-        autoPlay={false}
-        controls
-        src={src}
-        onerror={() => setError(true)}
-      />
-    </>
-  );
+  if (src) {
+    return (
+      <>
+        {error && <p>Error!{error}</p>}
+        <audio
+          preload="none"
+          id="musicPlayer"
+          autoPlay={false}
+          controls
+          src={src}
+          onerror={() => setError(true)}
+        />
+      </>
+    );
+  }
+  return <p>Music is unavailable</p>;
 };
 
 export default MusicPlayer;
