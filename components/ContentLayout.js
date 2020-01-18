@@ -16,10 +16,6 @@ const ContentLayout = styled.div`
     /* overflow-y: scroll; */
     padding-bottom: 200px;
     padding-top: 1rem;
-
-    .subHeading {
-      padding: 0.5rem 1rem 1rem 1rem;
-    }
   }
 
   @media (min-width: ${props => props.theme.largeScreen}) {

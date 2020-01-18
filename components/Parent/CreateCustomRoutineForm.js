@@ -6,6 +6,7 @@ import { ALL_Rs, PARENT_USER_QUERY } from "./Queries";
 import { UPDATE_CUSTOM_ROUTINE } from "./UpdateCustomRoutine";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
 import { StyledCreateClassForm } from "../styles/Form";
+import Card from "../styles/Card";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 import BackButton from "../BackButton";
@@ -213,191 +214,195 @@ function CreateCustomRoutineForm({ parent }) {
           </Link>
         </div>
       </Modal>
-      <StyledCreateClassForm
-        method="post"
-        onSubmit={async e => await saveNewCustomRoutine(e)}
-      >
-        <fieldset disabled={loading} aria-busy={loading}>
-          <h2>Create Your Own Routine</h2>
-          <div className="input-item">
-            <label htmlFor="dancer">
-              Dancer*
-              <p>(You may add other dancers later.)</p>
-            </label>
-            <select
-              required
-              id="dancer"
-              name="dancer"
-              value={inputs.dancer}
-              onChange={handleChange}
-            >
-              <option default value={""} disabled>
-                Dancer...
-              </option>
-              {parent &&
-                parent.dancers.map(dancer => (
-                  <option key={dancer.id} value={dancer.id}>
-                    {dancer.firstName}
-                  </option>
-                ))}
-            </select>
-          </div>
-          <div className="input-item">
-            <label htmlFor="name">Name of Routine* </label>
-            <input
-              required
-              pattern="(?!^ +$)^.+$"
-              type="text"
-              name="name"
-              placeholder="name"
-              value={inputs.name}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-item">
-            <label htmlFor="performanceName">Performance Name</label>
-            <input
-              type="text"
-              name="performanceName"
-              placeholder="Performance Name, or Name of Song"
-              value={inputs.performanceName}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-item">
-            <label htmlFor="studio">Studio:*</label>
-            <select
-              required
-              id="studio"
-              name="studio"
-              value={inputs.studio}
-              onChange={handleChange}
-            >
-              <option default value={""} disabled>
-                Studio...
-              </option>
-              {parent &&
-                parent.studios.map(studio => (
-                  <option key={studio.id} value={studio.id}>
-                    {studio.studioName}
-                  </option>
-                ))}
-              <option value={"none"}>None / Other</option>
-            </select>
-          </div>
-
-          <div className="form-row">
-            <div className="day form-row-item">
-              <label htmlFor="day">Day:</label>
+      <Card>
+        <StyledCreateClassForm
+          method="post"
+          onSubmit={async e => await saveNewCustomRoutine(e)}
+        >
+          <fieldset disabled={loading} aria-busy={loading}>
+            <h2>Create Your Own Routine</h2>
+            <div className="input-item">
+              <label htmlFor="dancer">
+                Dancer*
+                <p>(You may add other dancers later.)</p>
+              </label>
               <select
-                className="day"
-                id="day"
-                name="day"
-                value={inputs.day}
+                required
+                id="dancer"
+                name="dancer"
+                value={inputs.dancer}
                 onChange={handleChange}
               >
                 <option default value={""} disabled>
-                  Day...
+                  Dancer...
                 </option>
-                <option value="Mon.">Mon.</option>
-                <option value="Tue.">Tue.</option>
-                <option value="Wed.">Wed.</option>
-                <option value="Thur.">Thur.</option>
-                <option value="Fri.">Fri.</option>
-                <option value="Sat.">Sat.</option>
-                <option value="Sun.">Sun.</option>
+                {parent &&
+                  parent.dancers.map(dancer => (
+                    <option key={dancer.id} value={dancer.id}>
+                      {dancer.firstName}
+                    </option>
+                  ))}
               </select>
             </div>
-            <div className="form-row-item">
-              <label htmlFor="startTime">Start Time:</label>
-              <input
-                className="day"
-                type="time"
-                id="startTime"
-                name="startTime"
-                min="0:00"
-                max="23:59"
-                value={inputs.startTime}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-row-item">
-              <label htmlFor="endTime">End Time:</label>
-              <input
-                className="day"
-                type="time"
-                id="endTime"
-                name="endTime"
-                min="0:00"
-                max="23:59"
-                value={inputs.endTime}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div className="input-item">
-            <label htmlFor="tights">Tights</label>
-            <input
-              type="text"
-              name="tights"
-              placeholder="The style of tights required..."
-              value={inputs.tights}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="input-item">
-            <label htmlFor="shoes">Shoes</label>
-            <input
-              type="text"
-              name="shoes"
-              placeholder="The style of shoes required..."
-              value={inputs.shoes}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-item">
-            <label htmlFor="notes">Notes</label>
-            <textarea
-              id="notes"
-              type="text"
-              name="notes"
-              rows="5"
-              value={inputs.notes}
-              onChange={handleChange}
-            />
-          </div>
-          <button
-            type="button"
-            className="btn-dark"
-            onClick={() => toggleFileInput(true)}
-          >
-            Add Music
-          </button>
-          {showFileInput && (
             <div className="input-item">
-              <label htmlFor="music">Upload the music for this dance...</label>
+              <label htmlFor="name">Name of Routine* </label>
               <input
-                type="file"
-                id="music"
-                name="music"
-                placeholder="Upload the music for this dance"
-                onChange={setSongtoState}
+                required
+                pattern="(?!^ +$)^.+$"
+                type="text"
+                name="name"
+                placeholder="name"
+                value={inputs.name}
+                onChange={handleChange}
               />
             </div>
-          )}
+            <div className="input-item">
+              <label htmlFor="performanceName">Performance Name</label>
+              <input
+                type="text"
+                name="performanceName"
+                placeholder="Performance Name, or Name of Song"
+                value={inputs.performanceName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input-item">
+              <label htmlFor="studio">Studio:*</label>
+              <select
+                required
+                id="studio"
+                name="studio"
+                value={inputs.studio}
+                onChange={handleChange}
+              >
+                <option default value={""} disabled>
+                  Studio...
+                </option>
+                {parent &&
+                  parent.studios.map(studio => (
+                    <option key={studio.id} value={studio.id}>
+                      {studio.studioName}
+                    </option>
+                  ))}
+                <option value={"none"}>None / Other</option>
+              </select>
+            </div>
 
-          <div className="form-footer">
-            <p>{status}</p>
+            <div className="form-row">
+              <div className="day form-row-item">
+                <label htmlFor="day">Day:</label>
+                <select
+                  className="day"
+                  id="day"
+                  name="day"
+                  value={inputs.day}
+                  onChange={handleChange}
+                >
+                  <option default value={""} disabled>
+                    Day...
+                  </option>
+                  <option value="Mon.">Mon.</option>
+                  <option value="Tue.">Tue.</option>
+                  <option value="Wed.">Wed.</option>
+                  <option value="Thur.">Thur.</option>
+                  <option value="Fri.">Fri.</option>
+                  <option value="Sat.">Sat.</option>
+                  <option value="Sun.">Sun.</option>
+                </select>
+              </div>
+              <div className="form-row-item">
+                <label htmlFor="startTime">Start Time:</label>
+                <input
+                  className="day"
+                  type="time"
+                  id="startTime"
+                  name="startTime"
+                  min="0:00"
+                  max="23:59"
+                  value={inputs.startTime}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-row-item">
+                <label htmlFor="endTime">End Time:</label>
+                <input
+                  className="day"
+                  type="time"
+                  id="endTime"
+                  name="endTime"
+                  min="0:00"
+                  max="23:59"
+                  value={inputs.endTime}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="input-item">
+              <label htmlFor="tights">Tights</label>
+              <input
+                type="text"
+                name="tights"
+                placeholder="The style of tights required..."
+                value={inputs.tights}
+                onChange={handleChange}
+              />
+            </div>
 
-            <button type="submit" disabled={loading}>
-              Creat
-              {loading ? "ing " : "e "} Class
+            <div className="input-item">
+              <label htmlFor="shoes">Shoes</label>
+              <input
+                type="text"
+                name="shoes"
+                placeholder="The style of shoes required..."
+                value={inputs.shoes}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input-item">
+              <label htmlFor="notes">Notes</label>
+              <textarea
+                id="notes"
+                type="text"
+                name="notes"
+                rows="5"
+                value={inputs.notes}
+                onChange={handleChange}
+              />
+            </div>
+            <button
+              type="button"
+              className="btn-dark"
+              onClick={() => toggleFileInput(true)}
+            >
+              Add Music
             </button>
-            <BackButton text="Cancel" classNames="btn-danger" />
-          </div>
-        </fieldset>
-      </StyledCreateClassForm>
+            {showFileInput && (
+              <div className="input-item">
+                <label htmlFor="music">
+                  Upload the music for this dance...
+                </label>
+                <input
+                  type="file"
+                  id="music"
+                  name="music"
+                  placeholder="Upload the music for this dance"
+                  onChange={setSongtoState}
+                />
+              </div>
+            )}
+
+            <div className="form-footer">
+              <p>{status}</p>
+
+              <button type="submit" disabled={loading}>
+                Creat
+                {loading ? "ing " : "e "} Class
+              </button>
+              <BackButton text="Cancel" classNames="btn-danger" />
+            </div>
+          </fieldset>
+        </StyledCreateClassForm>
+      </Card>
     </Fragment>
   );
 }
