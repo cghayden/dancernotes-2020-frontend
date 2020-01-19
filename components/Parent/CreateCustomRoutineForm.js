@@ -150,7 +150,8 @@ function CreateCustomRoutineForm({ parent }) {
       // delete song file from cloudinary because there was an error updating the dnace class with the song url and id
       deleteCloudinaryAsset({
         variables: {
-          publicId: file.public_id
+          publicId: file.public_id,
+          resourceType: "video"
         }
       });
     });

@@ -109,7 +109,7 @@ function UpdateDanceClass({ danceClass, studio }) {
       if (danceClass.musicId) {
         setStatus("Deleting Old Music");
         await deleteCloudinaryAsset({
-          variables: { publicId: danceClass.musicId }
+          variables: { publicId: danceClass.musicId, resourceType: "video" }
         }).catch(error => console.log(error));
       }
       //2. upload new song
@@ -126,7 +126,9 @@ function UpdateDanceClass({ danceClass, studio }) {
         await updateDanceClass().catch(error => {
           //if a song was uploaded to cloudinary, but the url and id could not be updated in prisma, delete the song from cloudinary
           if (inputs.musicId) {
-            deleteCloudinaryAsset({ variables: { publicId: inputs.musicId } });
+            deleteCloudinaryAsset({
+              variables: { publicId: inputs.musicId, resourceType: "video" }
+            });
           }
         });
       }

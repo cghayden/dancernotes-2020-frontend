@@ -9,7 +9,7 @@ import BackButton from "../BackButton";
 import { PARENT_USER_QUERY } from "./Queries";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
 
-import { UPDATE_DANCER_MUTATION } from "./UpdateDancer";
+import { UPDATE_DANCER_MUTATION } from "./UpdateDancerForm";
 import { DancerCardContainer } from "./DancerCard";
 import { DancerCardHeaderStyles } from "./DancerCard";
 import useForm from "../../lib/useForm";
@@ -37,11 +37,6 @@ const ImageDiv = styled.div`
   p {
     font-size: 5rem;
   }
-`;
-
-const FormInCard = styled(Form)`
-  padding: 0;
-  width: 100%;
 `;
 
 const CREATE_DANCER = gql`
@@ -93,6 +88,7 @@ function CreateDancerForm() {
   const loading = creatingDancer || updatingDancer || uploadingAvatar;
   const errorUploadingAvatar =
     errorUpdatingDancer || errorUploadingToCloudinary;
+
   function resetForm() {
     updateInputs({ ...initialInputState });
     setAvatarPreview();
@@ -147,10 +143,11 @@ function CreateDancerForm() {
         avatarId: file.public_id
       }
     }).catch(() => {
-      // delete song file from cloudinary because there was an error updating the dnace class with the song url and id
+      // delete avatar file from cloudinary because there was an error updating the dancer with the song url and id
       deleteCloudinaryAsset({
         variables: {
-          publicId: file.public_id
+          publicId: file.public_id,
+          resourceType: "image"
         }
       });
     });
@@ -215,7 +212,7 @@ function CreateDancerForm() {
             )}
           </ImageDiv>
         </DancerCardHeaderStyles>
-        <FormInCard method="post" onSubmit={e => saveNewDancer(e)}>
+        <Form method="post" onSubmit={e => saveNewDancer(e)}>
           <fieldset disabled={loading} aria-busy={loading}>
             {/* <Error error={error || errorLoadingAvatar} /> */}
             <div className="input-item">
@@ -257,7 +254,7 @@ function CreateDancerForm() {
               <BackButton text="Cancel" classNames="btn-danger" />
             </div>
           </fieldset>
-        </FormInCard>
+        </Form>
       </DancerCardContainer>
     </Fragment>
   );

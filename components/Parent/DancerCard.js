@@ -5,7 +5,7 @@ import styled from "styled-components";
 import SearchForStudio from "../SearchForStudio";
 import Card from "../styles/Card";
 import Edit from "../Icons/Edit";
-import UpdateDancer from "./UpdateDancer";
+import UpdateDancerForm from "./UpdateDancerForm";
 import { RegistrationContextConsumer } from "./RegistrationContext";
 
 const DancerCardContainer = styled(Card)`
@@ -155,7 +155,7 @@ export default class DancerCard extends Component {
                     unmountOnExit
                   >
                     {this.state.view === "update" ? (
-                      <UpdateDancer
+                      <UpdateDancerForm
                         dancer={dancer}
                         closeFunc={this.switchView}
                         hasAvatar={hasAvatar}

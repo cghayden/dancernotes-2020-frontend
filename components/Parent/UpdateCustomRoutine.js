@@ -103,7 +103,7 @@ function UpdateCustomRoutine({ dance, parent }) {
       if (dance.musicId) {
         setStatus("Deleting Old Music");
         await deleteCloudinaryAsset({
-          variables: { publicId: danceClass.musicId }
+          variables: { publicId: danceClass.musicId, resourceType: "video" }
         }).catch(error => console.log(error));
       }
       //upload song to cloudinary and set id and url to state
@@ -120,7 +120,9 @@ function UpdateCustomRoutine({ dance, parent }) {
         await updateDanceClass().catch(error => {
           //if a song was uploaded to cloudinary, but the url and id could not be updated in prisma, delete the song from cloudinary
           if (inputs.musicId) {
-            deleteCloudinaryAsset({ variables: { publicId: inputs.musicId } });
+            deleteCloudinaryAsset({
+              variables: { publicId: inputs.musicId, resourceType: "video" }
+            });
           }
         });
       }
@@ -154,13 +156,14 @@ function UpdateCustomRoutine({ dance, parent }) {
     const file = await res.json();
     if (file.error) {
       setCloudinaryUploadError(file.error);
-      setLoadingSong(false);
+    } else {
+      updateInputs({
+        ...inputs,
+        music: file.secure_url,
+        musicId: file.public_id
+      });
     }
-    updateInputs({
-      ...inputs,
-      music: file.secure_url,
-      musicId: file.public_id
-    });
+    setLoadingSong(false);
   }
   // disable submission of empty state if no updates are made
   const disableButton = Object.keys(inputs).length < 1;
@@ -383,7 +386,10 @@ function UpdateCustomRoutine({ dance, parent }) {
             </div>
           )}
           <div className="form-footer">
-            <button type="submit" disabled={updatingRoutine || loadingSong}>
+            <button
+              type="submit"
+              disabled={disableButton || updatingRoutine || loadingSong}
+            >
               Sav
               {updatingRoutine ? "ing " : "e "} Changes
             </button>
