@@ -3,7 +3,6 @@ import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import Link from "next/link";
 import Router from "next/router";
-import Error from "../Error";
 import { StyledCreateClassForm } from "../styles/Form";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
@@ -63,7 +62,6 @@ function UpdateDanceClass({ danceClass, studio }) {
   const [showModal, toggleModal] = useState(false);
   const [status, setStatus] = useState();
   const [showFileInput, toggleFileInput] = useState(false);
-  // const [error, setError] = useState();
 
   const [
     updateDanceClass,
@@ -73,6 +71,7 @@ function UpdateDanceClass({ danceClass, studio }) {
       error: errorUpdatingDanceClass
     }
   ] = useMutation(UPDATE_DANCECLASS_MUTATION, {
+    onError: () => cloudinaryCleanup,
     variables: { ...inputs, id: danceClass.id },
     refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }],
     awaitRefetchQueries: true,
@@ -88,7 +87,13 @@ function UpdateDanceClass({ danceClass, studio }) {
 
   const updatedDanceClass = updatedDance && updatedDance.updateDanceClass;
   const loading = loadingSong || updatingDanceClass || deletingAsset;
-
+  const cloudinaryCleanup = () => {
+    if (inputs.musicId) {
+      deleteCloudinaryAsset({
+        variables: { publicId: inputs.musicId, resourceType: "video" }
+      });
+    }
+  };
   function resetForm() {
     updateInputs({ ...initialInputState });
     toggleFileInput(false);
@@ -110,27 +115,20 @@ function UpdateDanceClass({ danceClass, studio }) {
         setStatus("Deleting Old Music");
         await deleteCloudinaryAsset({
           variables: { publicId: danceClass.musicId, resourceType: "video" }
-        }).catch(error => console.log(error));
+        });
       }
       //2. upload new song
-      setStatus("Uploading Song...");
+      setStatus("Uploading Music...");
       await uploadSong(danceClass.id, inputs.audioFile).catch(err => {
         //if error uploading to cloudinary, delete from inputs.  Why? because if there are no other updates besides the music, the update does not need to be run, because the music upload to cloudinary has failed.
         delete inputs.audioFile;
         setCloudinaryUploadError(err);
       });
       setLoadingSong(false);
-      //if upload song errored out, and there are other inputs to update, update them
+      //update danceclass with song info in inputs. if upload song errored out, and music was the only update, the update will not run.
       if (Object.keys(inputs).length > 0) {
         setStatus("Updating Class");
-        await updateDanceClass().catch(error => {
-          //if a song was uploaded to cloudinary, but the url and id could not be updated in prisma, delete the song from cloudinary
-          if (inputs.musicId) {
-            deleteCloudinaryAsset({
-              variables: { publicId: inputs.musicId, resourceType: "video" }
-            });
-          }
-        });
+        await updateDanceClass();
       }
     }
     // B. update class without audiofile
@@ -163,13 +161,14 @@ function UpdateDanceClass({ danceClass, studio }) {
     const file = await res.json();
     if (file.error) {
       setCloudinaryUploadError(file.error);
-      setLoadingSong(false);
+      delete inputs.audioFile;
+    } else {
+      updateInputs({
+        ...inputs,
+        music: file.secure_url,
+        musicId: file.public_id
+      });
     }
-    updateInputs({
-      ...inputs,
-      music: file.secure_url,
-      musicId: file.public_id
-    });
   }
 
   // disable submission of empty state if no updates are made

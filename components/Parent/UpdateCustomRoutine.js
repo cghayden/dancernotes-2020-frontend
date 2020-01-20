@@ -1,15 +1,14 @@
 import React, { Fragment, useState } from "react";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import Link from "next/link";
-import Router from "next/router";
-import Error from "../Error";
 import { StyledCreateClassForm } from "../styles/Form";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 import BackButton from "../BackButton";
 import DeleteDanceClass from "../DeleteDanceClass";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
+import { ALL_Rs, PARENT_USER_QUERY } from "./Queries";
 
 const UPDATE_CUSTOM_ROUTINE = gql`
   mutation UPDATE_CUSTOM_ROUTINE(
@@ -67,8 +66,9 @@ function UpdateCustomRoutine({ dance, parent }) {
       error: errorUpdatingRoutine
     }
   ] = useMutation(UPDATE_CUSTOM_ROUTINE, {
+    onError: () => cloudinaryCleanup,
     variables: { ...inputs, id: dance.id },
-    refetchQueries: ["allRs"],
+    refetchQueries: [{ query: ALL_Rs }],
     awaitRefetchQueries: true,
     onCompleted: () => {
       resetForm();
@@ -83,6 +83,15 @@ function UpdateCustomRoutine({ dance, parent }) {
   const updatedDanceClass =
     updatedRoutine && updatedRoutine.updateCustomRoutine;
   const loading = loadingSong || updatingRoutine || deletingAsset;
+
+  const cloudinaryCleanup = () => {
+    if (inputs.musicId) {
+      deleteCloudinaryAsset({
+        variables: { publicId: inputs.musicId, resourceType: "video" }
+      });
+    }
+  };
+
   function resetForm() {
     updateInputs({ ...initialInputState });
     toggleFileInput(false);
@@ -104,10 +113,10 @@ function UpdateCustomRoutine({ dance, parent }) {
         setStatus("Deleting Old Music");
         await deleteCloudinaryAsset({
           variables: { publicId: danceClass.musicId, resourceType: "video" }
-        }).catch(error => console.log(error));
+        });
       }
+      setStatus("Uploading Music...");
       //upload song to cloudinary and set id and url to state
-      setStatus("Uploading Song...");
       await uploadSong(dance.id, inputs.audioFile).catch(err => {
         //if error uploading to cloudinary, delete from inputs.  Why? because if there are no other updates besides the music, the update does not need to be run, because the music upload to cloudinary has failed.
         delete inputs.audioFile;
@@ -117,14 +126,7 @@ function UpdateCustomRoutine({ dance, parent }) {
       //if upload song errored out, and there are other inputs to update, update them
       if (Object.keys(inputs).length > 0) {
         setStatus("Updating Class");
-        await updateDanceClass().catch(error => {
-          //if a song was uploaded to cloudinary, but the url and id could not be updated in prisma, delete the song from cloudinary
-          if (inputs.musicId) {
-            deleteCloudinaryAsset({
-              variables: { publicId: inputs.musicId, resourceType: "video" }
-            });
-          }
-        });
+        await updateDanceClass();
       }
     }
     // B. update class without audiofile
@@ -163,7 +165,6 @@ function UpdateCustomRoutine({ dance, parent }) {
         musicId: file.public_id
       });
     }
-    setLoadingSong(false);
   }
   // disable submission of empty state if no updates are made
   const disableButton = Object.keys(inputs).length < 1;

@@ -63,6 +63,8 @@ function CreateCustomRoutineForm({ parent }) {
   const [showModal, toggleModal] = useState(false);
   const [status, setStatus] = useState();
   const [showFileInput, toggleFileInput] = useState(false);
+  const [musicForUpload, setMusicForUpload] = useState();
+  const [musicData, setMusicData] = useState({});
 
   const [
     createCustomRoutine,
@@ -88,11 +90,8 @@ function CreateCustomRoutineForm({ parent }) {
     updateCustomRoutine,
     { error: errorUpdatingDanceClass, loading: updatingDanceClass }
   ] = useMutation(UPDATE_CUSTOM_ROUTINE, {
-    refetchQueries: [
-      {
-        query: ALL_Rs
-      }
-    ]
+    onError: () => cloudinaryCleanup(),
+    refetchQueries: [{ query: ALL_Rs }]
   });
 
   const [
@@ -103,22 +102,49 @@ function CreateCustomRoutineForm({ parent }) {
   const newDanceClass =
     newCustomRoutine && newCustomRoutine.createCustomRoutine;
 
-  const loading =
-    loadingSong || creatingCustomRoutine || updatingDanceClass || deletingAsset;
+  const loading = loadingSong || creatingCustomRoutine || updatingDanceClass;
   const errorUploadingSong =
     errorUpdatingDanceClass || errorUploadingToCloudinary;
+
+  const cloudinaryCleanup = () => {
+    if (musicData.musicId) {
+      deleteCloudinaryAsset({
+        variables: { publicId: musicData.musicId, resourceType: "video" }
+      });
+    }
+  };
+
   function resetForm() {
+    setStatus();
     updateInputs({ ...initialInputState });
     toggleFileInput(false);
-    setStatus();
   }
+
   function setSongtoState(e) {
     const audioFile = e.target.files[0];
-    updateInputs({ ...inputs, audioFile });
+    setMusicForUpload(audioFile);
   }
+
+  async function saveNewCustomRoutine(e) {
+    e.preventDefault();
+    setStatus("Creating Class...");
+    const newCustomRoutine = await createCustomRoutine();
+    //A. if music file is queued in state, create dance, upload music with tag of routineId, then update routine with the music url and musicId
+    if (musicForUpload) {
+      setStatus("Uploading Music...");
+      // const newCustomRoutine = await createCustomRoutine();
+      const newCustomRoutineId = newCustomRoutine.data.createCustomRoutine.id;
+      await uploadSongAndUpdateRoutine(newCustomRoutineId).catch(() => {
+        setStatus();
+        toggleModal(true);
+      });
+    }
+    resetForm();
+    toggleModal(true);
+  }
+
   async function uploadSongAndUpdateRoutine(danceClassId) {
     setLoadingSong(true);
-    setStatus("Uploading Song...");
     const data = new FormData();
     data.append("file", inputs.audioFile);
     data.append("upload_preset", "dancernotes-music");
@@ -136,47 +162,19 @@ function CreateCustomRoutineForm({ parent }) {
     if (file.error) {
       setCloudinaryUploadError(file.error);
       setLoadingSong(false);
-      throw `Audio Upload failed: ${file.error}`;
-    }
-    setLoadingSong(false);
-    setStatus("Updating class...");
-    await updateCustomRoutine({
-      variables: {
-        id: danceClassId,
-        music: file.secure_url,
-        musicId: file.public_id
-      }
-    }).catch(() => {
-      // delete song file from cloudinary because there was an error updating the dnace class with the song url and id
-      deleteCloudinaryAsset({
+    } else {
+      //set info to state in case there is an error updating the class, we can delete this music from cloudinary
+      setMusicData({ music: file.secure_url, musicId: file.public_id });
+      setStatus("Updating class...");
+      await updateCustomRoutine({
         variables: {
-          publicId: file.public_id,
-          resourceType: "video"
+          id: danceClassId,
+          music: file.secure_url,
+          musicId: file.public_id
         }
       });
-    });
+    }
     setStatus();
-  }
-
-  async function saveNewCustomRoutine(e) {
-    e.preventDefault();
-    //A. if music file is queued in state, create dance, upload music with tag of routineId, then update routine with the music url and musicId
-    setStatus("Creating Class...");
-    if (inputs.audioFile) {
-      const newCustomRoutine = await createCustomRoutine();
-      const newCustomRoutineId = newCustomRoutine.data.createCustomRoutine.id;
-      await uploadSongAndUpdateRoutine(newCustomRoutineId).catch(() => {
-        setStatus();
-        toggleModal(true);
-      });
-    }
-    //B. create without music
-    else {
-      await createCustomRoutine();
-      //if fail, error thrown
-    }
-    toggleModal(true);
-    resetForm();
   }
 
   return (

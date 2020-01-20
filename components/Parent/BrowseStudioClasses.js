@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import DanceClassInquiryCard from "./DanceClassInquiryCard";
-import Error from "../Error";
-import EnrollmentRequestsCart from "./EnrollmentRequestsCart";
 import SoloDuoTrioSubscribe from "./SoloDuoTrioSubscribe";
 import LinkDancerToStudioButton from "./LinkDancerToStudioButton";
 import styled from "styled-components";
@@ -23,8 +21,8 @@ const ClassListCard = styled(Card)`
   background: ${props => props.theme.gray0};
   max-width: 900px;
   box-shadow: none;
-  /* margin-top: -2px; */
-  border-radius: 0 5px 5px 5px;
+  margin-top: -2px;
+  /* border-radius:  5px 5px 5px; */
 `;
 const DancerTabs = styled(Card)`
   display: flex;
@@ -36,8 +34,8 @@ const DancerTabs = styled(Card)`
 `;
 const Tab = styled.div`
     width: auto;
-    max-width: 160px;
-    min-width: 80px;
+    max-width: 150px;
+    min-width: 50px;
     border-radius: 5px 5px 0 0;
     margin: 0 1px 0 0;
     color: ${props =>
@@ -95,7 +93,7 @@ function BrowseStudioClasses({ classFilter, studio }) {
   const { data: parentData } = useQuery(PARENT_USER_QUERY);
   const parentUser = parentData ? parentData.parentUser : {};
 
-  const { data: dancerData, loading, error } = useQuery(DANCER_QUERY, {
+  const { data: dancerData } = useQuery(DANCER_QUERY, {
     variables: { id: activeDancerId }
   });
   const dancer = dancerData ? dancerData.dancer : {};

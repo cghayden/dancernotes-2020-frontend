@@ -96,25 +96,24 @@ const BrowseClassFilter = ({
       <FilterPanelHeader>
         <CloseFilterPanel onClick={closeControls}>Close</CloseFilterPanel>
       </FilterPanelHeader>
-
+      <CheckboxAreaHeader>
+        <h3>Filter By:</h3>
+        {/* show clear button if there are active filters*/}
+        {Object.keys(filter).length > 0 && (
+          <button onClick={clearFilter}>Clear All</button>
+        )}
+      </CheckboxAreaHeader>
+      <ActiveFilters>
+        {/*display a list of the active filters */}
+        {Object.keys(filter).length > 0 && (
+          <ul>
+            {activeFilters.map(choice => (
+              <li key={choice}>{choice}</li>
+            ))}
+          </ul>
+        )}
+      </ActiveFilters>
       <CheckboxArea>
-        <CheckboxAreaHeader>
-          <h3>Filter By:</h3>
-          {/* show clear button if there are active filters*/}
-          {Object.keys(filter).length > 0 && (
-            <button onClick={clearFilter}>Clear All</button>
-          )}
-        </CheckboxAreaHeader>
-        <ActiveFilters>
-          {/*display a list of the active filters */}
-          {Object.keys(filter).length > 0 && (
-            <ul>
-              {activeFilters.map(choice => (
-                <li key={choice}>{choice}</li>
-              ))}
-            </ul>
-          )}
-        </ActiveFilters>
         {filterOptions.map(filterCategory => {
           const pluralCategory = filterCategory.concat("s");
           return (

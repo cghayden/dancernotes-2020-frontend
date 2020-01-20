@@ -129,9 +129,10 @@ function CreateDancerForm() {
       setCloudinaryUploadError(error);
     });
     const file = await res.json();
+    console.log("file:", file);
     if (file.error) {
       setCloudinaryUploadError(file.error);
-      // setLoadingSong(false);
+      setStatus();
       throw `Image Upload failed: ${file.error}`;
     }
     setStatus("Saving Avatar...");

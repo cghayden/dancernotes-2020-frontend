@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
+import styled from "styled-components";
+
 import Form from "../styles/Form";
 import Error from "../Error";
-import styled from "styled-components";
-import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
 import useForm from "../../lib/useForm";
+import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
+import { PARENT_USER_QUERY } from "./Queries";
 
 const FormStyles = styled(Form)`
   box-shadow: none;
@@ -48,9 +50,9 @@ function UpdateDancerForm({ dancer, closeFunc, hasAvatar, showAvatarPreview }) {
       ...inputs,
       id: dancer.id
     },
-    refetchQueries: ["allRs"],
+    refetchQueries: [{ query: PARENT_USER_QUERY }],
     awaitRefetchQueries: true,
-    onError: err => cloudinaryCleanup(err)
+    onError: () => cloudinaryCleanup()
   });
 
   const [
@@ -58,14 +60,16 @@ function UpdateDancerForm({ dancer, closeFunc, hasAvatar, showAvatarPreview }) {
     { loading: deletingAsset, error: errorDeletingAsset }
   ] = useMutation(DELETE_CLOUDINARY_ASSET);
 
-  const cloudinaryCleanup = err => {
-    deleteCloudinaryAsset({
-      variables: { publicId: inputs.avatarId, resourceType: "image" }
-    });
+  const cloudinaryCleanup = () => {
+    if (inputs.avatarId) {
+      deleteCloudinaryAsset({
+        variables: { publicId: inputs.avatarId, resourceType: "image" }
+      });
+    }
   };
 
-  const loading = updatingDancer;
-  const error = errorUpdatingDancer;
+  const loading = updatingDancer || deletingAsset;
+  const error = errorUpdatingDancer || errorUploadingToCloudinary;
   function resetForm() {
     updateInputs({ ...initialInputState });
     setStatus();
@@ -112,22 +116,22 @@ function UpdateDancerForm({ dancer, closeFunc, hasAvatar, showAvatarPreview }) {
 
   async function saveChanges(e) {
     e.preventDefault();
+    setStatus("Saving Changes...");
     //if newAvatar, upload img to cloudinary, and get new url form cloudinary into state.avatar
     if (avatarForUpload) {
-      await uploadNewAvatar().catch(err => setCloudinaryUploadError(err));
-      deleteCloudinaryAsset({
-        variables: { publicId: dancer.avatarId, resourceType: "image" }
-      });
-    }
-    await updateDancer().catch(async err => {
-      console.log("err:", err);
-      if (inputs.avatarId) {
-        console.log("need to delete image");
+      // if dancer already had an avatar, delete it.
+      if (dancer.avatarId) {
         await deleteCloudinaryAsset({
-          variables: { publicId: inputs.avatarId, resourceType: "image" }
+          variables: { publicId: dancer.avatarId, resourceType: "image" }
         });
       }
-    });
+      await uploadNewAvatar().catch(err => {
+        delete inputs.avatar;
+        delete inputs.avatarId;
+        setCloudinaryUploadError(err);
+      });
+    }
+    await updateDancer();
     closeFunc();
   }
 
@@ -176,6 +180,7 @@ function UpdateDancerForm({ dancer, closeFunc, hasAvatar, showAvatarPreview }) {
             {loading ? "ing " : "e "} Changes
           </button>
           <button
+            className="btn-danger"
             type="button"
             onClick={async () => {
               await showAvatarPreview("");
