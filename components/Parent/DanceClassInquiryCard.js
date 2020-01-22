@@ -174,7 +174,7 @@ function DanceClassInquiryCard({
       <DanceClassOptions>
         {status === "available" && (
           <button
-            className="btn-dark"
+            className="btn-action-primary"
             disabled={loading}
             onClick={async () => {
               await requestDance();

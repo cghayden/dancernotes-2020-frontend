@@ -229,7 +229,7 @@ function CreateDancerForm() {
             </div>
             <button
               type="button"
-              className="btn-dark"
+              className="btn-action-primary"
               onClick={() => toggleFileInput(!showFileInput)}
             >
               Add Image

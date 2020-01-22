@@ -153,7 +153,7 @@ function UpdateDancerForm({ dancer, closeFunc, hasAvatar, showAvatarPreview }) {
         </div>
         <button
           type="button"
-          className="btn-dark"
+          className="btn-action-primary"
           onClick={() => toggleFileInput(!showFileInput)}
         >
           {hasAvatar ? `Change Picture` : `Add a picture`}

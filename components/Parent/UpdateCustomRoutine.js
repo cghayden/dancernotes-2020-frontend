@@ -369,7 +369,7 @@ function UpdateCustomRoutine({ dance, parent }) {
           </div>
           <button
             type="button"
-            className="btn-dark"
+            className="btn-action-primary"
             onClick={() => toggleFileInput(true)}
           >
             Add/Change Music

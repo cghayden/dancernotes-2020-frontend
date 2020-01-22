@@ -222,7 +222,7 @@ function CreateDanceClass({ studio }) {
         <fieldset disabled={loading} aria-busy={loading}>
           <legend>Add A New Dance Class To Your Schedule</legend>
           <Link href="configureClassCategories">
-            <a className="btn-dark">Configure Class Categories</a>
+            <a className="btn-action-primary">Configure Class Categories</a>
           </Link>
           <div className="input-item">
             <label htmlFor="name">Class Name *</label>
@@ -424,7 +424,7 @@ function CreateDanceClass({ studio }) {
           </div>
           <button
             type="button"
-            className="btn-dark"
+            className="btn-action-primary"
             onClick={() => toggleFileInput(true)}
           >
             Add Music

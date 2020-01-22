@@ -15,7 +15,10 @@ const ALL_Rs = gql`
       tights
       notes
       music
-      parentsNotes
+      parentsNotes {
+        note
+        id
+      }
       dancers {
         id
         firstName

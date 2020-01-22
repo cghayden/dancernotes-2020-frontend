@@ -19,7 +19,7 @@ const Form = styled.form`
   color: ${props => props.theme.newBlue[90].hsl};
   background: ${props => props.theme.gray0};
   /* box-shadow: ${props => props.theme.dropShadow1}; */
-  padding: 1rem 0;
+  padding: 0 0;
   width: 100%;
   /* min-width: 320px; */
   max-width: 550px;
@@ -53,13 +53,21 @@ const Form = styled.form`
     /* border-radius: 10px; */
     width: 75%;
     max-width: 300px;
-    background: ${props => props.theme.newBlue[80].hsl};
+    background-color: ${props => props.theme.newBlue[50].hsl};
     color: white;
     border: 0;
     padding: 0.5rem;
     :active {
       box-shadow: 0 2px 3px hsla(0 0%, 0%, 0.8);
       transform: translateY(4px);
+    }
+    :hover {
+      background-color: ${props => props.theme.newBlue[60].hsl};
+      } 
+      :disabled{
+      background-color: ${props => props.theme.gray4};
+      color: ${props => props.theme.gray2};
+      cursor: not-allowed;
     }
     &[aria-busy="true"]::after {
       background-size: 50% auto;
@@ -117,8 +125,9 @@ const Form = styled.form`
     }
   }
   .form-footer {
+    padding-top: 1rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
 
   }
 `;

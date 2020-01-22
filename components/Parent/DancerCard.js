@@ -206,7 +206,7 @@ export default class DancerCard extends Component {
                           ))}
 
                           <button
-                            className="btn-dark"
+                            className="btn-action-primary"
                             onClick={this.toggleStudioSearch}
                           >
                             Find a Studio to Browse or Register{" "}
@@ -223,7 +223,7 @@ export default class DancerCard extends Component {
                             <p>OR</p>
                           </div>
                           <Link href="/parent/createCustomRoutine">
-                            <a className="btn-dark">
+                            <a className="btn-action-primary">
                               Create Your Own Routine for {dancer.firstName}
                             </a>
                           </Link>

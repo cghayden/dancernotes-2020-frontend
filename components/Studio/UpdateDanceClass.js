@@ -251,7 +251,7 @@ function UpdateDanceClass({ danceClass, studio }) {
           </div>
           <button
             type="button"
-            className="btn-dark"
+            className="btn-action-primary"
             onClick={() => toggleFileInput(true)}
           >
             Add/Change Music

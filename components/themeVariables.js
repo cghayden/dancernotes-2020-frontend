@@ -84,12 +84,12 @@ const theme = {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64, 96],
 
-  parentBackground: colors["gray0"],
   // text Colors...
   blackText: colors["blackText"],
   highlightedText: colors.indigo9,
   disabledText: colors["gray4"],
-  background: colors["gray2"],
+
+  background: colors["gray1"],
   border: colors["vividBlue4"],
 
   sidebarWidth: "18vw",

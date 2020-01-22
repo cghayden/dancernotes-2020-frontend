@@ -57,9 +57,9 @@ const GlobalStyle = createGlobalStyle`
   border-radius: 5px;
   background: transparent;
     :hover {
-    background-color: ${theme.cream}; 
+    background-color: ${theme.newBlue[10].hsl};
     color: ${theme.newBlue[90].hsl};
-    /* transition: background-color 1s ease-out; */
+    transition: background-color .25s ease-out;
     }
     :disabled{
       background-color: ${theme.gray4};
@@ -69,9 +69,9 @@ const GlobalStyle = createGlobalStyle`
     
     &.btn-action-secondary{
       background-color: ${theme.newBlue[10].hsl};
-    color: ${theme.newBlue[70].hsl};
-    :hover {
-      background-color: ${theme.newBlue[60].hsl};
+      color: ${theme.newBlue[70].hsl};
+      :hover {
+      background-color: ${theme.newBlue[20].hsl};
       } 
       :disabled{
       background-color: ${theme.gray4};
@@ -82,30 +82,34 @@ const GlobalStyle = createGlobalStyle`
 
     &.btn-light{
       background-color: ${theme.gray2};
-    color: ${theme.indigo9};
-    :hover {
+      color: ${theme.indigo9};
+      :hover {
       background-color: ${theme.indigo8}; 
-    color: white;
-    }
+      color: white;
+      }
     }
 
     &.btn-danger{
-      background-color: ${theme.red5};
+      background-color: ${theme.red4};
       color: white;
+      :hover {
+      background-color: ${theme.red5}; 
+      color: white;
+      }
     }
 
-    &.btn-dark{
-      background-color: ${theme.newBlue[70].hsl};
-    color: ${theme.newBlue[0].hsl};
-    :hover {
-      background-color: ${theme.newBlue[60].hsl};
+    &.btn-action-primary{
+      background-color: ${theme.newBlue[50].hsl};
+      color: white;
+      :hover {
+        background-color: ${theme.newBlue[60].hsl};
       } 
       :disabled{
-      background-color: ${theme.gray4};
-      color: ${theme.gray2};
+      background-color: ${theme.gray3};
+      color: ${theme.gray9};
       cursor: not-allowed;
     }
-    }
+  }
 
   &.landingPage{
     font-size: 1.5rem;
@@ -120,12 +124,9 @@ const GlobalStyle = createGlobalStyle`
  {
     background-color: white;
     border: none;
-    ${"" /* box-shadow: inset 1px 2px 2px hsla(0, 0%, 0%, 0.2); */}
     border-radius: 10px;
     font: inherit;
     padding: 0.6rem;
-    ${"" /* reinstate width if this screws up inputs and selects */}
-    ${"" /* width: 90%; */}
     &:focus {
       border-color: ${theme.cranberry};
     }
