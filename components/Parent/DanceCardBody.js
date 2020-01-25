@@ -11,20 +11,22 @@ const DanceCardBodyStyles = styled.div`
 `;
 
 const NoteItem = styled.div`
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  padding: 0.25rem;
+  display: flex;
+  padding: 0.25rem 0;
 `;
 
-// const NoteLabel = styled.dt``;
-const NoteContent = styled.dd`
-  margin: 0;
-  padding-left: 0 0.5rem;
+const Dt = styled.dt`
+  font-weight: bold;
+`;
+const Dd = styled.dd`
+  margin-left: 1rem;
   text-align: left;
 `;
-
+const Notes = styled.div`
+  text-align: left;
+  padding: 0.25rem 0;
+`;
 function DanceCardBody({ dance }) {
-  console.log("dance:", dance);
   const [addNote, toggleAddNote] = useState(false);
   const [editNotes, toggleEditNotes] = useState(false);
 
@@ -32,28 +34,29 @@ function DanceCardBody({ dance }) {
     <DanceCardBodyStyles>
       <dl>
         <NoteItem>
-          <dt>Shoes:</dt> <NoteContent>{dance.shoes}</NoteContent>
+          <Dt>Shoes:</Dt> <Dd>{dance.shoes}</Dd>
         </NoteItem>
         <NoteItem>
-          <dt>Tights:</dt> <NoteContent>{dance.tights}</NoteContent>
+          <Dt>Tights:</Dt> <Dd>{dance.tights}</Dd>
         </NoteItem>
-        <NoteItem>
-          <dt>Studio Notes:</dt> <NoteContent>{dance.notes}</NoteContent>
-        </NoteItem>
-
+        <Notes>
+          <Dt>Studio Notes:</Dt> <Dd>{dance.notes ? dance.notes : `N/A`}</Dd>
+        </Notes>
         {!dance.parentsNotes && !addNote && (
-          <button onClick={() => toggleAddNote(true)}>+ Note</button>
+          <button
+            className="btn-action-secondary"
+            onClick={() => toggleAddNote(true)}
+          >
+            + Note
+          </button>
+        )}
+        {dance.parentsNotes && (
+          <Notes>
+            <Dt>My Notes:</Dt>
+            {!editNotes && <Dd>{dance.parentsNotes.note}</Dd>}
+          </Notes>
         )}
 
-        {dance.parentsNotes && (
-          <NoteItem>
-            <dt>My Notes:</dt>
-            {!editNotes && <NoteContent>{dance.parentsNotes.note}</NoteContent>}
-          </NoteItem>
-        )}
-        {dance.parentsNotes && !editNotes && (
-          <button onClick={() => toggleEditNotes(true)}>Add/Edit Notes</button>
-        )}
         {editNotes && (
           <UpdateParentNotes
             existingNote={dance.parentsNotes}
@@ -63,11 +66,19 @@ function DanceCardBody({ dance }) {
         )}
         {addNote && (
           <NoteItem>
-            <dt>My Notes:</dt>
+            <Dt>My Notes:</Dt>
             <AddNote toggleAddNote={toggleAddNote} danceId={dance.id} />
           </NoteItem>
         )}
       </dl>
+      {dance.parentsNotes && !editNotes && (
+        <button
+          className="btn-action-secondary"
+          onClick={() => toggleEditNotes(true)}
+        >
+          Add/Edit Notes
+        </button>
+      )}
     </DanceCardBodyStyles>
   );
 }

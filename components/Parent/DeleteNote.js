@@ -21,7 +21,7 @@ export default class DeleteNote extends Component {
         variables={{ noteId: this.props.noteId }}
         update={this.updateNotes}
         refetchQueries={[{ query: ALL_Rs }]}
-        // awaitRefetchQueries={true}
+        awaitRefetchQueries={true}
       >
         {(deleteParentNote, { loading, error }) => (
           <button

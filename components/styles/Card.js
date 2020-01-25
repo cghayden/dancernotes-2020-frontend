@@ -8,7 +8,7 @@ const Card = styled.div`
   background-color: ${props => props.theme.gray0};
   box-shadow: ${props => props.theme.dropShadow1};
   margin: 0 auto 1rem auto;
-  padding: 1rem;
+  padding: 1rem 5vmin;
   width: 90%;
   min-width: 320px;
   max-width: 600px;
