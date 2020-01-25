@@ -10,7 +10,7 @@ const AddClassButton = (
 );
 
 const DanceClassesPage = () => (
-  <StudioLayout page={"Classes"} action={AddClassButton}>
+  <StudioLayout page={"Classes"} pageAction={AddClassButton}>
     <DanceClasses />
   </StudioLayout>
 );

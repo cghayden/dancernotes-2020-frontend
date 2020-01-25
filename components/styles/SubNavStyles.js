@@ -49,6 +49,7 @@ const SubNavStyles = styled.nav`
 
     &:hover,
     &:focus {
+      color: ${props => props.theme.indigo8};
       background: none;
       outline: none;
     }

@@ -25,14 +25,14 @@ const StudioMobileStatusBarStyles = styled.div`
 const Title = styled.h1`
   // font-size: 2rem;
 `;
-const Actions = styled.div`
+const PageAction = styled.div`
   margin-left: auto;
 `;
 function StudioMobileStatusBar(props) {
   return (
     <StudioMobileStatusBarStyles>
       <Title>{props.page}</Title>
-      <Actions>{props.children}</Actions>
+      <PageAction>{props.children}</PageAction>
     </StudioMobileStatusBarStyles>
   );
 }

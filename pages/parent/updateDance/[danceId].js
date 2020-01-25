@@ -49,7 +49,7 @@ const updateDancePage = () => {
       <NotesSubNav />
       <SubNavMainLayout
         page={"Update Your Routine"}
-        action={<BackButton text={"Cancel"} />}
+        pageAction={<BackButton text={"Cancel"} />}
       >
         <UpdateCustomRoutine
           dance={routine.customRoutine}

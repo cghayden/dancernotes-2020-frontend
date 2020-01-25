@@ -44,7 +44,7 @@ function Makeup() {
   }
 
   return (
-    <StudioLayout page="Makeup" action={AddMakeupSet}>
+    <StudioLayout page="Makeup" pageAction={AddMakeupSet}>
       {data.myStudio.makeupSets.map(set => (
         <MakeupSetCard makeupSet={set} key={set.id} />
       ))}

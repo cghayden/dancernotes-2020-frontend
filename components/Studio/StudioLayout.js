@@ -14,19 +14,19 @@ const MainContentWrapper = styled.div`
 const StudioLayout = ({
   children,
   page = "",
-  action = <div />,
+  pageAction = <div />,
   subnav = <div />,
   controls = null
 }) => {
   return (
     <Fragment>
-      <StudioMobileStatusBar page={page} action={action} />
+      <StudioMobileStatusBar page={page} pageAction={pageAction} />
       <StudioMobileNav />
       <StudioDesktopNav />
       <ContentLayout>
         {subnav}
         <main>
-          <ContentHeader page={page} action={action} />
+          <ContentHeader page={page} pageAction={pageAction} />
           <MainContentWrapper>{children}</MainContentWrapper>
         </main>
         {controls}

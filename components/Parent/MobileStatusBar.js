@@ -22,18 +22,18 @@ const MobileStatusBarStyles = styled.div`
 const Title = styled.h1`
   font-size: 1.4rem;
 `;
-const Actions = styled.div`
+const PageAction = styled.div`
   margin-left: auto;
 `;
 function MobileStatusBar(props) {
   // todo : get active dancers and display avatars?
-  const { page, action } = props;
+  const { page, pageAction } = props;
 
   return (
     <MobileStatusBarStyles>
       <Title>{page}</Title>
       {/* {avatars && <Avatars dancers={[Dancer]} />} */}
-      <Actions>{action}</Actions>
+      <PageAction>{pageAction}</PageAction>
     </MobileStatusBarStyles>
   );
 }

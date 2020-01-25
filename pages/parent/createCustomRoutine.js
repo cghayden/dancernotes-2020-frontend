@@ -16,7 +16,7 @@ function createCustomRoutinePage() {
       <NotesSubNav />
       <SubNavMainLayout
         page={"Create Your own Routine"}
-        action={<BackButton text={"Cancel"} />}
+        pageAction={<BackButton text={"Cancel"} />}
       >
         <CreateCustomRoutineForm parent={parent.parentUser} />
       </SubNavMainLayout>

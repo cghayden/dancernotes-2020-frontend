@@ -14,6 +14,7 @@ function OffScreenControlsToggler({ text }) {
       {({ toggleControlPanel }) => {
         return (
           <OffScreenTogglerButton
+            className="pageAction"
             onClick={() => {
               toggleControlPanel();
             }}

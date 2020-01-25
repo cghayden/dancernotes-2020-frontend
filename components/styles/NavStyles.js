@@ -21,12 +21,21 @@ const NavStyles = styled.nav`
   button {
     display: flex;
     align-items: center;
-    /* color: ${props => props.theme.indigo9}; */
     margin: 0;
     background: none;
     border: none;
     font-weight: 400;
     box-shadow: none;
+    :hover{
+      border-radius: 0;
+      background: none;
+      color: ${props => props.theme.indigo8};
+      border-bottom: 2px solid ${props => props.theme.indigo8};
+    }
+    :active {
+      border-bottom: none;
+      color: initial;
+    }
   }
 
   @media (min-width: ${props => props.theme.largeScreen}) {

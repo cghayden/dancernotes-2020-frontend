@@ -146,6 +146,15 @@ const GlobalStyle = createGlobalStyle`
     width: 200px;
     height: 50px;
   }
+  &.pageAction{
+    color: ${theme.indigo8};
+    border: none;
+    outline: none;
+    :hover{
+      color: ${theme.indigo9};
+      background: none;
+    }
+  }
   }
 
   input,

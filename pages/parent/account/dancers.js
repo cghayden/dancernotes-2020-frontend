@@ -21,7 +21,7 @@ function DancersPage() {
   return (
     <>
       <AccountSubNav dancers={parentUser.dancers} />
-      <SubNavMainLayout action={AddDancerButton} page="My Dancers">
+      <SubNavMainLayout pageAction={AddDancerButton} page="My Dancers">
         <Dancers hasDancers={hasDancers} dancers={parentUser.dancers} />
       </SubNavMainLayout>
     </>

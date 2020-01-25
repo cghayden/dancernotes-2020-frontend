@@ -37,7 +37,7 @@ const CreateMakeupPage = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return error && <Error error={error} />;
   return (
-    <StudioLayout page={"Classes"} action={CancelButton}>
+    <StudioLayout page={"Classes"} pageAction={CancelButton}>
       <CreateMakeupForm studio={data.myStudio} />
     </StudioLayout>
   );

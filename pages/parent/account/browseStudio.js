@@ -65,7 +65,7 @@ const BrowseStudioPage = () => {
             <AccountSubNav />
             <SubNavMainControlsLayout
               page={`Classes at ${studio.studioName}`}
-              action={<OffScreenControlsToggler text="Filter" />}
+              pageAction={<OffScreenControlsToggler text="Filter" />}
             >
               <BrowseStudioClasses
                 // dancerName={dancerName}

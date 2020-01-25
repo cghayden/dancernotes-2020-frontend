@@ -14,19 +14,15 @@ const HeaderStyle = styled.header`
   }
 `;
 
-const Actions = styled.div`
+const PageAction = styled.div`
   margin-left: auto;
-  color: ${props => props.theme.vividBlue9};
-  button {
-    /* margin: 0; */
-  }
 `;
 
-function ContentHeader({ page, action }) {
+function ContentHeader({ page, pageAction }) {
   return (
     <HeaderStyle>
       <h1>{page}</h1>
-      <Actions>{action}</Actions>
+      <PageAction>{pageAction}</PageAction>
     </HeaderStyle>
   );
 }

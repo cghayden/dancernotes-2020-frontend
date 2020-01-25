@@ -36,7 +36,7 @@ const ParentHome = () => {
       <NotesSubNav />
       <SubNavMainControlsLayout
         page="Routines"
-        action={<OffScreenControlsToggler text="Display" />}
+        pageAction={<OffScreenControlsToggler text="Display" />}
       >
         <RoutinesDisplay dancerIds={parentUser.dancersIds} />
       </SubNavMainControlsLayout>

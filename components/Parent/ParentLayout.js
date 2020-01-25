@@ -17,15 +17,15 @@ const SubNavMainLayout = styled.main`
   }
 `;
 
-//action is a component that triggers an action for the page, i.e add a dancer, or create a new dance
-const ParentLayout = ({ children, page = "", action = null }) => {
+//action is a component that triggers an pageAction for the page, i.e add a dancer, or create a new dance
+const ParentLayout = ({ children, page = "", pageAction = null }) => {
   return (
     <Fragment>
-      <MobileStatusBar page={page} action={action} />
+      <MobileStatusBar page={page} pageAction={pageAction} />
       <MobileNav />
       <DesktopNav />
       <SubNavMainLayout>
-        <ContentHeader page={page} action={action} />
+        <ContentHeader page={page} pageAction={pageAction} />
         {children}
       </SubNavMainLayout>
     </Fragment>

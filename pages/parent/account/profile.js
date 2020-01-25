@@ -32,7 +32,7 @@ const Profile = () => {
   return (
     <>
       <AccountSubNav dancers={parentUser.dancers} />
-      <SubNavMainLayout page={"My Account"} action={"Edit button"}>
+      <SubNavMainLayout page={"My Account"} pageAction={"Edit button"}>
         <MyProfile user={parentUser} />
       </SubNavMainLayout>
     </>
