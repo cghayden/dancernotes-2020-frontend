@@ -66,19 +66,6 @@ const GlobalStyle = createGlobalStyle`
       color: ${theme.gray2};
       cursor: not-allowed;
     }
-    
-    &.btn-action-secondary{
-      background-color: ${theme.newBlue[10].hsl};
-      color: ${theme.newBlue[70].hsl};
-      :hover {
-      background-color: ${theme.newBlue[20].hsl};
-      } 
-      :disabled{
-      background-color: ${theme.gray4};
-      color: ${theme.gray2};
-      cursor: not-allowed;
-    }
-    }
 
     &.btn-light{
       background-color: ${theme.gray2};
@@ -90,19 +77,28 @@ const GlobalStyle = createGlobalStyle`
     }
 
     &.btn-danger{
-      background-color: ${theme.red4};
-      color: white;
+      background-color: ${theme.red6};
+      color: ${theme.red0};
       :hover {
-      background-color: ${theme.red5}; 
-      color: white;
+      background-color: ${theme.red7}; 
+      color: ${theme.red0};
+      }
+    }
+    &.btn-danger-outline{
+      background-color: none;
+      color: ${theme.red7};
+      border: 1px solid ${theme.red7};
+      :hover {
+        background-color: ${theme.red6};
+      color: ${theme.red0};
       }
     }
 
     &.btn-action-primary{
-      background-color: ${theme.newBlue[50].hsl};
-      color: white;
+      background-color: ${theme.indigo8};
+      color: ${theme.indigo0};
       :hover {
-        background-color: ${theme.newBlue[60].hsl};
+        background-color: ${theme.indigo9};
       } 
       :disabled{
       background-color: ${theme.gray3};
@@ -110,6 +106,40 @@ const GlobalStyle = createGlobalStyle`
       cursor: not-allowed;
     }
   }
+  &.btn-action-primary-outline{
+      background-color: none;
+      color: ${theme.indigo8};
+      border: 1px solid ${theme.indigo8};
+      :hover {
+        background-color: ${theme.indigo8};
+      color: ${theme.indigo0};
+      } 
+      :disabled{
+      background-color: ${theme.gray3};
+      color: ${theme.gray9};
+      cursor: not-allowed;
+    }
+  }
+  &.btn-action-secondary{
+      background-color: ${theme.indigo5};
+      color: ${theme.indigo0};
+      :hover {
+      background-color: ${theme.indigo6};
+      } 
+      :disabled{
+      background-color: ${theme.gray4};
+      color: ${theme.gray2};
+      cursor: not-allowed;
+    }
+    }
+    &.btn-action-secondary-outline{
+      background-color: none;
+      color: ${theme.indigo5};
+      border: 1px solid ${theme.indigo5};
+    } :hover {
+      background-color: ${theme.indigo5};
+      color: ${theme.indigo0};
+    }
 
   &.landingPage{
     font-size: 1.5rem;

@@ -87,7 +87,7 @@ function UpdateParentNote({ danceId, existingNote, toggleEditNotes }) {
 
         <button
           type="button"
-          className="btn-action-secondary"
+          className="btn-action-secondary-outline"
           onClick={() => toggleEditNotes(false)}
         >
           Cancel

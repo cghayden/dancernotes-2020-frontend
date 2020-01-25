@@ -44,7 +44,7 @@ function DanceCardBody({ dance }) {
         </Notes>
         {!dance.parentsNotes && !addNote && (
           <button
-            className="btn-action-secondary"
+            className="btn-action-primary-outline"
             onClick={() => toggleAddNote(true)}
           >
             + Note
@@ -65,15 +65,15 @@ function DanceCardBody({ dance }) {
           />
         )}
         {addNote && (
-          <NoteItem>
+          <Notes>
             <Dt>My Notes:</Dt>
             <AddNote toggleAddNote={toggleAddNote} danceId={dance.id} />
-          </NoteItem>
+          </Notes>
         )}
       </dl>
       {dance.parentsNotes && !editNotes && (
         <button
-          className="btn-action-secondary"
+          className="btn-action-primary-outline"
           onClick={() => toggleEditNotes(true)}
         >
           Add/Edit Notes

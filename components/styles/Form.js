@@ -50,25 +50,9 @@ const Form = styled.form`
 
   button[type="submit"],
   input[type="submit"] {
-    /* border-radius: 10px; */
     width: 75%;
     max-width: 300px;
-    background-color: ${props => props.theme.newBlue[50].hsl};
-    color: white;
-    border: 0;
     padding: 0.5rem;
-    :active {
-      box-shadow: 0 2px 3px hsla(0 0%, 0%, 0.8);
-      transform: translateY(4px);
-    }
-    :hover {
-      background-color: ${props => props.theme.newBlue[60].hsl};
-      } 
-      :disabled{
-      background-color: ${props => props.theme.gray4};
-      color: ${props => props.theme.gray2};
-      cursor: not-allowed;
-    }
     &[aria-busy="true"]::after {
       background-size: 50% auto;
       animation: ${loading} 1s linear infinite;

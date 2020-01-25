@@ -68,7 +68,7 @@ function DanceCardFooter({ danceId, toggleAddNote }) {
         </button>
         <button
           type="button"
-          className="btn-action-secondary"
+          className="btn-action-primary-outline"
           onClick={() => toggleAddNote(false)}
         >
           Cancel
