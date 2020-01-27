@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 
-import { DANCER_QUERY } from "./DancerQuery";
+import { DANCER_QUERY } from "./Queries";
 
 const LINK_DANCER_TO_STUDIO_MUTATION = gql`
   mutation LINK_DANCER_TO_STUDIO_MUTATION($dancerId: ID!, $studioId: ID!) {
@@ -19,10 +19,10 @@ class LinkDancerToStudioButton extends Component {
         mutation={LINK_DANCER_TO_STUDIO_MUTATION}
         variables={{
           dancerId: this.props.dancerId,
-          studioId: this.props.studioId,
+          studioId: this.props.studioId
         }}
         refetchQueries={[
-          { query: DANCER_QUERY, variables: { id: this.props.dancerId } },
+          { query: DANCER_QUERY, variables: { id: this.props.dancerId } }
         ]}
       >
         {(linkDancerToStudio, { data }) => {

@@ -67,15 +67,6 @@ const GlobalStyle = createGlobalStyle`
       cursor: not-allowed;
     }
 
-    &.btn-light{
-      background-color: ${theme.gray2};
-      color: ${theme.indigo9};
-      :hover {
-      background-color: ${theme.indigo8}; 
-      color: white;
-      }
-    }
-
     &.btn-danger{
       background-color: ${theme.red6};
       color: ${theme.red0};
@@ -95,8 +86,8 @@ const GlobalStyle = createGlobalStyle`
     }
 
     &.btn-action-primary{
-      background-color: ${theme.indigo8};
-      color: ${theme.indigo0};
+      background-color: ${theme.indigo1};
+      color: ${theme.indigo9};
       :hover {
         background-color: ${theme.indigo9};
       } 
@@ -173,6 +164,9 @@ const GlobalStyle = createGlobalStyle`
 input[type='checkbox']{
   width: auto;
   margin-right: .5rem;
+}
+option {
+  background: inherit;
 }
 
   ul {

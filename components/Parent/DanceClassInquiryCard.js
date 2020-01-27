@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import { DANCER_QUERY } from "./DancerQuery";
+import { DANCER_QUERY } from "./Queries";
 import Error from "../../components/Error";
 
 const ClassListing = styled.div`

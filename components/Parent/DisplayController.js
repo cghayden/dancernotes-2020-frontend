@@ -5,7 +5,7 @@ import Link from "next/link";
 import DancerToggler from "./DancerToggler";
 import StudioRoutinesCheckboxes from "./StudioRoutinesCheckboxes";
 import IndependentRoutinesCheckboxes from "./IndependentRoutinesCheckboxes";
-import { DANCER_QUERY } from "./DancerQuery";
+import { DANCER_QUERY } from "./Queries";
 
 {
   /* for each dancerId, query the dancer and get studios, dance classes and custom classes.  

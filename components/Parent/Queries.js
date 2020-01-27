@@ -134,9 +134,42 @@ const CUSTOM_ROUTINE_QUERY = gql`
     }
   }
 `;
-
+const DANCER_QUERY = gql`
+  query DANCER_QUERY($id: ID!) {
+    dancer(where: { id: $id }) {
+      id
+      firstName
+      avatar
+      danceClasses {
+        id
+        name
+        studio {
+          id
+        }
+      }
+      customRoutines {
+        id
+        name
+        studio {
+          id
+        }
+      }
+      studios {
+        id
+        studioName
+      }
+      requests {
+        id
+        classesRequested {
+          id
+        }
+      }
+    }
+  }
+`;
 export {
   PARENT_USER_QUERY,
+  DANCER_QUERY,
   ALL_Rs,
   PARENTS_EVENTS_QUERY,
   PARENTS_DANCERS,

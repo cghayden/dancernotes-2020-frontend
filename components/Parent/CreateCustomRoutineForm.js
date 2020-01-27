@@ -10,7 +10,7 @@ import Card from "../styles/Card";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 import BackButton from "../BackButton";
-import { DANCER_QUERY } from "./DancerQuery";
+import { DANCER_QUERY } from "./Queries";
 
 const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
   mutation CREATE_CUSTOM_ROUTINE_MUTATION(
@@ -370,7 +370,7 @@ function CreateCustomRoutineForm({ parent }) {
             </div>
             <button
               type="button"
-              className="btn-action-primary"
+              className="btn-action-primary-outline"
               onClick={() => toggleFileInput(true)}
             >
               Add Music
@@ -393,7 +393,11 @@ function CreateCustomRoutineForm({ parent }) {
             <div className="form-footer">
               <p>{status}</p>
 
-              <button type="submit" disabled={loading}>
+              <button
+                className="btn-action-primary"
+                type="submit"
+                disabled={loading}
+              >
                 Creat
                 {loading ? "ing " : "e "} Class
               </button>

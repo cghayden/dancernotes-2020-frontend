@@ -16,7 +16,7 @@ const Form = styled.form`
    /* each form should be inside a card */
   text-align: center;
   border-radius: ${props => props.theme.borderRadius};
-  color: ${props => props.theme.newBlue[90].hsl};
+  color: ${props => props.theme.blackText};
   background: ${props => props.theme.gray0};
   /* box-shadow: ${props => props.theme.dropShadow1}; */
   padding: 0 0;
@@ -40,9 +40,10 @@ const Form = styled.form`
     }
   }
   input,
+  textarea,
   select {
     margin: 0;
-    color: ${props => props.theme.newBlue[90].hsl};
+    color: ${props => props.theme.indigo9};
     font-size: 1.25rem;
     background-color: ${props => props.theme.blue0};
     border: 1px solid ${props => props.theme.gray2};

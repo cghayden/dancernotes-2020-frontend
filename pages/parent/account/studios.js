@@ -38,10 +38,10 @@ function MyStudiosPage() {
       <SubNavMainLayout page={"My Studios"}>
         {studios.map(studio => (
           <Card key={studio.id}>
-            <p>{studio.studioName}</p>
+            <h2>{studio.studioName}</h2>
             <Link href={`/parent/account/browseStudio?studioId=${studio.id}`}>
               <button
-                className="btn-action-secondary"
+                className="btn-action-primary"
                 onClick={() => setBrowsingDancer(data.parentUser.dancers[0].id)}
               >
                 Browse Classes at {studio.studioName}

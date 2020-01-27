@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { PARENT_USER_QUERY } from "./Queries";
 
 import { ActiveFilters } from "./BrowseClassFilter";
-import { DANCER_QUERY } from "./DancerQuery";
+import { DANCER_QUERY } from "./Queries";
 import { REQUEST_STUDIO_ACCESS } from "./Mutations";
 import { RegistrationContext } from "./RegistrationContext";
 import Cookies from "js-cookie";

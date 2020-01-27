@@ -26,7 +26,8 @@ const SubNavStyles = styled.nav`
   }
 
   .active {
-    color: ${props => props.theme.vividBlue6};
+    color: ${props => props.theme.vividBlue8};
+    font-weight: bold;
   }
 
   ul {
