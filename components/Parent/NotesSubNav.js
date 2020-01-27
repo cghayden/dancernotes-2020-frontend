@@ -3,8 +3,6 @@ import { useQuery } from "@apollo/react-hooks";
 import SubNavStyles from "../styles/SubNavStyles";
 import StyledLink from "../StyledLink";
 import styled from "styled-components";
-// import Modal from "../Modal";
-// import EventsLinksModal from "./EventsLinksModal";
 import { PARENTS_DANCERS } from "./Queries";
 
 const NotesSubNavStyles = styled(SubNavStyles)`
@@ -52,41 +50,11 @@ function NotesSubNav() {
               <a>Hair</a>
             </StyledLink>
           </li>
-          <li className="hideOnMobile">
-            <StyledLink
-              activeClassName="active"
-              href="/parent/notes/competitions"
-            >
-              <a>Competitions</a>
-            </StyledLink>
-          </li>
-          <li className="hideOnMobile">
-            <StyledLink
-              activeClassName="active"
-              href="/parent/notes/conventions"
-            >
-              <a>Conventions</a>
-            </StyledLink>
-          </li>
           <li>
             <StyledLink activeClassName="active" href="/parent/notes/events">
               <a>Events</a>
             </StyledLink>
           </li>
-          <li className="hideOnMobile">
-            <StyledLink
-              activeClassName="active"
-              href="/parent/notes/rehearsals"
-            >
-              <a>Rehearsals</a>
-            </StyledLink>
-          </li>
-          <li className="hideOnMobile">
-            <StyledLink activeClassName="active" href="/parent/notes/recital">
-              <a>Recital</a>
-            </StyledLink>
-          </li>
-
           <li>
             <StyledLink href="/parent/createCustomRoutine">
               <a>Add a Routine</a>
