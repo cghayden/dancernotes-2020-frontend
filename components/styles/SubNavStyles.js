@@ -2,9 +2,7 @@ import styled from "styled-components";
 
 const SubNavStyles = styled.nav`
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
   color: ${props => props.theme.blackText};
   background: ${props => props.theme.background};
@@ -40,6 +38,7 @@ const SubNavStyles = styled.nav`
 
   a,
   button {
+    border-radius: 0;
     margin: 0;
     padding: 0.5rem;
     display: flex;
@@ -52,9 +51,21 @@ const SubNavStyles = styled.nav`
       color: ${props => props.theme.indigo8};
       background: none;
       outline: none;
+      border-bottom: 2px solid ${props => props.theme.indigo8};
+      margin-bottom: -2px;
     }
   }
   @media (min-width: ${props => props.theme.largeScreen}) {
+    a,
+    button {
+      &:hover,
+      &:focus {
+        border-bottom: none;
+        margin-bottom: 0;
+        border-left: 2px solid ${props => props.theme.indigo8};
+        margin-left: -2px;
+      }
+    }
     align-items: unset;
     padding-top: 1rem;
     top: ${props => props.theme.navHeight};

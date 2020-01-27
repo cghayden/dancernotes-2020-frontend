@@ -58,8 +58,18 @@ const DanceCardNav = styled.div`
   display: flex;
   justify-content: space-around;
   font-size: 0.825rem;
+  a,
   button {
+    border-radius: 0;
     margin: 0;
+    &:hover,
+    &:focus {
+      color: ${props => props.theme.indigo8};
+      background: none;
+      outline: none;
+      border-bottom: 2px solid ${props => props.theme.indigo8};
+      margin-bottom: -2px;
+    }
   }
 `;
 

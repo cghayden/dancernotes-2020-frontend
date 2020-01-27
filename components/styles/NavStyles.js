@@ -27,6 +27,7 @@ const NavStyles = styled.nav`
     font-weight: 400;
     box-shadow: none;
     :hover{
+      margin-bottom: -2px;
       border-radius: 0;
       background: none;
       color: ${props => props.theme.indigo8};
