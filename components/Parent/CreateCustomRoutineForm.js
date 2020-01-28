@@ -65,6 +65,7 @@ function CreateCustomRoutineForm({ parent }) {
   const [showFileInput, toggleFileInput] = useState(false);
   const [musicForUpload, setMusicForUpload] = useState();
   const [musicData, setMusicData] = useState({});
+  const [dancers, setDancers] = useState([]);
 
   const [
     createCustomRoutine,
@@ -177,6 +178,19 @@ function CreateCustomRoutineForm({ parent }) {
     setStatus();
   }
 
+  function handleSelectChange(e) {
+    console.log("e.target");
+    const dancerName = e.target.selectedOptions[0].label;
+    // if dancername is in dancers array, remove it
+    if (dancers.indexOf(dancerName) !== -1) {
+      console.log("dancer is already selected, remove dancer");
+      const newArray = dancers.splice(dancers.indexOf(dancerName), 1);
+      setDancers(newArray);
+    } else {
+      setDancers([...dancers, dancerName]);
+    }
+  }
+
   return (
     <Fragment>
       <Modal open={showModal} setOpen={toggleModal}>
@@ -221,23 +235,33 @@ function CreateCustomRoutineForm({ parent }) {
           <fieldset disabled={loading} aria-busy={loading}>
             <h2>Create Your Own Routine</h2>
             <div className="input-item">
-              <label htmlFor="dancer">
-                Dancer*
-                <p>(You may add other dancers later.)</p>
-              </label>
+              <label htmlFor="dancer">Dancer(s):*</label>
+              <p>
+                {dancers.map(dancer => (
+                  <span>{dancer}</span>
+                ))}
+              </p>
+
               <select
                 required
                 id="dancer"
                 name="dancer"
                 value={inputs.dancer}
-                onChange={handleChange}
+                onChange={e => {
+                  handleChange(e);
+                  handleSelectChange(e);
+                }}
               >
                 <option default value={""} disabled>
-                  Dancer...
+                  Dancer(s)...
                 </option>
                 {parent &&
                   parent.dancers.map(dancer => (
-                    <option key={dancer.id} value={dancer.id}>
+                    <option
+                      key={dancer.id}
+                      value={dancer.id}
+                      label={dancer.firstName}
+                    >
                       {dancer.firstName}
                     </option>
                   ))}
