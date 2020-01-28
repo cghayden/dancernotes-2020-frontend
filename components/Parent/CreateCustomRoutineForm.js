@@ -1,6 +1,8 @@
 import React, { useState, Fragment } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
+import styled from "styled-components";
+
 import Link from "next/link";
 import { ALL_Rs, PARENT_USER_QUERY } from "./Queries";
 import { UPDATE_CUSTOM_ROUTINE } from "./UpdateCustomRoutine";
@@ -40,6 +42,18 @@ const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
       name
       id
     }
+  }
+`;
+
+const ChosenDancers = styled.ul`
+  margin-bottom: 0.5rem;
+  display: flex;
+  li {
+    border-radius: ${props => props.theme.borderRadius};
+    padding: 0.25rem 0.5rem;
+    margin-right: 1rem;
+    background-color: ${props => props.theme.teal7};
+    color: white;
   }
 `;
 
@@ -245,11 +259,13 @@ function CreateCustomRoutineForm({ parent }) {
             <h2>Create Your Own Routine</h2>
             <div className="input-item">
               <label htmlFor="dancer">Dancer(s):*</label>
-              <p>
-                {dancers.map(dancer => (
-                  <span>{dancer}</span>
-                ))}
-              </p>
+              <div>
+                <ChosenDancers>
+                  {dancers.map(dancer => (
+                    <li>{dancer}</li>
+                  ))}
+                </ChosenDancers>
+              </div>
 
               <select
                 id="dancer"

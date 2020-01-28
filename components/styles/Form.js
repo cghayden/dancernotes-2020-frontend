@@ -33,7 +33,6 @@ const Form = styled.form`
 
   label {
     margin-bottom: 5px;
-    padding-left: 0.6rem;
     text-align: left;
     &.visuallyHidden {
       display: none;
@@ -51,7 +50,7 @@ const Form = styled.form`
 
   button[type="submit"],
   input[type="submit"] {
-    width: 75%;
+    width: 50%;
     max-width: 300px;
     padding: 0.5rem;
     &[aria-busy="true"]::after {
