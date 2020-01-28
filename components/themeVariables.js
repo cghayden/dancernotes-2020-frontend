@@ -88,6 +88,7 @@ const theme = {
   background: colors["gray1"],
   border: colors["vividBlue4"],
 
+  testChangeForGit: "testing123",
   sidebarWidth: "18vw",
   controlPanelWidth: "22vw",
   black: "#393939",
