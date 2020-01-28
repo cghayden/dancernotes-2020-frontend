@@ -22,7 +22,7 @@ const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
     $shoes: String
     $tights: String
     $notes: String
-    $dancer: ID!
+    $dancerIds: [ID!]!
     $studio: ID!
   ) {
     createCustomRoutine(
@@ -34,7 +34,7 @@ const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
       shoes: $shoes
       tights: $tights
       notes: $notes
-      dancer: $dancer
+      dancerIds: $dancerIds
       studio: $studio
     ) {
       name
@@ -66,6 +66,7 @@ function CreateCustomRoutineForm({ parent }) {
   const [musicForUpload, setMusicForUpload] = useState();
   const [musicData, setMusicData] = useState({});
   const [dancers, setDancers] = useState([]);
+  const [dancerIds, setDancerIds] = useState([]);
 
   const [
     createCustomRoutine,
@@ -75,7 +76,7 @@ function CreateCustomRoutineForm({ parent }) {
       loading: creatingCustomRoutine
     }
   ] = useMutation(CREATE_CUSTOM_ROUTINE_MUTATION, {
-    variables: { ...inputs },
+    variables: { ...inputs, dancerIds: dancerIds },
     onCompleted: () => {
       resetForm();
     },
@@ -179,21 +180,23 @@ function CreateCustomRoutineForm({ parent }) {
   }
 
   function handleSelectChange(e) {
-    console.log("e.target.selectedOptions[0]", e.target.selectedOptions[0]);
     const dancerName = e.target.selectedOptions[0].label;
+    const dancerId = e.target.selectedOptions[0].value;
     updateInputs({
       ...inputs,
       dancer: dancerName
     });
     // if dancername is in dancers array, remove it
-    console.log("index of", dancers.indexOf(dancerName));
     if (dancers.indexOf(dancerName) !== -1) {
-      console.log("dancer is already selected, remove dancer");
       const newDancers = [...dancers];
+      const newDancerIds = [...dancerIds];
       newDancers.splice(dancers.indexOf(dancerName), 1);
+      newDancerIds.splice(dancerIds.indexOf(dancerId), 1);
       setDancers(newDancers);
+      setDancerIds(newDancerIds);
     } else {
       setDancers([...dancers, dancerName]);
+      setDancerIds([...dancerIds, dancerId]);
     }
   }
 
@@ -249,7 +252,6 @@ function CreateCustomRoutineForm({ parent }) {
               </p>
 
               <select
-                required
                 id="dancer"
                 name="dancer"
                 value={""}
