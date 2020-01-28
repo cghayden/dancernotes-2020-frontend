@@ -179,13 +179,19 @@ function CreateCustomRoutineForm({ parent }) {
   }
 
   function handleSelectChange(e) {
-    console.log("e.target");
+    console.log("e.target.selectedOptions[0]", e.target.selectedOptions[0]);
     const dancerName = e.target.selectedOptions[0].label;
+    updateInputs({
+      ...inputs,
+      dancer: dancerName
+    });
     // if dancername is in dancers array, remove it
+    console.log("index of", dancers.indexOf(dancerName));
     if (dancers.indexOf(dancerName) !== -1) {
       console.log("dancer is already selected, remove dancer");
-      const newArray = dancers.splice(dancers.indexOf(dancerName), 1);
-      setDancers(newArray);
+      const newDancers = [...dancers];
+      newDancers.splice(dancers.indexOf(dancerName), 1);
+      setDancers(newDancers);
     } else {
       setDancers([...dancers, dancerName]);
     }
@@ -246,9 +252,9 @@ function CreateCustomRoutineForm({ parent }) {
                 required
                 id="dancer"
                 name="dancer"
-                value={inputs.dancer}
+                value={""}
                 onChange={e => {
-                  handleChange(e);
+                  // handleChange(e);
                   handleSelectChange(e);
                 }}
               >
