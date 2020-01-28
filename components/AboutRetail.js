@@ -17,7 +17,7 @@ const AboutRetail = ({ setActive }) => {
         jobs non-competitive.
       </div>
       <div>
-        <button className="btn-dark" onClick={() => setActive("signupRetail")}>
+        <button className="btn-action-primary" onClick={() => setActive("signupRetail")}>
           Try dancernotes
         </button>
       </div>

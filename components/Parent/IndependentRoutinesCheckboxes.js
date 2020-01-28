@@ -1,25 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
-// import { HiddenDanceContext } from "./HiddenDanceContext";
+
 import { ParentDisplayConsumer } from "../../components/ParentDisplayProvider";
+import {
+  CheckboxLabel,
+  Checkboxes,
+  StudioHeading
+} from "./StudioRoutinesCheckboxes";
 
-const StudioCheckboxes = styled.div`
-  .label_Studio {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: ${props => (props.disabled ? props.theme.disabledText : "inherit")};
-  }
-  margin-bottom: 1rem;
-`;
-
-const CheckboxDiv = styled.div`
-  padding-left: 1rem;
-  label {
-    color: ${props => (props.disabled ? props.theme.disabledText : "inherit")};
-  }
-`;
-
-const IndependentRoutinesCheckboxes = ({ routines, dancerId }) => {
+function IndependentRoutinesCheckboxes({ routines, dancerId }) {
   return (
     <ParentDisplayConsumer>
       {({
@@ -29,36 +18,26 @@ const IndependentRoutinesCheckboxes = ({ routines, dancerId }) => {
         hiddenIndependents,
         toggleDance,
         toggleStudio,
-        toggleIndependent,
+        toggleIndependent
       }) => {
         return (
-          <StudioCheckboxes disabled={hiddenDancers.includes(dancerId)}>
-            <input
-              disabled={hiddenDancers.includes(dancerId)}
-              checked={!hiddenIndependents.includes(dancerId)}
-              onChange={() => {
-                toggleStudio("independent", hiddenStudios);
-                toggleIndependent(dancerId, hiddenIndependents);
-              }}
-              type="checkbox"
-              id={"independent"}
-              name={"independent"}
-              value={"independent"}
-            />
-            <label className="label_Studio" htmlFor={"independent"}>
-              Others:
-            </label>
-            <CheckboxDiv
+          <div>
+            <StudioHeading
               disabled={
                 hiddenIndependents.includes(dancerId) ||
+                hiddenIndependents.includes("all") ||
                 hiddenDancers.includes(dancerId)
               }
             >
+              Independent
+            </StudioHeading>
+            <Checkboxes>
               {routines.map(routine => (
                 <div key={routine.id}>
                   <input
                     disabled={
                       hiddenIndependents.includes(dancerId) ||
+                      hiddenIndependents.includes("all") ||
                       hiddenDancers.includes(dancerId)
                     }
                     checked={!hiddenDances.includes(routine.id)}
@@ -68,15 +47,24 @@ const IndependentRoutinesCheckboxes = ({ routines, dancerId }) => {
                     value={routine.name}
                     onChange={() => toggleDance(routine.id, hiddenDances)}
                   />
-                  <label htmlFor={routine.name}>{routine.name}</label>
+                  <CheckboxLabel
+                    disabled={
+                      hiddenIndependents.includes(dancerId) ||
+                      hiddenIndependents.includes("all") ||
+                      hiddenDancers.includes(dancerId)
+                    }
+                    htmlFor={routine.name}
+                  >
+                    {routine.name}
+                  </CheckboxLabel>
                 </div>
               ))}
-            </CheckboxDiv>
-          </StudioCheckboxes>
+            </Checkboxes>
+          </div>
         );
       }}
     </ParentDisplayConsumer>
   );
-};
+}
 
 export default IndependentRoutinesCheckboxes;

@@ -21,7 +21,7 @@ const Signout = () => (
     {(signout, { client }) => {
       return (
         <button
-          onClick={async () => await signout().then(() => client.clearStore())}
+          onClick={async () => await signout().then(() => client.resetStore())}
         >
           Sign Out
         </button>

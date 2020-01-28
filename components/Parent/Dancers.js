@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import Card from "../../components/styles/Card";
 import DancerCard from "../../components/Parent/DancerCard";
-const WelcomeMessage = styled(Card)`
-  background: transparent;
-`;
+import Link from "next/link";
+import CreateDancerForm from "./CreateDancerForm";
+const WelcomeMessage = styled(Card)``;
 
-const Dancers = ({ hasDancers, dancers, addDancer, toggleAddDancer }) => {
+const Dancers = ({ hasDancers, dancers }) => {
   // if has dancers, show dancers cards
   if (hasDancers) {
     return (
@@ -18,23 +18,21 @@ const Dancers = ({ hasDancers, dancers, addDancer, toggleAddDancer }) => {
     );
   }
 
-  // if no dacners, show welcome and add dancer/browse studios
+  // if no dancers, show welcome and add dancer/browse studios
   if (!hasDancers) {
     return (
-      <WelcomeMessage>
-        <div className="card__section">
+      <>
+        <WelcomeMessage>
           <p>
-            Welcome to Dancernotes! To begin, add a Dancer to your account, or
-            simply browse classes at a participating studio near you
+            Welcome to Dancernotes! To begin, use the form below to add a Dancer
+            to your account.
           </p>
-        </div>
-        <button
-          className="btn-dark"
-          onClick={() => toggleAddDancer(!addDancer)}
-        >
-          {!addDancer ? `Add a Dancer` : `Cancel`}
-        </button>
-      </WelcomeMessage>
+          {/* <Link href="/parent/account/addDancer">
+      <a>Add a Dancer</a>
+      </Link> */}
+        </WelcomeMessage>
+        <CreateDancerForm />
+      </>
     );
   }
 };

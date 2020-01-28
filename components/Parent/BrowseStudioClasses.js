@@ -1,24 +1,74 @@
 import React, { useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import DanceClassInquiryCard from "./DanceClassInquiryCard";
-import Error from "../Error";
-import EnrollmentRequestsCart from "./EnrollmentRequestsCart";
 import SoloDuoTrioSubscribe from "./SoloDuoTrioSubscribe";
 import LinkDancerToStudioButton from "./LinkDancerToStudioButton";
 import styled from "styled-components";
 import { PARENT_USER_QUERY } from "./Queries";
 
 import { ActiveFilters } from "./BrowseClassFilter";
-import { DANCER_QUERY } from "./DancerQuery";
-
+import { DANCER_QUERY } from "./Queries";
+import { REQUEST_STUDIO_ACCESS } from "./Mutations";
 import { RegistrationContext } from "./RegistrationContext";
 import Cookies from "js-cookie";
+import Card from "../styles/Card";
 
 // 1. get all classes from studio
 //2. get filters
 //3. filter classes array
 //4. render classes
+const ClassListCard = styled(Card)`
+  background: ${props => props.theme.gray0};
+  max-width: 900px;
+  box-shadow: none;
+  margin-top: -2px;
+  /* border-radius:  5px 5px 5px; */
+`;
+const DancerTabs = styled(Card)`
+  display: flex;
+  align-items: center;
+  box-shadow: none;
+  margin-bottom: 0;
+  padding: 0;
+  background: transparent;
+`;
+const Tab = styled.div`
+    width: auto;
+    max-width: 150px;
+    min-width: 50px;
+    border-radius: 5px 5px 0 0;
+    margin: 0 1px 0 0;
+    color: ${props =>
+      props.active ? props.theme.highlightedText : props.theme.blackText};
+    /* border-style: solid;
+    border-color: ${props =>
+      props.active ? props.theme.gray0 : "transparent"}; */
+    /* border-width: ${props => (props.active ? `2px 2px 0 2px` : `0`)}; */
+    background-color: ${props =>
+      props.active ? props.theme.gray0 : props.theme.gray1};
+    /* :hover {
+      background-color: ${props => props.theme.gray1};
+    } */
+    button {
+      background: inherit;
+      margin: 0;
+      overflow: hidden;
+      /* text-overflow: ellipsis; */
+      white-space: nowrap;
+      width: 100%;
+      :focus {
+        outline: ${props => (props.active ? "none" : "auto")};
+        background-color: ${props => props.theme.gray0};
+        /* color: ${props => (props.active ? "inherit" : props.theme.teal9)}; */
+      }
+    }
+  `;
 
+const BrowsingHeader = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  padding: 1rem;
+`;
 const LargeScreenActiveFilters = styled(ActiveFilters)`
   h2 {
     font-size: 1rem;
@@ -32,22 +82,19 @@ const LargeScreenActiveFilters = styled(ActiveFilters)`
   }
 `;
 
-function BrowseStudioClasses({classFilter, studio}) {
+function BrowseStudioClasses({ classFilter, studio }) {
   const BrowsingContext = useContext(RegistrationContext);
-  // const activeDancerName = BrowsingContext.browsingDancerName;
-  //activeDancerId to set active Tab
-  // const activeDancerId = BrowsingContext.browsingDancerId;
   const setBrowsingDancer = BrowsingContext.setBrowsingDancer;
 
-  //get browsing dancer fro cookies so it will still be available if page is refreshed
-  const activeDancerId = Cookies.get('browsingDancerId');
-  const activeDancerName = Cookies.get('browsingDancerName');
-  
+  //get browsing dancer from cookies so it will still be available if page is refreshed
+  const activeDancerId = Cookies.get("browsingDancerId");
+  // const activeDancerName = Cookies.get("browsingDancerName");
+
   const { data: parentData } = useQuery(PARENT_USER_QUERY);
   const parentUser = parentData ? parentData.parentUser : {};
 
-  const { data: dancerData, loading, error } = useQuery(DANCER_QUERY, {
-    variables: { id: activeDancerId },
+  const { data: dancerData } = useQuery(DANCER_QUERY, {
+    variables: { id: activeDancerId }
   });
   const dancer = dancerData ? dancerData.dancer : {};
 
@@ -65,41 +112,15 @@ function BrowseStudioClasses({classFilter, studio}) {
 
   const filteredClasses = studio.danceClasses
     ? studio.danceClasses.filter(danceClass =>
-        compareDanceToFilter(danceClass, classFilter),
+        compareDanceToFilter(danceClass, classFilter)
       )
     : [];
 
   const activeFilters = [].concat.apply([], Object.values(classFilter));
 
-  const BrowsingContent = styled.div`
-    background: white;
-  `;
-  const DancerTabs = styled.div`
-    display: flex;
-    align-items: center;
-  `;
-  const Tab = styled.button`
-    border-radius: 5px 5px 0 0;
-    margin: 0 1px 0 0;
-    padding: 0.5rem 2rem;
-    border-style: solid;
-    border-color: ${props =>
-      props.active ? props.theme.gray0 : "transparent"};
-    border-width: ${props => (props.active ? `2px 2px 0 2px` : `0`)};
-    background-color: ${props => (props.active ? "white" : props.theme.gray2)};
-    :hover {
-      background-color: ${props => props.theme.gray1};
-    }
-  `;
-
-  const BrowsingHeader = styled.div`
-    width: 90%;
-    margin: 0 auto;
-    padding: 1rem;
-  `;
   return (
-    <div>
-      <span>Browse for:</span>
+    <>
+      <p>Browse for:</p>
 
       <DancerTabs>
         {parentUser.dancers &&
@@ -107,17 +128,18 @@ function BrowseStudioClasses({classFilter, studio}) {
             <Tab
               key={dancer.firstName}
               active={dancer.id === activeDancerId ? true : false}
-              onClick={() => setBrowsingDancer(dancer.id, dancer.firstName)}
             >
-              {dancer.firstName}
+              <button onClick={() => setBrowsingDancer(dancer.id)}>
+                {dancer.firstName}
+              </button>
             </Tab>
           ))}
       </DancerTabs>
-
-      <BrowsingContent>
+      <ClassListCard>
         <BrowsingHeader>
           <p>
-            To register {activeDancerName} for classes, or manage classes he/she
+            {/* To register {activeDancerName} for classes, or manage classes he/she */}
+            To register {dancer.firstName} for classes, or manage classes he/she
             is enrolled in or has requested, follow the links below.
           </p>
         </BrowsingHeader>
@@ -142,7 +164,8 @@ function BrowseStudioClasses({classFilter, studio}) {
           if (dance.size === "Group") {
             return (
               <DanceClassInquiryCard
-                dancerName={activeDancerName}
+                dancerName={dancer.firstName}
+                // dancerName={activeDancerName}
                 dance={dance}
                 dancerId={activeDancerId}
                 studioId={studio.id}
@@ -158,8 +181,8 @@ function BrowseStudioClasses({classFilter, studio}) {
             );
           }
         })}
-      </BrowsingContent>
-    </div>
+      </ClassListCard>
+    </>
   );
 }
 export default BrowseStudioClasses;
@@ -220,4 +243,33 @@ export default BrowseStudioClasses;
                         </div>
                       )}
                     </Card> */
+}
+// async function sendRequest() {
+//   parentUser.accessRequests.push(studio.id);
+//   await requestStudioAccess({
+//     variables: {
+//       studioId: studio.id,
+//       accessRequests: parentUser.accessRequests
+//     }
+//   });
+// }
+{
+  /* {!parentUser.accessRequests.includes(studio.id) && (
+        <>
+          <p>
+            If you are keeping your own notes, you can request access to the
+            studios Hair, Makeup and Event notes.
+          </p>
+          <button
+            type="button"
+            disabled={loadingAccessRequest}
+            onClick={sendRequest}
+          >
+            Request Studio Notes
+          </button>
+        </>
+      )}
+      {parentUser.accessRequests.includes(studio.id) && (
+        <p>Access to studio has been requested</p>
+      )} */
 }

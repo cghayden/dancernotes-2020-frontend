@@ -1,5 +1,5 @@
 import React, { Component, createContext } from "react";
-import { useApolloClient } from "@apollo/react-hooks";
+import Cookies from "js-cookie";
 
 const RegistrationContext = createContext();
 
@@ -9,16 +9,22 @@ class RegistrationContextProvider extends Component {
     browsingDancerName: ""
   };
 
-  setBrowsingDancer = (id, name) => {
-    this.setState({ browsingDancerId: id, browsingDancerName: name });
+  setBrowsingDancer = id => {
+    // console.log(" set browsing dancer:", name);
+    Cookies.set("browsingDancerId", id);
+    // Cookies.set("browsingDancerName", name);
+    this.setState({ browsingDancerId: id });
   };
   render() {
-    const { browsingDancerId, browsingDancerName } = this.state;
+    const {
+      browsingDancerId
+      // browsingDancerName
+    } = this.state;
     return (
       <RegistrationContext.Provider
         value={{
           browsingDancerId,
-          browsingDancerName,
+          // browsingDancerName,
           setBrowsingDancer: this.setBrowsingDancer
         }}
       >

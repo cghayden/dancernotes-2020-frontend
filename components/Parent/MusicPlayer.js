@@ -1,22 +1,23 @@
-import React from "react";
-import useMeasure from "../../lib/useMeasure";
-import { useSpring, animated } from "react-spring";
+import React, { useState } from "react";
 
-const MusicPlayer = ({ src, open }) => {
-  const [bind, { height }] = useMeasure();
-
-  const animation = useSpring({
-    overflow: "hidden",
-    height: open ? height : 0,
-  });
-
-  return (
-    <animated.div style={animation}>
-      <div {...bind}>
-        <audio id="musicPlayer" autoPlay={false} controls src={src} />
-      </div>
-    </animated.div>
-  );
+const MusicPlayer = ({ src }) => {
+  const [error, setError] = useState(false);
+  if (src) {
+    return (
+      <>
+        {error && <p>Error!{error}</p>}
+        <audio
+          preload="none"
+          id="musicPlayer"
+          autoPlay={false}
+          controls
+          src={src}
+          onerror={() => setError(true)}
+        />
+      </>
+    );
+  }
+  return <p>Music is unavailable</p>;
 };
 
 export default MusicPlayer;

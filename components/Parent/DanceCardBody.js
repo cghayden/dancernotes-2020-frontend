@@ -1,100 +1,86 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import AddNote from "./AddNote";
 import UpdateParentNotes from "./UpdateParentNotes";
 
 const DanceCardBodyStyles = styled.div`
+  padding-bottom: 1rem;
   li {
     padding: 0.25rem;
   }
 `;
 
 const NoteItem = styled.div`
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  padding: 0.25rem;
+  display: flex;
+  padding: 0.25rem 0;
 `;
 
-// const NoteLabel = styled.dt``;
-const NoteContent = styled.dd`
-  margin: 0;
-  padding-left: 0 0.5rem;
+const Dt = styled.dt`
+  font-weight: bold;
+`;
+const Dd = styled.dd`
+  margin-left: 1rem;
   text-align: left;
 `;
+const Notes = styled.div`
+  text-align: left;
+  padding: 0.25rem 0;
+`;
+function DanceCardBody({ dance }) {
+  const [addNote, toggleAddNote] = useState(false);
+  const [editNotes, toggleEditNotes] = useState(false);
 
-export default class DanceCardBody extends Component {
-  state = {
-    view: "notes",
-    addNote: false,
-    editNotes: false,
-  };
+  return (
+    <DanceCardBodyStyles>
+      <dl>
+        <NoteItem>
+          <Dt>Shoes:</Dt> <Dd>{dance.shoes}</Dd>
+        </NoteItem>
+        <NoteItem>
+          <Dt>Tights:</Dt> <Dd>{dance.tights}</Dd>
+        </NoteItem>
+        <Notes>
+          <Dt>Studio Notes:</Dt> <Dd>{dance.notes ? dance.notes : `N/A`}</Dd>
+        </Notes>
+        {!dance.parentsNotes && !addNote && (
+          <button
+            className="btn-action-primary-outline"
+            onClick={() => toggleAddNote(true)}
+          >
+            + Note
+          </button>
+        )}
+        {dance.parentsNotes && (
+          <Notes>
+            <Dt>My Notes:</Dt>
+            {!editNotes && <Dd>{dance.parentsNotes.note}</Dd>}
+          </Notes>
+        )}
 
-  hideNote = () => {
-    this.setState({ addNote: false });
-  };
-
-  hideEdit = () => {
-    this.setState({ editNotes: false });
-  };
-
-  render() {
-    const { dance, showMediaPlayer, toggleMediaPlayer } = this.props;
-
-    return (
-      <DanceCardBodyStyles>
-        <dl>
-          <NoteItem>
-            <dt>Shoes:</dt> <NoteContent>{dance.shoes}</NoteContent>
-          </NoteItem>
-          <NoteItem>
-            <dt>Tights:</dt> <NoteContent>{dance.tights}</NoteContent>
-          </NoteItem>
-          <NoteItem>
-            <dt>Studio Notes:</dt> <NoteContent>{dance.notes}</NoteContent>
-            {dance.parentsNotes.length === 0 && (
-              <button onClick={() => this.setState({ addNote: true })}>
-                + Note
-              </button>
-            )}
-          </NoteItem>
-          {dance.parentsNotes.length > 0 && (
-            <div>
-              <NoteItem>
-                <dt>My Notes:</dt>
-                <NoteContent>
-                  <ul>
-                    {dance.parentsNotes.map((note, index) => (
-                      <li key={index}>{note}</li>
-                    ))}
-                  </ul>
-                </NoteContent>
-              </NoteItem>
-              <button
-                onClick={() =>
-                  this.setState({ addNote: true, editNotes: false })
-                }
-              >
-                + Note
-              </button>
-              <button
-                onClick={() =>
-                  this.setState({ editNotes: true, addNote: false })
-                }
-              >
-                Edit Notes
-              </button>
-              {this.state.editNotes && (
-                <NoteContent>
-                  <UpdateParentNotes danceId={dance.id} hide={this.hideEdit} />
-                </NoteContent>
-              )}
-            </div>
-          )}
-          {this.state.addNote && (
-            <AddNote hideNote={this.hideNote} danceId={dance.id} />
-          )}
-        </dl>
-      </DanceCardBodyStyles>
-    );
-  }
+        {editNotes && (
+          <UpdateParentNotes
+            existingNote={dance.parentsNotes}
+            danceId={dance.id}
+            toggleEditNotes={toggleEditNotes}
+          />
+        )}
+        {addNote && (
+          <Notes>
+            <Dt>My Notes:</Dt>
+            <AddNote toggleAddNote={toggleAddNote} danceId={dance.id} />
+          </Notes>
+        )}
+      </dl>
+      {dance.parentsNotes && !editNotes && (
+        <button
+          className="btn-action-primary-outline"
+          onClick={() => toggleEditNotes(true)}
+        >
+          Add/Edit Notes
+        </button>
+      )}
+    </DanceCardBodyStyles>
+  );
 }
+
+export default DanceCardBody;

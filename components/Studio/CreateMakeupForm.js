@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { Mutation, Query } from "react-apollo";
+import React from "react";
+import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-
+import Router from "next/router";
 import Form from "../styles/Form";
 import Error from "../Error";
-
-import { CATEGORIES_QUERY } from "./Queries";
+import useForm from "../../lib/useForm";
+import { STUDIO_MAKEUP_QUERY } from "../../pages/studio/makeup";
 
 const CREATE_MAKEUP_SET_MUTATION = gql`
   mutation CREATE_MAKEUP_SET_MUTATION(
@@ -25,110 +25,100 @@ const CREATE_MAKEUP_SET_MUTATION = gql`
   }
 `;
 
-export default class AddMakeupForm extends Component {
-  state = {
-    name: "",
-    lipstick: "",
-    eyeShadow: "",
-    applyTo: "",
-  };
-  handleChange = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  };
+const initialInputState = {
+  name: "",
+  lipstick: "",
+  eyeShadow: "",
+  applyTo: ""
+};
 
-  saveMakeupSet = async (e, createMakeupSet, closeForm) => {
+function AddMakeupForm({ toggleForm, studio }) {
+  const { inputs, updateInputs, handleChange } = useForm(initialInputState);
+
+  const [
+    createMakeupSet,
+    {
+      data: newMakeupSet,
+      loading: creatingMakeupSet,
+      error: errorCreatingMakeupSet
+    }
+  ] = useMutation(CREATE_MAKEUP_SET_MUTATION, {
+    variables: { ...inputs },
+    onCompleted: () => {
+      updateInputs({ ...initialInputState });
+      Router.push("/studio/makeup");
+    },
+    refetchQueries: [{ query: STUDIO_MAKEUP_QUERY }]
+  });
+
+  async function saveMakeupSet(e) {
     e.preventDefault();
-    await createMakeupSet({ variables: this.state });
-    this.setState(
-      {
-        name: "",
-        lipstick: "",
-        eyeShadow: "",
-        applyTo: "",
-      },
-      () => closeForm(false),
-    );
-  };
-
-  render() {
-    return (
-      <Mutation mutation={CREATE_MAKEUP_SET_MUTATION}>
-        {(createMakeupSet, { error, loading }) => (
-          <Query query={CATEGORIES_QUERY}>
-            {({ data: { studioCategories }={} }, error, loading) => {
-              return (
-                <Form
-                  method="post"
-                  onSubmit={e =>
-                    this.saveMakeupSet(e, createMakeupSet, this.props.closeForm)
-                  }
-                >
-                  <h2>Create a Makeup Set</h2>
-                  <fieldset disabled={loading} aria-busy={loading}>
-                    <Error error={error} />
-                    <label htmlFor="name">
-                      Name
-                      <input
-                        required
-                        type="text"
-                        name="name"
-                        value={this.state.name}
-                        onChange={this.handleChange}
-                      />
-                    </label>
-                    <label htmlFor="applyTo">
-                      Apply To:
-                      <select
-                        id="applyTo"
-                        name="applyTo"
-                        value={this.state.applyTo}
-                        onChange={this.handleChange}
-                      >
-                        <option default disabled value={""}>
-                          Apply To...
-                        </option>
-                        {studioCategories &&
-                          studioCategories.levels.map(level => (
-                            <option key={level} value={level}>
-                              {level}
-                            </option>
-                          ))}
-                        <option value={"none"}>None at this time</option>
-                      </select>
-                    </label>
-                    <label htmlFor="lipstick">
-                      Lip Stick
-                      <input
-                        type="text"
-                        name="lipstick"
-                        value={this.state.lipstick}
-                        onChange={this.handleChange}
-                      />
-                    </label>
-                    <label htmlFor="eyeShadow">
-                      Eye Shadow
-                      <input
-                        type="text"
-                        name="eyeShadow"
-                        value={this.state.eyeShadow}
-                        onChange={this.handleChange}
-                      />
-                    </label>
-                    <button type="submit">Save Makeup Set</button>
-                    <button
-                      type="button"
-                      onClick={() => this.props.closeForm(false)}
-                    >
-                      Cancel
-                    </button>
-                  </fieldset>
-                </Form>
-              );
-            }}
-          </Query>
-        )}
-      </Mutation>
-    );
+    await createMakeupSet();
   }
+
+  return (
+    <Form method="post" onSubmit={e => saveMakeupSet(e)}>
+      <h2>Create a Makeup Set</h2>
+      <fieldset disabled={creatingMakeupSet} aria-busy={creatingMakeupSet}>
+        <Error error={errorCreatingMakeupSet} />
+        <div className="input-item">
+          <label htmlFor="name">Name</label>
+          <input
+            required
+            type="text"
+            name="name"
+            value={inputs.name}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="input-item">
+          <label htmlFor="applyTo">Apply To:</label>
+          <select
+            id="applyTo"
+            name="applyTo"
+            value={inputs.applyTo}
+            onChange={handleChange}
+          >
+            <option default disabled value={""}>
+              Apply To...
+            </option>
+            {studio.levels.map(level => (
+              <option key={level} value={level}>
+                {level}
+              </option>
+            ))}
+            <option value={"none"}>None at this time</option>
+          </select>
+        </div>
+
+        <div className="input-item">
+          <label htmlFor="lipstick">Lip Stick</label>
+          <input
+            type="text"
+            name="lipstick"
+            value={inputs.lipstick}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="input-item">
+          <label htmlFor="eyeShadow">Eye Shadow</label>
+          <input
+            type="text"
+            name="eyeShadow"
+            value={inputs.eyeShadow}
+            onChange={handleChange}
+          />
+        </div>
+
+        <button type="submit">Save Makeup Set</button>
+        <button type="button" onClick={() => toggleForm(false)}>
+          Cancel
+        </button>
+      </fieldset>
+    </Form>
+  );
 }
+
+export default AddMakeupForm;

@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import SubNavStyles from "../styles/SubNavStyles";
 import StyledLink from "../StyledLink";
-import SidebarPosition from "../styles/SidebarPosition";
 import styled from "styled-components";
-import Modal from "../Modal";
-import EventsLinksModal from "./EventsLinksModal";
 import { PARENTS_DANCERS } from "./Queries";
 
 const NotesSubNavStyles = styled(SubNavStyles)`
@@ -28,14 +25,12 @@ const NotesSubNavStyles = styled(SubNavStyles)`
 
 function NotesSubNav() {
   const { data, loading, error } = useQuery(PARENTS_DANCERS);
-  console.log("data:", data);
   const dancers = data && data.parentsDancers;
-  const [showEvents, setShowEvents] = useState(false);
 
   return (
-    <SidebarPosition>
+    <>
       <NotesSubNavStyles>
-        <h2 className="subNav-heading">Notes</h2>
+        <h2>Notes</h2>
         <ul>
           <li>
             <StyledLink activeClassName="active" href="/parent/notes/routines">
@@ -55,39 +50,11 @@ function NotesSubNav() {
               <a>Hair</a>
             </StyledLink>
           </li>
-          <li className="hideOnMobile">
-            <StyledLink
-              activeClassName="active"
-              href="/parent/notes/competitions"
-            >
-              <a>Competitions</a>
+          <li>
+            <StyledLink activeClassName="active" href="/parent/notes/events">
+              <a>Events</a>
             </StyledLink>
           </li>
-          <li className="hideOnMobile">
-            <StyledLink
-              activeClassName="active"
-              href="/parent/notes/conventions"
-            >
-              <a>Conventions</a>
-            </StyledLink>
-          </li>
-          <li className="hideOnDesktop">
-            <button onClick={() => setShowEvents(true)}>Events</button>
-          </li>
-          <li className="hideOnMobile">
-            <StyledLink
-              activeClassName="active"
-              href="/parent/notes/rehearsals"
-            >
-              <a>Rehearsals</a>
-            </StyledLink>
-          </li>
-          <li className="hideOnMobile">
-            <StyledLink activeClassName="active" href="/parent/notes/recital">
-              <a>Recital</a>
-            </StyledLink>
-          </li>
-
           <li>
             <StyledLink href="/parent/createCustomRoutine">
               <a>Add a Routine</a>
@@ -99,7 +66,10 @@ function NotesSubNav() {
           <ul>
             {dancers.map(dancer => (
               <li key={dancer.firstName}>
-                <StyledLink activeClassName="active" href={`/parent/dancers`}>
+                <StyledLink
+                  activeClassName="active"
+                  href={`/parent/account/dancers`}
+                >
                   <a>{dancer.firstName}</a>
                 </StyledLink>
               </li>
@@ -107,10 +77,10 @@ function NotesSubNav() {
           </ul>
         )}
       </NotesSubNavStyles>
-      <Modal open={showEvents} setOpen={setShowEvents}>
+      {/* <Modal open={showEvents} setOpen={setShowEvents}>
         <EventsLinksModal />
-      </Modal>
-    </SidebarPosition>
+      </Modal> */}
+    </>
   );
 }
 export default NotesSubNav;

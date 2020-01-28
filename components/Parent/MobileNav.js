@@ -27,7 +27,7 @@ const MobileNav = props => {
         <Link href="/parent/shop">
           <a>Shop</a>
         </Link>
-        <Link href="/parent/dancers">
+        <Link href="/parent/account/dancers">
           <a>Dancers</a>
         </Link>
         <Link href="/parent/account/profile">

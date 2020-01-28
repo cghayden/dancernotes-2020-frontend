@@ -3,13 +3,15 @@ import styled from "styled-components";
 const Card = styled.div`
   text-align: center;
   border-radius: ${props => props.theme.borderRadius};
-  color: ${props => props.theme.newBlue[90].hsl};
+  color: ${props => props.theme.blackText};
+  /* color: ${props => props.theme.newBlue[90].hsl}; */
   background-color: ${props => props.theme.gray0};
+  box-shadow: ${props => props.theme.dropShadow1};
   margin: 0 auto 1rem auto;
-  padding: 1rem;
+  padding: 1rem 5vmin;
   width: 90%;
   min-width: 320px;
-  max-width: 550px;
+  max-width: 600px;
 
   .card__header {
     display: flex;
@@ -23,9 +25,6 @@ const Card = styled.div`
     p {
       padding: 0.5rem 0;
     }
-  }
-  img {
-    margin: 1rem 0;
   }
   .img-large {
     width: 300px;

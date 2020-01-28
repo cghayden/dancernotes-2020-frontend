@@ -18,7 +18,7 @@ const ActiveDancerButton = styled.button`
     border-radius: 50%;
   }
   p {
-    font-size: 1.7rem;
+    font-size: 1.4rem;
   }
 `;
 const InActiveDancerButton = styled.button`
@@ -54,7 +54,7 @@ export default class DancerToggler extends Component {
                 }}
               >
                 {dancer.avatar ? (
-                  <img src={dancer.avatar} />
+                  <img src={dancer.avatar} alt={dancer.firstName} />
                 ) : (
                   <p>{dancer.firstName}</p>
                 )}
@@ -68,7 +68,7 @@ export default class DancerToggler extends Component {
               }}
             >
               {dancer.avatar ? (
-                <img src={dancer.avatar} />
+                <img src={dancer.avatar} alt={dancer.firstName} />
               ) : (
                 <p>{dancer.firstName}</p>
               )}

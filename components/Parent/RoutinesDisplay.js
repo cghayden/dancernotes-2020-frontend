@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import Link from "next/link";
 import DanceCard from "./DanceCard";
 import { Query } from "react-apollo";
 import { ALL_Rs } from "./Queries";
 import Error from "../Error";
 import { ParentDisplayConsumer } from "../../components/ParentDisplayProvider";
+import SearchForStudio from "../SearchForStudio";
 
 //query all dances where ids of parents dancers are in the ids of enrolled dancers for the dance.  On the server, filter out all dancers not belonging to this parent.
 
@@ -15,15 +17,33 @@ class RoutinesDisplay extends Component {
           hiddenDances,
           hiddenDancers,
           hiddenStudios,
-          hiddenIndependents,
+          hiddenIndependents
         }) => {
           return (
             <Query query={ALL_Rs}>
               {({ data, error, loading }) => {
                 if (error) return <Error error={error} />;
-                if (loading) return <p>Loading}</p>;
+                if (loading) return <p>5, 6, 7, 8 ...</p>;
 
                 const allRs = data ? data.allRs : {};
+                if (allRs.length < 1) {
+                  return (
+                    <div>
+                      <p>You have no routines to display</p>
+                      <Link href="parent/createCustomRoutine">
+                        <a>create your own routine</a>
+                      </Link>
+                      <p>Or</p>
+                      find a studio to enroll or request class notes
+                      <SearchForStudio
+                        // setBrowsingDancer={this.props.dancerIds[0]}
+                        // dancerName={this.props.dancers[0].firstName}
+                        dancerId={this.props.dancerIds[0]}
+                      />
+                    </div>
+                  );
+                }
+
                 for (const dance of allRs) {
                   const dancerIds = [];
                   for (const dancer of dance.dancers) {
@@ -33,7 +53,7 @@ class RoutinesDisplay extends Component {
                 }
 
                 const visibleDancersIds = this.props.dancerIds.filter(
-                  id => !hiddenDancers.includes(id),
+                  id => !hiddenDancers.includes(id)
                 );
 
                 return (
@@ -43,8 +63,9 @@ class RoutinesDisplay extends Component {
                         //independent dances...
                         if (!dance.studio) {
                           if (
+                            hiddenIndependents.includes("all") ||
                             dance.dancerIds.some(dancerId =>
-                              hiddenIndependents.includes(dancerId),
+                              hiddenIndependents.includes(dancerId)
                             )
                           ) {
                             return null;
@@ -52,7 +73,7 @@ class RoutinesDisplay extends Component {
                           if (
                             !hiddenDances.includes(dance.id) &&
                             visibleDancersIds.some(visibleDancerId =>
-                              dance.dancerIds.includes(visibleDancerId),
+                              dance.dancerIds.includes(visibleDancerId)
                             )
                           ) {
                             return (
@@ -74,7 +95,7 @@ class RoutinesDisplay extends Component {
                             !hiddenDances.includes(dance.id) &&
                             !hiddenStudios.includes(dance.studio.id) &&
                             visibleDancersIds.some(visibleDancerId =>
-                              dance.dancerIds.includes(visibleDancerId),
+                              dance.dancerIds.includes(visibleDancerId)
                             )
                           ) {
                             return (

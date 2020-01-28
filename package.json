@@ -22,6 +22,7 @@
     "babel-plugin-styled-components": "^1.10.6",
     "cookie": "^0.3.1",
     "downshift": "^2.2.3",
+    "formik": "^2.0.4",
     "graphql": "^14.5.6",
     "graphql-tag": "^2.10.1",
     "isomorphic-unfetch": "^3.0.0",
@@ -40,7 +41,8 @@
     "react-spring": "^8.0.27",
     "resize-observer-polyfill": "^1.5.1",
     "styled-components": "^4.3.2",
-    "waait": "^1.0.5"
+    "waait": "^1.0.5",
+    "yup": "^0.27.0"
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^3.2.0",

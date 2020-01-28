@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 const ALL_Rs = gql`
   query {
     allRs {
+      custom
       id
       name
       performanceName
@@ -14,7 +15,10 @@ const ALL_Rs = gql`
       tights
       notes
       music
-      parentsNotes
+      parentsNotes {
+        note
+        id
+      }
       dancers {
         id
         firstName
@@ -30,13 +34,13 @@ const ALL_Rs = gql`
 const PARENTS_EVENTS_QUERY = gql`
   query {
     parentUser {
-      dancers {
-        studios {
-          events {
-            name
-            type
-            appliesTo
-          }
+      id
+      studios {
+        id
+        events {
+          name
+          type
+          appliesTo
         }
       }
     }
@@ -51,10 +55,23 @@ const PARENT_USER_QUERY = gql`
       id
       email
       dancersIds
+      customRoutines {
+        id
+        name
+        studio {
+          id
+        }
+      }
+      studios {
+        id
+        studioName
+      }
       dancers {
         id
         firstName
         avatar
+        avatarId
+        # todo: remove when changing dancers page query
         studios {
           studioName
           id
@@ -72,21 +89,23 @@ const PARENT_USER_QUERY = gql`
           }
         }
       }
+      accessRequests
     }
   }
 `;
 
-const HIDDEN_DANCERS_QUERY = gql`
+const STUDIOS_AND_DANCERS = gql`
   query {
-    hiddenDancers @client
-  }
-`;
-
-const PARENTS_STUDIOS = gql`
-  query PARENTS_STUDIOS {
-    parentStudios {
-      studioName
+    parentUser {
       id
+      dancers {
+        id
+        firstName
+      }
+      studios {
+        id
+        studioName
+      }
     }
   }
 `;
@@ -99,11 +118,61 @@ const PARENTS_DANCERS = gql`
   }
 `;
 
+const CUSTOM_ROUTINE_QUERY = gql`
+  query CUSTOM_ROUTINE_QUERY($id: ID!) {
+    customRoutine(where: { id: $id }) {
+      id
+      name
+      performanceName
+      day
+      startTime
+      endTime
+      shoes
+      tights
+      notes
+      music
+    }
+  }
+`;
+const DANCER_QUERY = gql`
+  query DANCER_QUERY($id: ID!) {
+    dancer(where: { id: $id }) {
+      id
+      firstName
+      avatar
+      danceClasses {
+        id
+        name
+        studio {
+          id
+        }
+      }
+      customRoutines {
+        id
+        name
+        studio {
+          id
+        }
+      }
+      studios {
+        id
+        studioName
+      }
+      requests {
+        id
+        classesRequested {
+          id
+        }
+      }
+    }
+  }
+`;
 export {
-  HIDDEN_DANCERS_QUERY,
-  PARENTS_STUDIOS,
   PARENT_USER_QUERY,
+  DANCER_QUERY,
   ALL_Rs,
   PARENTS_EVENTS_QUERY,
-  PARENTS_DANCERS
+  PARENTS_DANCERS,
+  CUSTOM_ROUTINE_QUERY,
+  STUDIOS_AND_DANCERS
 };

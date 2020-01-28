@@ -8,4 +8,12 @@ const UPDATE_CATEGORY_MUTATION = gql`
   }
 `;
 
-export { UPDATE_CATEGORY_MUTATION };
+const DELETE_CLOUDINARY_ASSET = gql`
+  mutation DELETE_CLOUDINARY_ASSET($publicId: String!, $resourceType: String!) {
+    deleteCloudinaryAsset(publicId: $publicId, resourceType: $resourceType) {
+      message
+    }
+  }
+`;
+
+export { UPDATE_CATEGORY_MUTATION, DELETE_CLOUDINARY_ASSET };

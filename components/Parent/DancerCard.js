@@ -1,41 +1,45 @@
 import React, { Component } from "react";
 import Link from "next/link";
-
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import SearchForStudio from "../SearchForStudio";
 import Card from "../styles/Card";
 import Edit from "../Icons/Edit";
-import UpdateDancer from "./UpdateDancer";
-
+import UpdateDancerForm from "./UpdateDancerForm";
 import { RegistrationContextConsumer } from "./RegistrationContext";
 
-const DancerCardHeaderStyles = styled(Card)`
+const DancerCardContainer = styled(Card)`
+  padding-bottom: 0;
+  margin-top: 4rem;
+`;
+const DancerCardHeaderStyles = styled.div`
   height: 80px;
   position: relative;
   text-align: right;
-  padding: 1rem;
-  margin-top: 80px;
+  /* padding: 1rem; */
+  /* margin-top: 80px; */
   margin-bottom: -20px;
+  z-index: 100;
+  /* background: ${props => props.theme.gray0}; */
+  /* z-index to hide top box shadow of edit dancer form */
 `;
 
 const FlipButton = styled.button`
   padding: 0;
   margin: 0;
   box-shadow: none;
-  /* background-color: transparent; */
   border: none;
 `;
-
-const DancerCardMain = styled.div``;
 
 const DancerCardFooter = styled.div`
   display: flex;
   flex-direction: column;
+  padding-bottom: 1rem;
 `;
 
-const CardFlipAnimation = styled(Card)`
+const CardFlipAnimation = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   position: relative;
   .body {
@@ -90,9 +94,7 @@ const ImageDiv = styled.div`
 export default class DancerCard extends Component {
   state = {
     showStudioSearch: false,
-    update: false,
-    view: "info",
-    newAvatar: ""
+    view: "info"
   };
 
   toggleStudioSearch = () => {
@@ -102,46 +104,32 @@ export default class DancerCard extends Component {
   switchView = () => {
     if (this.state.view === "info") {
       this.setState({ view: "update" });
-    } else this.setState({ view: "info" });
+    } else {
+      this.setState({ view: "info" });
+    }
   };
 
-  changeAvatar = async e => {
-    const files = e.target.files;
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "dancernotes-avatars");
-
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/coreytesting/image/upload",
-      {
-        method: "POST",
-        body: data
-      }
-    );
-    const file = await res.json();
-    this.setState({
-      newAvatar: file.eager[0].secure_url
-    });
+  showAvatarPreview = newAvatar => {
+    this.setState({ newAvatar });
   };
 
   render() {
     const { dancer } = this.props;
     const hasDanceClasses = dancer.danceClasses.length > 0;
     const hasAvatar = dancer.avatar;
-    // if (dancer) {
-    //   console.log("dancer classes:", dancer.classes.length);
-    // }
+    // Router.events.on("routeChangeStart", this.handleRouteChange);
+
     return (
       <RegistrationContextConsumer>
         {({ setBrowsingDancer }) => {
           return (
-            <>
+            <DancerCardContainer>
               <DancerCardHeaderStyles id={dancer.id}>
                 <ImageDiv>
                   {this.state.newAvatar ? (
                     <img
                       src={this.state.newAvatar}
-                      alt={`preview of new image picture`}
+                      alt={`preview of new avatar image`}
                     />
                   ) : hasAvatar ? (
                     <img
@@ -167,16 +155,15 @@ export default class DancerCard extends Component {
                     unmountOnExit
                   >
                     {this.state.view === "update" ? (
-                      <UpdateDancer
-                        id={dancer.id}
-                        hasAvatar={hasAvatar}
+                      <UpdateDancerForm
+                        dancer={dancer}
                         closeFunc={this.switchView}
-                        newAvatar={this.state.newAvatar}
-                        changeAvatar={this.changeAvatar}
+                        hasAvatar={hasAvatar}
+                        showAvatarPreview={this.showAvatarPreview}
                       />
                     ) : (
-                      <Card>
-                        <DancerCardMain>
+                      <>
+                        <div>
                           <h2>{dancer.firstName}</h2>
                           {hasDanceClasses ? (
                             <div>
@@ -202,10 +189,24 @@ export default class DancerCard extends Component {
                               classes.
                             </p>
                           )}
-                        </DancerCardMain>
+                        </div>
                         <DancerCardFooter>
+                          {dancer.studios.map(studio => (
+                            <Link
+                              key={studio.id}
+                              href={`/parent/account/browseStudio?studioId=${studio.id}`}
+                            >
+                              <button
+                                className="btn-action-secondary"
+                                onClick={() => setBrowsingDancer(dancer.id)}
+                              >
+                                Browse Classes at {studio.studioName}
+                              </button>
+                            </Link>
+                          ))}
+
                           <button
-                            className="btn-dark"
+                            className="btn-action-primary"
                             onClick={this.toggleStudioSearch}
                           >
                             Find a Studio to Browse or Register{" "}
@@ -213,8 +214,8 @@ export default class DancerCard extends Component {
                           </button>
                           {this.state.showStudioSearch && (
                             <SearchForStudio
-                              setBrowsingDancer={setBrowsingDancer}
-                              dancerName={dancer.firstName}
+                              // setBrowsingDancer={setBrowsingDancer}
+                              // dancerName={dancer.firstName}
                               dancerId={dancer.id}
                             />
                           )}
@@ -222,17 +223,17 @@ export default class DancerCard extends Component {
                             <p>OR</p>
                           </div>
                           <Link href="/parent/createCustomRoutine">
-                            <a className="btn-dark">
+                            <a className="btn-action-primary">
                               Create Your Own Routine for {dancer.firstName}
                             </a>
                           </Link>
                         </DancerCardFooter>
-                      </Card>
+                      </>
                     )}
                   </CSSTransition>
                 </TransitionGroup>
               </CardFlipAnimation>
-            </>
+            </DancerCardContainer>
           );
         }}
       </RegistrationContextConsumer>
@@ -240,4 +241,4 @@ export default class DancerCard extends Component {
   }
 }
 
-export { DancerCardHeaderStyles, CardFlipAnimation };
+export { DancerCardHeaderStyles, CardFlipAnimation, DancerCardContainer };

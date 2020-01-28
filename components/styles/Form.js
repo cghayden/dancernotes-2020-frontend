@@ -13,17 +13,17 @@ const loading = keyframes`
 `;
 
 const Form = styled.form`
+   /* each form should be inside a card */
   text-align: center;
   border-radius: ${props => props.theme.borderRadius};
-  color: ${props => props.theme.newBlue[90].hsl};
-  background: ${props => props.theme.gray1};
-  border: 10px solid ${props => props.theme.gray0};
-  padding: 0.5rem;
-  width: 90%;
-  min-width: 320px;
-  max-width: 500px;
+  color: ${props => props.theme.blackText};
+  background: ${props => props.theme.gray0};
+  /* box-shadow: ${props => props.theme.dropShadow1}; */
+  padding: 0 0;
+  width: 100%;
+  /* min-width: 320px; */
+  max-width: 550px;
   margin: 0 auto 1rem auto;
-
   legend,
   h2 {
     font-size: 1.25em;
@@ -39,32 +39,27 @@ const Form = styled.form`
       display: none;
     }
   }
-  input {
+  input,
+  textarea,
+  select {
     margin: 0;
-    color: ${props => props.theme.newBlue[90].hsl};
+    color: ${props => props.theme.indigo9};
+    font-size: 1.25rem;
+    background-color: ${props => props.theme.blue0};
+    border: 1px solid ${props => props.theme.gray2};
   }
 
-  button,
+  button[type="submit"],
   input[type="submit"] {
-    border-radius: 10px;
     width: 75%;
     max-width: 300px;
-    background: ${props => props.theme.newBlue[80].hsl};
-    color: white;
-    border: 0;
     padding: 0.5rem;
-    :active {
-      box-shadow: 0 2px 3px hsla(0 0%, 0%, 0.8);
-      transform: translateY(4px);
-    }
     &[aria-busy="true"]::after {
       background-size: 50% auto;
       animation: ${loading} 1s linear infinite;
     }
   }
-  select {
-    color: ${props => props.theme.gray5};
-  }
+
   fieldset {
     border: 0;
     padding: 0;
@@ -89,15 +84,36 @@ const Form = styled.form`
       animation: ${loading} 1s linear infinite;
     }
   }
+  .time,
+  .day {
+    width: 110px;
+    display: block;
+    padding: 0.5rem;
+  }
   .fileLoader {
     background: ${props => props.theme.indigo2};
   }
   .input-item {
     display: grid;
-    margin-bottom: 1rem;
+    width: 90%;
+    margin: 0 auto 1rem auto;
+  }
+  .form-row {
+    margin: 0 auto 1rem auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    .form-row-item {
+      display: grid;
+      place-content: center;
+    }
   }
   .form-footer {
-    text-align: center;
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-evenly;
+
   }
 `;
 
@@ -124,5 +140,17 @@ const LandingPageForm = styled(Form)`
   }
 `;
 
+const StyledCreateClassForm = styled(Form)`
+  .day {
+    text-align: center;
+    label {
+      display: inline-block;
+    }
+    input {
+      width: 100px;
+    }
+  }
+`;
+
 export default Form;
-export { LandingPageForm };
+export { LandingPageForm, StyledCreateClassForm };

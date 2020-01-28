@@ -1,39 +1,33 @@
 import styled from "styled-components";
 
 const SubNavStyles = styled.nav`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: ${props => props.theme.blackText};
-  padding: 0.5rem 0;
-  /* overflow-x: scroll; */
-  /* blurs not being used - not working on Safari */
-  .blur-right {
-    position: absolute;
-    right: 0;
-    width: 30px;
-    height: 2rem;
-    background: linear-gradient(
-      to right,
-      transparent,
-      ${props => props.theme.background} 85%
-    );
-  }
-  .blur-left {
-    position: absolute;
-    left: 0;
-    width: 30px;
-    height: 2rem;
-    background: linear-gradient(
-      to left,
-      transparent,
-      ${props => props.theme.background} 85%
-    );
-  }
-  .subNav-heading {
+  background: ${props => props.theme.background};
+  padding: 0.5rem;
+  box-shadow: ${props => props.theme.dropShadow1};
+  height: 5rem;
+  position: fixed;
+  top: ${props => props.theme.mobileStatusBarHeight};
+  left: 0;
+  right: 0;
+  z-index: 120;
+  /* z-index to keep it on top of main, to allow click events on navlinks */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     display: none;
+    text-transform: none;
   }
 
   .active {
-    /* font-weight: bold; */
-    color: ${props => props.theme.vividBlue6};
+    color: ${props => props.theme.vividBlue8};
+    font-weight: bold;
   }
 
   ul {
@@ -45,6 +39,7 @@ const SubNavStyles = styled.nav`
 
   a,
   button {
+    border-radius: 0;
     margin: 0;
     padding: 0.5rem;
     display: flex;
@@ -54,34 +49,51 @@ const SubNavStyles = styled.nav`
 
     &:hover,
     &:focus {
+      color: ${props => props.theme.indigo8};
       background: none;
       outline: none;
+      border-bottom: 2px solid ${props => props.theme.indigo8};
+      margin-bottom: -2px;
     }
   }
   @media (min-width: ${props => props.theme.largeScreen}) {
+    a,
+    button {
+      &:hover,
+      &:focus {
+        border-bottom: none;
+        margin-bottom: 0;
+        border-left: 2px solid ${props => props.theme.indigo8};
+        margin-left: -2px;
+      }
+    }
+    align-items: unset;
     padding-top: 1rem;
-    /* overflow-x: hidden; */
-
-    .subNav-heading {
+    top: ${props => props.theme.navHeight};
+    padding-left: 4vw;
+    box-shadow: none;
+    height: 100vw;
+    overflow-y: scroll;
+    width: 18vw;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      /* padding-left: 1rem; */
+      font-size: 1.35rem;
       display: block;
-      text-align: left;
+      /* right: unset; */
+      /* text-align: left; */
       padding-bottom: 1rem;
     }
     ul {
-      padding-left: 1rem;
+      /* padding-left: 1rem; */
       padding-bottom: 1rem;
-
       flex-direction: column;
       align-items: flex-start;
       font-size: 1rem;
-    }
-    h2 {
-      font-size: 1.35rem;
-      text-align: center;
-    }
-    .blur-right,
-    .blur-left {
-      display: none;
     }
   }
 `;

@@ -1,30 +1,13 @@
-import React, { Component } from "react";
-import { Mutation, Query } from "react-apollo";
+import React, { useState, Fragment } from "react";
+import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import Router from "next/router";
-
-import styled from "styled-components";
-import Error from "../Error";
 import Link from "next/link";
-import Form from "../styles/Form";
-import { CATEGORIES_QUERY } from "./EditClassCategories";
 import { ALL_DANCE_CLASSES_QUERY } from "./Queries";
-
-import SuccessMessage from "../SuccessMessage";
-
-const StyledCreateClassForm = styled(Form)`
-  .time {
-    display: flex;
-    justify-content: space-around;
-
-    select,
-    input {
-      width: 150px;
-      display: block;
-      padding: 0.5rem;
-    }
-  }
-`;
+import { UPDATE_DANCECLASS_MUTATION } from "./UpdateDanceClass";
+import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
+import { StyledCreateClassForm } from "../styles/Form";
+import useForm from "../../lib/useForm";
+import Modal from "../Modal";
 
 const CREATE_DANCE_CLASS_MUTATION = gql`
   mutation CREATE_DANCE_CLASS_MUTATION(
@@ -36,7 +19,6 @@ const CREATE_DANCE_CLASS_MUTATION = gql`
     $shoes: String
     $tights: String
     $notes: String
-    $music: String
     $level: String
     $style: String
     $division: String
@@ -52,7 +34,6 @@ const CREATE_DANCE_CLASS_MUTATION = gql`
       shoes: $shoes
       tights: $tights
       notes: $notes
-      music: $music
       level: $level
       style: $style
       division: $division
@@ -66,353 +47,421 @@ const CREATE_DANCE_CLASS_MUTATION = gql`
   }
 `;
 
-class CreateDanceClass extends Component {
-  state = {
-    name: "",
-    day: "Day...",
-    startTime: "",
-    endTime: "",
-    style: "",
-    level: "",
-    division: "",
-    performanceName: "",
-    shoes: "",
-    tights: "",
-    notes: "",
-    music: "",
-    showSuccessMessage: false,
-    loadingSong: false,
-    makeupSet: "none",
-    size: "",
-  };
+const initialInputState = {
+  name: "",
+  day: "Day...",
+  startTime: "",
+  endTime: "",
+  style: "",
+  level: "",
+  division: "",
+  performanceName: "",
+  shoes: "",
+  tights: "",
+  notes: "",
+  showSuccessMessage: false,
+  makeupSet: "none",
+  size: "",
+  audioFile: ""
+};
 
-  handleChange = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  };
+function CreateDanceClass({ studio }) {
+  const { inputs, updateInputs, handleChange } = useForm(initialInputState);
+  const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState();
+  const [loadingSong, setLoadingSong] = useState(false);
+  const [showModal, toggleModal] = useState(false);
+  const [status, setStatus] = useState();
+  const [showFileInput, toggleFileInput] = useState(false);
+  const [musicForUpload, setMusicForUpload] = useState();
+  const [musicData, setMusicData] = useState({});
 
-  uploadSong = async e => {
-    this.setState({ loadingSong: true });
-    const files = e.target.files;
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "dancernotes-music");
+  const [
+    createDanceClass,
+    {
+      data: newDance,
+      loading: creatingDanceClass,
+      error: errorCreatingDanceClass
+    }
+  ] = useMutation(CREATE_DANCE_CLASS_MUTATION, {
+    variables: { ...inputs },
+    onCompleted: () => {
+      resetForm();
+    },
+    refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }],
+    awaitRefetchQueries: true
+  });
 
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/coreytesting/video/upload",
-      {
-        method: "POST",
-        body: data,
-      },
-    );
-    const file = await res.json();
-    this.setState({
-      music: file.secure_url,
-      loadingSong: false,
-    });
-  };
+  const [
+    updateDanceClass,
+    { error: errorUpdatingDanceClass, loading: updatingDanceClass }
+  ] = useMutation(UPDATE_DANCECLASS_MUTATION, {
+    onError: () => cloudinaryCleanup(),
+    refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }]
+  });
 
-  closeSuccessMessage = () => {
-    this.setState({ showSuccessMessage: false });
-  };
+  const [
+    deleteCloudinaryAsset,
+    { error: errorDeletingAsset, loading: deletingAsset }
+  ] = useMutation(DELETE_CLOUDINARY_ASSET);
 
-  onSuccess = danceClass => {
-    if (danceClass.size === "Group") {
-      this.setState({ showSuccessMessage: true });
-    } else {
-      Router.push({
-        pathname: "/studio/addDancers",
-        query: { id: danceClass.id },
+  const newDanceClass = newDance && newDance.createDanceClass;
+  const errorUploadingSong =
+    errorUpdatingDanceClass || errorUploadingToCloudinary;
+  const loading = loadingSong || updatingDanceClass || creatingDanceClass;
+
+  const cloudinaryCleanup = () => {
+    if (musicData.musicId) {
+      deleteCloudinaryAsset({
+        variables: { publicId: musicData.musicId, resourceType: "video" }
       });
     }
   };
 
-  render() {
-    return (
-      <Query query={CATEGORIES_QUERY}>
-        {({ data, error, loading }) => {
-          const studioCategories = data ? data.studioCategories : {};
-          if (loading) return <p>5,6,7,8 ...</p>;
-          if (error) return <Error error={error} />;
-          return (
-            <Mutation
-              mutation={CREATE_DANCE_CLASS_MUTATION}
-              variables={this.state}
-              onCompleted={({ createDanceClass }) =>
-                this.onSuccess(createDanceClass)
-              }
-              refetchQueries={[{ query: ALL_DANCE_CLASSES_QUERY }]}
-              awaitRefetchQueries={true}
-            >
-              {(createDanceClass, { error, loading }) => {
-                return (
-                  <>
-                    {this.state.showSuccessMessage && (
-                      <SuccessMessage closeFunc={this.closeSuccessMessage} />
-                    )}
-                    <StyledCreateClassForm
-                      method="post"
-                      onSubmit={async e => {
-                        e.preventDefault();
-                        const res = await createDanceClass();
-                        this.setState({
-                          name: "",
-                          day: "Day...",
-                          startTime: "",
-                          endTime: "",
-                          style: "",
-                          level: "",
-                          division: "",
-                          performanceName: "",
-                          shoes: "",
-                          tights: "",
-                          notes: "",
-                          music: "",
-                          makeupSet: "none",
-                        });
-                      }}
-                    >
-                      <fieldset disabled={loading} aria-busy={loading}>
-                        <legend>Add A New Dance Class To Your Schedule</legend>
-                        <Link href="configureClassCategories">
-                          <a className="btn-dark">Configure Class Categories</a>
-                        </Link>
-                        <Error error={error} />
-                        <div className="input-item">
-                          <label htmlFor="name">Class Name</label>
-                          <input
-                            required
-                            type="text"
-                            name="name"
-                            value={this.state.name}
-                            onChange={this.handleChange}
-                          />
-                        </div>
-                        <div className="input-item">
-                          <label htmlFor="size">Size:</label>
-                          <select
-                            id="size"
-                            name="size"
-                            value={this.state.size}
-                            onChange={this.handleChange}
-                          >
-                            <option default value={""} disabled>
-                              (Group/Solo/Duo/Trio)?
-                            </option>
-                            <option value="Group">Group</option>
-                            <option value="Solo">Solo</option>
-                            <option value="Duo">Duo</option>
-                            <option value="Trio">Trio</option>
-                          </select>
-                        </div>
-
-                        <div className="input-item">
-                          <label htmlFor="day">Day: </label>
-                          <select
-                            id="day"
-                            name="day"
-                            value={this.state.day}
-                            onChange={this.handleChange}
-                          >
-                            <option default value={"Day..."} disabled>
-                              Day...
-                            </option>
-                            <option value="Mon.">Mon.</option>
-                            <option value="Tue.">Tue.</option>
-                            <option value="Wed.">Wed.</option>
-                            <option value="Thur.">Thur.</option>
-                            <option value="Fri.">Fri.</option>
-                            <option value="Sat.">Sat.</option>
-                            <option value="Sun.">Sun.</option>
-                          </select>
-                        </div>
-
-                        <div className="time">
-                          <div>
-                            <label htmlFor="startTime">
-                              Start Time:
-                              <input
-                                type="time"
-                                id="startTime"
-                                name="startTime"
-                                min="0:00"
-                                max="23:59"
-                                value={this.state.startTime}
-                                onChange={this.handleChange}
-                              />
-                            </label>
-                          </div>
-
-                          <div>
-                            <label htmlFor="endTime">
-                              End Time:
-                              <input
-                                type="time"
-                                id="endTime"
-                                name="endTime"
-                                min="0:00"
-                                max="23:59"
-                                value={this.state.endTime}
-                                onChange={this.handleChange}
-                              />
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="input-item">
-                          <label htmlFor="style">Style:</label>
-                          <select
-                            required
-                            id="style"
-                            name="style"
-                            value={this.state.style}
-                            onChange={this.handleChange}
-                          >
-                            <option default value={""} disabled>
-                              Style...
-                            </option>
-                            {studioCategories.styles.map(style => (
-                              <option key={style} value={style}>
-                                {style}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="input-item">
-                          <label htmlFor="level">Level:</label>
-                          <select
-                            required
-                            id="level"
-                            name="level"
-                            value={this.state.level}
-                            onChange={this.handleChange}
-                          >
-                            <option default disabled value={""}>
-                              Level...
-                            </option>
-                            {studioCategories.levels.map(level => (
-                              <option key={level} value={level}>
-                                {level}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="input-item">
-                          <label htmlFor="division">Division:</label>
-                          <select
-                            id="division"
-                            name="division"
-                            value={this.state.division}
-                            onChange={this.handleChange}
-                          >
-                            <option default disabled value={""}>
-                              Division...
-                            </option>
-                            {studioCategories.divisions.map(division => (
-                              <option key={division} value={division}>
-                                {division}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="input-item">
-                          <label htmlFor="performanceName">
-                            Performance Name
-                          </label>
-                          <input
-                            type="text"
-                            name="performanceName"
-                            placeholder="Performance Name, or Name of Song"
-                            value={this.state.performanceName}
-                            onChange={this.handleChange}
-                          />
-                        </div>
-                        <div className="input-item">
-                          <label htmlFor="tights">Tights</label>
-                          <input
-                            type="text"
-                            name="tights"
-                            placeholder="The style of tights required..."
-                            value={this.state.tights}
-                            onChange={this.handleChange}
-                          />
-                        </div>
-                        <div className="input-item">
-                          <label htmlFor="shoes">Shoes</label>
-                          <input
-                            type="text"
-                            name="shoes"
-                            placeholder="The style of shoes required..."
-                            value={this.state.shoes}
-                            onChange={this.handleChange}
-                          />
-                        </div>
-                        <div className="input-item">
-                          <label htmlFor="notes">Notes</label>
-                          <textarea
-                            id="notes"
-                            type="text"
-                            name="notes"
-                            rows="5"
-                            value={this.state.notes}
-                            onChange={this.handleChange}
-                          />
-                        </div>
-                        <div className="input-item">
-                          <label htmlFor="makeupSet">Makeup:</label>
-                          <select
-                            id="makeupSet"
-                            name="makeupSet"
-                            value={this.state.makeupSet}
-                            onChange={this.handleChange}
-                          >
-                            <option default disabled value={""}>
-                              Makeup...
-                            </option>
-                            {studioCategories.makeupSets.map(set => (
-                              <option key={set.id} value={set.id}>
-                                {set.name}
-                              </option>
-                            ))}
-                            <option value={"none"}>
-                              None at this time, N/A
-                            </option>
-                          </select>
-                        </div>
-                        <div className="input-item">
-                          <label htmlFor="music">
-                            Upload the music for this dance...
-                          </label>
-                          <input
-                            type="file"
-                            id="music"
-                            name="music"
-                            placeholder="Upload the music for this dance"
-                            onChange={this.uploadSong}
-                          />
-                        </div>
-
-                        <div>
-                          <button
-                            type="submit"
-                            disabled={loading || this.state.loadingSong}
-                          >
-                            Creat
-                            {loading ? "ing " : "e "} Class
-                          </button>
-                        </div>
-                      </fieldset>
-                    </StyledCreateClassForm>
-                  </>
-                );
-              }}
-            </Mutation>
-          );
-        }}
-      </Query>
-    );
+  function resetForm() {
+    updateInputs({ ...initialInputState });
+    toggleFileInput(false);
+    setStatus();
   }
+
+  function setSongtoState(e) {
+    const audioFile = e.target.files[0];
+    setMusicForUpload(audioFile);
+  }
+
+  async function saveNewDanceClass(e) {
+    e.preventDefault();
+    setStatus("Creating Class...");
+    const newDanceClass = await createDanceClass();
+    //A. if music file is queued in state, create dance, upload music with tag of routineId, then update routine with the music url and musicId
+    if (musicForUpload) {
+      setStatus("Uploading Music...");
+      const newDanceClassId = newDanceClass.data.createDanceClass.id;
+      await uploadSongAndUpdateClass(newDanceClassId).catch(() => {
+        setStatus();
+        toggleModal(true);
+      });
+    }
+    resetForm();
+    toggleModal(true);
+  }
+
+  async function uploadSongAndUpdateClass(danceClassId) {
+    setLoadingSong(true);
+    const data = new FormData();
+    data.append("file", inputs.audioFile);
+    data.append("upload_preset", "dancernotes-music");
+    data.append("tag", danceClassId);
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/coreytesting/video/upload",
+      {
+        method: "POST",
+        body: data
+      }
+    ).catch(error => {
+      setCloudinaryUploadError(error);
+    });
+
+    const file = await res.json();
+    setLoadingSong(false);
+    if (file.error) {
+      setCloudinaryUploadError(file.error);
+    } else {
+      setMusicData({ music: file.secure_url, musicId: file.public_id });
+      setStatus("Updating class...");
+      await updateDanceClass({
+        variables: {
+          id: danceClassId,
+          music: file.secure_url,
+          musicId: file.public_id
+        }
+      });
+    }
+    setStatus();
+  }
+
+  return (
+    <Fragment>
+      <Modal open={showModal} setOpen={toggleModal}>
+        <div>
+          {errorCreatingDanceClass && (
+            <>
+              <p>
+                Warning: there was a problem saving your class. Please try
+                again:
+              </p>
+              <button role="button" onClick={() => toggleModal(false)}>
+                Try Again
+              </button>
+            </>
+          )}
+
+          {newDanceClass && <p>Success - you created {newDanceClass.name}</p>}
+          {newDanceClass && errorUploadingSong && (
+            <p>
+              Warning: there was a problem uploading the music for{" "}
+              {newDanceClass.name}. You can try to add music now or later by
+              editing the class:
+              <Link href={`/studio/updateClass/${newDanceClass.id}`}>
+                <a>Update Class</a>
+              </Link>
+            </p>
+          )}
+
+          <button role="button" onClick={() => toggleModal(false)}>
+            Create Another Class
+          </button>
+          <Link href="/studio/classes">
+            <a>I'm finished creating classes</a>
+          </Link>
+        </div>
+      </Modal>
+      <StyledCreateClassForm
+        method="post"
+        onSubmit={async e => await saveNewDanceClass(e)}
+      >
+        <fieldset disabled={loading} aria-busy={loading}>
+          <legend>Add A New Dance Class To Your Schedule</legend>
+          <Link href="configureClassCategories">
+            <a className="btn-action-primary">Configure Class Categories</a>
+          </Link>
+          <div className="input-item">
+            <label htmlFor="name">Class Name *</label>
+            <input
+              required
+              type="text"
+              name="name"
+              value={inputs.name}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="input-item">
+            <label htmlFor="size">Size: *</label>
+            <select
+              required
+              id="size"
+              name="size"
+              value={inputs.size}
+              onChange={handleChange}
+            >
+              <option default value={""} disabled>
+                (Group/Solo/Duo/Trio)?
+              </option>
+              <option value="Group">Group</option>
+              <option value="Solo">Solo</option>
+              <option value="Duo">Duo</option>
+              <option value="Trio">Trio</option>
+            </select>
+          </div>
+
+          <div className="form-row">
+            <div className="form-row-item day">
+              <label htmlFor="day">Day: </label>
+              <select
+                id="day"
+                name="day"
+                value={inputs.day}
+                onChange={handleChange}
+              >
+                <option default value={"Day..."} disabled>
+                  Day...
+                </option>
+                <option value="Mon.">Mon.</option>
+                <option value="Tue.">Tue.</option>
+                <option value="Wed.">Wed.</option>
+                <option value="Thur.">Thur.</option>
+                <option value="Fri.">Fri.</option>
+                <option value="Sat.">Sat.</option>
+                <option value="Sun.">Sun.</option>
+              </select>
+            </div>
+
+            <div className="form-row-item">
+              <label htmlFor="startTime">Start Time:</label>
+              <input
+                type="time"
+                id="startTime"
+                name="startTime"
+                min="0:00"
+                max="23:59"
+                value={inputs.startTime}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-row-item">
+              <label htmlFor="endTime">End Time: </label>
+              <input
+                type="time"
+                id="endTime"
+                name="endTime"
+                min="0:00"
+                max="23:59"
+                value={inputs.endTime}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="input-item">
+            <label htmlFor="style">Style: *</label>
+            <select
+              required
+              id="style"
+              name="style"
+              value={inputs.style}
+              onChange={handleChange}
+            >
+              <option default value={""} disabled>
+                Style...
+              </option>
+              {studio &&
+                studio.styles.map(style => (
+                  <option key={style} value={style}>
+                    {style}
+                  </option>
+                ))}
+            </select>
+          </div>
+          <div className="input-item">
+            <label htmlFor="level">Level: *</label>
+            <select
+              required
+              id="level"
+              name="level"
+              value={inputs.level}
+              onChange={handleChange}
+            >
+              <option default disabled value={""}>
+                Level...
+              </option>
+              {studio &&
+                studio.levels.map(level => (
+                  <option key={level} value={level}>
+                    {level}
+                  </option>
+                ))}
+            </select>
+          </div>
+          <div className="input-item">
+            <label htmlFor="division">Division:</label>
+            <select
+              id="division"
+              name="division"
+              value={inputs.division}
+              onChange={handleChange}
+            >
+              <option default disabled value={""}>
+                Division...
+              </option>
+              {studio &&
+                studio.divisions.map(division => (
+                  <option key={division} value={division}>
+                    {division}
+                  </option>
+                ))}
+            </select>
+          </div>
+          <div className="input-item">
+            <label htmlFor="performanceName">Performance Name</label>
+            <input
+              type="text"
+              name="performanceName"
+              placeholder="Performance Name, or Name of Song"
+              value={inputs.performanceName}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="input-item">
+            <label htmlFor="tights">Tights:</label>
+            <input
+              type="text"
+              name="tights"
+              placeholder="The style of tights required..."
+              value={inputs.tights}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="input-item">
+            <label htmlFor="shoes">Shoes</label>
+            <input
+              type="text"
+              name="shoes"
+              placeholder="The style of shoes required..."
+              value={inputs.shoes}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="input-item">
+            <label htmlFor="notes">Notes</label>
+            <textarea
+              id="notes"
+              type="text"
+              name="notes"
+              rows="5"
+              value={inputs.notes}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="input-item">
+            <label htmlFor="makeupSet">Makeup:</label>
+            <select
+              id="makeupSet"
+              name="makeupSet"
+              value={inputs.makeupSet}
+              onChange={handleChange}
+            >
+              <option default disabled value={""}>
+                Makeup...
+              </option>
+              {studio &&
+                studio.makeupSets.map(set => (
+                  <option key={set.id} value={set.id}>
+                    {set.name}
+                  </option>
+                ))}
+              <option value={"none"}>None at this time, N/A</option>
+            </select>
+          </div>
+          <button
+            type="button"
+            className="btn-action-primary"
+            onClick={() => toggleFileInput(true)}
+          >
+            Add Music
+          </button>
+          {showFileInput && (
+            <div className="input-item">
+              <label htmlFor="audioFile">
+                Upload the music for this dance...
+              </label>
+              <input
+                type="file"
+                id="audioFile"
+                name="audioFile"
+                placeholder="Upload music for this dance"
+                onChange={setSongtoState}
+              />
+            </div>
+          )}
+
+          <div className="form-footer">
+            <p>{status}</p>
+            <button type="submit" disabled={loading}>
+              Creat
+              {loading ? "ing " : "e "} Class
+            </button>
+          </div>
+        </fieldset>
+      </StyledCreateClassForm>
+    </Fragment>
+  );
 }
 
 export default CreateDanceClass;
 export { StyledCreateClassForm };
+
+// {inputs.showSuccessMessage && (
+//   <SuccessMessage
+//     closeFunc={closeSuccessMessage}
+//   />
+// )}

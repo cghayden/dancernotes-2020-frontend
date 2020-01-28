@@ -16,7 +16,7 @@ const AboutStudio = ({ setActive }) => {
         jobs non-competitive.
       </div>
       <div>
-        <button className="btn-dark" onClick={() => setActive("signupStudio")}>
+        <button className="btn-action-primary" onClick={() => setActive("signupStudio")}>
           Try dancernotes
         </button>
       </div>

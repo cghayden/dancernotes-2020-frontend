@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from "react";
+import Link from "next/link";
 import styled from "styled-components";
 import { useSpring, animated } from "react-spring";
 import useMeasure from "../../lib/useMeasure";
@@ -57,8 +58,18 @@ const DanceCardNav = styled.div`
   display: flex;
   justify-content: space-around;
   font-size: 0.825rem;
+  a,
   button {
+    border-radius: 0;
     margin: 0;
+    &:hover,
+    &:focus {
+      color: ${props => props.theme.indigo8};
+      background: none;
+      outline: none;
+      border-bottom: 2px solid ${props => props.theme.indigo8};
+      margin-bottom: -2px;
+    }
   }
 `;
 
@@ -66,7 +77,7 @@ function DanceCard(props) {
   const { dance, visibleDancersIds } = props;
   const [showBody, setShowBody] = useState(false);
   const [showMediaPlayer, setShowMediaPlayer] = useState(false);
-  const [bind, { height, top }] = useMeasure();
+  const [bind, { height }] = useMeasure();
 
   const animation = useSpring({
     overflow: "hidden",
@@ -77,13 +88,6 @@ function DanceCard(props) {
     //if closing body, close media player too
 
     setShowBody(!showBody);
-  }
-
-  function toggleMusic() {
-    // if (!showBody) {
-    //   setShowBody(true);
-    // }
-    setShowMediaPlayer(!showMediaPlayer);
   }
 
   return (
@@ -105,14 +109,19 @@ function DanceCard(props) {
       </DanceCardHeader>
       <DanceCardNav>
         <button onClick={toggleBody}>Details</button>
-        <button onClick={toggleMusic}>Music</button>
+        <button onClick={() => setShowMediaPlayer(!showMediaPlayer)}>
+          Music
+        </button>
+        {dance.custom && (
+          <Link href={`/parent/updateDance/${dance.id}`}>
+            <a>Edit</a>
+          </Link>
+        )}
       </DanceCardNav>
 
-      <MusicPlayer
-        open={showMediaPlayer}
-        danceName={dance.name}
-        src={dance.music}
-      />
+      {showMediaPlayer && (
+        <MusicPlayer danceName={dance.name} src={dance.music} />
+      )}
 
       <animated.div style={animation}>
         <div {...bind}>

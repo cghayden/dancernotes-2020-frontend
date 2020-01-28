@@ -5,10 +5,10 @@ const Signup = ({ setActive }) => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <button className="btn-dark" onClick={() => setActive("signupParent")}>
+      <button className="btn-action-primary" onClick={() => setActive("signupParent")}>
         Sign up as a Parent
       </button>
-      <button className="btn-dark" onClick={() => setActive("signupStudio")}>
+      <button className="btn-action-primary" onClick={() => setActive("signupStudio")}>
         Sign up as a Studio
       </button>
     </div>

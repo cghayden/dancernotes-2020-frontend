@@ -57,15 +57,16 @@ const DanceCardNav = styled.div`
 `;
 
 function StudioDanceCard({ dance }) {
-  const [showBody, setShowBody] = useState(false);
+  const [showDetails, toggleShowDetails] = useState(false);
 
   return (
     <Fragment>
       <DanceCardStyles>
-        <DanceCardHeader dance={dance} setShowBody={setShowBody} />
+        <DanceCardHeader dance={dance} setShowBody={toggleShowDetails} />
       </DanceCardStyles>
-      <Modal open={showBody} setOpen={setShowBody}>
+      <Modal open={showDetails} setOpen={toggleShowDetails}>
         <StudioDanceDetails dance={dance} />
+        <button onClick={() => toggleShowDetails(false)}>Close</button>
       </Modal>
     </Fragment>
   );

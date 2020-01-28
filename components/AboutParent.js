@@ -22,7 +22,7 @@ const AboutParentContent = ({ setActive }) => {
 
       <div>
         <button
-          className="btn-dark landingPage"
+          className="btn-action-primary landingPage"
           onClick={() => setActive("signupParent")}
         >
           Try dancernotes

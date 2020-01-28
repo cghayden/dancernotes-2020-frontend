@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { animated, useTransition } from "react-spring";
-
-import ParentLayout from "../../../components/Parent/ParentLayout";
+import Error from "../../../components/Error";
+import SubNavMainControlsLayout from "../../../components/SubNavMainControlsLayout";
 import RoutinesDisplay from "../../../components/Parent/RoutinesDisplay";
 import CreateDancerForm from "../../../components/Parent/CreateDancerForm";
 import NotesSubNav from "../../../components/Parent/NotesSubNav";
@@ -12,56 +11,41 @@ import OffScreenControlsToggler from "../../../components/Parent/OffscreenContro
 import { PARENT_USER_QUERY } from "../../../components/Parent/Queries";
 
 const ParentHome = () => {
-  const [addDancer, toggleAddDancer] = useState(false);
   const { data, loading, error } = useQuery(PARENT_USER_QUERY);
   const parentUser = data ? data.parentUser : {};
 
-  const transition = useTransition(addDancer, null, {
-    from: {
-      display: "grid",
-      placeItems: "center",
-      opacity: 0,
-      transform: "translate3d(100%, 0,0)"
-    },
-    enter: { opacity: 1, transform: "translate3d(0,0,0)" },
-    leave: { opacity: 0, transform: "translate3d(100%, 0,0)" }
-  });
-
   if (loading) return <p>loading...</p>;
+  if (error) return <Error error={error} />;
+  //if no dancers, propmt to add a dancer
   if (!parentUser.dancers || parentUser.dancers.length < 1) {
     return (
-      <ParentLayout page="Routines">
-        <p>Welcome to dancernotes!</p>
-
-        <button onClick={() => toggleAddDancer(!addDancer)}>
-          Add a dancer to your account
-        </button>
-
-        {transition.map(
-          ({ item, key, props: styles }) =>
-            item && (
-              <animated.div key={key} style={styles}>
-                <CreateDancerForm toggleAddDancer={toggleAddDancer} />
-              </animated.div>
-            )
-        )}
-      </ParentLayout>
+      <>
+        <NotesSubNav />
+        <SubNavMainControlsLayout page="Routines">
+          <p>Welcome to dancernotes!</p>
+          <p>To begin use the form below to add a Dancer to your account.</p>
+          <CreateDancerForm />
+        </SubNavMainControlsLayout>
+      </>
     );
   }
+
+  //if no routines, prompt to create a routine or search for a studio
   return (
-    <ParentLayout
-      page="Routines"
-      action={<OffScreenControlsToggler text="Display" />}
-      subnav={<NotesSubNav />}
-      controls={
-        <ControlPanel
-          dancerIds={parentUser.dancersIds}
-          dancers={parentUser.dancers}
-        />
-      }
-    >
-      <RoutinesDisplay dancerIds={parentUser.dancersIds} />
-    </ParentLayout>
+    <>
+      <NotesSubNav />
+      <SubNavMainControlsLayout
+        page="Routines"
+        pageAction={<OffScreenControlsToggler text="Display" />}
+      >
+        <RoutinesDisplay dancerIds={parentUser.dancersIds} />
+      </SubNavMainControlsLayout>
+      <ControlPanel
+        studios={parentUser.studios}
+        dancerIds={parentUser.dancersIds}
+        customRoutines={parentUser.customRoutines}
+      />
+    </>
   );
 };
 

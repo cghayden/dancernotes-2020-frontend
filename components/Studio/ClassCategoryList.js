@@ -126,7 +126,7 @@ export default class ClassCategoryList extends Component {
                 onChange={this.handleInputChange}
               />
               <button
-                className="btn-dark"
+                className="btn-action-primary"
                 disabled={disabled}
                 onClick={() =>
                   this.addItemToCategory(updateStudioClassCategory)

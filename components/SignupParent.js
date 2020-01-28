@@ -46,7 +46,7 @@ class SignupParent extends Component {
         mutation={SIGNUP_PARENT_MUTATION}
         variables={this.state}
         onCompleted={data => {
-          Router.push(`/parent/dancers`);
+          Router.push(`/parent/account/dancers`);
         }}
         // refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >

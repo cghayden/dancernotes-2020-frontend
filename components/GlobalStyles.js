@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.25;
     font-family: "Open Sans",'source-sans-pro';
     font-weight: 400;
-    color: ${theme.textColor};
+    color: ${theme.blackText};
   }
   
   h1,
@@ -47,7 +47,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   a, button {
-  padding: .5rem;
+  padding: .5rem 1rem;
   margin: .5rem;
   border: none;
   font: inherit;
@@ -57,9 +57,9 @@ const GlobalStyle = createGlobalStyle`
   border-radius: 5px;
   background: transparent;
     :hover {
-    background-color: ${theme.cream}; 
+    background-color: ${theme.newBlue[10].hsl};
     color: ${theme.newBlue[90].hsl};
-    /* transition: background-color 1s ease-out; */
+    transition: background-color .25s ease-out;
     }
     :disabled{
       background-color: ${theme.gray4};
@@ -67,24 +67,55 @@ const GlobalStyle = createGlobalStyle`
       cursor: not-allowed;
     }
 
-    &.btn-light{
-      background-color: ${theme.gray2}; 
-    color: ${theme.indigo9};
-    :hover {
-      background-color: ${theme.indigo8}; 
-    color: white;
-    }
-    }
     &.btn-danger{
-      background-color: ${theme.red5};
-      color: white;
+      background-color: ${theme.red6};
+      color: ${theme.red0};
+      :hover {
+      background-color: ${theme.red7}; 
+      color: ${theme.red0};
+      }
+    }
+    &.btn-danger-outline{
+      background-color: none;
+      color: ${theme.red7};
+      border: 1px solid ${theme.red7};
+      :hover {
+        background-color: ${theme.red6};
+      color: ${theme.red0};
+      }
     }
 
-    &.btn-dark{
-      background-color: ${theme.newBlue[70].hsl};
-    color: ${theme.newBlue[0].hsl};
-    :hover {
-      background-color: ${theme.newBlue[60].hsl};
+    &.btn-action-primary{
+      background-color: ${theme.indigo1};
+      color: ${theme.indigo9};
+      :hover {
+        background-color: ${theme.indigo9};
+      } 
+      :disabled{
+      background-color: ${theme.gray3};
+      color: ${theme.gray9};
+      cursor: not-allowed;
+    }
+  }
+  &.btn-action-primary-outline{
+      background-color: none;
+      color: ${theme.indigo8};
+      border: 1px solid ${theme.indigo8};
+      :hover {
+        background-color: ${theme.indigo8};
+      color: ${theme.indigo0};
+      } 
+      :disabled{
+      background-color: ${theme.gray3};
+      color: ${theme.gray9};
+      cursor: not-allowed;
+    }
+  }
+  &.btn-action-secondary{
+      background-color: ${theme.indigo5};
+      color: ${theme.indigo0};
+      :hover {
+      background-color: ${theme.indigo6};
       } 
       :disabled{
       background-color: ${theme.gray4};
@@ -92,10 +123,28 @@ const GlobalStyle = createGlobalStyle`
       cursor: not-allowed;
     }
     }
+    &.btn-action-secondary-outline{
+      background-color: none;
+      color: ${theme.indigo5};
+      border: 1px solid ${theme.indigo5};
+    } :hover {
+      background-color: ${theme.indigo5};
+      color: ${theme.indigo0};
+    }
+
   &.landingPage{
     font-size: 1.5rem;
     width: 200px;
     height: 50px;
+  }
+  &.pageAction{
+    color: ${theme.indigo8};
+    border: none;
+    outline: none;
+    :hover{
+      color: ${theme.indigo9};
+      background: none;
+    }
   }
   }
 
@@ -105,11 +154,9 @@ const GlobalStyle = createGlobalStyle`
  {
     background-color: white;
     border: none;
-    ${"" /* box-shadow: inset 1px 2px 2px hsla(0, 0%, 0%, 0.2); */}
     border-radius: 10px;
     font: inherit;
     padding: 0.6rem;
-    width: 90%;
     &:focus {
       border-color: ${theme.cranberry};
     }
@@ -117,6 +164,9 @@ const GlobalStyle = createGlobalStyle`
 input[type='checkbox']{
   width: auto;
   margin-right: .5rem;
+}
+option {
+  background: inherit;
 }
 
   ul {
@@ -140,24 +190,6 @@ input[type='checkbox']{
     padding: 1rem 0rem;
 }
 
-  .modal-backdrop {
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.7);
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  .modal-container {
-    background-color: white;
-    position: absolute;
-    top: 10%;
-    right: 10%;
-    bottom: 10%;
-    left: 10%;
-    padding: 1em;
-  }
 `;
 
 export default class GlobalStyles extends Component {

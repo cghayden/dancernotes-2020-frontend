@@ -4,38 +4,30 @@ import MobileNav from "./MobileNav";
 import DesktopNav from "./DesktopNav";
 import ContentLayout from "../ContentLayout";
 import ContentHeader from "../ContentHeader";
-import { useSpring, animated } from "react-spring";
+import styled from "styled-components";
 
-//action is a component that triggers an action for the page, i.e add a dancer, or create a new dance
-const ParentLayout = ({
-  children,
-  page = "",
-  action = <div />,
-  subnav = <div />,
-  controls = null
-}) => {
-  const fade = useSpring({
-    from: {
-      opacity: 0
-    },
-    to: {
-      opacity: 1
-    }
-  });
+const SubNavMainLayout = styled.main`
+  margin-top: 9rem;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 100px;
+  align-items: center;
+  @media (min-width: ${props => props.theme.largeScreen}) {
+    margin-top: ${props => props.theme.navHeight};
+  }
+`;
 
+//action is a component that triggers an pageAction for the page, i.e add a dancer, or create a new dance
+const ParentLayout = ({ children, page = "", pageAction = null }) => {
   return (
     <Fragment>
-      <MobileStatusBar page={page} action={action} />
+      <MobileStatusBar page={page} pageAction={pageAction} />
       <MobileNav />
       <DesktopNav />
-      <ContentLayout>
-        {subnav}
-        <main>
-          <ContentHeader page={page} action={action} />
-          {children}
-        </main>
-        {controls}
-      </ContentLayout>
+      <SubNavMainLayout>
+        <ContentHeader page={page} pageAction={pageAction} />
+        {children}
+      </SubNavMainLayout>
     </Fragment>
   );
 };

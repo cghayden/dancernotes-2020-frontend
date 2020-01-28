@@ -1,13 +1,16 @@
-import ParentLayout from "../../../components/Parent/ParentLayout";
+import SubNavMainLayout from "../../../components/SubNavMainLayout";
 
 import NotesSubNav from "../../../components/Parent/NotesSubNav";
 import HairStylesCards from "../../../components/Parent/HairStylesCards";
 
 function makeupPage() {
   return (
-    <ParentLayout page={"Hair Styles"} subnav={<NotesSubNav />}>
-      <HairStylesCards />
-    </ParentLayout>
+    <>
+      <NotesSubNav />
+      <SubNavMainLayout page={"Hair Styles"}>
+        <HairStylesCards />
+      </SubNavMainLayout>
+    </>
   );
 }
 

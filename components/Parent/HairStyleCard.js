@@ -27,7 +27,7 @@ function HairStyleCard(props) {
       {/* <h4>Description: </h4> */}
       <div className="card__section">
         {hairStyle.link && (
-          <a className="btn-dark" href={hairStyle.link} target="_blank">
+          <a className="btn-action-primary" href={hairStyle.link} target="_blank">
             Watch an Intructional Video
           </a>
         )}
