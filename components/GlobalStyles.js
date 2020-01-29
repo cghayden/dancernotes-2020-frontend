@@ -148,27 +148,6 @@ const GlobalStyle = createGlobalStyle`
   }
   }
 
-  input,
-  textarea,
-  select
- {
-    background-color: white;
-    border: none;
-    border-radius: 10px;
-    font: inherit;
-    padding: 0.6rem;
-    &:focus {
-      border-color: ${theme.cranberry};
-    }
-  }
-input[type='checkbox']{
-  width: auto;
-  margin-right: .5rem;
-}
-option {
-  background: inherit;
-}
-
   ul {
     list-style: none;
     margin: 0;

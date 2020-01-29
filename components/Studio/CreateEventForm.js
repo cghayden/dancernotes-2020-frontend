@@ -3,7 +3,7 @@ import Select from "react-select";
 
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
-import { StyledCreateClassForm } from "./CreateDanceClassForm";
+import { Form } from "./CreateDanceClassForm";
 import Error from "../Error";
 const ADD_STUDIO_EVENT = gql`
   mutation ADD_STUDIO_EVENT(
@@ -54,7 +54,7 @@ class CreateEventForm extends Component {
       >
         {(addStudioEvent, { error, loading }) => {
           return (
-            <StyledCreateClassForm
+            <Form
               method="post"
               onSubmit={async e => {
                 e.preventDefault();
@@ -112,7 +112,7 @@ class CreateEventForm extends Component {
                   </button>
                 </div>
               </fieldset>
-            </StyledCreateClassForm>
+            </Form>
           );
         }}
       </Mutation>

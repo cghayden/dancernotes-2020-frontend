@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ALL_DANCE_CLASSES_QUERY } from "./Queries";
 import { UPDATE_DANCECLASS_MUTATION } from "./UpdateDanceClass";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
-import { StyledCreateClassForm } from "../styles/Form";
+import { Form } from "../styles/Form";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 
@@ -215,7 +215,7 @@ function CreateDanceClass({ studio }) {
           </Link>
         </div>
       </Modal>
-      <StyledCreateClassForm
+      <Form
         method="post"
         onSubmit={async e => await saveNewDanceClass(e)}
       >
@@ -452,13 +452,13 @@ function CreateDanceClass({ studio }) {
             </button>
           </div>
         </fieldset>
-      </StyledCreateClassForm>
+      </Form>
     </Fragment>
   );
 }
 
 export default CreateDanceClass;
-export { StyledCreateClassForm };
+export { Form };
 
 // {inputs.showSuccessMessage && (
 //   <SuccessMessage

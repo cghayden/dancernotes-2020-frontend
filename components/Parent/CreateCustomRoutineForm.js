@@ -7,7 +7,7 @@ import Link from "next/link";
 import { ALL_Rs, PARENT_USER_QUERY } from "./Queries";
 import { UPDATE_CUSTOM_ROUTINE } from "./UpdateCustomRoutine";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
-import { StyledCreateClassForm } from "../styles/Form";
+import Form from "../styles/Form";
 import Card from "../styles/Card";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
@@ -52,7 +52,7 @@ const ChosenDancers = styled.ul`
     border-radius: ${props => props.theme.borderRadius};
     padding: 0.25rem 0.5rem;
     margin-right: 1rem;
-    background-color: ${props => props.theme.teal7};
+    background-color: ${props => props.theme.teal6};
     color: white;
   }
 `;
@@ -251,10 +251,7 @@ function CreateCustomRoutineForm({ parent }) {
         </div>
       </Modal>
       <Card>
-        <StyledCreateClassForm
-          method="post"
-          onSubmit={async e => await saveNewCustomRoutine(e)}
-        >
+        <Form method="post" onSubmit={async e => await saveNewCustomRoutine(e)}>
           <fieldset disabled={loading} aria-busy={loading}>
             <h2>Create Your Own Routine</h2>
             <div className="input-item">
@@ -335,8 +332,8 @@ function CreateCustomRoutineForm({ parent }) {
               </select>
             </div>
 
-            <div className="form-row">
-              <div className="day form-row-item">
+            <div className="form-row-day-time">
+              <div className="day">
                 <label htmlFor="day">Day:</label>
                 <select
                   className="day"
@@ -357,31 +354,33 @@ function CreateCustomRoutineForm({ parent }) {
                   <option value="Sun.">Sun.</option>
                 </select>
               </div>
-              <div className="form-row-item">
-                <label htmlFor="startTime">Start Time:</label>
-                <input
-                  className="day"
-                  type="time"
-                  id="startTime"
-                  name="startTime"
-                  min="0:00"
-                  max="23:59"
-                  value={inputs.startTime}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="form-row-item">
-                <label htmlFor="endTime">End Time:</label>
-                <input
-                  className="day"
-                  type="time"
-                  id="endTime"
-                  name="endTime"
-                  min="0:00"
-                  max="23:59"
-                  value={inputs.endTime}
-                  onChange={handleChange}
-                />
+              <div className="time">
+                <div>
+                  <label htmlFor="startTime">Start Time:</label>
+                  <input
+                    className=""
+                    type="time"
+                    id="startTime"
+                    name="startTime"
+                    min="0:00"
+                    max="23:59"
+                    value={inputs.startTime}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="endTime">End Time:</label>
+                  <input
+                    className="time"
+                    type="time"
+                    id="endTime"
+                    name="endTime"
+                    min="0:00"
+                    max="23:59"
+                    value={inputs.endTime}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
             </div>
             <div className="input-item">
@@ -452,7 +451,7 @@ function CreateCustomRoutineForm({ parent }) {
               <BackButton text="Cancel" classNames="btn-danger" />
             </div>
           </fieldset>
-        </StyledCreateClassForm>
+        </Form>
       </Card>
     </Fragment>
   );
