@@ -8,7 +8,7 @@ const LandingNavStyle = styled.nav`
   grid-template-columns: min-content 1fr max-content;
 
   .brand {
-    font-size: ${props => props.theme.fontSizes[4]}px;
+    font-size: 24px;
     font-family: "Dancing Script", cursive;
     padding-left: 1rem;
   }

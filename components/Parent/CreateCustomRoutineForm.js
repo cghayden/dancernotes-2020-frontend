@@ -51,7 +51,7 @@ const ChosenDancers = styled.ul`
   li {
     border-radius: ${props => props.theme.borderRadius};
     padding: 0.25rem 0.5rem;
-    margin-right: 1rem;
+    margin-left: 1rem;
     background-color: ${props => props.theme.teal6};
     color: white;
   }
@@ -79,8 +79,12 @@ function CreateCustomRoutineForm({ parent }) {
   const [showFileInput, toggleFileInput] = useState(false);
   const [musicForUpload, setMusicForUpload] = useState();
   const [musicData, setMusicData] = useState({});
-  const [dancers, setDancers] = useState([]);
-  const [dancerIds, setDancerIds] = useState([]);
+  const [dancers, setDancers] = useState(() =>
+    parent.dancers.length > 1 ? [] : [parent.dancers[0].firstName]
+  );
+  const [dancerIds, setDancerIds] = useState(() =>
+    parent.dancers.length > 1 ? [] : [parent.dancers[0].id]
+  );
 
   const [
     createCustomRoutine,
@@ -255,38 +259,38 @@ function CreateCustomRoutineForm({ parent }) {
           <fieldset disabled={loading} aria-busy={loading}>
             <h2>Create Your Own Routine</h2>
             <div className="input-item">
-              <label htmlFor="dancer">Dancer(s):*</label>
-              <div>
-                <ChosenDancers>
-                  {dancers.map(dancer => (
-                    <li>{dancer}</li>
-                  ))}
-                </ChosenDancers>
-              </div>
+              <ChosenDancers>
+                <label htmlFor="dancer">Dancer(s):*</label>
+                {dancers.map(dancer => (
+                  <li>{dancer}</li>
+                ))}
+              </ChosenDancers>
 
-              <select
-                id="dancer"
-                name="dancer"
-                value={""}
-                onChange={e => {
-                  // handleChange(e);
-                  handleSelectChange(e);
-                }}
-              >
-                <option default value={""} disabled>
-                  Dancer(s)...
-                </option>
-                {parent &&
-                  parent.dancers.map(dancer => (
-                    <option
-                      key={dancer.id}
-                      value={dancer.id}
-                      label={dancer.firstName}
-                    >
-                      {dancer.firstName}
-                    </option>
-                  ))}
-              </select>
+              {parent.dancers.length > 1 && (
+                <select
+                  id="dancer"
+                  name="dancer"
+                  value={""}
+                  onChange={e => {
+                    // handleChange(e);
+                    handleSelectChange(e);
+                  }}
+                >
+                  <option default value={""} disabled>
+                    Dancer(s)...
+                  </option>
+                  {parent &&
+                    parent.dancers.map(dancer => (
+                      <option
+                        key={dancer.id}
+                        value={dancer.id}
+                        label={dancer.firstName}
+                      >
+                        {dancer.firstName}
+                      </option>
+                    ))}
+                </select>
+              )}
             </div>
             <div className="input-item">
               <label htmlFor="name">Name of Routine* </label>
