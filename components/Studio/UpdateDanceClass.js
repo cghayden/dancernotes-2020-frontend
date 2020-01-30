@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import Link from "next/link";
 import Router from "next/router";
-import { StyledCreateClassForm } from "../styles/Form";
+import { Form } from "../styles/Form";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 import DeleteDanceClass from "../DeleteDanceClass";
@@ -224,7 +224,7 @@ function UpdateDanceClass({ danceClass, studio }) {
           </Link>
         </div>
       </Modal>
-      <StyledCreateClassForm onSubmit={e => saveChanges(e)}>
+      <Form onSubmit={e => saveChanges(e)}>
         <h2>Update {danceClass.name}</h2>
         <fieldset disabled={loading} aria-busy={loading}>
           {/* <Error error={error} /> */}
@@ -468,7 +468,7 @@ function UpdateDanceClass({ danceClass, studio }) {
             </DeleteDanceClass>
           </div>
         </fieldset>
-      </StyledCreateClassForm>
+      </Form>
     </Fragment>
   );
 }

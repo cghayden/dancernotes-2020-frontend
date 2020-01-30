@@ -53,9 +53,11 @@ const Tab = styled.div`
       background: inherit;
       margin: 0;
       overflow: hidden;
-      /* text-overflow: ellipsis; */
       white-space: nowrap;
       width: 100%;
+      :hover {
+        color: ${props => props.theme.indigo9};
+      }
       :focus {
         outline: ${props => (props.active ? "none" : "auto")};
         background-color: ${props => props.theme.gray0};

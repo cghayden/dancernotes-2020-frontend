@@ -68,7 +68,7 @@ class SearchForStudio extends React.Component {
                         <input
                           {...getInputProps({
                             type: "search",
-                            placeholder: "Search For A Studio",
+                            placeholder: "Search...",
                             id: "search",
                             className: this.state.loading ? "loading" : "",
                             onChange: e => {

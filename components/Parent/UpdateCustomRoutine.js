@@ -2,10 +2,11 @@ import React, { Fragment, useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import Link from "next/link";
-import { StyledCreateClassForm } from "../styles/Form";
+import Form from "../styles/Form";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 import BackButton from "../BackButton";
+import Card from "../styles/Card";
 import DeleteDanceClass from "../DeleteDanceClass";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
 import { ALL_Rs, PARENT_USER_QUERY } from "./Queries";
@@ -23,8 +24,6 @@ const UPDATE_CUSTOM_ROUTINE = gql`
     $notes: String
     $music: String
     $musicId: String
-    $dancer: ID
-    $studio: ID
   ) {
     updateCustomRoutine(
       id: $id
@@ -38,8 +37,6 @@ const UPDATE_CUSTOM_ROUTINE = gql`
       notes: $notes
       music: $music
       musicId: $musicId
-      dancer: $dancer
-      studio: $studio
     ) {
       id
       name
@@ -214,190 +211,170 @@ function UpdateCustomRoutine({ dance, parent }) {
           </Link>
         </div>
       </Modal>
-      <StyledCreateClassForm
-        method="post"
-        onSubmit={async e => await saveChanges(e, updateCustomRoutine)}
-      >
-        <fieldset disabled={loading} aria-busy={loading}>
-          <h2>Update {dance.name}</h2>
-          {/* <Error error={errorUpdatingRoutine} /> */}
-          <div className="input-item">
-            <label htmlFor="name">Name*</label>
-            <input
-              required
-              pattern="(?!^ +$)^.+$"
-              type="text"
-              name="name"
-              defaultValue={dance.name}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-item">
-            <label htmlFor="dancer">Dancer*</label>
-            <select
-              id="dancer"
-              name="dancer"
-              defaultValue={dance.dancer}
-              onChange={handleChange}
-            >
-              {/* <option default defaultValue={""} disabled>
-                Dancer...
-              </option> */}
-              {parent.dancers.map(dancer => (
-                <option key={dancer.id} value={dancer.id}>
-                  {dancer.firstName}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="input-item">
-            <label htmlFor="studio">Studio:</label>
-            <select
-              id="studio"
-              name="studio"
-              value={inputs.studio}
-              defaultValue={dance.studio ? dance.studio : "None"}
-              onChange={handleChange}
-            >
-              {/* <option
-                default
-                alue={dance.studio ? dance.studio : "None"}
-              >
-                {dance.studio ? dance.studio : "None"}
-              </option> */}
-              {parent.studios.map(studio => (
-                <option key={studio.id} value={studio.id}>
-                  {studio.studioName}
-                </option>
-              ))}
-              <option value={"None"}>None</option>
-            </select>
-          </div>
-
-          <div className="form-row">
-            <div className="day form-row-item">
-              <label htmlFor="day">Day:</label>
-              <select
-                className="day"
-                id="day"
-                name="day"
-                defaultValue={dance.day}
-                onChange={handleChange}
-              >
-                <option default defaultValue={""} disabled>
-                  Day...
-                </option>
-                <option defaultValue="Mon.">Mon.</option>
-                <option defaultValue="Tue.">Tue.</option>
-                <option defaultValue="Wed.">Wed.</option>
-                <option defaultValue="Thur.">Thur.</option>
-                <option defaultValue="Fri.">Fri.</option>
-                <option defaultValue="Sat.">Sat.</option>
-                <option defaultValue="Sun.">Sun.</option>
-              </select>
-            </div>
-            <div className="form-row-item">
-              <label htmlFor="startTime">Start Time:</label>
-              <input
-                className="day"
-                type="time"
-                id="startTime"
-                name="startTime"
-                min="0:00"
-                max="23:59"
-                defaultValue={dance.startTime}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-row-item">
-              <label htmlFor="endTime">End Time:</label>
-              <input
-                className="day"
-                type="time"
-                id="endTime"
-                name="endTime"
-                min="0:00"
-                max="23:59"
-                defaultValue={dance.endTime}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div className="input-item">
-            <label htmlFor="performanceName">Performance Name</label>
-            <input
-              type="text"
-              name="performanceName"
-              placeholder="Performance Name, or Name of Song"
-              defaultValue={dance.performanceName}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="input-item">
-            <label htmlFor="tights">Tights</label>
-            <input
-              type="text"
-              name="tights"
-              placeholder="The style of tights required..."
-              defaultValue={dance.tights}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="input-item">
-            <label htmlFor="shoes">Shoes</label>
-            <input
-              type="text"
-              name="shoes"
-              placeholder="The style of shoes required..."
-              defaultValue={dance.shoes}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-item">
-            <label htmlFor="notes">Notes</label>
-            <textarea
-              id="notes"
-              type="text"
-              name="notes"
-              rows="5"
-              defaultValue={dance.notes}
-              onChange={handleChange}
-            />
-          </div>
-          <button
-            type="button"
-            className="btn-action-primary"
-            onClick={() => toggleFileInput(true)}
-          >
-            Add/Change Music
-          </button>
-          {showFileInput && (
+      <Card>
+        <Form
+          method="post"
+          onSubmit={async e => await saveChanges(e, updateCustomRoutine)}
+        >
+          <fieldset disabled={loading} aria-busy={loading}>
+            <h2>Update {dance.name}</h2>
+            {/* <Error error={errorUpdatingRoutine} /> */}
             <div className="input-item">
-              <label htmlFor="audioFile">Upload music for this dance...</label>
+              <label htmlFor="name">Name</label>
               <input
-                type="file"
-                id="audioFile"
-                name="audioFile"
-                placeholder="Upload music for this dance"
-                onChange={setSongtoState}
+                pattern="(?!^ +$)^.+$"
+                type="text"
+                name="name"
+                defaultValue={dance.name}
+                onChange={handleChange}
               />
             </div>
-          )}
-          <div className="form-footer">
+            {/* <div className="input-item">
+      <label htmlFor="studio">Studio:</label>
+      <select
+      id="studio"
+      name="studio"
+      value={inputs.studio}
+      defaultValue={dance.studio ? dance.studio : "None"}
+      onChange={handleChange}
+      >
+      {parent.studios.map(studio => (
+      <option key={studio.id} value={studio.id}>
+      {studio.studioName}
+      </option>
+      ))}
+      <option value={"None"}>None</option>
+      </select>
+      </div> */}
+
+            <div className="form-row-day-time">
+              <div className="day">
+                <label htmlFor="day">Day:</label>
+                <select
+                  className="day"
+                  id="day"
+                  name="day"
+                  defaultValue={dance.day}
+                  onChange={handleChange}
+                >
+                  <option default defaultValue={""} disabled>
+                    Day...
+                  </option>
+                  <option defaultValue="Mon.">Mon.</option>
+                  <option defaultValue="Tue.">Tue.</option>
+                  <option defaultValue="Wed.">Wed.</option>
+                  <option defaultValue="Thur.">Thur.</option>
+                  <option defaultValue="Fri.">Fri.</option>
+                  <option defaultValue="Sat.">Sat.</option>
+                  <option defaultValue="Sun.">Sun.</option>
+                </select>
+              </div>
+              <div className="time">
+                <div>
+                  <label htmlFor="startTime">Start Time:</label>
+                  <input
+                    type="time"
+                    id="startTime"
+                    name="startTime"
+                    min="0:00"
+                    max="23:59"
+                    defaultValue={dance.startTime}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="endTime">End Time:</label>
+                  <input
+                    type="time"
+                    id="endTime"
+                    name="endTime"
+                    min="0:00"
+                    max="23:59"
+                    defaultValue={dance.endTime}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="input-item">
+              <label htmlFor="performanceName">Performance Name</label>
+              <input
+                type="text"
+                name="performanceName"
+                placeholder="Performance Name, or Name of Song"
+                defaultValue={dance.performanceName}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="input-item">
+              <label htmlFor="tights">Tights</label>
+              <input
+                type="text"
+                name="tights"
+                placeholder="The style of tights required..."
+                defaultValue={dance.tights}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="input-item">
+              <label htmlFor="shoes">Shoes</label>
+              <input
+                type="text"
+                name="shoes"
+                placeholder="The style of shoes required..."
+                defaultValue={dance.shoes}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input-item">
+              <label htmlFor="notes">Notes</label>
+              <textarea
+                id="notes"
+                type="text"
+                name="notes"
+                rows="5"
+                defaultValue={dance.notes}
+                onChange={handleChange}
+              />
+            </div>
             <button
-              type="submit"
-              disabled={disableButton || updatingRoutine || loadingSong}
+              type="button"
+              className="btn-action-primary"
+              onClick={() => toggleFileInput(true)}
             >
-              Sav
-              {updatingRoutine ? "ing " : "e "} Changes
+              Add/Change Music
             </button>
-            <BackButton text="Cancel" classNames="btn-danger" />{" "}
-          </div>
-        </fieldset>
-      </StyledCreateClassForm>
+            {showFileInput && (
+              <div className="input-item">
+                <label htmlFor="audioFile">
+                  Upload music for this dance...
+                </label>
+                <input
+                  type="file"
+                  id="audioFile"
+                  name="audioFile"
+                  placeholder="Upload music for this dance"
+                  onChange={setSongtoState}
+                />
+              </div>
+            )}
+            <div className="form-footer">
+              <button
+                type="submit"
+                disabled={disableButton || updatingRoutine || loadingSong}
+              >
+                Sav
+                {updatingRoutine ? "ing " : "e "} Changes
+              </button>
+              <BackButton text="Cancel" classNames="btn-danger" />{" "}
+            </div>
+          </fieldset>
+        </Form>
+      </Card>
     </Fragment>
   );
 }

@@ -1,11 +1,13 @@
 import React, { useState, Fragment } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
+import styled from "styled-components";
+
 import Link from "next/link";
 import { ALL_Rs, PARENT_USER_QUERY } from "./Queries";
 import { UPDATE_CUSTOM_ROUTINE } from "./UpdateCustomRoutine";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
-import { StyledCreateClassForm } from "../styles/Form";
+import Form from "../styles/Form";
 import Card from "../styles/Card";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
@@ -22,7 +24,7 @@ const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
     $shoes: String
     $tights: String
     $notes: String
-    $dancer: ID!
+    $dancerIds: [ID!]!
     $studio: ID!
   ) {
     createCustomRoutine(
@@ -34,12 +36,24 @@ const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
       shoes: $shoes
       tights: $tights
       notes: $notes
-      dancer: $dancer
+      dancerIds: $dancerIds
       studio: $studio
     ) {
       name
       id
     }
+  }
+`;
+
+const ChosenDancers = styled.ul`
+  margin-bottom: 0.5rem;
+  display: flex;
+  li {
+    border-radius: ${props => props.theme.borderRadius};
+    padding: 0.25rem 0.5rem;
+    margin-left: 1rem;
+    background-color: ${props => props.theme.teal6};
+    color: white;
   }
 `;
 
@@ -65,6 +79,12 @@ function CreateCustomRoutineForm({ parent }) {
   const [showFileInput, toggleFileInput] = useState(false);
   const [musicForUpload, setMusicForUpload] = useState();
   const [musicData, setMusicData] = useState({});
+  const [dancers, setDancers] = useState(() =>
+    parent.dancers.length > 1 ? [] : [parent.dancers[0].firstName]
+  );
+  const [dancerIds, setDancerIds] = useState(() =>
+    parent.dancers.length > 1 ? [] : [parent.dancers[0].id]
+  );
 
   const [
     createCustomRoutine,
@@ -74,7 +94,7 @@ function CreateCustomRoutineForm({ parent }) {
       loading: creatingCustomRoutine
     }
   ] = useMutation(CREATE_CUSTOM_ROUTINE_MUTATION, {
-    variables: { ...inputs },
+    variables: { ...inputs, dancerIds: dancerIds },
     onCompleted: () => {
       resetForm();
     },
@@ -177,6 +197,27 @@ function CreateCustomRoutineForm({ parent }) {
     setStatus();
   }
 
+  function handleSelectChange(e) {
+    const dancerName = e.target.selectedOptions[0].label;
+    const dancerId = e.target.selectedOptions[0].value;
+    updateInputs({
+      ...inputs,
+      dancer: dancerName
+    });
+    // if dancername is in dancers array, remove it
+    if (dancers.indexOf(dancerName) !== -1) {
+      const newDancers = [...dancers];
+      const newDancerIds = [...dancerIds];
+      newDancers.splice(dancers.indexOf(dancerName), 1);
+      newDancerIds.splice(dancerIds.indexOf(dancerId), 1);
+      setDancers(newDancers);
+      setDancerIds(newDancerIds);
+    } else {
+      setDancers([...dancers, dancerName]);
+      setDancerIds([...dancerIds, dancerId]);
+    }
+  }
+
   return (
     <Fragment>
       <Modal open={showModal} setOpen={toggleModal}>
@@ -214,34 +255,42 @@ function CreateCustomRoutineForm({ parent }) {
         </div>
       </Modal>
       <Card>
-        <StyledCreateClassForm
-          method="post"
-          onSubmit={async e => await saveNewCustomRoutine(e)}
-        >
+        <Form method="post" onSubmit={async e => await saveNewCustomRoutine(e)}>
           <fieldset disabled={loading} aria-busy={loading}>
             <h2>Create Your Own Routine</h2>
             <div className="input-item">
-              <label htmlFor="dancer">
-                Dancer*
-                <p>(You may add other dancers later.)</p>
-              </label>
-              <select
-                required
-                id="dancer"
-                name="dancer"
-                value={inputs.dancer}
-                onChange={handleChange}
-              >
-                <option default value={""} disabled>
-                  Dancer...
-                </option>
-                {parent &&
-                  parent.dancers.map(dancer => (
-                    <option key={dancer.id} value={dancer.id}>
-                      {dancer.firstName}
-                    </option>
-                  ))}
-              </select>
+              <ChosenDancers>
+                <label htmlFor="dancer">Dancer(s):*</label>
+                {dancers.map(dancer => (
+                  <li>{dancer}</li>
+                ))}
+              </ChosenDancers>
+
+              {parent.dancers.length > 1 && (
+                <select
+                  id="dancer"
+                  name="dancer"
+                  value={""}
+                  onChange={e => {
+                    // handleChange(e);
+                    handleSelectChange(e);
+                  }}
+                >
+                  <option default value={""} disabled>
+                    Dancer(s)...
+                  </option>
+                  {parent &&
+                    parent.dancers.map(dancer => (
+                      <option
+                        key={dancer.id}
+                        value={dancer.id}
+                        label={dancer.firstName}
+                      >
+                        {dancer.firstName}
+                      </option>
+                    ))}
+                </select>
+              )}
             </div>
             <div className="input-item">
               <label htmlFor="name">Name of Routine* </label>
@@ -287,8 +336,8 @@ function CreateCustomRoutineForm({ parent }) {
               </select>
             </div>
 
-            <div className="form-row">
-              <div className="day form-row-item">
+            <div className="form-row-day-time">
+              <div className="day">
                 <label htmlFor="day">Day:</label>
                 <select
                   className="day"
@@ -309,31 +358,33 @@ function CreateCustomRoutineForm({ parent }) {
                   <option value="Sun.">Sun.</option>
                 </select>
               </div>
-              <div className="form-row-item">
-                <label htmlFor="startTime">Start Time:</label>
-                <input
-                  className="day"
-                  type="time"
-                  id="startTime"
-                  name="startTime"
-                  min="0:00"
-                  max="23:59"
-                  value={inputs.startTime}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="form-row-item">
-                <label htmlFor="endTime">End Time:</label>
-                <input
-                  className="day"
-                  type="time"
-                  id="endTime"
-                  name="endTime"
-                  min="0:00"
-                  max="23:59"
-                  value={inputs.endTime}
-                  onChange={handleChange}
-                />
+              <div className="time">
+                <div>
+                  <label htmlFor="startTime">Start Time:</label>
+                  <input
+                    className=""
+                    type="time"
+                    id="startTime"
+                    name="startTime"
+                    min="0:00"
+                    max="23:59"
+                    value={inputs.startTime}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="endTime">End Time:</label>
+                  <input
+                    className="time"
+                    type="time"
+                    id="endTime"
+                    name="endTime"
+                    min="0:00"
+                    max="23:59"
+                    value={inputs.endTime}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
             </div>
             <div className="input-item">
@@ -404,7 +455,7 @@ function CreateCustomRoutineForm({ parent }) {
               <BackButton text="Cancel" classNames="btn-danger" />
             </div>
           </fieldset>
-        </StyledCreateClassForm>
+        </Form>
       </Card>
     </Fragment>
   );
