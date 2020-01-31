@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import EventsFilter from "./EventsFilter";
 import EventsDisplay from "./EventsDisplay";
-const EventsContent = () => {
+
+const EventsContent = ({ events, allRoutines }) => {
   const [eventFilter, setFilter] = useState({
-    competitions: true,
-    conventions: false,
-    rehearsals: false,
+    competition: true,
+    convention: false,
+    rehearsal: false,
     recital: false
   });
   return (
@@ -16,6 +17,8 @@ const EventsContent = () => {
         activeEvents={Object.keys(eventFilter).filter(
           eventCategory => eventFilter[eventCategory]
         )}
+        events={events}
+        allRoutines={allRoutines}
       />
     </>
   );

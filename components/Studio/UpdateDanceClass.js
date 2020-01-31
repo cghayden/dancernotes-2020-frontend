@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import Link from "next/link";
 import Router from "next/router";
-import { Form } from "../styles/Form";
+import Form from "../styles/Form";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 import DeleteDanceClass from "../DeleteDanceClass";

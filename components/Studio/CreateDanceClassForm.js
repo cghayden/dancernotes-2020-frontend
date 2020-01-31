@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ALL_DANCE_CLASSES_QUERY } from "./Queries";
 import { UPDATE_DANCECLASS_MUTATION } from "./UpdateDanceClass";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
-import { Form } from "../styles/Form";
+import Form from "../styles/Form";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 
@@ -215,10 +215,7 @@ function CreateDanceClass({ studio }) {
           </Link>
         </div>
       </Modal>
-      <Form
-        method="post"
-        onSubmit={async e => await saveNewDanceClass(e)}
-      >
+      <Form method="post" onSubmit={async e => await saveNewDanceClass(e)}>
         <fieldset disabled={loading} aria-busy={loading}>
           <legend>Add A New Dance Class To Your Schedule</legend>
           <Link href="configureClassCategories">

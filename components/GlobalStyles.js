@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${theme.background};
     margin: 0;
     line-height: 1.25;
-    font-family: "Open Sans",'source-sans-pro';
+    font-family: "Source Sans Pro", sans-serif;
     font-weight: 400;
     color: ${theme.blackText};
   }
