@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import Link from "next/link";
 import Router from "next/router";
-import { Form } from "../styles/Form";
+import Form from "../styles/Form";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 import DeleteDanceClass from "../DeleteDanceClass";
@@ -15,8 +15,8 @@ const UPDATE_DANCECLASS_MUTATION = gql`
     $id: ID!
     $name: String
     $style: String
-    $level: String
-    $division: String
+    $competitiveLevel: String
+    $ageDivision: String
     $day: String
     $startTime: String
     $endTime: String
@@ -33,8 +33,8 @@ const UPDATE_DANCECLASS_MUTATION = gql`
       id: $id
       name: $name
       style: $style
-      level: $level
-      division: $division
+      competitiveLevel: $competitiveLevel
+      ageDivision: $ageDivision
       day: $day
       startTime: $startTime
       endTime: $endTime
@@ -352,35 +352,35 @@ function UpdateDanceClass({ danceClass, studio }) {
               </select>
             </div>
             <div className="form-row-item">
-              <label htmlFor="level">Level: </label>
+              <label htmlFor="competitiveLevel">competitiveLevel: </label>
 
               <select
                 required
-                id="level"
-                name="level"
-                defaultValue={danceClass.level}
+                id="competitiveLevel"
+                name="competitiveLevel"
+                defaultValue={danceClass.competitiveLevel}
                 onChange={handleChange}
               >
-                {studio.levels.map(level => (
-                  <option key={level} value={level}>
-                    {level}
+                {studio.competitiveLevels.map(competitiveLevel => (
+                  <option key={competitiveLevel} value={competitiveLevel}>
+                    {competitiveLevel}
                   </option>
                 ))}
               </select>
             </div>
             <div className="form-row-item">
-              <label htmlFor="division">Division: </label>
+              <label htmlFor="ageDivision">ageDivision: </label>
 
               <select
                 required
-                id="division"
-                name="division"
-                defaultValue={danceClass.division}
+                id="ageDivision"
+                name="ageDivision"
+                defaultValue={danceClass.ageDivision}
                 onChange={handleChange}
               >
-                {studio.divisions.map(division => (
-                  <option key={division} value={division}>
-                    {division}
+                {studio.ageDivisions.map(ageDivision => (
+                  <option key={ageDivision} value={ageDivision}>
+                    {ageDivision}
                   </option>
                 ))}
               </select>

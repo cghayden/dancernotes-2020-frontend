@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${theme.background};
     margin: 0;
     line-height: 1.25;
-    font-family: "Open Sans",'source-sans-pro';
+    font-family: "Source Sans Pro", sans-serif;
     font-weight: 400;
     color: ${theme.blackText};
   }
@@ -46,6 +46,11 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.05rem;
   }
 
+
+  input[type='checkbox']{
+  width: auto;
+  margin-right: .5rem;
+}
   a, button {
   padding: .5rem 1rem;
   margin: .5rem;

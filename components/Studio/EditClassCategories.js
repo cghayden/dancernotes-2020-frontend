@@ -29,7 +29,7 @@ const StyledClassCategories = styled.div`
 const EditClassCategories = () => {
   const { data, loading, error } = useQuery(CATEGORIES_QUERY);
   const studioCategories = data ? data.studioCategories : {};
-  const categories = ["styles", "levels", "divisions"];
+  const categories = ["styles", "competitiveLevels", "ageDivisions"];
   if (loading) return <h1>5, 6, 7, 8...</h1>;
   if (error) return <Error error={error} />;
   return (
@@ -45,5 +45,4 @@ const EditClassCategories = () => {
   );
 };
 
-export { CATEGORIES_QUERY };
 export default EditClassCategories;

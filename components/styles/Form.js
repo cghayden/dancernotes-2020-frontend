@@ -64,10 +64,7 @@ const Form = styled.form`
     }
   }
 
-  input[type='checkbox']{
-  width: auto;
-  margin-right: .5rem;
-}
+ 
 option {
   background: inherit;
 }

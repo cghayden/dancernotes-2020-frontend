@@ -42,13 +42,23 @@ const CategoryFilter = ({ setFilter, filter, category, choices }) => {
     setFilter(filter =>
       Object.hasOwnProperty([category])
         ? { ...filter, [category]: newChoices }
-        : { ...filter },
+        : { ...filter }
     );
+  }
+
+  function formatHeading(category) {
+    if (category === "competitiveLevel") {
+      return "Competitive Level";
+    }
+    if (category === "ageDivision") {
+      return "Age Group";
+    }
+    return category;
   }
 
   return (
     <CheckboxDiv>
-      <h4 className="category-heading">{category}</h4>
+      <h4 className="category-heading">{formatHeading(category)}</h4>
       <ul>
         {choices &&
           choices.map(choice => {

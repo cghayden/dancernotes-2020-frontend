@@ -7,9 +7,15 @@ const Meta = () => (
     <link rel="shortcut icon" href="/static/dnIcon.png" />
     <link rel="stylesheet" href="https://use.typekit.net/gkh6amt.css" />
     <link
-      href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans+Dancing+Script"
+      href="https://fonts.googleapis.com/css?family=Open+Sans|Dancing+Script"
       rel="stylesheet"
     />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat|Source+Sans+Pro&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
     {/* in progress is red loading abr across top of page */}
     <title>DancerNotes</title>
