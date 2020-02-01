@@ -14,7 +14,7 @@ Router.onRouteChangeError = () => {
   NProgress.done();
 };
 
-const MobileNav = props => {
+const MobileNav = () => {
   return (
     <>
       <NavStyles>
@@ -27,9 +27,6 @@ const MobileNav = props => {
         <Link href="/parent/shop">
           <a>Shop</a>
         </Link>
-        <Link href="/parent/account/dancers">
-          <a>Dancers</a>
-        </Link>
         <Link href="/parent/account/profile">
           <a>Account</a>
         </Link>
@@ -39,16 +36,3 @@ const MobileNav = props => {
 };
 
 export default MobileNav;
-
-{
-  /* <Link href="home">
-          <a>Routines</a>
-        </Link>
-        <Link href="competitions">
-          <a>Comps</a>
-        </Link>
-
-        <Link href="#">
-          <a>Discover</a>
-        </Link> */
-}

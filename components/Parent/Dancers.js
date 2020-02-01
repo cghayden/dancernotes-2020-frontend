@@ -1,10 +1,7 @@
 import React from "react";
-import styled from "styled-components";
 import Card from "../../components/styles/Card";
 import DancerCard from "../../components/Parent/DancerCard";
-import Link from "next/link";
 import CreateDancerForm from "./CreateDancerForm";
-const WelcomeMessage = styled(Card)``;
 
 const Dancers = ({ hasDancers, dancers }) => {
   // if has dancers, show dancers cards
@@ -22,7 +19,7 @@ const Dancers = ({ hasDancers, dancers }) => {
   if (!hasDancers) {
     return (
       <>
-        <WelcomeMessage>
+        <Card>
           <p>
             Welcome to Dancernotes! To begin, use the form below to add a Dancer
             to your account.
@@ -30,7 +27,7 @@ const Dancers = ({ hasDancers, dancers }) => {
           {/* <Link href="/parent/account/addDancer">
       <a>Add a Dancer</a>
       </Link> */}
-        </WelcomeMessage>
+        </Card>
         <CreateDancerForm />
       </>
     );

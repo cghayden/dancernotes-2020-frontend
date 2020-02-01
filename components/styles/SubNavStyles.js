@@ -8,7 +8,7 @@ const SubNavStyles = styled.nav`
   background: ${props => props.theme.background};
   padding: 0.5rem;
   box-shadow: ${props => props.theme.dropShadow1};
-  height: 5rem;
+  /* height: 5rem; */
   position: fixed;
   top: ${props => props.theme.mobileStatusBarHeight};
   left: 0;
@@ -33,7 +33,7 @@ const SubNavStyles = styled.nav`
   ul {
     display: flex;
     justify-content: center;
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 0.02rem;
   }
 

@@ -47,6 +47,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   a, button {
+    display:inline-block;
   padding: .5rem 1rem;
   margin: .5rem;
   border: none;
