@@ -8,7 +8,7 @@ import { ALL_Rs } from "./Queries";
 import Error from "../Error";
 import { ParentDisplayConsumer } from "../../components/ParentDisplayProvider";
 import SearchForStudio from "../SearchForStudio";
-
+import Card from "../../components/styles/Card";
 //query all dances where ids of parents dancers are in the ids of enrolled dancers for the dance.  On the server, filter out all dancers not belonging to this parent.
 const NoRoutinesDiv = styled.div`
   padding-top: 5rem;
@@ -35,20 +35,22 @@ class RoutinesDisplay extends Component {
                 const allRs = data ? data.allRs : {};
                 if (allRs.length < 1) {
                   return (
-                    <NoRoutinesDiv>
-                      <p>You have no routines to display</p>
-                      <Link href="parent/createCustomRoutine">
-                        <a className="btn-action-primary">
-                          Create Your Own Routine
-                        </a>
-                      </Link>
-                      <p>Find a Studio to Browse or Request Notes</p>
-                      <SearchForStudio
-                        // setBrowsingDancer={this.props.dancerIds[0]}
-                        // dancerName={this.props.dancers[0].firstName}
-                        dancerId={this.props.dancerIds[0]}
-                      />
-                    </NoRoutinesDiv>
+                    <Card>
+                      <div className="card__section">
+                        <p>You have no routines to display</p>
+                      </div>
+                      <div className="card__section">
+                        <Link href="parent/createCustomRoutine">
+                          <a className="btn-action-primary">Create a Routine</a>
+                        </Link>
+                      </div>
+                      <div className="card__section"> - OR - </div>
+
+                      <div className="card__section">
+                        <p>Find A Studio to Browse or Enroll</p>
+                        <SearchForStudio dancerId={this.props.dancerIds[0]} />
+                      </div>
+                    </Card>
                   );
                 }
 

@@ -52,6 +52,7 @@ const GlobalStyle = createGlobalStyle`
   margin-right: .5rem;
 }
   a, button {
+    display:inline-block;
   padding: .5rem 1rem;
   margin: .5rem;
   border: none;
