@@ -1,4 +1,3 @@
-import React from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 
@@ -9,8 +8,8 @@ const STUDIO_USER_QUERY = gql`
       email
       studioName
       styles
-      levels
-      divisions
+      competitiveLevels
+      ageDivisions
       danceClasses {
         id
         name
@@ -20,8 +19,8 @@ const STUDIO_USER_QUERY = gql`
         name
       }
       dancers {
-        firstName
         id
+        firstName
       }
     }
   }

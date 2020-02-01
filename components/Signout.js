@@ -19,13 +19,7 @@ const Signout = () => (
     }}
   >
     {(signout, { client }) => {
-      return (
-        <button
-          onClick={async () => await signout().then(() => client.resetStore())}
-        >
-          Sign Out
-        </button>
-      );
+      return <button onClick={async () => await signout()}>Sign Out</button>;
     }}
   </Mutation>
 );

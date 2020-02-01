@@ -13,8 +13,8 @@ const SINGLE_DANCE_QUERY = gql`
       id
       name
       style
-      level
-      division
+      competitiveLevel
+      ageDivision
       day
       startTime
       endTime

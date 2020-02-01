@@ -1,14 +1,13 @@
 import React, { useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import DanceClassInquiryCard from "./DanceClassInquiryCard";
-import SoloDuoTrioSubscribe from "./SoloDuoTrioSubscribe";
-import LinkDancerToStudioButton from "./LinkDancerToStudioButton";
+// import SoloDuoTrioSubscribe from "./SoloDuoTrioSubscribe";
+// import LinkDancerToStudioButton from "./LinkDancerToStudioButton";
 import styled from "styled-components";
 import { PARENT_USER_QUERY } from "./Queries";
 
 import { ActiveFilters } from "./BrowseClassFilter";
 import { DANCER_QUERY } from "./Queries";
-import { REQUEST_STUDIO_ACCESS } from "./Mutations";
 import { RegistrationContext } from "./RegistrationContext";
 import Cookies from "js-cookie";
 import Card from "../styles/Card";
@@ -33,38 +32,30 @@ const DancerTabs = styled(Card)`
   background: transparent;
 `;
 const Tab = styled.div`
-    width: auto;
-    max-width: 150px;
-    min-width: 50px;
-    border-radius: 5px 5px 0 0;
-    margin: 0 1px 0 0;
-    color: ${props =>
-      props.active ? props.theme.highlightedText : props.theme.blackText};
-    /* border-style: solid;
-    border-color: ${props =>
-      props.active ? props.theme.gray0 : "transparent"}; */
-    /* border-width: ${props => (props.active ? `2px 2px 0 2px` : `0`)}; */
-    background-color: ${props =>
-      props.active ? props.theme.gray0 : props.theme.gray1};
-    /* :hover {
-      background-color: ${props => props.theme.gray1};
-    } */
-    button {
-      background: inherit;
-      margin: 0;
-      overflow: hidden;
-      white-space: nowrap;
-      width: 100%;
-      :hover {
-        color: ${props => props.theme.indigo9};
-      }
-      :focus {
-        outline: ${props => (props.active ? "none" : "auto")};
-        background-color: ${props => props.theme.gray0};
-        /* color: ${props => (props.active ? "inherit" : props.theme.teal9)}; */
-      }
+  width: auto;
+  max-width: 150px;
+  min-width: 50px;
+  border-radius: 5px 5px 0 0;
+  margin: 0 1px 0 0;
+  color: ${props =>
+    props.active ? props.theme.highlightedText : props.theme.blackText};
+  background-color: ${props =>
+    props.active ? props.theme.gray0 : props.theme.gray1};
+  button {
+    background: inherit;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    :hover {
+      color: ${props => props.theme.indigo9};
     }
-  `;
+    :focus {
+      outline: ${props => (props.active ? "none" : "auto")};
+      background-color: ${props => props.theme.gray0};
+    }
+  }
+`;
 
 const BrowsingHeader = styled.div`
   width: 90%;
@@ -90,7 +81,6 @@ function BrowseStudioClasses({ classFilter, studio }) {
 
   //get browsing dancer from cookies so it will still be available if page is refreshed
   const activeDancerId = Cookies.get("browsingDancerId");
-  // const activeDancerName = Cookies.get("browsingDancerName");
 
   const { data: parentData } = useQuery(PARENT_USER_QUERY);
   const parentUser = parentData ? parentData.parentUser : {};
@@ -122,8 +112,6 @@ function BrowseStudioClasses({ classFilter, studio }) {
 
   return (
     <>
-      <p>Browse for:</p>
-
       <DancerTabs>
         {parentUser.dancers &&
           parentUser.dancers.map(dancer => (
@@ -140,7 +128,6 @@ function BrowseStudioClasses({ classFilter, studio }) {
       <ClassListCard>
         <BrowsingHeader>
           <p>
-            {/* To register {activeDancerName} for classes, or manage classes he/she */}
             To register {dancer.firstName} for classes, or manage classes he/she
             is enrolled in or has requested, follow the links below.
           </p>
@@ -167,7 +154,6 @@ function BrowseStudioClasses({ classFilter, studio }) {
             return (
               <DanceClassInquiryCard
                 dancerName={dancer.firstName}
-                // dancerName={activeDancerName}
                 dance={dance}
                 dancerId={activeDancerId}
                 studioId={studio.id}

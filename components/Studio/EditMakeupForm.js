@@ -83,9 +83,9 @@ export default class EditMakeupForm extends Component {
                           onChange={this.handleChange}
                         >
                           {studioCategories &&
-                            studioCategories.levels.map(level => (
-                              <option key={level} value={level}>
-                                {level}
+                            studioCategories.competitiveLevels.map(competitiveLevel => (
+                              <option key={competitiveLevel} value={competitiveLevel}>
+                                {competitiveLevel}
                               </option>
                             ))}
                           <option value={"none"}>None at this time</option>

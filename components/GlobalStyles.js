@@ -46,6 +46,11 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.05rem;
   }
 
+
+  input[type='checkbox']{
+  width: auto;
+  margin-right: .5rem;
+}
   a, button {
   padding: .5rem 1rem;
   margin: .5rem;

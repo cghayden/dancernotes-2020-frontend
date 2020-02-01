@@ -6,8 +6,8 @@ const ALL_Rs = gql`
     allRs {
       id
       style
-      level
-      division
+      competitiveLevel
+      ageDivision
       name
       performanceName
       day
@@ -78,11 +78,6 @@ const PARENT_USER_QUERY = gql`
         studios {
           studioName
           id
-          events {
-            type
-            name
-            appliesTo
-          }
         }
         danceClasses {
           id
@@ -92,7 +87,6 @@ const PARENT_USER_QUERY = gql`
           }
         }
       }
-      accessRequests
     }
   }
 `;
@@ -134,6 +128,9 @@ const CUSTOM_ROUTINE_QUERY = gql`
       tights
       notes
       music
+      style
+      ageDivision
+      competitiveLevel
     }
   }
 `;

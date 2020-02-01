@@ -47,10 +47,10 @@ const CategoryFilter = ({ setFilter, filter, category, choices }) => {
   }
 
   function formatHeading(category) {
-    if (category === "level") {
+    if (category === "competitiveLevel") {
       return "Competitive Level";
     }
-    if (category === "division") {
+    if (category === "ageDivision") {
       return "Age Group";
     }
     return category;

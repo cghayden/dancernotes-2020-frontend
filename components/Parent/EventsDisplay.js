@@ -18,11 +18,11 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
   const allRoutineAttributes = ["all"];
   for (const routine of allRoutines) {
     allRoutineAttributes.push(routine.name.toLowerCase());
-    if (routine.level) {
-      allRoutineAttributes.push(routine.level.toLowerCase());
+    if (routine.competitiveLevel) {
+      allRoutineAttributes.push(routine.competitiveLevel.toLowerCase());
     }
-    if (routine.division) {
-      allRoutineAttributes.push(routine.division.toLowerCase());
+    if (routine.ageDivision) {
+      allRoutineAttributes.push(routine.ageDivision.toLowerCase());
     }
   }
   console.log("allRoutineAttributes:", allRoutineAttributes);

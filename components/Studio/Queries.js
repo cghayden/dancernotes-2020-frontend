@@ -6,8 +6,8 @@ const SINGLE_DANCE_QUERY = gql`
       id
       name
       style
-      level
-      division
+      competitiveLevel
+      ageDivision
       day
       startTime
       endTime
@@ -32,8 +32,8 @@ const CATEGORIES_QUERY = gql`
   query CATEGORIES_QUERY {
     studioCategories {
       styles
-      levels
-      divisions
+      competitiveLevels
+      ageDivisions
       makeupSets {
         name
         id
@@ -52,9 +52,9 @@ const ALL_DANCE_CLASSES_QUERY = gql`
       day
       startTime
       endTime
-      level
+      competitiveLevel
       style
-      division
+      ageDivision
       tights
       shoes
       notes
@@ -105,5 +105,5 @@ export {
   ALL_DANCE_CLASSES_QUERY,
   STUDIO_ALL_DANCERS_QUERY,
   SINGLE_DANCE_QUERY,
-  ENROLLMENT_REQUESTS_QUERY,
+  ENROLLMENT_REQUESTS_QUERY
 };

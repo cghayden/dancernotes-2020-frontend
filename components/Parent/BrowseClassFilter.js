@@ -85,7 +85,7 @@ const BrowseClassFilter = ({
   open,
   closeControls
 }) => {
-  const filterOptions = ["style", "level", "division", "day"];
+  const filterOptions = ["style", "competitiveLevel", "ageDivision", "day"];
   const days = ["Mon.", "Tue.", "Wed.", "Thur.", "Fri", "Sat.", "Sun."];
   const activeFilters = [].concat.apply([], Object.values(filter));
   const clearFilter = () => {

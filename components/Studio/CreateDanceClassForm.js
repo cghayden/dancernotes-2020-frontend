@@ -19,9 +19,9 @@ const CREATE_DANCE_CLASS_MUTATION = gql`
     $shoes: String
     $tights: String
     $notes: String
-    $level: String
+    $competitiveLevel: String
     $style: String
-    $division: String
+    $ageDivision: String
     $makeupSet: ID
     $size: String
   ) {
@@ -34,9 +34,9 @@ const CREATE_DANCE_CLASS_MUTATION = gql`
       shoes: $shoes
       tights: $tights
       notes: $notes
-      level: $level
+      competitiveLevel: $competitiveLevel
       style: $style
-      division: $division
+      ageDivision: $ageDivision
       makeupSet: $makeupSet
       size: $size
     ) {
@@ -53,8 +53,8 @@ const initialInputState = {
   startTime: "",
   endTime: "",
   style: "",
-  level: "",
-  division: "",
+  competitiveLevel: "",
+  ageDivision: "",
   performanceName: "",
   shoes: "",
   tights: "",
@@ -320,40 +320,40 @@ function CreateDanceClass({ studio }) {
             </select>
           </div>
           <div className="input-item">
-            <label htmlFor="level">Level: *</label>
+            <label htmlFor="competitiveLevel">competitiveLevel: *</label>
             <select
               required
-              id="level"
-              name="level"
-              value={inputs.level}
+              id="competitiveLevel"
+              name="competitiveLevel"
+              value={inputs.competitiveLevel}
               onChange={handleChange}
             >
               <option default disabled value={""}>
-                Level...
+                Competitive Level...
               </option>
               {studio &&
-                studio.levels.map(level => (
-                  <option key={level} value={level}>
-                    {level}
+                studio.competitiveLevels.map(competitiveLevel => (
+                  <option key={competitiveLevel} value={competitiveLevel}>
+                    {competitiveLevel}
                   </option>
                 ))}
             </select>
           </div>
           <div className="input-item">
-            <label htmlFor="division">Division:</label>
+            <label htmlFor="ageDivision">Age Division:</label>
             <select
-              id="division"
-              name="division"
-              value={inputs.division}
+              id="ageDivision"
+              name="ageDivision"
+              value={inputs.ageDivision}
               onChange={handleChange}
             >
               <option default disabled value={""}>
-                Division...
+                Age Division...
               </option>
               {studio &&
-                studio.divisions.map(division => (
-                  <option key={division} value={division}>
-                    {division}
+                studio.ageDivisions.map(ageDivision => (
+                  <option key={ageDivision} value={ageDivision}>
+                    {ageDivision}
                   </option>
                 ))}
             </select>

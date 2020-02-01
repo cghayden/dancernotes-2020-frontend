@@ -12,7 +12,7 @@ const STUDIO_CREATE_MAKEUP_QUERY = gql`
       email
       studioName
       styles
-      levels
+      competitiveLevels
       divisions
     }
   }
