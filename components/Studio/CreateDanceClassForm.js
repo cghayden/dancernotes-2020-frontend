@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ALL_DANCE_CLASSES_QUERY } from "./Queries";
 import { UPDATE_DANCECLASS_MUTATION } from "./UpdateDanceClass";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
-import { StyledCreateClassForm } from "../styles/Form";
+import Form from "../styles/Form";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 
@@ -19,9 +19,9 @@ const CREATE_DANCE_CLASS_MUTATION = gql`
     $shoes: String
     $tights: String
     $notes: String
-    $level: String
+    $competitiveLevel: String
     $style: String
-    $division: String
+    $ageDivision: String
     $makeupSet: ID
     $size: String
   ) {
@@ -34,9 +34,9 @@ const CREATE_DANCE_CLASS_MUTATION = gql`
       shoes: $shoes
       tights: $tights
       notes: $notes
-      level: $level
+      competitiveLevel: $competitiveLevel
       style: $style
-      division: $division
+      ageDivision: $ageDivision
       makeupSet: $makeupSet
       size: $size
     ) {
@@ -53,8 +53,8 @@ const initialInputState = {
   startTime: "",
   endTime: "",
   style: "",
-  level: "",
-  division: "",
+  competitiveLevel: "",
+  ageDivision: "",
   performanceName: "",
   shoes: "",
   tights: "",
@@ -215,10 +215,7 @@ function CreateDanceClass({ studio }) {
           </Link>
         </div>
       </Modal>
-      <StyledCreateClassForm
-        method="post"
-        onSubmit={async e => await saveNewDanceClass(e)}
-      >
+      <Form method="post" onSubmit={async e => await saveNewDanceClass(e)}>
         <fieldset disabled={loading} aria-busy={loading}>
           <legend>Add A New Dance Class To Your Schedule</legend>
           <Link href="configureClassCategories">
@@ -323,40 +320,40 @@ function CreateDanceClass({ studio }) {
             </select>
           </div>
           <div className="input-item">
-            <label htmlFor="level">Level: *</label>
+            <label htmlFor="competitiveLevel">competitiveLevel: *</label>
             <select
               required
-              id="level"
-              name="level"
-              value={inputs.level}
+              id="competitiveLevel"
+              name="competitiveLevel"
+              value={inputs.competitiveLevel}
               onChange={handleChange}
             >
               <option default disabled value={""}>
-                Level...
+                Competitive Level...
               </option>
               {studio &&
-                studio.levels.map(level => (
-                  <option key={level} value={level}>
-                    {level}
+                studio.competitiveLevels.map(competitiveLevel => (
+                  <option key={competitiveLevel} value={competitiveLevel}>
+                    {competitiveLevel}
                   </option>
                 ))}
             </select>
           </div>
           <div className="input-item">
-            <label htmlFor="division">Division:</label>
+            <label htmlFor="ageDivision">Age Division:</label>
             <select
-              id="division"
-              name="division"
-              value={inputs.division}
+              id="ageDivision"
+              name="ageDivision"
+              value={inputs.ageDivision}
               onChange={handleChange}
             >
               <option default disabled value={""}>
-                Division...
+                Age Division...
               </option>
               {studio &&
-                studio.divisions.map(division => (
-                  <option key={division} value={division}>
-                    {division}
+                studio.ageDivisions.map(ageDivision => (
+                  <option key={ageDivision} value={ageDivision}>
+                    {ageDivision}
                   </option>
                 ))}
             </select>
@@ -452,13 +449,13 @@ function CreateDanceClass({ studio }) {
             </button>
           </div>
         </fieldset>
-      </StyledCreateClassForm>
+      </Form>
     </Fragment>
   );
 }
 
 export default CreateDanceClass;
-export { StyledCreateClassForm };
+export { Form };
 
 // {inputs.showSuccessMessage && (
 //   <SuccessMessage

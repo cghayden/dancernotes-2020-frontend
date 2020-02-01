@@ -48,7 +48,7 @@ function StudioDanceDetails({ dance }) {
           <dt>divsion:</dt> <NoteContent>{dance.divsion}</NoteContent>
         </NoteItem>
         <NoteItem>
-          <dt>level:</dt> <NoteContent>{dance.level}</NoteContent>
+          <dt>competitiveLevel:</dt> <NoteContent>{dance.competitiveLevel}</NoteContent>
         </NoteItem>
         <NoteItem>
           <dt>Style:</dt> <NoteContent>{dance.style}</NoteContent>

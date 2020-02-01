@@ -4,8 +4,10 @@ import gql from "graphql-tag";
 const ALL_Rs = gql`
   query {
     allRs {
-      custom
       id
+      style
+      competitiveLevel
+      ageDivision
       name
       performanceName
       day
@@ -15,6 +17,7 @@ const ALL_Rs = gql`
       tights
       notes
       music
+      custom
       parentsNotes {
         note
         id
@@ -31,17 +34,17 @@ const ALL_Rs = gql`
   }
 `;
 
-const PARENTS_EVENTS_QUERY = gql`
+const PARENT_EVENTS_QUERY = gql`
   query {
-    parentUser {
+    parentEvents {
       id
-      studios {
+      name
+      appliesTo
+      date
+      type
+      studio {
         id
-        events {
-          name
-          type
-          appliesTo
-        }
+        studioName
       }
     }
   }
@@ -75,11 +78,6 @@ const PARENT_USER_QUERY = gql`
         studios {
           studioName
           id
-          events {
-            type
-            name
-            appliesTo
-          }
         }
         danceClasses {
           id
@@ -89,7 +87,6 @@ const PARENT_USER_QUERY = gql`
           }
         }
       }
-      accessRequests
     }
   }
 `;
@@ -131,6 +128,9 @@ const CUSTOM_ROUTINE_QUERY = gql`
       tights
       notes
       music
+      style
+      ageDivision
+      competitiveLevel
     }
   }
 `;
@@ -171,7 +171,7 @@ export {
   PARENT_USER_QUERY,
   DANCER_QUERY,
   ALL_Rs,
-  PARENTS_EVENTS_QUERY,
+  PARENT_EVENTS_QUERY,
   PARENTS_DANCERS,
   CUSTOM_ROUTINE_QUERY,
   STUDIOS_AND_DANCERS

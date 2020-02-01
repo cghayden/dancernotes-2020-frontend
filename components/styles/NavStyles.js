@@ -19,6 +19,8 @@ const NavStyles = styled.nav`
 
   a,
   button {
+    font-family: "Source Sans Pro", sans-serif;
+
     display: flex;
     align-items: center;
     margin: 0;

@@ -1,17 +1,28 @@
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
 import styled from "styled-components";
 
-const EventsFilterStyles = styled.div``;
+const EventCheckboxesDiv = styled.div`
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: left;
+`;
+
+const EventCheckbox = styled.div`
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  label {
+    padding-left: 0.5rem;
+  }
+`;
 
 function NotesSubNav({ eventFilter, setFilter }) {
-  // const { data, loading, error } = useQuery(PARENTS_DANCERS);
-  // const dancers = data && data.parentsDancers;
-
   return (
-    <EventsFilterStyles>
+    <EventCheckboxesDiv>
       {Object.keys(eventFilter).map(eventCategory => (
-        <div>
+        <EventCheckbox>
           <input
             type="checkbox"
             checked={eventFilter[eventCategory]}
@@ -25,10 +36,12 @@ function NotesSubNav({ eventFilter, setFilter }) {
               })
             }
           />
-          <label htmlFor={eventCategory}>{eventCategory}</label>
-        </div>
+          <label
+            htmlFor={eventCategory}
+          >{`${eventCategory.toUpperCase()}S`}</label>
+        </EventCheckbox>
       ))}
-    </EventsFilterStyles>
+    </EventCheckboxesDiv>
   );
 }
 export default NotesSubNav;

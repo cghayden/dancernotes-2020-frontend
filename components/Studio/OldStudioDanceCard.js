@@ -24,7 +24,7 @@ class StudioDanceCard extends Component {
             <Link
               href={{
                 pathname: "danceClass",
-                query: { id: dance.id },
+                query: { id: dance.id }
               }}
             >
               <EditLink onClick={() => console.log("switch view")}>
@@ -34,8 +34,8 @@ class StudioDanceCard extends Component {
           </div>
         </div>
         <div>
-          <p>Division: {dance.division}</p>
-          <p>Level: {dance.level}</p>
+          <p>ageDivision: {dance.ageDivision}</p>
+          <p>competitiveLevel: {dance.competitiveLevel}</p>
           <p>Style: {dance.style}</p>
           <p>Size: {dance.size}</p>
         </div>
@@ -48,7 +48,7 @@ class StudioDanceCard extends Component {
           <Link
             href={{
               pathname: "addDancers",
-              query: { id: dance.id },
+              query: { id: dance.id }
             }}
           >
             <button>Add / Remove Dancers</button>

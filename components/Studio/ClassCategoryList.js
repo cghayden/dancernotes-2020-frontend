@@ -3,7 +3,7 @@ import { Mutation } from "react-apollo";
 import styled from "styled-components";
 
 import { UPDATE_CATEGORY_MUTATION } from "../Mutations";
-import { CATEGORIES_QUERY } from "./EditClassCategories";
+import { CATEGORIES_QUERY } from "./Queries";
 import XIcon from "../Icons/X";
 //TODO - add optimistic return to add category to list
 
@@ -44,7 +44,7 @@ const EditCategoriesCardFooter = styled.div`
 
 export default class ClassCategoryList extends Component {
   state = {
-    newItem: "",
+    newItem: ""
   };
 
   handleInputChange = e => {
@@ -57,8 +57,8 @@ export default class ClassCategoryList extends Component {
     return await updateCategoryMutation({
       variables: {
         category: this.props.category,
-        items: newItems,
-      },
+        items: newItems
+      }
     })
       .then(() => this.setState({ newItem: "" }))
       .catch(err => {
@@ -68,23 +68,27 @@ export default class ClassCategoryList extends Component {
 
   deleteItemFromCategoryList = async (e, updateCategoryMutation) => {
     const newItems = this.props.currentItems.filter(
-      item => item !== e.target.value,
+      item => item !== e.target.value
     );
     return await updateCategoryMutation({
       variables: {
         category: this.props.category,
-        items: newItems,
-      },
+        items: newItems
+      }
     }).catch(err => {
       alert(err.message);
     });
   };
-
+  configure;
+  formatCategoryHeading = category => {
+    if (category === "styles") return "Styles";
+    if (category === "ageDivisions") return "Age Divisions";
+    if (category === "competitiveLevels") return "Competitive Levels";
+  };
   render() {
     const currentItems = this.props.currentItems;
-    const category =
-      this.props.category.charAt(0).toUpperCase() +
-      this.props.category.slice(1);
+    const category = this.formatCategoryHeading(this.props.category);
+    console.log("category:", category);
     const disabled = this.state.newItem === "" ? true : false;
     return (
       <Mutation
@@ -103,7 +107,7 @@ export default class ClassCategoryList extends Component {
                       onClick={e =>
                         this.deleteItemFromCategoryList(
                           e,
-                          updateStudioClassCategory,
+                          updateStudioClassCategory
                         )
                       }
                     >

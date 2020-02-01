@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Link from "next/link";
+import styled from "styled-components";
+
 import DanceCard from "./DanceCard";
 import { Query } from "react-apollo";
 import { ALL_Rs } from "./Queries";
@@ -8,7 +10,12 @@ import { ParentDisplayConsumer } from "../../components/ParentDisplayProvider";
 import SearchForStudio from "../SearchForStudio";
 import Card from "../../components/styles/Card";
 //query all dances where ids of parents dancers are in the ids of enrolled dancers for the dance.  On the server, filter out all dancers not belonging to this parent.
-
+const NoRoutinesDiv = styled.div`
+  padding-top: 5rem;
+  display: grid;
+  grid-gap: 20px;
+  justify-items: center;
+`;
 class RoutinesDisplay extends Component {
   render() {
     return (

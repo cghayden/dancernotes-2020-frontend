@@ -16,9 +16,9 @@ const BROWSE_STUDIO_CLASSES_QUERY = gql`
     studio(where: { id: $id }) {
       id
       studioName
-      levels
+      competitiveLevels
       styles
-      divisions
+      ageDivisions
       danceClasses {
         id
         name
@@ -26,8 +26,8 @@ const BROWSE_STUDIO_CLASSES_QUERY = gql`
         startTime
         endTime
         style
-        level
-        division
+        competitiveLevel
+        ageDivision
         size
         dancers {
           firstName

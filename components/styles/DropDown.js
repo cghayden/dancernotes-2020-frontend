@@ -9,14 +9,16 @@ const DropDown = styled.div`
 
 const DropDownItem = styled.div`
   border-bottom: 1px solid ${props => props.theme.gray1};
-  background: ${props => (props.highlighted ? "pink" : props.theme.gray2)};
+  background: ${props =>
+    props.highlighted ? props.theme.indigo0 : props.theme.gray0};
+  color: ${props => (props.highlighted ? props.theme.indigo8 : "inherit")};
   padding: 1rem;
   transition: all 0.2s;
-  ${props => (props.highlighted ? "padding-left: 2rem;" : null)};
+  ${props => (props.highlighted ? "padding-left: 1rem;" : null)};
   display: flex;
   align-items: center;
-  border-left: 10px solid
-    ${props => (props.highlighted ? props.theme.gray1 : "red")};
+  border: ${props =>
+    props.highlighted ? `2px solid ${props.theme.indigo8}` : "none"};
 `;
 
 const glow = keyframes`
@@ -31,6 +33,7 @@ const glow = keyframes`
 
 const SearchStyles = styled.div`
   position: relative;
+  width: 100%;
   input {
     width: 100%;
     padding: 10px;

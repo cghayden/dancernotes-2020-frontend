@@ -83,9 +83,9 @@ function AddMakeupForm({ toggleForm, studio }) {
             <option default disabled value={""}>
               Apply To...
             </option>
-            {studio.levels.map(level => (
-              <option key={level} value={level}>
-                {level}
+            {studio.competitiveLevels.map(competitiveLevel => (
+              <option key={competitiveLevel} value={competitiveLevel}>
+                {competitiveLevel}
               </option>
             ))}
             <option value={"none"}>None at this time</option>
