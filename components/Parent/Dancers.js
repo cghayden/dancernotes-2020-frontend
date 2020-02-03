@@ -24,9 +24,6 @@ const Dancers = ({ hasDancers, dancers }) => {
             Welcome to Dancernotes! To begin, use the form below to add a Dancer
             to your account.
           </p>
-          {/* <Link href="/parent/account/addDancer">
-      <a>Add a Dancer</a>
-      </Link> */}
         </Card>
         <CreateDancerForm />
       </>

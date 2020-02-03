@@ -5,27 +5,11 @@ import StyledLink from "../StyledLink";
 import styled from "styled-components";
 import { PARENTS_DANCERS } from "./Queries";
 
-const NotesSubNavStyles = styled(SubNavStyles)`
-  .hideOnMobile {
-    display: none;
-  }
-  .hideOnDesktop {
-    display: block;
-  }
-
-  @media (min-width: ${props => props.theme.largeScreen}) {
-    .hideOnMobile {
-      display: block;
-    }
-    .hideOnDesktop {
-      display: none;
-    }
-  }
-`;
+const NotesSubNavStyles = styled(SubNavStyles)``;
 
 function NotesSubNav() {
   const { data, loading, error } = useQuery(PARENTS_DANCERS);
-  const dancers = data && data.parentsDancers;
+  const dancers = data ? data.parentsDancers : null;
 
   return (
     <>
@@ -56,13 +40,20 @@ function NotesSubNav() {
             </StyledLink>
           </li>
           <li>
-            <StyledLink href="/parent/createCustomRoutine">
-              <a>Add a Routine</a>
+            <StyledLink activeClassName="active" href="/parent/account/dancers">
+              <a>Dancers</a>
             </StyledLink>
           </li>
+          {dancers && dancers.length > 1 && (
+            <li>
+              <StyledLink href="/parent/createCustomRoutine">
+                <a>Add a Routine</a>
+              </StyledLink>
+            </li>
+          )}
         </ul>
+        {/* {dancers && (
         <h2 className="subNav-heading">Dancers</h2>
-        {dancers && (
           <ul>
             {dancers.map(dancer => (
               <li key={dancer.firstName}>
@@ -75,7 +66,7 @@ function NotesSubNav() {
               </li>
             ))}
           </ul>
-        )}
+        )} */}
       </NotesSubNavStyles>
       {/* <Modal open={showEvents} setOpen={setShowEvents}>
         <EventsLinksModal />

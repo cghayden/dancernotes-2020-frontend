@@ -1,8 +1,10 @@
 import React, { useState, Fragment } from "react";
+import { useRouter } from "next/router";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import styled from "styled-components";
 import Form from "../styles/Form";
+import Card from "../styles/Card";
 import Link from "next/link";
 import Modal from "../Modal";
 import BackButton from "../BackButton";
@@ -13,6 +15,10 @@ import { UPDATE_DANCER_MUTATION } from "./UpdateDancerForm";
 import { DancerCardContainer } from "./DancerCard";
 import { DancerCardHeaderStyles } from "./DancerCard";
 import useForm from "../../lib/useForm";
+
+const ModalCard = styled(Card)`
+  box-shadow: none;
+`;
 
 //same as DancerCard with z-index to put it on top of cardBody(form)
 const ImageDiv = styled.div`
@@ -88,6 +94,10 @@ function CreateDancerForm() {
   const loading = creatingDancer || updatingDancer || uploadingAvatar;
   const errorUploadingAvatar =
     errorUpdatingDancer || errorUploadingToCloudinary;
+
+  const {
+    query: { hasDancers }
+  } = useRouter();
 
   function resetForm() {
     updateInputs({ ...initialInputState });
@@ -172,15 +182,25 @@ function CreateDancerForm() {
 
   return (
     <Fragment>
+      <h2 className="mobileHeader hideOnDesktop">Add a Dancer</h2>
+      {hasDancers && (
+        <Card className="message">
+          <p>Welcome to Dancernotes! To begin, add a Dancer to your account.</p>
+        </Card>
+      )}
       <Modal open={showModal} setOpen={toggleModal}>
-        <div>
+        <ModalCard>
           {errorCreatingDancer && (
             <>
               <p>
                 Warning: there was a problem saving your class. Please try
                 again:
               </p>
-              <button role="button" onClick={() => toggleModal(false)}>
+              <button
+                className="btn-action-primary"
+                role="button"
+                onClick={() => toggleModal(false)}
+              >
                 Try Again
               </button>
             </>
@@ -195,14 +215,19 @@ function CreateDancerForm() {
             </p>
           )}
 
-          <button role="button" onClick={() => toggleModal(false)}>
+          <button
+            className="btn-action-primary-outline"
+            role="button"
+            onClick={() => toggleModal(false)}
+          >
             Create Another Dancer
           </button>
           <Link href="/parent/account/dancers">
-            <a>I'm finished</a>
+            <a className="btn-action-secondary-outline">I'm finished</a>
           </Link>
-        </div>
+        </ModalCard>
       </Modal>
+
       <DancerCardContainer>
         <DancerCardHeaderStyles>
           <ImageDiv>
@@ -229,7 +254,7 @@ function CreateDancerForm() {
             </div>
             <button
               type="button"
-              className="btn-action-primary"
+              className="btn-action-secondary-outline"
               onClick={() => toggleFileInput(!showFileInput)}
             >
               Add Image
@@ -251,7 +276,9 @@ function CreateDancerForm() {
             )}
             <p>{status}</p>
             <div className="form-footer">
-              <button type="submit">Save Dancer</button>
+              <button className="btn-action-primary" type="submit">
+                Save Dancer
+              </button>
               <BackButton text="Cancel" classNames="btn-danger" />
             </div>
           </fieldset>

@@ -8,8 +8,20 @@ import NotesSubNav from "../../components/Parent/NotesSubNav";
 
 function createCustomRoutinePage() {
   const { data: parent, loading, error } = useQuery(STUDIOS_AND_DANCERS);
-  if (loading) return "loading";
-  if (error) return <Error error={error} />;
+  if (loading || error)
+    return (
+      <>
+        <NotesSubNav />
+        <SubNavMainLayout
+          page={"Create Your own Routine"}
+          pageAction={<BackButton text={"Cancel"} />}
+          mobileHeader="Notes"
+        >
+          {loading && <Loading />}
+          {error && <Error error={error} />}
+        </SubNavMainLayout>
+      </>
+    );
 
   return (
     <>
@@ -17,6 +29,7 @@ function createCustomRoutinePage() {
       <SubNavMainLayout
         page={"Create Your own Routine"}
         pageAction={<BackButton text={"Cancel"} />}
+        mobileHeader="Notes"
       >
         <CreateCustomRoutineForm parent={parent.parentUser} />
       </SubNavMainLayout>

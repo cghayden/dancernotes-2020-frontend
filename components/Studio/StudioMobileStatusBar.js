@@ -6,16 +6,12 @@ const StudioMobileStatusBarStyles = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  left: 0;
   background-color: ${props => props.theme.gray0};
-  display: grid;
-  z-index: 100;
-  grid-template-columns: repeat(auto-fit, minmax(50vw, 1fr));
+  display: flex;
+  z-index: 1000;
+  padding-left: 1rem;
   place-items: center;
-
-  h1 {
-    position: absolute;
-  }
+  justify-content: space-between;
 
   @media (min-width: ${props => props.theme.largeScreen}) {
     display: none;
@@ -23,16 +19,18 @@ const StudioMobileStatusBarStyles = styled.div`
 `;
 
 const Title = styled.h1`
-  // font-size: 2rem;
+  font-size: 1.4rem;
 `;
+
 const PageAction = styled.div`
   margin-left: auto;
 `;
-function StudioMobileStatusBar(props) {
+
+function StudioMobileStatusBar({ mobileHeader, pageAction }) {
   return (
     <StudioMobileStatusBarStyles>
-      <Title>{props.page}</Title>
-      <PageAction>{props.children}</PageAction>
+      <Title>{mobileHeader}</Title>
+      <PageAction>{pageAction}</PageAction>
     </StudioMobileStatusBarStyles>
   );
 }

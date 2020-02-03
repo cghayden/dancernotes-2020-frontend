@@ -9,6 +9,7 @@ import {
   STUDIOS_AND_DANCERS
 } from "../../../components/Parent/Queries";
 import Error from "../../../components/Error";
+import Loading from "../../../components/Loading";
 import SubNavMainLayout from "../../../components/SubNavMainLayout";
 
 const updateDancePage = () => {
@@ -28,19 +29,18 @@ const updateDancePage = () => {
     variables: { id: danceId }
   });
 
-  if (loadingParent || loadingRoutine) {
-    return (
-      <SubNavMainLayout page={"Update Your Routine"}>
-        <p>Loading...</p>
-      </SubNavMainLayout>
-    );
-  }
+  const loading = loadingParent || loadingRoutine;
+  const error = errorLoadingParent || errorloadingRoutine;
 
-  if (errorLoadingParent || errorloadingRoutine) {
+  if (loading || error) {
     return (
-      <SubNavMainLayout page={"Update Your Routine"}>
-        <Error error={error} />
-      </SubNavMainLayout>
+      <>
+        <NotesSubNav />
+        <SubNavMainLayout mobileHeader="Notes" page={"Update Your Routine"}>
+          {loading && <Loading />}
+          {error && <Error error={error} />}
+        </SubNavMainLayout>
+      </>
     );
   }
 
@@ -48,6 +48,7 @@ const updateDancePage = () => {
     <>
       <NotesSubNav />
       <SubNavMainLayout
+        mobileHeader="Notes"
         page={"Update Your Routine"}
         pageAction={<BackButton text={"Cancel"} />}
       >

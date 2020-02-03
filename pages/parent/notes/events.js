@@ -35,7 +35,11 @@ function EventsPage() {
     return (
       <>
         <NotesSubNav />
-        <SubNavMainControlsLayout page="Events" pageAction="Add Event">
+        <SubNavMainControlsLayout
+          mobileHeader={"Notes"}
+          page="Events"
+          pageAction="Add Event"
+        >
           {loading && <p>5, 6, 7, 8 ...</p>}
           {error && <Error error={error} />}
         </SubNavMainControlsLayout>

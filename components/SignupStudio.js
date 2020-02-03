@@ -30,7 +30,7 @@ class StudioSignup extends Component {
     studioName: "",
     password: "",
     email: "",
-    userType: "studio",
+    userType: "studio"
   };
   saveToState = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -93,7 +93,7 @@ class StudioSignup extends Component {
                 />
               </div>
 
-              <button type="submit">Sign Up!</button>
+              <button type="submit">Let's Go !!!</button>
             </fieldset>
           </LandingPageForm>
         )}

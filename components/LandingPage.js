@@ -39,7 +39,7 @@ const AboutContent = styled(animated.main)`
   }
 `;
 function LandingPage() {
-  const [active, setActive] = useState("about");
+  const [active, setActive] = useState("aboutParent");
 
   const transitions = useTransition(active, null, {
     from: {

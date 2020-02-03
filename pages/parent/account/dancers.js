@@ -1,27 +1,55 @@
 import { useQuery } from "@apollo/react-hooks";
+import Router from "next/router";
 import AccountSubNav from "../../../components/Parent/AccountSubNav";
 import SubNavMainLayout from "../../../components/SubNavMainLayout";
 import Dancers from "../../../components/Parent/Dancers";
+import Loading from "../../../components/Loading";
+import Error from "../../../components/Error";
 import { PARENT_USER_QUERY } from "../../../components/Parent/Queries";
 import Link from "next/link";
 function DancersPage() {
   //todo - query only the dancers of the parent
   const { data, loading, error } = useQuery(PARENT_USER_QUERY);
   const parentUser = data ? data.parentUser : {};
-
-  if (loading) return "5, 6, 7, 8...";
-  if (error) return `Error! ${error.message}`;
+  const hasDancers = parentUser && parentUser.dancers.length > 0;
 
   const AddDancerButton = (
     <Link href="addDancer">
       <a>Add a Dancer</a>
     </Link>
   );
-  const hasDancers = parentUser.dancers.length > 0;
+
+  if (loading || error)
+    return (
+      <>
+        <AccountSubNav />
+        <SubNavMainLayout
+          mobileHeader={"Account"}
+          pageAction={AddDancerButton}
+          page="My Dancers"
+        >
+          {loading && <Loading />}
+          {error && <Error error={error} />}
+        </SubNavMainLayout>
+      </>
+    );
+
+  if (!hasDancers) {
+    Router.push({
+      pathname: "/parent/account/addDancer",
+      query: {
+        hasDancers: false
+      }
+    });
+  }
   return (
     <>
       <AccountSubNav dancers={parentUser.dancers} />
-      <SubNavMainLayout pageAction={AddDancerButton} page="My Dancers">
+      <SubNavMainLayout
+        mobileHeader={"Account"}
+        pageAction={AddDancerButton}
+        page="My Dancers"
+      >
         <Dancers hasDancers={hasDancers} dancers={parentUser.dancers} />
       </SubNavMainLayout>
     </>

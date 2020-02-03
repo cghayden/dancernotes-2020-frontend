@@ -76,7 +76,7 @@ option {
     &[disabled] {
       opacity: 0.7;
     }
-    &::after {
+    /* &::after {
       height: 2px;
       margin: 4px 0;
       content: "";
@@ -87,8 +87,18 @@ option {
         ${props => props.theme.red0} 50%,
         ${props => props.theme.red9} 100%
       );
-    }
+    } */
     &[aria-busy="true"]::after {
+      height: 2px;
+      margin: 4px 0;
+      content: "";
+      display: block;
+      background-image: linear-gradient(
+        to right,
+        ${props => props.theme.red9} 0%,
+        ${props => props.theme.red0} 50%,
+        ${props => props.theme.red9} 100%
+      );
       background-size: 50% auto;
       animation: ${loading} 1s linear infinite;
     }

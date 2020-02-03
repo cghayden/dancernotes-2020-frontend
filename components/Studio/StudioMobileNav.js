@@ -1,10 +1,8 @@
+import React from "react";
 import Link from "next/link";
 import Router from "next/router";
-
 import NProgress from "nprogress";
-
 import { NavStyles } from "../styles/NavStyles";
-import Signout from "../Signout";
 import RequestsNavLink from "./RequestsNavLink";
 
 Router.onRouteChangeStart = () => {
@@ -17,7 +15,7 @@ Router.onRouteChangeError = () => {
   NProgress.done();
 };
 
-const StudioMobileNav = props => (
+const StudioMobileNav = () => (
   <NavStyles>
     <Link href="classes">
       <a>Classes</a>
@@ -29,7 +27,6 @@ const StudioMobileNav = props => (
       <a>Account</a>
     </Link>
     <RequestsNavLink />
-    <Signout />
   </NavStyles>
 );
 

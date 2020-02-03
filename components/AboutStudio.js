@@ -4,19 +4,22 @@ const AboutStudio = ({ setActive }) => {
   return (
     <div>
       <h1>Dancernotes for Studios</h1>
-      <div className="">
-        Some people have an ability to write placeholder text... It's an art
-        you're basically born with. You either have it or you don't.
+      <div className="aboutBody">
+        All of your dance and costume information in one place
       </div>
-      <div>
-        Despite the constant negative ipsum covfefe. Lorem Ispum is a choke
-        artist. It chokes! I'm speaking with myself, number one, because I have
-        a very good brain and I've said a lot of things. The concept of Lorem
-        Ipsum was created by and for the Chinese in order to make U.S. design
-        jobs non-competitive.
+      <div className="aboutBody">
+        A single location for all parent communications
       </div>
+
+      <div className="aboutBody">
+        Keep parents and retailers up to date on all apparel requirements
+      </div>
+
       <div>
-        <button className="btn-action-primary" onClick={() => setActive("signupStudio")}>
+        <button
+          className="btn-action-primary"
+          onClick={() => setActive("signupStudio")}
+        >
           Try dancernotes
         </button>
       </div>

@@ -1,9 +1,9 @@
-import ParentLayout from "../../../components/Parent/ParentLayout";
+import NoNavLayout from "../../../components/NoNavLayout";
 import Card from "../../../components/styles/Card";
 
 function shopPage() {
   return (
-    <ParentLayout page={"Shop"}>
+    <NoNavLayout mobileHeader="Shop" page={"Shop"}>
       <Card>
         <div className="card__header">
           <h2>Coming Soon!</h2>
@@ -13,7 +13,7 @@ function shopPage() {
           <p>Preferred, saved, and other local retailers.</p>
         </div>
       </Card>
-    </ParentLayout>
+    </NoNavLayout>
   );
 }
 

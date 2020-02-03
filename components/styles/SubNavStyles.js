@@ -7,8 +7,9 @@ const SubNavStyles = styled.nav`
   color: ${props => props.theme.blackText};
   background: ${props => props.theme.background};
   padding: 0.5rem;
-  box-shadow: ${props => props.theme.dropShadow1};
-  /* height: 5rem; */
+  /* box-shadow: ${props => props.theme.dropShadow1}; */
+  border-bottom: 1px solid ${props => props.theme.gray2};
+  height: ${props => props.theme.mobileSubNavHeight};
   position: fixed;
   top: ${props => props.theme.mobileStatusBarHeight};
   left: 0;

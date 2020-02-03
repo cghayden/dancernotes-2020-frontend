@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
 const MobileStatusBarStyles = styled.div`
   height: ${props => props.theme.mobileStatusBarHeight};
@@ -25,22 +24,13 @@ const Title = styled.h1`
 const PageAction = styled.div`
   margin-left: auto;
 `;
-function MobileStatusBar(props) {
-  // todo : get active dancers and display avatars?
-  const { page, pageAction } = props;
-
+function MobileStatusBar({ mobileHeader, pageAction }) {
   return (
     <MobileStatusBarStyles>
-      <Title>{page}</Title>
-      {/* {avatars && <Avatars dancers={[Dancer]} />} */}
+      <Title>{mobileHeader}</Title>
       <PageAction>{pageAction}</PageAction>
     </MobileStatusBarStyles>
   );
 }
-
-MobileStatusBar.propTypes = {
-  dancers: PropTypes.array,
-  page: PropTypes.string.isRequired
-};
 
 export default MobileStatusBar;

@@ -74,7 +74,7 @@ function UpdateParentNote({ danceId, existingNote, toggleEditNotes }) {
       />
       <div className="form-footer">
         {note && (
-          <button type="submit" className="btn-action-primary">
+          <button type="submit" className="btn-action-primary btn-small">
             Save
           </button>
         )}
@@ -87,7 +87,7 @@ function UpdateParentNote({ danceId, existingNote, toggleEditNotes }) {
 
         <button
           type="button"
-          className="btn-action-secondary-outline"
+          className="btn-action-secondary-outline btn-small"
           onClick={() => toggleEditNotes(false)}
         >
           Cancel
