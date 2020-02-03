@@ -102,7 +102,6 @@ function DanceCard(props) {
           <p>{dance.performanceName}</p>
         </DanceCardTitle>
         <DanceCardTime>
-          <p>101</p>
           <p>{dance.day}</p>
           <p>{dance.startTime}</p>
         </DanceCardTime>

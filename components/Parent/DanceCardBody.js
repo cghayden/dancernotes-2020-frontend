@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import AddNote from "./AddNote";
-import UpdateParentNotes from "./UpdateParentNotes";
 import NotesDiv from "./NotesDiv";
 import CustomNotesDiv from "./CustomNotesDiv";
 const DanceCardBodyStyles = styled.div`
@@ -53,34 +51,7 @@ function DanceCardBody({ dance }) {
         ) : (
           <CustomNotesDiv dance={dance} />
         )}
-        {/* {dance.custom ? (
-          <CustomNotesDiv
-            addNote={addNote}
-            toggleAddNote={toggleAddNote}
-            editNote={editNote}
-            toggleEditNote={toggleEditNotes}
-            notes={dance.notes}
-            danceId={danceId}
-          />
-        ) : (
-          <NotesDiv
-            addNote={addNote}
-            toggleAddNote={toggleAddNote}
-            editNote={editNote}
-            toggleEditNote={toggleEditNotes}
-            notes={dance.notes}
-            danceId={danceId}
-          />
-        )} */}
       </dl>
-      {/* {dance.parentsNotes && !editNotes && (
-        <button
-          className="btn-action-primary-outline edit-notes"
-          onClick={() => toggleEditNotes(true)}
-        >
-          Add/Edit Notes
-        </button>
-      )} */}
     </DanceCardBodyStyles>
   );
 }
