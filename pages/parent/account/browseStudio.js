@@ -47,15 +47,24 @@ const BrowseStudioPage = () => {
   //   console.log("browsingDancer from local Storage:", browsingDancer);
   // }
   const router = useRouter();
-  const {
-    data: studioData,
-    loading: classesLoading,
-    error: classesError
-  } = useQuery(BROWSE_STUDIO_CLASSES_QUERY, {
-    variables: { id: router.query.studioId }
-  });
+  const { data: studioData, loading: loading, error: error } = useQuery(
+    BROWSE_STUDIO_CLASSES_QUERY,
+    {
+      variables: { id: router.query.studioId }
+    }
+  );
   // const dancerName = browsingDancer.browsingDancerName;
   const studio = studioData ? studioData.studio : {};
+  if (loading || error)
+    return (
+      <>
+        <AccountSubNav />
+        <SubNavMainLayout mobileHeader={"Account"}>
+          {loading && <Loading />}
+          {error && <Error error={error} />}
+        </SubNavMainLayout>
+      </>
+    );
 
   return (
     <ParentDisplayConsumer>

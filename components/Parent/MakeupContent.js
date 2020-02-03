@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import Card from "../styles/Card";
+import Loading from "../Loading";
+import Error from "../Error";
 
 const STUDIO_MAKEUP_QUERY = gql`
   query STUDIO_MAKEUP_QUERY {
@@ -43,8 +45,8 @@ class MakeupContent extends Component {
     return (
       <Query query={STUDIO_MAKEUP_QUERY}>
         {({ data: { allRs } = {}, error, loading }) => {
-          if (loading) return <p>loading...</p>;
-          if (error) return <p>Error! {error}</p>;
+          if (loading) return <Loading />;
+          if (error) return <Error error={error} />;
 
           const makeup = this.compileMakeupSets(allRs);
           if (makeup.length < 1) {

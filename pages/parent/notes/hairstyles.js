@@ -7,7 +7,7 @@ function makeupPage() {
   return (
     <>
       <NotesSubNav />
-      <SubNavMainLayout page={"Hair Styles"}>
+      <SubNavMainLayout mobileHeader={"Notes"} page={"Hair Styles"}>
         <HairStylesCards />
       </SubNavMainLayout>
     </>

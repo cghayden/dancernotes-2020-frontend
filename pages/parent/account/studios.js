@@ -14,20 +14,29 @@ function MyStudiosPage() {
   const setBrowsingDancer = BrowsingContext.setBrowsingDancer;
 
   const { data, loading, error } = useQuery(STUDIOS_AND_DANCERS);
-  console.log("data:", data);
   const studios = data && data.parentUser.studios;
-  if (loading) return <p>5, 6, 7, 8...</p>;
-  if (error) return <Error error={error} />;
+
+  if (loading || error)
+    return (
+      <>
+        <AccountSubNav />
+        <SubNavMainLayout mobileHeader={"Account"} page="My Studios">
+          {loading && <Loading />}
+          {error && <Error error={error} />}
+        </SubNavMainLayout>
+      </>
+    );
+
   if (studios.length < 1) {
     return (
       <>
         <AccountSubNav />
-        <SubNavMainLayout page={"My Studios"}>
-          <p>
-            You are not connected to any studios. When you Register your dancers
-            at a studio recieve approval to subscrine to a studios information,
-            the studio will apear here.
-          </p>
+        <SubNavMainLayout mobileHeader={"Account"} page={"My Studios"}>
+          <Card>
+            <p>
+              You're dancers are not enrolled at or subscribed to any studios.
+            </p>
+          </Card>
         </SubNavMainLayout>
       </>
     );
@@ -35,7 +44,7 @@ function MyStudiosPage() {
   return (
     <>
       <AccountSubNav />
-      <SubNavMainLayout page={"My Studios"}>
+      <SubNavMainLayout mobileHeader={"Account"} page={"My Studios"}>
         {studios.map(studio => (
           <Card key={studio.id}>
             <h2>{studio.studioName}</h2>

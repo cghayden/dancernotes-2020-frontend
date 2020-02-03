@@ -3,7 +3,7 @@ import SubNavStyles from "../styles/SubNavStyles";
 import Signout from "../Signout";
 import StyledLink from "../StyledLink";
 
-function AccountSubNav({ dancers }) {
+function AccountSubNav() {
   return (
     <SubNavStyles>
       <h2 className="subNav-heading">Account</h2>
@@ -27,17 +27,6 @@ function AccountSubNav({ dancers }) {
           <Signout />
         </li>
       </ul>
-
-      {/* <ul>
-        {dancers &&
-          dancers.map(dancer => (
-            <li key={dancer.id}>
-              <StyledLink activeClassName="active" href={`/parent/dancers`}>
-                <a>{dancer.firstName}</a>
-              </StyledLink>
-            </li>
-          ))}
-      </ul> */}
     </SubNavStyles>
   );
 }

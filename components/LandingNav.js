@@ -67,7 +67,7 @@ const LandingNav = ({ setActive }) => {
               setActive("aboutParent");
             }}
           >
-            <p>Dancer Notes for Parents</p>
+            <p>Parents</p>
           </AboutButton>
 
           <AboutButton
@@ -75,7 +75,7 @@ const LandingNav = ({ setActive }) => {
               setActive("aboutStudio");
             }}
           >
-            Dancer Notes for Studios
+            Studios
           </AboutButton>
 
           <AboutButton
@@ -83,7 +83,7 @@ const LandingNav = ({ setActive }) => {
               setActive("aboutRetail");
             }}
           >
-            Dancer Notes for Retailers
+            Retailers
           </AboutButton>
         </AboutNav>
       </LandingNavStyle>

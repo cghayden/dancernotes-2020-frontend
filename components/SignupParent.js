@@ -24,6 +24,9 @@ const SIGNUP_PARENT_MUTATION = gql`
       email
       firstName
       userType
+      dancers {
+        id
+      }
     }
   }
 `;
@@ -46,9 +49,14 @@ class SignupParent extends Component {
         mutation={SIGNUP_PARENT_MUTATION}
         variables={this.state}
         onCompleted={data => {
-          Router.push(`/parent/account/dancers`);
+          console.log("data:", data);
+          Router.push({
+            pathname: "/parent/account/addDancer",
+            query: {
+              hasDancers: false
+            }
+          });
         }}
-        // refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
         {(signupParent, { error, loading }) => (
           <LandingPageForm
@@ -117,7 +125,7 @@ class SignupParent extends Component {
                 value={this.state.password}
                 onChange={this.saveToState}
               />
-              <button type="submit">Sign Up!</button>
+              <button type="submit">Let's Go !!!</button>
             </fieldset>
           </LandingPageForm>
         )}

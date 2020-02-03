@@ -3,8 +3,8 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import HairStyleCard from "./HairStyleCard";
 import Card from "../styles/Card";
-import styled from "styled-components";
-
+import Error from "../Error";
+import Loading from "../Loading";
 const HAIRSTYLES_QUERY = gql`
   query HAIRSTYLES_QUERY {
     parentStudios {
@@ -25,8 +25,8 @@ class HairStylesCards extends Component {
     return (
       <Query query={HAIRSTYLES_QUERY}>
         {({ data: { parentStudios } = {}, error, loading }) => {
-          if (loading) return <p>loading...</p>;
-          if (error) return <p>Error! {error}</p>;
+          if (loading) return <Loading />;
+          if (error) return <Error error={error} />;
           return (
             <>
               {parentStudios.map(studio => {

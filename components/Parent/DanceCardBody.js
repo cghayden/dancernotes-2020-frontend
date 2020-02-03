@@ -21,6 +21,7 @@ const Dt = styled.dt`
 const Dd = styled.dd`
   margin-left: 1rem;
   text-align: left;
+  white-space: pre-wrap;
 `;
 const Notes = styled.div`
   text-align: left;
@@ -40,8 +41,28 @@ function DanceCardBody({ dance }) {
           <Dt>Tights:</Dt> <Dd>{dance.tights}</Dd>
         </NoteItem>
         <Notes>
-          <Dt>Studio Notes:</Dt> <Dd>{dance.notes ? dance.notes : `N/A`}</Dd>
+          <Dt>{!dance.custom && `Studio`} Notes:</Dt>{" "}
+          <Dd>{dance.notes ? dance.notes : `N/A`}</Dd>
         </Notes>
+        {/* {dance.custom ? (
+          <CustomNotesDiv
+            addNote={addNote}
+            toggleAddNote={toggleAddNote}
+            editNote={editNote}
+            toggleEditNote={toggleEditNotes}
+            notes={dance.notes}
+            danceId={danceId}
+          />
+        ) : (
+          <NotesDiv
+            addNote={addNote}
+            toggleAddNote={toggleAddNote}
+            editNote={editNote}
+            toggleEditNote={toggleEditNotes}
+            notes={dance.notes}
+            danceId={danceId}
+          />
+        )} */}
         {!dance.parentsNotes && !addNote && (
           <button
             className="btn-action-primary-outline"

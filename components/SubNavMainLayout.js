@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import MobileStatusBar from "./Parent/MobileStatusBar";
 import MobileNav from "./Parent/MobileNav";
 import DesktopNav from "./Parent/DesktopNav";
-// import ContentLayout from "../ContentLayout";
 import ContentHeader from "./ContentHeader";
 import styled from "styled-components";
 
@@ -20,10 +19,19 @@ const MainStyle = styled.main`
 `;
 
 //action is a component that triggers an pageAction for the page, i.e add a dancer, or create a new dance
-const SubNavMainLayout = ({ children, page = "", pageAction = null }) => {
+const SubNavMainLayout = ({
+  children,
+  mobileHeader = "",
+  page = "",
+  pageAction = null
+}) => {
   return (
     <Fragment>
-      <MobileStatusBar page={page} pageAction={pageAction} />
+      <MobileStatusBar
+        mobileHeader={mobileHeader}
+        page={page}
+        pageAction={pageAction}
+      />
       <MobileNav />
       <DesktopNav />
       <MainStyle>

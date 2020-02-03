@@ -1,17 +1,32 @@
 import React from "react";
+import styled from "styled-components";
+
+const SignupButton = styled.button`
+  font-size: 20px;
+  background: ${props => props.theme.indigo0};
+  color: ${props => props.theme.indigo9};
+  padding: 20px 30px;
+  margin-bottom: 30px;
+`;
+
+const SignupDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+`;
 
 const Signup = ({ setActive }) => {
   const handleTypeChange = radioEvent => setActive(radioEvent.target.value);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <button className="btn-action-primary" onClick={() => setActive("signupParent")}>
+    <SignupDiv>
+      <SignupButton onClick={() => setActive("signupParent")}>
         Sign up as a Parent
-      </button>
-      <button className="btn-action-primary" onClick={() => setActive("signupStudio")}>
+      </SignupButton>
+      <SignupButton onClick={() => setActive("signupStudio")}>
         Sign up as a Studio
-      </button>
-    </div>
+      </SignupButton>
+    </SignupDiv>
   );
 };
 export default Signup;

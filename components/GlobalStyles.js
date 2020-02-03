@@ -163,17 +163,25 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
 
-  /* mobile-first */
-  .content {
-    text-align: center;
-    max-width: 800px;
-    border: 1px solid black;
-    min-height: 90vh;
-    width: 94vw;
-    background-color:inherit;
-    margin: 90px auto 0 auto;
-    padding: 1rem 0rem;
+.mobileHeader{
+  padding-bottom: 1rem;
 }
+
+.hideOnMobile {
+    display: none;
+  }
+  .hideOnDesktop {
+    display: block;
+  }
+
+  @media (min-width: ${props => props.theme.largeScreen}) {
+    .hideOnMobile {
+      display: block;
+    }
+    .hideOnDesktop {
+      display: none;
+    }
+  }
 
 `;
 

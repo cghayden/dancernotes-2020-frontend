@@ -112,8 +112,8 @@ const theme = {
   hoveringDropdownShadow: "5px 5px 6px 5px rgba(0, 0, 0, 0.10)",
   navHeight: `4rem`,
   mobileStatusBarHeight: "3rem",
-  mobileSubNavHeight: "5rem",
-  mobileMainTop: "8rem",
+  mobileSubNavHeight: "3.5rem",
+  mobileMainTop: "6.5rem",
 
   largeScreen: "787px",
   borderRadius: "5px",
