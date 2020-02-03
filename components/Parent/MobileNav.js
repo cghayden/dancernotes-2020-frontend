@@ -16,22 +16,20 @@ Router.onRouteChangeError = () => {
 
 const MobileNav = () => {
   return (
-    <>
-      <NavStyles>
-        <Link href="/parent/notes/routines">
-          <a>Notes</a>
-        </Link>
-        <Link href="/parent/discover">
-          <a>Discover</a>
-        </Link>
-        <Link href="/parent/shop">
-          <a>Shop</a>
-        </Link>
-        <Link href="/parent/account/profile">
-          <a>Account</a>
-        </Link>
-      </NavStyles>
-    </>
+    <NavStyles>
+      <Link href="/parent/notes/routines">
+        <a>Notes</a>
+      </Link>
+      <Link href="/parent/discover">
+        <a>Discover</a>
+      </Link>
+      <Link href="/parent/shop">
+        <a>Shop</a>
+      </Link>
+      <Link href="/parent/account/profile">
+        <a>Account</a>
+      </Link>
+    </NavStyles>
   );
 };
 

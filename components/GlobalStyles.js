@@ -138,6 +138,11 @@ const GlobalStyle = createGlobalStyle`
       color: ${theme.indigo0};
     }
 
+    &.btn-small{
+      font-size: 14px;
+      padding: .25rem .75rem;
+    }
+
   &.landingPage{
     font-size: 1.5rem;
     width: 200px;

@@ -26,7 +26,7 @@ export default class DeleteNote extends Component {
         {(deleteParentNote, { loading, error }) => (
           <button
             type="button"
-            className="btn-danger-outline"
+            className="btn-danger-outline btn-small"
             onClick={async () => {
               await deleteParentNote();
               this.props.toggleEditNotes(false);

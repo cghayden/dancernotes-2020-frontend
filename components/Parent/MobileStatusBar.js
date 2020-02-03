@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
 const MobileStatusBarStyles = styled.div`
   height: ${props => props.theme.mobileStatusBarHeight};
@@ -33,9 +32,5 @@ function MobileStatusBar({ mobileHeader, pageAction }) {
     </MobileStatusBarStyles>
   );
 }
-
-MobileStatusBar.propTypes = {
-  page: PropTypes.string.isRequired
-};
 
 export default MobileStatusBar;

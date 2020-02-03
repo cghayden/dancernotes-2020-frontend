@@ -1,16 +1,15 @@
 import React from "react";
-
-import ContentHeader from "../../components/ContentHeader";
-import StudioLayout from "../../components/Studio/StudioLayout";
+import StudioAccountSubNav from "../../components/Studio/StudioAccountSubNav";
+import SubNavMainLayout from "../../components/Studio/SubNavMainLayout";
 
 function AccountPage() {
   return (
-    <StudioLayout>
-      <main>
-        <ContentHeader page={"Account"} />
+    <>
+      <StudioAccountSubNav />
+      <SubNavMainLayout mobileHeader="Account" page={"Account"}>
         <p>Account Info...</p>
-      </main>
-    </StudioLayout>
+      </SubNavMainLayout>
+    </>
   );
 }
 

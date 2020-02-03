@@ -1,25 +1,38 @@
-import Link from "next/link";
+import React from "react";
 import SubNavStyles from "../styles/SubNavStyles";
+import Signout from "../Signout";
+import StyledLink from "../StyledLink";
 
-import React, { Component } from "react";
-
-export default class StudioAccountSubNav extends Component {
-  render() {
-    return (
-      <SubNavStyles>
-        <Link href="createClass">
-          <a>Create a Class</a>
-        </Link>
-        <Link href="retail">
-          <a>Retailers</a>
-        </Link>
-        <Link href="searchComps">
-          <a>Find Comps/Conventions</a>
-        </Link>
-        <Link href="profile">
-          <a>Profile</a>
-        </Link>
-      </SubNavStyles>
-    );
-  }
+function StudioAccountSubNav() {
+  return (
+    <SubNavStyles>
+      <h2 className="subNav-heading">Account</h2>
+      <ul>
+        <li>
+          <StyledLink activeClassName="active" href="createClass">
+            <a>Create a Class</a>
+          </StyledLink>
+        </li>
+        <li>
+          <StyledLink activeClassName="active" href="retail">
+            <a>Retailers</a>
+          </StyledLink>
+        </li>
+        <li>
+          <StyledLink activeClassName="active" href="searchComps">
+            <a>Find Comps/Conventions</a>
+          </StyledLink>
+        </li>
+        <li>
+          <StyledLink activeClassName="active" href="profile">
+            <a>Profile</a>
+          </StyledLink>
+        </li>
+        <li>
+          <Signout />
+        </li>
+      </ul>
+    </SubNavStyles>
+  );
 }
+export default StudioAccountSubNav;

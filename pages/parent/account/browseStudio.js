@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import { useQuery } from "@apollo/react-hooks";
 import { useState, useContext } from "react";
 import gql from "graphql-tag";
+import Loading from "../../../components/Loading";
+import Error from "../../../components/Error";
 import AccountSubNav from "../../../components/Parent/AccountSubNav";
 import BrowseStudioClasses from "../../../components/Parent/BrowseStudioClasses";
 import SubNavMainControlsLayout from "../../../components/SubNavMainControlsLayout";
@@ -59,10 +61,10 @@ const BrowseStudioPage = () => {
     return (
       <>
         <AccountSubNav />
-        <SubNavMainLayout mobileHeader={"Account"}>
+        <SubNavMainControlsLayout mobileHeader={"Account"}>
           {loading && <Loading />}
           {error && <Error error={error} />}
-        </SubNavMainLayout>
+        </SubNavMainControlsLayout>
       </>
     );
 

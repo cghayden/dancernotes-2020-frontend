@@ -1,39 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import AddNote from "./AddNote";
+import UpdateCustomRoutineNotes from "./UpdateCustomRoutineNotes";
 
-const CustomNotesDiv = () => {
+import { Dt, Dd, Notes } from "./DanceCardBody";
+const CustomNotesDiv = ({ addNote, dance }) => {
+  const [editNotes, toggleEditNotes] = useState(false);
+
   return (
     <>
-      <Dd>
-        <Dt>{!dance.custom && `Studio`} Notes:</Dt>{" "}
-        <Dd>{dance.notes ? dance.notes : `N/A`}</Dd>
-      </Dd>
-      {!dance.parentsNotes && !addNote && (
+      <Notes>
+        <Dt>Notes:</Dt>
+        <Dd>{dance.notes ? dance.notes : `None`}</Dd>
+      </Notes>
+      {!editNotes && (
         <button
-          className="btn-action-primary-outline"
-          onClick={() => toggleAddNote(true)}
+          className="btn-action-primary-outline btn-small"
+          onClick={() => toggleEditNotes(true)}
         >
-          + Note
+          Add / Edit Custom Routine Notes
         </button>
-      )}
-      {dance.parentsNotes && (
-        <Notes>
-          <Dt>My Notes:</Dt>
-          {!editNotes && <Dd>{dance.parentsNotes.note}</Dd>}
-        </Notes>
       )}
 
       {editNotes && (
-        <UpdateParentNotes
-          existingNote={dance.parentsNotes}
+        <UpdateCustomRoutineNotes
+          existingNote={dance.notes}
           danceId={dance.id}
           toggleEditNotes={toggleEditNotes}
         />
-      )}
-      {addNote && (
-        <Notes>
-          <Dt>My Notes:</Dt>
-          <AddNote toggleAddNote={toggleAddNote} danceId={dance.id} />
-        </Notes>
       )}
     </>
   );

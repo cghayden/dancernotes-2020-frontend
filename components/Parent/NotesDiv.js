@@ -1,12 +1,21 @@
 import React from "react";
+import AddNote from "./AddNote";
+import UpdateParentNotes from "./UpdateParentNotes";
 
-const NotesDiv = () => {
+import { Dt, Dd, Notes } from "./DanceCardBody";
+const NotesDiv = ({
+  addNote,
+  toggleAddNote,
+  editNotes,
+  toggleEditNotes,
+  dance
+}) => {
   return (
     <>
-      <Dd>
+      <Notes>
         <Dt>{!dance.custom && `Studio`} Notes:</Dt>{" "}
         <Dd>{dance.notes ? dance.notes : `N/A`}</Dd>
-      </Dd>
+      </Notes>
       {!dance.parentsNotes && !addNote && (
         <button
           className="btn-action-primary-outline"
@@ -34,6 +43,14 @@ const NotesDiv = () => {
           <Dt>My Notes:</Dt>
           <AddNote toggleAddNote={toggleAddNote} danceId={dance.id} />
         </Notes>
+      )}
+      {dance.parentsNotes && !editNotes && (
+        <button
+          className="btn-action-primary-outline btn-small"
+          onClick={() => toggleEditNotes(true)}
+        >
+          Add/Edit Notes
+        </button>
       )}
     </>
   );
