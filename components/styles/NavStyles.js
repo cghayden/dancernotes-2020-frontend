@@ -20,7 +20,6 @@ const NavStyles = styled.nav`
   a,
   button {
     font-family: "Source Sans Pro", sans-serif;
-
     display: flex;
     align-items: center;
     margin: 0;
@@ -33,11 +32,7 @@ const NavStyles = styled.nav`
       border-radius: 0;
       background: none;
       color: ${props => props.theme.indigo8};
-      border-bottom: 2px solid ${props => props.theme.indigo8};
-    }
-    :active {
-      border-bottom: none;
-      color: initial;
+      border-bottom: 2px solid ${props => props.theme.indigo8}; 
     }
   }
 

@@ -27,11 +27,7 @@ const SubNavMainLayout = ({
 }) => {
   return (
     <Fragment>
-      <MobileStatusBar
-        mobileHeader={mobileHeader}
-        page={page}
-        pageAction={pageAction}
-      />
+      <MobileStatusBar mobileHeader={mobileHeader} pageAction={pageAction} />
       <MobileNav />
       <DesktopNav />
       <MainStyle>

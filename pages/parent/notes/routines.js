@@ -16,6 +16,11 @@ const ParentHome = () => {
   const { data, loading, error } = useQuery(PARENT_USER_QUERY);
   const parentUser = data ? data.parentUser : {};
 
+  const AddRoutineButton = (
+    <Link href="createCustomRoutine">
+      <a class="textOnly-primary-action">Create a Routine</a>
+    </Link>
+  );
   if (loading || error)
     return (
       <>
@@ -23,7 +28,8 @@ const ParentHome = () => {
         <SubNavMainControlsLayout
           mobileHeader={"Notes"}
           page="Routines"
-          pageAction={<OffScreenControlsToggler text="Display" />}
+          pageAction={AddRoutineButton}
+          // pageAction={<OffScreenControlsToggler text="Display" />}
         >
           {loading && <Loading />}
           {error && <Error error={error} />}
@@ -59,7 +65,8 @@ const ParentHome = () => {
       <SubNavMainControlsLayout
         mobileHeader={"Notes"}
         page="Routines"
-        pageAction={<OffScreenControlsToggler text="Display" />}
+        pageAction={AddRoutineButton}
+        offscreenToggler="Display"
       >
         <RoutinesDisplay dancerIds={parentUser.dancersIds} />
       </SubNavMainControlsLayout>

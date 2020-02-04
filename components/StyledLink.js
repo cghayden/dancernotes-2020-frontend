@@ -3,6 +3,8 @@ import Link from "next/link";
 import React, { Children } from "react";
 
 const ActiveLink = ({ router, children, ...props }) => {
+  console.log("router:", router);
+  console.log("props.href", props.href);
   const child = Children.only(children);
 
   let className = child.props.className || null;

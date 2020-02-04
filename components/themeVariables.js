@@ -37,6 +37,7 @@ const theme = {
   indigo9: "#19216C",
 
   gray0: "#F5F7FA",
+  gray05: "#F6F7F8",
   gray1: "#E4E7EB",
   gray2: "#CBD2D9",
   gray3: "#9AA5B1",

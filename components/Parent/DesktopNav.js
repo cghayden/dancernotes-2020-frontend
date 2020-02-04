@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Router from "next/router";
 import NProgress from "nprogress";
+
+import StyledLink from "../StyledLink";
 import { DesktopNavStyles } from "../styles/NavStyles";
 
 Router.onRouteChangeStart = () => {
@@ -16,9 +18,9 @@ Router.onRouteChangeError = () => {
 function DesktopNav() {
   return (
     <DesktopNavStyles>
-      <Link href="/parent/notes/routines">
+      <StyledLink activeClassName="active" href="/parent/notes/routines">
         <a>Notes</a>
-      </Link>
+      </StyledLink>
       <Link href="/parent/discover">
         <a>Discover</a>
       </Link>

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import OffScreenControlsToggler from "../Parent/OffscreenControlsToggler";
 
 const MobileStatusBarStyles = styled.div`
   height: ${props => props.theme.mobileStatusBarHeight};
@@ -24,11 +25,23 @@ const Title = styled.h1`
 const PageAction = styled.div`
   margin-left: auto;
 `;
-function MobileStatusBar({ mobileHeader, pageAction }) {
+
+// This component can display one action in the right hand corner.  If there is an offscreen control panel for the page, that toggler is what is displayed.  The toggler is triggered if the text of the toggler is passed down via a String prop from the page component through SubNavMainControls.
+//if it does not receive offscreenToggler prop, it will display the page action prop that comes in from page > layout component.
+function MobileStatusBar({
+  mobileHeader,
+  offscreenToggler = null,
+  pageAction = null
+}) {
   return (
     <MobileStatusBarStyles>
       <Title>{mobileHeader}</Title>
-      <PageAction>{pageAction}</PageAction>
+      {offscreenToggler && (
+        <PageAction>
+          <OffScreenControlsToggler text={offscreenToggler} />
+        </PageAction>
+      )}
+      {!offscreenToggler && pageAction && <PageAction>{pageAction}</PageAction>}
     </MobileStatusBarStyles>
   );
 }

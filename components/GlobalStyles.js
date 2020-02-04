@@ -148,12 +148,13 @@ const GlobalStyle = createGlobalStyle`
     width: 200px;
     height: 50px;
   }
-  &.pageAction{
+  &.textOnly-primary-action{
+    border-radius: 0;
     color: ${theme.indigo8};
     border: none;
     outline: none;
     :hover{
-      color: ${theme.indigo9};
+      color: ${theme.indigo6};
       background: none;
     }
   }
@@ -177,6 +178,11 @@ const GlobalStyle = createGlobalStyle`
   }
   .hideOnDesktop {
     display: block;
+  }
+
+  .active {
+    color: ${props => props.theme.green8};
+    font-weight: bold;
   }
 
   @media (min-width: ${props => props.theme.largeScreen}) {
