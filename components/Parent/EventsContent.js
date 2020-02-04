@@ -7,7 +7,8 @@ const EventsContent = ({ events, allRoutines }) => {
     competition: true,
     convention: false,
     rehearsal: false,
-    recital: false
+    recital: false,
+    other: false
   });
   return (
     <>

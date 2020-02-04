@@ -8,7 +8,7 @@ const StudioCardsDiv = styled.div`
 `;
 
 const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
-  console.log("all studio events:", events);
+  // console.log("all studio events:", events);
   const displayEvents = events
     .filter(event => activeEvents.includes(event.type))
     .sort(function(a, b) {
@@ -25,7 +25,7 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
       allRoutineAttributes.push(routine.ageDivision.toLowerCase());
     }
   }
-  console.log("allRoutineAttributes:", allRoutineAttributes);
+  // console.log("allRoutineAttributes:", allRoutineAttributes);
 
   function hasAttribute(attr) {
     return allRoutineAttributes.includes(attr);
@@ -33,12 +33,15 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
   // const filteredByAttribute = displayEvents.filter(event =>
   //   event.appliesTo.some(hasAttribute)
   // );
-  console.log("displayEvents:", displayEvents);
+  // console.log("displayEvents:", displayEvents);
 
   // console.log("filteredByAttribute:", filteredByAttribute);
 
   return (
     <StudioCardsDiv>
+      {activeEvents.map(event => (
+        <p>display all {event}s</p>
+      ))}
       {displayEvents.map(event => {
         const eventDate = new Date(event.date).toLocaleString("en-US", {
           month: "long",

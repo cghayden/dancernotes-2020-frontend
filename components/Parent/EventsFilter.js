@@ -19,9 +19,16 @@ const EventCheckbox = styled.div`
 `;
 
 function NotesSubNav({ eventFilter, setFilter }) {
+  const eventCategories = [
+    "competition",
+    "convention",
+    "rehearsal",
+    "recital",
+    "other"
+  ];
   return (
     <EventCheckboxesDiv>
-      {Object.keys(eventFilter).map(eventCategory => (
+      {eventCategories.map(eventCategory => (
         <EventCheckbox>
           <input
             type="checkbox"

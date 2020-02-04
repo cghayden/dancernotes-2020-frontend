@@ -1,21 +1,27 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import gql from "graphql-tag";
 import { ParentDisplayConsumer } from "../../components/ParentDisplayProvider";
 
 const ActiveDancerButton = styled.button`
   justify-self: center;
+  background: transparent;
   color: ${props => props.theme.indigo9};
-  width: 60px;
-  height: 60px;
   margin: 0.5rem 0;
   padding: 0;
   border-radius: 50%;
   border: none;
+  :active {
+    transform: translate3d(5px, 5px, 0);
+  }
+  :hover {
+    background: inherit;
+    color: ${props => props.theme.indigo8};
+  }
   img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
+    object-fit: cover;
   }
   p {
     font-size: 1.4rem;
@@ -23,20 +29,27 @@ const ActiveDancerButton = styled.button`
 `;
 const InActiveDancerButton = styled.button`
   justify-self: center;
-  color: ${props => props.theme.gray3};
+  color: ${props => props.theme.gray4};
   padding: 0;
-  width: 45px;
-  height: 45px;
   border-radius: 50%;
   border: none;
+  :active {
+    transform: translate3d(5px, 5px, 0);
+  }
+  :hover {
+    background: inherit;
+    color: ${props => props.theme.indigo8};
+  }
+
   img {
     width: 45px;
     height: 45px;
     border-radius: 50%;
     filter: grayscale(85%);
+    object-fit: cover;
   }
   p {
-    font-size: 1rem;
+    font-size: 1.3rem;
   }
 `;
 

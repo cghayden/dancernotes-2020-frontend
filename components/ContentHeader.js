@@ -5,12 +5,14 @@ import styled from "styled-components";
 // z-index on header prevents dancer cards from overlapping and prevents click event on action buttons/links in the header
 const HeaderStyle = styled.header`
   width: 100%;
-  min-width: 550px;
+  /* min-width: 550px; */
   display: flex;
   align-items: center;
   padding: 0 8vw 2rem 8vw;
   @media (max-width: ${props => props.theme.largeScreen}) {
-    display: none;
+    display: ${props => !props.mobile && `none`};
+    padding-bottom: 1rem;
+    margin-top: -10px;
   }
 `;
 
@@ -18,9 +20,9 @@ const PageAction = styled.div`
   margin-left: auto;
 `;
 
-function ContentHeader({ page, pageAction }) {
+function ContentHeader({ mobile, page, pageAction }) {
   return (
-    <HeaderStyle>
+    <HeaderStyle mobile={mobile}>
       <h1>{page}</h1>
       <PageAction>{pageAction}</PageAction>
     </HeaderStyle>

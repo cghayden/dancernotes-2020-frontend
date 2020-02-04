@@ -206,11 +206,11 @@ function CreateDancerForm() {
             </>
           )}
 
-          {newDancer && <p>Success - you created {newDancer.name}</p>}
+          {newDancer && <p>Success - you created {newDancer.firstName}</p>}
           {newDancer && errorUploadingAvatar && (
             <p>
               Warning: there was a problem uploading the image for
-              {newDancer.name}. You can try to add an image now or later by
+              {newDancer.firstName}. You can try to add an image now or later by
               updating the dancer
             </p>
           )}

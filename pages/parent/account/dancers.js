@@ -11,11 +11,11 @@ function DancersPage() {
   //todo - query only the dancers of the parent
   const { data, loading, error } = useQuery(PARENT_USER_QUERY);
   const parentUser = data ? data.parentUser : {};
-  const hasDancers = parentUser && parentUser.dancers.length > 0;
+  const hasDancers = parentUser.dancers && parentUser.dancers.length > 0;
 
   const AddDancerButton = (
     <Link href="addDancer">
-      <a>Add a Dancer</a>
+      <a className="textOnly-primary-action">Add a Dancer</a>
     </Link>
   );
 

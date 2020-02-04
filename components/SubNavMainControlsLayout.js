@@ -22,8 +22,12 @@ const MainStyle = styled.main`
   }
 `;
 
-//action is a component that triggers an pageAction for the page, i.e add a dancer, or create a new dance
+//This component sets the layout when there is a control panel for the page. The control panel is offscreen on mobile, and the text for the button that toggles the offscreen panel must be passed as 'offscreenToggler' prop (Sting) from the page that needs it.  offscreenToggler must then be passed to MobileStatusBar
+
+// ContentHeader recieves mobile prop to signal that it must remain on the page in the mobile layout.
+// this is necessary because the pageAction needs to be displayed in the main content area because the offscreen toggler is occupying the place of the action button in the mobileNav.
 const SubNavMainLayout = ({
+  offscreenToggler = null,
   children,
   page = "",
   mobileHeader = "",
@@ -31,11 +35,15 @@ const SubNavMainLayout = ({
 }) => {
   return (
     <Fragment>
-      <MobileStatusBar mobileHeader={mobileHeader} pageAction={pageAction} />
+      <MobileStatusBar
+        offscreenToggler={offscreenToggler}
+        mobileHeader={mobileHeader}
+        pageAction={pageAction}
+      />
       <MobileNav />
       <DesktopNav />
       <MainStyle>
-        <ContentHeader page={page} pageAction={pageAction} />
+        <ContentHeader mobile page={page} pageAction={pageAction} />
         {children}
       </MainStyle>
     </Fragment>

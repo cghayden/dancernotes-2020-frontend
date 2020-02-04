@@ -6,12 +6,13 @@ import { ParentDisplayConsumer } from "../ParentDisplayProvider";
 import styled from "styled-components";
 
 const ControlPanelStyles = styled.div`
-  padding: 1rem 0.5rem 100px 0.5rem;
+  padding: 1rem 1rem 100px 1rem;
   transform: ${props =>
     props.showControlPanel ? "translateX(0%)" : "translateX(150%)"};
   transition: all 0.4s;
   position: fixed;
-  top: ${props => props.theme.mobileMainTop};
+  top: ${props => props.theme.mobileStatusBarHeight};
+  margin-top: 5px;
   left: 3vw;
   width: 94vw;
   height: 75vh;
@@ -34,6 +35,7 @@ const ControlPanelStyles = styled.div`
     left: auto;
     right: 0;
     top: ${props => props.theme.navHeight};
+    margin-top: 0;
     ul {
       font-size: 1rem;
       align-items: start;
@@ -44,6 +46,16 @@ const ControlPanelStyles = styled.div`
 const AllStudioCheckboxes = styled.div`
   padding-bottom: 1.2rem;
   padding-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  div {
+    display: flex;
+    align-content: center;
+    margin-bottom: 0.5rem;
+  }
+  @media (min-width: ${props => props.theme.largeScreen}) {
+    flex-direction: column;
+  }
 `;
 
 const StudioLabel = styled.label`

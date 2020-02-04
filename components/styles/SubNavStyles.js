@@ -26,11 +26,6 @@ const SubNavStyles = styled.nav`
     text-transform: none;
   }
 
-  .active {
-    color: ${props => props.theme.vividBlue8};
-    font-weight: bold;
-  }
-
   ul {
     display: flex;
     justify-content: center;
@@ -56,6 +51,9 @@ const SubNavStyles = styled.nav`
       border-bottom: 2px solid ${props => props.theme.indigo8};
       margin-bottom: -2px;
     }
+    .active{
+        border-bottom: 2px solid ${props => props.theme.indigo8};
+      }
   }
   @media (min-width: ${props => props.theme.largeScreen}) {
     a,
@@ -68,7 +66,7 @@ const SubNavStyles = styled.nav`
         margin-left: -2px;
       }
     }
-    align-items: unset;
+    /* align-items: unset; */
     padding-top: 1rem;
     top: ${props => props.theme.navHeight};
     padding-left: 4vw;

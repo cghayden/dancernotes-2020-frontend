@@ -3,6 +3,7 @@ import Link from "next/link";
 import Router from "next/router";
 import NProgress from "nprogress";
 import { NavStyles } from "../styles/NavStyles";
+import StyledLink from "../StyledLink";
 
 Router.onRouteChangeStart = () => {
   NProgress.start();
@@ -17,18 +18,18 @@ Router.onRouteChangeError = () => {
 const MobileNav = () => {
   return (
     <NavStyles>
-      <Link href="/parent/notes/routines">
+      <StyledLink activeClassName="active" href="/parent/notes/routines">
         <a>Notes</a>
-      </Link>
-      <Link href="/parent/discover">
+      </StyledLink>
+      <StyledLink activeClassName="active" href="/parent/discover">
         <a>Discover</a>
-      </Link>
-      <Link href="/parent/shop">
+      </StyledLink>
+      <StyledLink activeClassName="active" href="/parent/shop">
         <a>Shop</a>
-      </Link>
-      <Link href="/parent/account/profile">
+      </StyledLink>
+      <StyledLink activeClassName="active" href="/parent/account/profile">
         <a>Account</a>
-      </Link>
+      </StyledLink>
     </NavStyles>
   );
 };
