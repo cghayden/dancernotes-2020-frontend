@@ -4,7 +4,7 @@ import styled from "styled-components";
 // import useMeasure from "../../lib/useMeasure";
 import Card from "../styles/Card";
 import Modal from "../Modal";
-import DanceCardHeader from "../DanceCardHeader";
+import DanceCardHeader from "./DanceCardHeader";
 import StudioDanceDetails from "./StudioDanceDetails";
 
 const DanceCardStyles = styled(Card)`
