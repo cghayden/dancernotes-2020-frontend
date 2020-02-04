@@ -172,6 +172,7 @@ function UpdateDancerForm({ dancer, closeFunc, hasAvatar, showAvatarPreview }) {
         <p>{status}</p>
         <div className="form-footer">
           <button
+            className="btn-action-primary"
             type="submit"
             disabled={loading || disableButton}
             aria-busy={loading}

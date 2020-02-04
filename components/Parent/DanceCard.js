@@ -107,13 +107,18 @@ function DanceCard(props) {
         </DanceCardTime>
       </DanceCardHeader>
       <DanceCardNav>
-        <button onClick={toggleBody}>Details</button>
-        <button onClick={() => setShowMediaPlayer(!showMediaPlayer)}>
+        <button className="textOnly-primary-action" onClick={toggleBody}>
+          Details
+        </button>
+        <button
+          className="textOnly-primary-action"
+          onClick={() => setShowMediaPlayer(!showMediaPlayer)}
+        >
           Music
         </button>
         {dance.custom && (
           <Link href={`/parent/updateDance/${dance.id}`}>
-            <a>Edit</a>
+            <a className="textOnly-primary-action">Edit</a>
           </Link>
         )}
       </DanceCardNav>

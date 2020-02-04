@@ -63,8 +63,8 @@ const GlobalStyle = createGlobalStyle`
   border-radius: 5px;
   background: transparent;
     :hover {
-    background-color: ${theme.newBlue[10].hsl};
-    color: ${theme.newBlue[90].hsl};
+    background-color: inherit;
+    color: inherit;
     transition: background-color .25s ease-out;
     }
     :disabled{
