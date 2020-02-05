@@ -92,3 +92,4 @@ const LandingNav = ({ setActive }) => {
 };
 
 export default LandingNav;
+export { LandingNavStyle, AboutButton };

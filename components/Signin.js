@@ -4,6 +4,9 @@ import gql from "graphql-tag";
 import Router from "next/router";
 import { LandingPageForm } from "./styles/Form";
 import Error from "./Error";
+import styled from "styled-components";
+
+const ResetButton = styled.button``;
 
 const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($email: String!, $password: String!) {
@@ -24,6 +27,7 @@ class Signin extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
+    const { setActive } = this.props;
     return (
       <Mutation
         mutation={SIGNIN_MUTATION}
@@ -53,7 +57,7 @@ class Signin extends Component {
                 <h2>Sign Into Your Dancer Notes</h2>
               </div>
               <div className="form-content">
-                <Error error={error} />
+                <Error error={"An Error Occurred With This Request"} />
                 <label htmlFor="email" className="visuallyHidden">
                   Email
                 </label>
@@ -76,6 +80,13 @@ class Signin extends Component {
                 />
               </div>
               <button type="submit">Sign In!</button>
+              <ResetButton
+                type="button"
+                className="btn-small"
+                onClick={() => setActive("requestResetPassword")}
+              >
+                Reset my Password
+              </ResetButton>
             </fieldset>
           </LandingPageForm>
         )}
