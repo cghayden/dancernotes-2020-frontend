@@ -1,5 +1,5 @@
 import NoNavLayout from "../../components/Studio/NoNavLayout";
-import CreateHairstyleForm from "../../components/Studio/CreateHairstyleForm";
+import CreateHairStyleForm from "../../components/Studio/CreateHairStyleForm";
 import Router from "next/router";
 
 const CancelButton = (
@@ -22,7 +22,7 @@ const CreateHairstylePage = () => {
       page={"Add a Hairstyle"}
       pageAction={CancelButton}
     >
-      <CreateHairstyleForm />
+      <CreateHairStyleForm />
     </NoNavLayout>
   );
 };
