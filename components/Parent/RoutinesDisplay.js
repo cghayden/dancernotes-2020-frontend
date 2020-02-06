@@ -40,7 +40,7 @@ class RoutinesDisplay extends Component {
                         <p>You have no routines to display</p>
                       </div>
                       <div className="card__section">
-                        <Link href="parent/createCustomRoutine">
+                        <Link href="/parent/createCustomRoutine">
                           <a className="btn-action-primary">Create a Routine</a>
                         </Link>
                       </div>

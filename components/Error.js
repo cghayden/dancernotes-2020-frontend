@@ -29,7 +29,7 @@ const Error = ({ error }) => {
     return error.networkError.result.errors.map((error, i) => (
       <ErrorStyles key={i}>
         <p data-test="graphql-error">
-          <strong>Shoot!</strong>
+          <strong>Shoot! An Error has occurred</strong>
           {error.message.replace("GraphQL error: ", "")}
         </p>
       </ErrorStyles>
@@ -46,11 +46,11 @@ const Error = ({ error }) => {
 };
 
 Error.defaultProps = {
-  error: {},
+  error: {}
 };
 
 Error.propTypes = {
-  error: PropTypes.object,
+  error: PropTypes.object
 };
 
 export default Error;

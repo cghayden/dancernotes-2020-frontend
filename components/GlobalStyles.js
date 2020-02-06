@@ -193,7 +193,16 @@ const GlobalStyle = createGlobalStyle`
       display: none;
     }
   }
-
+  .message {
+    margin-bottom: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 14px;
+  }
+  .py1{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
 `;
 
 export default class GlobalStyles extends Component {

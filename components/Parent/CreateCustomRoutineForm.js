@@ -45,6 +45,15 @@ const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
   }
 `;
 
+const Alert = styled.div`
+  position: fixed;
+  bottom: 50px;
+  left: 10px;
+  right: 10px;
+  height: 300px;
+  background: white;
+`;
+
 const ChosenDancers = styled.ul`
   margin-bottom: 0.5rem;
   display: flex;
@@ -220,7 +229,7 @@ function CreateCustomRoutineForm({ parent }) {
 
   return (
     <Fragment>
-      <Modal open={showModal} setOpen={toggleModal}>
+      {/* <Modal open={showModal} setOpen={toggleModal}>
         <div>
           {errorCreatingCustomRoutine && (
             <>
@@ -253,7 +262,7 @@ function CreateCustomRoutineForm({ parent }) {
             <a>I'm finished creating classes</a>
           </Link>
         </div>
-      </Modal>
+      </Modal> */}
       <Card>
         <Form method="post" onSubmit={async e => await saveNewCustomRoutine(e)}>
           <fieldset disabled={loading} aria-busy={loading}>
@@ -261,8 +270,8 @@ function CreateCustomRoutineForm({ parent }) {
             <div className="input-item">
               <ChosenDancers>
                 <label htmlFor="dancer">Dancer(s):*</label>
-                {dancers.map(dancer => (
-                  <li>{dancer}</li>
+                {dancers.map((dancer, index) => (
+                  <li key={index}>{dancer}</li>
                 ))}
               </ChosenDancers>
 
@@ -441,9 +450,50 @@ function CreateCustomRoutineForm({ parent }) {
               </div>
             )}
 
-            <div className="form-footer">
-              <p>{status}</p>
+            <p>{status}</p>
+            {showModal && (
+              <Alert>
+                {errorCreatingCustomRoutine && (
+                  <>
+                    <p>
+                      Warning: there was a problem saving your class. Please try
+                      again:
+                    </p>
+                    <button role="button" onClick={() => toggleModal(false)}>
+                      Try Again
+                    </button>
+                  </>
+                )}
 
+                {newDanceClass && (
+                  <p>Success - you created {newDanceClass.name}</p>
+                )}
+                {newDanceClass && errorUploadingSong && (
+                  <p>
+                    Warning: there was a problem uploading the music for{" "}
+                    {newDanceClass.name}. You can try to add music now or later
+                    by updating the dance class:
+                    <Link href={`/studio/updateClass/${newDanceClass.id}`}>
+                      <a>Update Class</a>
+                    </Link>
+                  </p>
+                )}
+
+                <button
+                  role="button"
+                  className="btn-action-primary"
+                  onClick={() => toggleModal(false)}
+                >
+                  Create Another Class
+                </button>
+                <Link href="/parent/notes/routines">
+                  <a className="btn-action-secondary">
+                    I'm finished creating classes
+                  </a>
+                </Link>
+              </Alert>
+            )}
+            <div className="form-footer">
               <button
                 className="btn-action-primary"
                 type="submit"

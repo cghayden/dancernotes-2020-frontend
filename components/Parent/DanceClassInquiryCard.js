@@ -158,13 +158,17 @@ function DanceClassInquiryCard({
       <DanceClassInfo>
         <DanceClassName>{dance.name}</DanceClassName>
         <p>
-          Ages: <span>( dance.ages )</span>
+          <span>{dance.ageDivision}</span>
+          {"  "}
+          <span>{dance.competitiveLevel}</span>
+          {"  "}
+          <span>{dance.style}</span>
         </p>
         <DanceClassTime>
-          <Day>{dance.day}</Day>
-
+          {dance.day && <Day>{dance.day}</Day>}
           <p>
-            <span>{dance.startTime}</span> - <span>{dance.endTime}</span>
+            {dance.startTime && <span>{dance.startTime}</span>}
+            {dance.endTime && <span>{` - ${dance.endTime}`}</span>}
           </p>
         </DanceClassTime>
         {removeRequestLoading && <p>Removing request...</p>}

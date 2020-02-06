@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { UPDATE_CATEGORY_MUTATION } from "../Mutations";
 import { CATEGORIES_QUERY } from "./Queries";
+import { STUDIO_USER_QUERY } from "./useStudio";
 import XIcon from "../Icons/X";
 //TODO - add optimistic return to add category to list
 
@@ -58,7 +59,8 @@ export default class ClassCategoryList extends Component {
       variables: {
         category: this.props.category,
         items: newItems
-      }
+      },
+      refetchQueries: [{ query: STUDIO_USER_QUERY }]
     })
       .then(() => this.setState({ newItem: "" }))
       .catch(err => {

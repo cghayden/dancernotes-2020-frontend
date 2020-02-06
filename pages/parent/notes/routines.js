@@ -17,8 +17,8 @@ const ParentHome = () => {
   const parentUser = data ? data.parentUser : {};
 
   const AddRoutineButton = (
-    <Link href="createCustomRoutine">
-      <a class="textOnly-primary-action">Create a Routine</a>
+    <Link href="/parent/createCustomRoutine">
+      <a className="textOnly-primary-action">Create a Routine</a>
     </Link>
   );
   if (loading || error)
