@@ -25,7 +25,7 @@ const CREATE_HAIRSTYLE_MUTATION = gql`
   }
 `;
 
-export default class AddMakeupForm extends Component {
+export default class CreateHairStyleForm extends Component {
   state = {
     name: "",
     image: "",
