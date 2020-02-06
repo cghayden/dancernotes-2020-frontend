@@ -446,14 +446,18 @@ function UpdateDanceClass({ danceClass, studio }) {
               <option value={"none"}>None</option>
             </select>
           </div>
+          <p>{status}</p>
           <div>
-            <p>{status}</p>
-
-            <button type="submit" disabled={disableButton}>
+            <button
+              className="btn-action-primary"
+              type="submit"
+              disabled={disableButton}
+            >
               SAV
               {loading ? "ING " : "E "} Class
             </button>
             <button
+              className="btn-action-secondary"
               type="button"
               onClick={() =>
                 Router.push({

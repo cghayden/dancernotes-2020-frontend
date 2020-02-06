@@ -72,7 +72,7 @@ function CreateDanceClass({ studio }) {
   const [showModal, toggleModal] = useState(false);
   const [status, setStatus] = useState();
   const [showFileInput, toggleFileInput] = useState(false);
-  const [musicForUpload, setMusicForUpload] = useState();
+
   const [musicData, setMusicData] = useState({});
 
   const [
@@ -84,19 +84,24 @@ function CreateDanceClass({ studio }) {
     }
   ] = useMutation(CREATE_DANCE_CLASS_MUTATION, {
     variables: { ...inputs },
-    onCompleted: () => {
-      resetForm();
-    },
     refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }],
     awaitRefetchQueries: true
   });
 
   const [
     updateDanceClass,
-    { error: errorUpdatingDanceClass, loading: updatingDanceClass }
+    {
+      data: updatedDance,
+      error: errorUpdatingDanceClass,
+      loading: updatingDanceClass
+    }
   ] = useMutation(UPDATE_DANCECLASS_MUTATION, {
     onError: () => cloudinaryCleanup(),
-    refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }]
+    refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }],
+    awaitRefetchQueries: true,
+    onCompleted: () => {
+      resetForm();
+    }
   });
 
   const [
@@ -125,7 +130,7 @@ function CreateDanceClass({ studio }) {
 
   function setSongtoState(e) {
     const audioFile = e.target.files[0];
-    setMusicForUpload(audioFile);
+    updateInputs({ ...inputs, audioFile });
   }
 
   async function saveNewDanceClass(e) {
@@ -133,24 +138,27 @@ function CreateDanceClass({ studio }) {
     setStatus("Creating Class...");
     const newDanceClass = await createDanceClass();
     //A. if music file is queued in state, create dance, upload music with tag of routineId, then update routine with the music url and musicId
-    if (musicForUpload) {
+    if (inputs.audioFile) {
       setStatus("Uploading Music...");
       const newDanceClassId = newDanceClass.data.createDanceClass.id;
-      await uploadSongAndUpdateClass(newDanceClassId).catch(() => {
-        setStatus();
-        toggleModal(true);
-      });
+      await uploadSongAndUpdateClass(newDanceClassId, inputs.audioFile).catch(
+        err => {
+          setStatus();
+          toggleModal(true);
+          setCloudinaryUploadError(err);
+        }
+      );
     }
     resetForm();
     toggleModal(true);
   }
 
-  async function uploadSongAndUpdateClass(danceClassId) {
+  async function uploadSongAndUpdateClass(danceClassId, asset) {
     setLoadingSong(true);
     const data = new FormData();
-    data.append("file", inputs.audioFile);
+    data.append("file", asset);
     data.append("upload_preset", "dancernotes-music");
-    data.append("tag", danceClassId);
+    data.append("tags", danceClassId);
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/coreytesting/video/upload",
       {
@@ -166,7 +174,6 @@ function CreateDanceClass({ studio }) {
     if (file.error) {
       setCloudinaryUploadError(file.error);
     } else {
-      setMusicData({ music: file.secure_url, musicId: file.public_id });
       setStatus("Updating class...");
       await updateDanceClass({
         variables: {
@@ -442,9 +449,13 @@ function CreateDanceClass({ studio }) {
             </div>
           )}
 
+          <p>{status}</p>
           <div className="form-footer">
-            <p>{status}</p>
-            <button type="submit" disabled={loading}>
+            <button
+              className="btn-action-primary"
+              type="submit"
+              disabled={loading}
+            >
               Creat
               {loading ? "ing " : "e "} Class
             </button>
