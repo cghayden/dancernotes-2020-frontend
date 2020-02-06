@@ -4,6 +4,9 @@ import styled from "styled-components";
 
 // z-index on header prevents dancer cards from overlapping and prevents click event on action buttons/links in the header
 const HeaderStyle = styled.header`
+  h1 {
+    font-size: 1.2rem;
+  }
   width: 100%;
   /* min-width: 550px; */
   display: flex;
@@ -13,6 +16,9 @@ const HeaderStyle = styled.header`
     display: ${props => !props.mobile && `none`};
     padding-bottom: 1rem;
     margin-top: -10px;
+    h1 {
+      font-size: 1.4rem;
+    }
   }
 `;
 

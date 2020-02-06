@@ -57,7 +57,7 @@ class Signin extends Component {
                 <h2>Sign Into Your Dancer Notes</h2>
               </div>
               <div className="form-content">
-                <Error error={"An Error Occurred With This Request"} />
+                <Error error={error} />
                 <label htmlFor="email" className="visuallyHidden">
                   Email
                 </label>

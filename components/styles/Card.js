@@ -30,12 +30,7 @@ const Card = styled.div`
     width: 300px;
     height: 300px;
   }
-  .message {
-    margin-bottom: 0;
-    padding-top: .5rem;
-    padding-bottom: .5rem;
-    font-size: 14px;
-  }
+  
 `;
 
 export default Card;

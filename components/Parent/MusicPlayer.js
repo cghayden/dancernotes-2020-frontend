@@ -17,7 +17,7 @@ const MusicPlayer = ({ src }) => {
       </>
     );
   }
-  return <p>Music is unavailable</p>;
+  return <p className="py1">Music is unavailable</p>;
 };
 
 export default MusicPlayer;

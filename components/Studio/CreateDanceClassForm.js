@@ -49,7 +49,7 @@ const CREATE_DANCE_CLASS_MUTATION = gql`
 
 const initialInputState = {
   name: "",
-  day: "Day...",
+  day: "",
   startTime: "",
   endTime: "",
   style: "",
@@ -259,9 +259,10 @@ function CreateDanceClass({ studio }) {
                 value={inputs.day}
                 onChange={handleChange}
               >
-                <option default value={"Day..."} disabled>
+                <option default value={""} disabled>
                   Day...
                 </option>
+                {/* <option value="TBD">TBD</option> */}
                 <option value="Mon.">Mon.</option>
                 <option value="Tue.">Tue.</option>
                 <option value="Wed.">Wed.</option>

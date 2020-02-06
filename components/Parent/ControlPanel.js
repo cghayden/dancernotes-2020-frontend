@@ -43,6 +43,10 @@ const ControlPanelStyles = styled.div`
   }
 `;
 
+const ControlPanelHeading = styled.h3`
+  margin-bottom: 1rem;
+`;
+
 const AllStudioCheckboxes = styled.div`
   padding-bottom: 1.2rem;
   padding-top: 1rem;
@@ -107,7 +111,7 @@ const ControlPanel = ({ dancerIds, studios, customRoutines }) => {
       }) => {
         return (
           <ControlPanelStyles showControlPanel={showControlPanel}>
-            <h3>Display:</h3>
+            <ControlPanelHeading>Display:</ControlPanelHeading>
             {/* checkbox for each parent studio */}
             {showAllStudioFilter && (
               <AllStudioCheckboxes>

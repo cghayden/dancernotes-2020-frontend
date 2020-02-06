@@ -47,7 +47,7 @@ export default function Modal({ children, open }) {
           {transition.map(
             ({ item, key, props: animation }) =>
               item && (
-                <ModalBackdrop style={animation}>
+                <ModalBackdrop key={key} style={animation}>
                   <AnimatedModalContainer>{children}</AnimatedModalContainer>
                 </ModalBackdrop>
               )
