@@ -26,7 +26,7 @@ const PageAction = styled.div`
   margin-left: auto;
 `;
 
-function StudioMobileStatusBar({ mobileHeader, pageAction }) {
+function StudioMobileStatusBar({ mobileHeader, pageAction=null }) {
   return (
     <StudioMobileStatusBarStyles>
       <Title>{mobileHeader}</Title>

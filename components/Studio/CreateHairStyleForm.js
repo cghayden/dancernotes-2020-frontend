@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { Mutation, Query } from "react-apollo";
+import { Mutation } from "react-apollo";
+import Router from "next/router";
 import gql from "graphql-tag";
 import { HAIRSTYLES_QUERY } from "../../pages/studio/hairstyles";
 import Form from "../styles/Form";
 import Error from "../Error";
+import Card from "../styles/Card";
 
 const CREATE_HAIRSTYLE_MUTATION = gql`
   mutation CREATE_HAIRSTYLE_MUTATION(
@@ -28,7 +30,7 @@ export default class AddMakeupForm extends Component {
     name: "",
     image: "",
     link: "",
-    description: "",
+    description: ""
   };
   handleChange = e => {
     const { name, type, value } = e.target;
@@ -44,97 +46,101 @@ export default class AddMakeupForm extends Component {
 
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/coreytesting/image/upload",
-      { method: "POST", body: data },
+      { method: "POST", body: data }
     );
     const file = await res.json();
     this.setState({
-      image: file.secure_url,
+      image: file.secure_url
     });
-  };
-
-  saveHairStyle = async (e, createHairStyle, closeForm) => {
-    e.preventDefault();
-    await createHairStyle({ variables: this.state });
-    this.setState(
-      {
-        name: "",
-        image: "",
-        link: "",
-        description: "",
-      },
-      () => closeForm(false),
-    );
   };
 
   render() {
     return (
       <Mutation
         mutation={CREATE_HAIRSTYLE_MUTATION}
+        variables={this.state}
         refetchQueries={[{ query: HAIRSTYLES_QUERY }]}
         awaitRefetchQueries={true}
+        onCompleted={() => Router.push("hairstyles")}
       >
         {(createHairStyle, { error, loading }) => (
-          <Form
-            method="post"
-            onSubmit={e =>
-              this.saveHairStyle(e, createHairStyle, this.props.closeForm)
-            }
-          >
-            <h2>Create a Hairstyle</h2>
-            <fieldset disabled={loading} aria-busy={loading}>
-              <Error error={error} />
-              <label htmlFor="name">
-                Name
-                <input
-                  id="name"
-                  required
-                  type="text"
-                  name="name"
-                  value={this.state.name}
-                  onChange={this.handleChange}
-                />
-              </label>
+          <Card>
+            <Form
+              method="post"
+              onSubmit={async e => {
+                await createHairStyle();
+                this.setState({
+                  name: "",
+                  image: "",
+                  link: "",
+                  description: ""
+                });
+                Router.push("hairstyles");
+              }}
+            >
+              <h2>Create a Hairstyle</h2>
+              <fieldset disabled={loading} aria-busy={loading}>
+                <Error error={error} />
+                <div className="input-item">
+                  <label htmlFor="name">Name </label>
+                  <input
+                    id="name"
+                    required
+                    type="text"
+                    name="name"
+                    value={this.state.name}
+                    onChange={this.handleChange}
+                  />
+                </div>
+                <div className="input-item">
+                  <label htmlFor="description">Description </label>
+                  <input
+                    id="description"
+                    type="text"
+                    name="description"
+                    value={this.state.description}
+                    onChange={this.handleChange}
+                  />
+                </div>
+                <div className="input-item">
+                  <label htmlFor="image">Image </label>
+                  <input
+                    type="file"
+                    id="image"
+                    name="file"
+                    placeholder="Upload an Image"
+                    onChange={this.uploadImage}
+                  />
+                </div>
+                {this.state.image && (
+                  <img width="200" src={this.state.image} alt="image preview" />
+                )}
+                <div className="input-item">
+                  <label htmlFor="link">
+                    Include a link to an instructional video
+                  </label>
+                  <input
+                    type="text"
+                    id="link"
+                    name="link"
+                    placeholder="Paste link here"
+                    onChange={this.handleChange}
+                  />
+                </div>
 
-              <label htmlFor="description">
-                Description
-                <input
-                  id="description"
-                  type="text"
-                  name="description"
-                  value={this.state.description}
-                  onChange={this.handleChange}
-                />
-              </label>
-              <label htmlFor="image">
-                Image
-                <input
-                  type="file"
-                  id="image"
-                  name="file"
-                  placeholder="Upload an Image"
-                  onChange={this.uploadImage}
-                />
-              </label>
-              {this.state.image && (
-                <img width="200" src={this.state.image} alt="image preview" />
-              )}
-              <label htmlFor="link">
-                Include a link to an instructional video
-                <input
-                  type="text"
-                  id="link"
-                  name="link"
-                  placeholder="Paste link here"
-                  onChange={this.handleChange}
-                />
-              </label>
-
-              <button type="submit">Save</button>
-              <button type="button" onClick={() => this.props.closeForm(false)}>
-                Cancel
-              </button>
-            </fieldset>
-          </Form>
+                <button className="btn-action-primary" type="submit">
+                  Save
+                </button>
+                <button
+                  type="button"
+                  className="btn-danger"
+                  onClick={() => Router.push("hairstyles")}
+                >
+                  Cancel
+                </button>
+              </fieldset>
+            </Form>
+          </Card>
         )}
       </Mutation>
     );

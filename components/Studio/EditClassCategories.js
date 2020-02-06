@@ -18,7 +18,7 @@ const StyledClassCategories = styled.div`
 
   h4 {
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin: 0;
   }
   input {

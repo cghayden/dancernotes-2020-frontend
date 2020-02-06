@@ -1,7 +1,8 @@
 import Link from "next/link";
+import SubNavMainLayout from "../../components/Studio/SubNavMainLayout";
+import ClassesSubNav from "../../components/Studio/ClassesSubNav";
 
 import DanceClasses from "../../components/Studio/DanceClasses";
-import StudioLayout from "../../components/Studio/StudioLayout";
 
 const AddClassButton = (
   <Link href="createClass">
@@ -10,8 +11,15 @@ const AddClassButton = (
 );
 
 const DanceClassesPage = () => (
-  <StudioLayout page={"Classes"} pageAction={AddClassButton}>
-    <DanceClasses />
-  </StudioLayout>
+  <>
+    <ClassesSubNav />
+    <SubNavMainLayout
+      page="Classes"
+      mobileHeader="Classes"
+      pageAction={AddClassButton}
+    >
+      <DanceClasses />
+    </SubNavMainLayout>
+  </>
 );
 export default DanceClassesPage;

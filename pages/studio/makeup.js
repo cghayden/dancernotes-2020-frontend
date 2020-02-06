@@ -3,8 +3,9 @@ import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import Link from "next/link";
-import StudioLayout from "../../components/Studio/StudioLayout";
+import NoNavLayout from "../../components/Studio/NoNavLayout";
 import Error from "../../components/Error";
+import Loading from "../../components/Loading";
 import MakeupSetCard from "../../components/Studio/MakeupSetCard";
 
 const STUDIO_MAKEUP_QUERY = gql`
@@ -29,17 +30,25 @@ function Makeup() {
     </Link>
   );
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return error && <Error error={error} />;
+  if (loading || error)
+    return (
+      <NoNavLayout mobileHeader="Makeup" page="Makeup">
+        {loading && <Loading />}
+        {error && <Error error={error} />}
+        <Link href="/studio/createMakeup">
+          <a>Create a Makeup Set</a>
+        </Link>
+      </NoNavLayout>
+    );
 
   if (data.myStudio.makeupSets.length === 0) {
     return (
-      <StudioLayout page="Makeup">
+      <NoNavLayout mobileHeader="Makeup" page="Makeup">
         <p>You have not defined any makeup Sets...</p>
         <Link href="/studio/createMakeup">
           <a>Create a Makeup Set</a>
         </Link>
-      </StudioLayout>
+      </NoNavLayout>
     );
   }
 
