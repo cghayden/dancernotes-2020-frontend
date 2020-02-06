@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/react-hooks";
-import SubNavMainLayout from "../../components/Studio/SubNavMainLayout";
+import NoNavLayout from "../../components/Studio/NoNavLayout";
 import Link from "next/link";
 import Loading from "../../components/Loading";
 import Error from "../../components/Error";
@@ -10,14 +10,14 @@ function StudioHome() {
   const { data, error, loading } = useQuery(STUDIO_USER_QUERY);
   if (loading || error) {
     return (
-      <SubNavMainLayout mobileHeader="Home" page="Home">
+      <NoNavLayout mobileHeader="Home" page="Home">
         {loading && <Loading />}
         {error && <Error error={error} />}
-      </SubNavMainLayout>
+      </NoNavLayout>
     );
   }
   return (
-    <SubNavMainLayout mobileHeader="Home" page="Home">
+    <NoNavLayout mobileHeader="Home" page="Home">
       <Card>
         <p>Welcome to dancernotes!</p>
 
@@ -27,12 +27,12 @@ function StudioHome() {
             To begin, configure your class categories that you will use to
             create and describe your dance classes.
             <Link href="configureClassCategories">
-              <a></a>
+              <a>Configure Class Categories</a>
             </Link>
           </>
         )}
       </Card>
-    </SubNavMainLayout>
+    </NoNavLayout>
   );
 }
 

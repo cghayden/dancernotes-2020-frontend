@@ -60,7 +60,10 @@ export default class ClassCategoryList extends Component {
         category: this.props.category,
         items: newItems
       },
-      refetchQueries: [{ query: STUDIO_USER_QUERY }]
+      refetchQueries: [
+        { query: STUDIO_USER_QUERY },
+        { query: CATEGORIES_QUERY }
+      ]
     })
       .then(() => this.setState({ newItem: "" }))
       .catch(err => {
@@ -90,7 +93,6 @@ export default class ClassCategoryList extends Component {
   render() {
     const currentItems = this.props.currentItems;
     const category = this.formatCategoryHeading(this.props.category);
-    console.log("category:", category);
     const disabled = this.state.newItem === "" ? true : false;
     return (
       <Mutation
