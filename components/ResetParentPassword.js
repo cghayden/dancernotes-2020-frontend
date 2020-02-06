@@ -1,4 +1,5 @@
 import React from "react";
+import Router from "next/router";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { LandingPageForm } from "./styles/Form";
@@ -31,7 +32,8 @@ function ResetParentPassword({ resetToken }) {
   const [resetParentPassword, { loading, error }] = useMutation(
     RESET_PARENT_PASSWORD,
     {
-      variables: { ...inputs, resetToken }
+      variables: { ...inputs, resetToken },
+      onCompleted: () => Router.push("/parent/notes/routines")
     }
   );
 
