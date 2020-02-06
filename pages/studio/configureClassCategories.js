@@ -1,15 +1,18 @@
+import SubNavMainLayout from "../../components/Studio/SubNavMainLayout";
+import ClassesSubNav from "../../components/Studio/ClassesSubNav";
 import EditClassCategories from "../../components/Studio/EditClassCategories";
-import StudioLayout from "../../components/Studio/StudioLayout";
-import ContentHeader from "../../components/ContentHeader";
 
-function configureClassCategoriesPage(props) {
+function configureClassCategoriesPage() {
   return (
-    <StudioLayout>
-      <main>
-        <ContentHeader page={"Configure your class options"} />
+    <>
+      <ClassesSubNav />
+      <SubNavMainLayout
+        mobileHeader="Configure Class Option"
+        page="Configure class options"
+      >
         <EditClassCategories />
-      </main>
-    </StudioLayout>
+      </SubNavMainLayout>
+    </>
   );
 }
 

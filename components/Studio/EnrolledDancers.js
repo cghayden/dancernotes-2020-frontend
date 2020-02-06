@@ -11,6 +11,7 @@ const EnrolledDancers = () => {
   if (error) return <Error error={error} />;
   return (
     <>
+      {studioDancers.length < 1 && <p>No Dancers are enrolled</p>}
       {studioDancers.map(dancer => (
         <StudioDancerCard key={dancer.id} dancer={dancer} />
       ))}

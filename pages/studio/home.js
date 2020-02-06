@@ -1,33 +1,39 @@
-import StudioUserQuery from "../../components/Studio/StudioUserQuery";
+import { useQuery } from "@apollo/react-hooks";
 import SubNavMainLayout from "../../components/Studio/SubNavMainLayout";
+import Link from "next/link";
 import Loading from "../../components/Loading";
 import Error from "../../components/Error";
-class StudioHome extends React.Component {
-  render() {
-    return (
-      <StudioUserQuery>
-        {({ data: { myStudio } = {}, loading, error }) => {
-          if (loading || error)
-            return (
-              <SubNavMainLayout mobileHeader="Home" page="Home">
-                {loading && <Loading />}
-                {error && <Error error={error} />}
-              </SubNavMainLayout>
-            );
+import Card from "../../components/styles/Card";
+import { STUDIO_USER_QUERY } from "../../components/Studio/useStudio";
 
-          return (
-            <SubNavMainLayout mobileHeader="Home" page="Home">
-              <main>
-                <p>Welcome to dancernotes!</p>
-                <p>Add dances to your account to create your class schedule.</p>
-                <p>list of links to possible actions?</p>
-              </main>
-            </SubNavMainLayout>
-          );
-        }}
-      </StudioUserQuery>
+function StudioHome() {
+  const { data, error, loading } = useQuery(STUDIO_USER_QUERY);
+  if (loading || error) {
+    return (
+      <SubNavMainLayout mobileHeader="Home" page="Home">
+        {loading && <Loading />}
+        {error && <Error error={error} />}
+      </SubNavMainLayout>
     );
   }
+  return (
+    <SubNavMainLayout mobileHeader="Home" page="Home">
+      <Card>
+        <p>Welcome to dancernotes!</p>
+
+        {/* <p>Add dances to your account to create your class schedule.</p> */}
+        {data.myStudio.danceClasses.length < 1 && (
+          <>
+            To begin, configure your class categories that you will use to
+            create and describe your dance classes.
+            <Link href="configureClassCategories">
+              <a></a>
+            </Link>
+          </>
+        )}
+      </Card>
+    </SubNavMainLayout>
+  );
 }
 
 export default StudioHome;

@@ -98,7 +98,7 @@ const GlobalStyle = createGlobalStyle`
         background-color: ${theme.indigo9};
       } 
       :disabled{
-      background-color: ${theme.gray3};
+      background-color: ${theme.gray2};
       color: ${theme.gray9};
       cursor: not-allowed;
     }

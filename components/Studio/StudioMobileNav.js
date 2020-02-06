@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import StyledLink from "../StyledLink";
 import Router from "next/router";
 import NProgress from "nprogress";
 import { NavStyles } from "../styles/NavStyles";
@@ -17,15 +17,18 @@ Router.onRouteChangeError = () => {
 
 const StudioMobileNav = () => (
   <NavStyles>
-    <Link href="classes">
+    <StyledLink activeClassName="active" Link href="home">
+      <a>Home</a>
+    </StyledLink>
+    <StyledLink activeClassName="active" Link href="classes">
       <a>Classes</a>
-    </Link>
-    <Link href="dancers">
+    </StyledLink>
+    <StyledLink activeClassName="active" Link href="dancers">
       <a>Dancers</a>
-    </Link>
-    <Link href="account">
+    </StyledLink>
+    <StyledLink activeClassName="active" Link href="account">
       <a>Account</a>
-    </Link>
+    </StyledLink>
     <RequestsNavLink />
   </NavStyles>
 );

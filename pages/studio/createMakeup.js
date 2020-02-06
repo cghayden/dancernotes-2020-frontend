@@ -1,9 +1,10 @@
-import DanceClasses from "../../components/Studio/DanceClasses";
-import StudioLayout from "../../components/Studio/StudioLayout";
+import NoNavLayout from "../../components/Studio/NoNavLayout";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import Router from "next/router";
 import CreateMakeupForm from "../../components/Studio/CreateMakeupForm";
+import Error from "../../components/Error";
+import Loading from "../../components/Loading";
 
 const STUDIO_CREATE_MAKEUP_QUERY = gql`
   query STUDIO_CREATE_MAKEUP_QUERY {
@@ -13,7 +14,7 @@ const STUDIO_CREATE_MAKEUP_QUERY = gql`
       studioName
       styles
       competitiveLevels
-      divisions
+      ageDivisions
     }
   }
 `;
@@ -23,7 +24,7 @@ const CancelButton = (
     type="button"
     onClick={() =>
       Router.push({
-        pathname: "/studio/classes"
+        pathname: "/studio/makeup"
       })
     }
   >
@@ -34,12 +35,27 @@ const CancelButton = (
 const CreateMakeupPage = () => {
   const { data, error, loading } = useQuery(STUDIO_CREATE_MAKEUP_QUERY);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return error && <Error error={error} />;
+  if (loading || error) {
+    return (
+      <NoNavLayout
+        mobileHeader="Create a Makeup Set"
+        page={"Add Makeup"}
+        pageAction={CancelButton}
+      >
+        {loading && <Loading />}
+        {error && <Error error={error} />}
+      </NoNavLayout>
+    );
+  }
+
   return (
-    <StudioLayout page={"Classes"} pageAction={CancelButton}>
+    <NoNavLayout
+      mobileHeader="Create a Makeup Set"
+      page={"Add Makeup"}
+      pageAction={CancelButton}
+    >
       <CreateMakeupForm studio={data.myStudio} />
-    </StudioLayout>
+    </NoNavLayout>
   );
 };
 export default CreateMakeupPage;

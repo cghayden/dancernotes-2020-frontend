@@ -1,19 +1,22 @@
-import React, { useState } from "react";
-import StudioLayout from "../../components/Studio/StudioLayout";
-import ContentHeader from "../../components/ContentHeader";
-import CreateEventForm from "../../components/Studio/CreateEventForm";
+import React from "react";
+import Link from "next/link";
+import SubNavMainLayout from "../../components/Studio/SubNavMainLayout";
+
+const AddEventLink = (
+  <Link href="createEvent">
+    <a>Add an Event</a>
+  </Link>
+);
 
 function EventsPage() {
-  const [showForm, toggleForm] = useState(false);
   return (
-    <StudioLayout>
-      <main>
-        <ContentHeader page={"Events"}>
-          <button onClick={() => toggleForm(!showForm)}>Create an Event</button>
-        </ContentHeader>
-        {showForm && <CreateEventForm />}
-      </main>
-    </StudioLayout>
+    <SubNavMainLayout
+      page={"Events"}
+      mobileHeader="Events"
+      pageAction={AddEventLink}
+    >
+      <p>Events will go here</p>
+    </SubNavMainLayout>
   );
 }
 

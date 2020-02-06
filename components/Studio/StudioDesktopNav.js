@@ -1,10 +1,12 @@
-import Link from "next/link";
+import React from "react";
 import Router from "next/router";
 import NProgress from "nprogress";
 import { DesktopNavStyles } from "../styles/NavStyles";
 import Signout from "../Signout";
 import RequestsCount from "./RequestsCount";
+import StyledLink from "../StyledLink";
 import RequestsNavLink from "./RequestsNavLink";
+
 Router.onRouteChangeStart = () => {
   NProgress.start();
 };
@@ -18,27 +20,27 @@ Router.onRouteChangeError = () => {
 function StudioDesktopNav(props) {
   return (
     <DesktopNavStyles>
-      <Link href="/studio/home">
+      <StyledLink activeClassName="active" href="/studio/home">
         <a>Home</a>
-      </Link>
-      <Link href="/studio/classes">
+      </StyledLink>
+      <StyledLink activeClassName="active" href="/studio/classes">
         <a>Classes</a>
-      </Link>
-      <Link href="/studio/dancers">
+      </StyledLink>
+      <StyledLink activeClassName="active" href="/studio/dancers">
         <a>Dancers</a>
-      </Link>
-      <Link href="/studio/makeup">
+      </StyledLink>
+      <StyledLink activeClassName="active" href="/studio/makeup">
         <a>Makeup</a>
-      </Link>
-      <Link href="/studio/hairstyles">
+      </StyledLink>
+      <StyledLink activeClassName="active" href="/studio/hairstyles">
         <a>Hairstyles</a>
-      </Link>
-      <Link href="/studio/events">
+      </StyledLink>
+      <StyledLink activeClassName="active" href="/studio/events">
         <a>Events</a>
-      </Link>
-      <Link href="/studio/account">
+      </StyledLink>
+      <StyledLink activeClassName="active" href="/studio/account">
         <a>Account</a>
-      </Link>
+      </StyledLink>
       <RequestsNavLink />
       <Signout />
     </DesktopNavStyles>
