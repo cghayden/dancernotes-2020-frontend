@@ -10,6 +10,7 @@ import AboutStudio from "./AboutStudio";
 import SignupStudio from "./SignupStudio";
 import AboutRetail from "./AboutRetail";
 import SignupRetail from "./SignupRetail";
+import RequestResetPassword from "./RequestResetPassword";
 import { animated, useTransition } from "react-spring";
 
 const StyledLandingPage = styled.div`
@@ -65,7 +66,7 @@ function LandingPage() {
             case "signin":
               return (
                 <animated.div key={key} style={props}>
-                  <Signin />
+                  <Signin setActive={setActive} />
                 </animated.div>
               );
             case "signup":
@@ -110,6 +111,12 @@ function LandingPage() {
                   <SignupRetail />
                 </animated.div>
               );
+            case "requestResetPassword":
+              return (
+                <animated.div key={key} style={props}>
+                  <RequestResetPassword setActive={setActive} />
+                </animated.div>
+              );
 
             default:
               return (
@@ -125,4 +132,4 @@ function LandingPage() {
 }
 
 export default LandingPage;
-export { StyledLandingContent };
+export { StyledLandingPage, StyledLandingContent };
