@@ -69,55 +69,66 @@ class RoutinesDisplay extends Component {
                 return (
                   <>
                     {allRs &&
-                      allRs.map(dance => {
-                        //independent dances...
-                        if (!dance.studio) {
-                          if (
-                            hiddenIndependents.includes("all") ||
-                            dance.dancerIds.some(dancerId =>
-                              hiddenIndependents.includes(dancerId)
-                            )
-                          ) {
-                            return null;
+                      allRs
+                        .sort(function(a, b) {
+                          const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                          const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                          if (nameA < nameB) {
+                            return -1;
                           }
-                          if (
-                            !hiddenDances.includes(dance.id) &&
-                            visibleDancersIds.some(visibleDancerId =>
-                              dance.dancerIds.includes(visibleDancerId)
-                            )
-                          ) {
-                            return (
-                              <DanceCard
-                                visibleDancersIds={visibleDancersIds}
-                                key={dance.id}
-                                dance={dance}
-                              />
-                            );
+                          if (nameA > nameB) {
+                            return 1;
                           }
-                        }
-                        //all other dances ( linked with a studio & studioId)
-                        {
-                          /* !hiddenStudios.includes(dance.studio.id) && */
-                        }
-                        {
-                          if (
-                            dance.studio &&
-                            !hiddenDances.includes(dance.id) &&
-                            !hiddenStudios.includes(dance.studio.id) &&
-                            visibleDancersIds.some(visibleDancerId =>
-                              dance.dancerIds.includes(visibleDancerId)
-                            )
-                          ) {
-                            return (
-                              <DanceCard
-                                visibleDancersIds={visibleDancersIds}
-                                key={dance.id}
-                                dance={dance}
-                              />
-                            );
+                        })
+                        .map(dance => {
+                          //independent dances...
+                          if (!dance.studio) {
+                            if (
+                              hiddenIndependents.includes("all") ||
+                              dance.dancerIds.some(dancerId =>
+                                hiddenIndependents.includes(dancerId)
+                              )
+                            ) {
+                              return null;
+                            }
+                            if (
+                              !hiddenDances.includes(dance.id) &&
+                              visibleDancersIds.some(visibleDancerId =>
+                                dance.dancerIds.includes(visibleDancerId)
+                              )
+                            ) {
+                              return (
+                                <DanceCard
+                                  visibleDancersIds={visibleDancersIds}
+                                  key={dance.id}
+                                  dance={dance}
+                                />
+                              );
+                            }
                           }
-                        }
-                      })}
+                          //all other dances ( linked with a studio & studioId)
+                          {
+                            /* !hiddenStudios.includes(dance.studio.id) && */
+                          }
+                          {
+                            if (
+                              dance.studio &&
+                              !hiddenDances.includes(dance.id) &&
+                              !hiddenStudios.includes(dance.studio.id) &&
+                              visibleDancersIds.some(visibleDancerId =>
+                                dance.dancerIds.includes(visibleDancerId)
+                              )
+                            ) {
+                              return (
+                                <DanceCard
+                                  visibleDancersIds={visibleDancersIds}
+                                  key={dance.id}
+                                  dance={dance}
+                                />
+                              );
+                            }
+                          }
+                        })}
                   </>
                 );
               }}

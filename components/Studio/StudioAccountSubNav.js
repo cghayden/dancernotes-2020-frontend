@@ -19,11 +19,6 @@ function StudioAccountSubNav() {
           </StyledLink>
         </li>
         <li>
-          <StyledLink activeClassName="active" href="searchComps">
-            <a>Find Comps/Conventions</a>
-          </StyledLink>
-        </li>
-        <li>
           <StyledLink activeClassName="active" href="profile">
             <a>Profile</a>
           </StyledLink>
