@@ -4,7 +4,8 @@ import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import NoNavLayout from "../../../components/Studio/NoNavLayout";
 import UpdateDanceClass from "../../../components/Studio/UpdateDanceClass";
-
+import Loading from "../../../components/Loading";
+import Error from "../../../components/Error";
 import { useStudio } from "../../../components/Studio/useStudio";
 
 const SINGLE_DANCE_QUERY = gql`

@@ -12,7 +12,7 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
   const displayEvents = events
     .filter(event => activeEvents.includes(event.type))
     .sort(function(a, b) {
-      return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
+      return a.beginDate < b.beginDate ? -1 : a.beginDate > b.beginDate ? 1 : 0;
     });
 
   const allRoutineAttributes = ["all"];
@@ -30,12 +30,6 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
   function hasAttribute(attr) {
     return allRoutineAttributes.includes(attr);
   }
-  // const filteredByAttribute = displayEvents.filter(event =>
-  //   event.appliesTo.some(hasAttribute)
-  // );
-  // console.log("displayEvents:", displayEvents);
-
-  // console.log("filteredByAttribute:", filteredByAttribute);
 
   return (
     <StudioCardsDiv>
@@ -43,7 +37,15 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
         <p>display all {event}s</p>
       ))}
       {displayEvents.map(event => {
-        const eventDate = new Date(event.date).toLocaleString("en-US", {
+        const eventBeginDate = new Date(event.beginDate).toLocaleString(
+          "en-US",
+          {
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+          }
+        );
+        const eventEndDate = new Date(event.endDate).toLocaleString("en-US", {
           month: "long",
           day: "numeric",
           year: "numeric"
@@ -53,7 +55,18 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
           return (
             <Card key={event.id}>
               <p>{event.name}</p>
-              <p>{eventDate}</p>
+              <p>
+                {eventBeginDate} - {eventEndDate}
+              </p>
+              <div>
+                <p>{event.location}</p>
+                <p>{event.street1}</p>
+                <span>
+                  <span>{event.city},</span> <span>{event.state}</span>{" "}
+                  <span>{event.zip}</span>
+                </span>
+              </div>
+              <p>{event.url}</p>
             </Card>
           );
         }

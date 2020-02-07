@@ -40,7 +40,7 @@ const PARENT_EVENTS_QUERY = gql`
       id
       name
       appliesTo
-      startDate
+      beginDate
       endDate
       type
       location
