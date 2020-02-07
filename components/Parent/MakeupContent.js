@@ -18,26 +18,6 @@ function MakeupContent({ studios }) {
   }
 
   return <div>There Are No Makeup Sets to Display</div>;
-  // compileMakeupSets = allRoutines => {
-  //   const makeup = {};
-  //   for (const dance of allRoutines) {
-  //     if (dance.makeupSet) {
-  //       const setName = dance.makeupSet.name;
-  //       if (!makeup.hasOwnProperty(setName)) {
-  //         const applyTo = [];
-  //         applyTo.push(dance.name);
-  //         dance.makeupSet.applyTo = applyTo;
-  //         makeup[setName] = dance.makeupSet;
-  //       } else {
-  //         makeup[setName].applyTo.push(dance.name);
-  //       }
-  //     }
-  //   }
-  //   const makeupArray = Object.values(makeup);
-  //   return makeupArray;
-  // };
-
-  // const makeup = this.compileMakeupSets(allRs);
 }
 
 export default MakeupContent;

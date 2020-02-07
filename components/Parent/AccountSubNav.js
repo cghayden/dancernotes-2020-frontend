@@ -2,6 +2,10 @@ import React from "react";
 import SubNavStyles from "../styles/SubNavStyles";
 import Signout from "../Signout";
 import StyledLink from "../StyledLink";
+import DancernotesInfo from "../DancernotesInfo";
+import styled from "styled-components";
+
+const DancerNotesInfoLink = styled.div``;
 
 function AccountSubNav() {
   return (
@@ -27,6 +31,11 @@ function AccountSubNav() {
           <Signout />
         </li>
       </ul>
+      <DancerNotesInfoLink className="hideOnMobile">
+        <StyledLink activeClassName="active" href="/parent/support">
+          <a>Support</a>
+        </StyledLink>
+      </DancerNotesInfoLink>
     </SubNavStyles>
   );
 }

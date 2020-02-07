@@ -13,7 +13,7 @@ const ProfilePage = () => {
   if (loading || error)
     return (
       <>
-        <AccountSubNav dancers={parentUser.dancers} />
+        <AccountSubNav />
         <SubNavMainLayout mobileHeader={"Account"} page="My Profile">
           {loading && <Loading />}
           {error && <Error error={error} />}
