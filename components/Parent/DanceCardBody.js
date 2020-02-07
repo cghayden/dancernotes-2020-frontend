@@ -57,4 +57,4 @@ function DanceCardBody({ dance }) {
 }
 
 export default DanceCardBody;
-export { NoteItem, Dt, Dd, Notes };
+export { DanceCardBodyStyles, NoteItem, Dt, Dd, Notes };

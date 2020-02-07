@@ -26,7 +26,6 @@ const UPDATE_DANCECLASS_MUTATION = gql`
     $music: String
     $musicId: String
     $performanceName: String
-    $makeupSet: ID
     $size: String
   ) {
     updateDanceClass(
@@ -44,7 +43,6 @@ const UPDATE_DANCECLASS_MUTATION = gql`
       music: $music
       musicId: $musicId
       performanceName: $performanceName
-      makeupSet: $makeupSet
       size: $size
     ) {
       id
@@ -173,10 +171,6 @@ function UpdateDanceClass({ danceClass, studio }) {
 
   // disable submission of empty state if no updates are made
   const disableButton = Object.keys(inputs).length < 1;
-  let defaultMakeupSet = "";
-  if (danceClass.makeupSet) {
-    defaultMakeupSet = danceClass.makeupSet.name;
-  }
 
   return (
     <Fragment>
@@ -422,29 +416,6 @@ function UpdateDanceClass({ danceClass, studio }) {
               defaultValue={danceClass.notes}
               onChange={handleChange}
             />
-          </div>
-
-          <div className="input-item">
-            <label htmlFor="makeupSet">Makeup: </label>
-
-            <select
-              id="makeupSet"
-              name="makeupSet"
-              defaultValue={defaultMakeupSet}
-              onChange={handleChange}
-            >
-              {!defaultMakeupSet && (
-                <option default disabled value={""}>
-                  Makeup...
-                </option>
-              )}
-              {studio.makeupSets.map(set => (
-                <option key={set.id} value={set.id}>
-                  {set.name}
-                </option>
-              ))}
-              <option value={"none"}>None</option>
-            </select>
           </div>
           <p>{status}</p>
           <div>

@@ -7,6 +7,7 @@ import AccountSubNav from "../../../components/Parent/AccountSubNav";
 import { STUDIOS_AND_DANCERS } from "../../../components/Parent/Queries";
 import Card from "../../../components/styles/Card";
 import Error from "../../../components/Error";
+import Loading from "../../../components/Loading";
 import ParentUser from "../../../components/Parent/ParentUserQuery";
 
 function MyStudiosPage() {
@@ -15,6 +16,7 @@ function MyStudiosPage() {
 
   const { data, loading, error } = useQuery(STUDIOS_AND_DANCERS);
   const studios = data && data.parentUser.studios;
+  console.log("studios:", studios);
 
   if (loading || error)
     return (

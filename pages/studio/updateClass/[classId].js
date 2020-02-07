@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import StudioLayout from "../../../components/Studio/StudioLayout";
+import NoNavLayout from "../../../components/Studio/NoNavLayout";
 import UpdateDanceClass from "../../../components/Studio/UpdateDanceClass";
 
 import { useStudio } from "../../../components/Studio/useStudio";
@@ -24,10 +24,6 @@ const SINGLE_DANCE_QUERY = gql`
       music
       musicId
       performanceName
-      makeupSet {
-        id
-        name
-      }
       size
     }
   }
@@ -42,26 +38,19 @@ const updateStudioClassDancePage = () => {
   });
   const studio = useStudio();
 
-  if (!studio || loading) {
+  if (!studio || loading || error) {
     return (
-      <StudioLayout page={"Update Your Routine"}>
-        <p>Loading...</p>
-      </StudioLayout>
-    );
-  }
-
-  if (error) {
-    return (
-      <StudioLayout page={"Update Your Routine"}>
-        <Error error={error} />
-      </StudioLayout>
+      <NoNavLayout page={"Update Your Routine"}>
+        {loading && <Loading />}
+        {error && <Error error={error} />}
+      </NoNavLayout>
     );
   }
 
   return (
-    <StudioLayout page={"Update Your Routine"}>
+    <NoNavLayout mobileHeader="Update Dance Class" page={"Update Your Routine"}>
       <UpdateDanceClass studio={studio} danceClass={data.danceClass} />
-    </StudioLayout>
+    </NoNavLayout>
   );
 };
 

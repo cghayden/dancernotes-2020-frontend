@@ -28,8 +28,7 @@ const CREATE_MAKEUP_SET_MUTATION = gql`
 const initialInputState = {
   name: "",
   lipstick: "",
-  eyeShadow: "",
-  applyTo: ""
+  eyeShadow: ""
 };
 
 function AddMakeupForm({ toggleForm, studio }) {
@@ -71,27 +70,6 @@ function AddMakeupForm({ toggleForm, studio }) {
             onChange={handleChange}
           />
         </div>
-
-        <div className="input-item">
-          <label htmlFor="applyTo">Apply To:</label>
-          <select
-            id="applyTo"
-            name="applyTo"
-            value={inputs.applyTo}
-            onChange={handleChange}
-          >
-            <option default disabled value={""}>
-              Apply To...
-            </option>
-            {studio.competitiveLevels.map(competitiveLevel => (
-              <option key={competitiveLevel} value={competitiveLevel}>
-                {competitiveLevel}
-              </option>
-            ))}
-            <option value={"none"}>None at this time</option>
-          </select>
-        </div>
-
         <div className="input-item">
           <label htmlFor="lipstick">Lip Stick</label>
           <input
@@ -101,7 +79,6 @@ function AddMakeupForm({ toggleForm, studio }) {
             onChange={handleChange}
           />
         </div>
-
         <div className="input-item">
           <label htmlFor="eyeShadow">Eye Shadow</label>
           <input
@@ -112,8 +89,14 @@ function AddMakeupForm({ toggleForm, studio }) {
           />
         </div>
 
-        <button type="submit">Save Makeup Set</button>
-        <button type="button" onClick={() => toggleForm(false)}>
+        <button className="btn-button-primary" type="submit">
+          Save Makeup Set
+        </button>
+        <button
+          className="btn-danger"
+          type="button"
+          onClick={() => toggleForm(false)}
+        >
           Cancel
         </button>
       </fieldset>

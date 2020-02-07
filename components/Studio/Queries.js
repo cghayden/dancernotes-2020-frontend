@@ -17,9 +17,6 @@ const SINGLE_DANCE_QUERY = gql`
       music
       performanceName
       size
-      makeupSet {
-        name
-      }
       dancers {
         id
         firstName
@@ -60,9 +57,6 @@ const ALL_DANCE_CLASSES_QUERY = gql`
       notes
       dancers {
         firstName
-      }
-      makeupSet {
-        name
       }
       size
     }

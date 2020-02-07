@@ -3,9 +3,8 @@ import Card from "../styles/Card";
 import Edit from "../Icons/Edit";
 import EditMakeupForm from "./EditMakeupForm";
 
-function MakeupSetCard(props) {
+function MakeupSetCard({ makeupSet }) {
   const [showEdit, setShowEdit] = useState(false);
-  const { makeupSet } = props;
   return !showEdit ? (
     <Card>
       <div className="card__header">
@@ -20,8 +19,7 @@ function MakeupSetCard(props) {
       </div>
       <ul>
         <li>Lipstick: {makeupSet.lipstick}</li>
-        <li>Eye Shadow: {makeupSet.eyeShadow}</li>
-        <li>Apply To: {makeupSet.applyTo}</li>
+        <li>Notes:{makeupSet.notes}</li>
       </ul>
     </Card>
   ) : (

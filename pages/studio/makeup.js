@@ -16,7 +16,7 @@ const STUDIO_MAKEUP_QUERY = gql`
         id
         name
         lipstick
-        applyTo
+        notes
       }
     }
   }
@@ -53,11 +53,11 @@ function Makeup() {
   }
 
   return (
-    <StudioLayout page="Makeup" pageAction={AddMakeupSet}>
-      {data.myStudio.makeupSets.map(set => (
-        <MakeupSetCard makeupSet={set} key={set.id} />
+    <NoNavLayout mobileHeader="Makeup" page="Makeup" pageAction={AddMakeupSet}>
+      {data.myStudio.makeupSets.map(makeupSet => (
+        <MakeupSetCard makeupSet={makeupSet} key={makeupSet.id} />
       ))}
-    </StudioLayout>
+    </NoNavLayout>
   );
 }
 
