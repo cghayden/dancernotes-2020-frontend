@@ -51,11 +51,13 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
         if (event.appliesTo.some(attr => allRoutineAttributes.includes(attr))) {
           return (
             <Card key={event.id}>
-              <p>{event.name}</p>
-              <p>
-                {eventBeginDate} - {eventEndDate}
-              </p>
-              <div>
+              <h3>{event.name}</h3>
+              <div className="card__section">
+                <p>
+                  {eventBeginDate} - {eventEndDate}
+                </p>
+              </div>
+              <div className="card-section">
                 <p>{event.location}</p>
                 <p>{event.street1}</p>
                 <span>
@@ -63,7 +65,11 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
                   <span>{event.zip}</span>
                 </span>
               </div>
-              <p>{event.url}</p>
+              <div className="card__section">
+                <a rel="noreferrer noopener" href={event.url}>
+                  {event.url}
+                </a>
+              </div>
             </Card>
           );
         }

@@ -13,7 +13,7 @@ const Meta = () => (
     />
 
     <link
-      href="https://fonts.googleapis.com/css?family=Montserrat|Source+Sans+Pro&display=swap"
+      href="https://fonts.googleapis.com/css?family=Montserrat|Source+Sans+Pro:400,600&display=swap"
       rel="stylesheet"
     />
 

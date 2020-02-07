@@ -17,6 +17,9 @@ const EventCheckbox = styled.div`
     padding-left: 0.25rem;
     font-size: 12px;
   }
+  @media (min-width: ${props => props.theme.largeScreen}) {
+    font-size: 1rem;
+  }
 `;
 
 function NotesSubNav({ eventFilter, setFilter }) {
