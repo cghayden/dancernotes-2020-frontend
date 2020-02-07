@@ -4,7 +4,7 @@ import App from "next/app";
 import { ApolloProvider } from "react-apollo";
 import withApollo from "../lib/withApollo";
 
-import "../static/normalize.css";
+import "../public/normalize.css";
 import GlobalStyles from "../components/GlobalStyles";
 
 import ParentDisplayProvider from "../components/ParentDisplayProvider";

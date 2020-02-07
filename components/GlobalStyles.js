@@ -68,8 +68,7 @@ const GlobalStyle = createGlobalStyle`
     transition: background-color .25s ease-out;
     }
     :disabled{
-      background-color: ${theme.gray4};
-      color: ${theme.gray2};
+      
       cursor: not-allowed;
     }
 
@@ -98,8 +97,7 @@ const GlobalStyle = createGlobalStyle`
         background-color: ${theme.indigo9};
       } 
       :disabled{
-      background-color: ${theme.gray2};
-      color: ${theme.gray9};
+      
       cursor: not-allowed;
     }
   }
@@ -111,11 +109,6 @@ const GlobalStyle = createGlobalStyle`
         background-color: ${theme.indigo8};
       color: ${theme.indigo0};
       } 
-      :disabled{
-      background-color: ${theme.gray3};
-      color: ${theme.gray9};
-      cursor: not-allowed;
-    }
   }
   &.btn-action-secondary{
       background-color: ${theme.indigo5};
@@ -123,11 +116,7 @@ const GlobalStyle = createGlobalStyle`
       :hover {
       background-color: ${theme.indigo6};
       } 
-      :disabled{
-      background-color: ${theme.gray4};
-      color: ${theme.gray2};
-      cursor: not-allowed;
-    }
+      
     }
     &.btn-action-secondary-outline{
       background-color: none;
@@ -218,7 +207,3 @@ export default class GlobalStyles extends Component {
     );
   }
 }
-
-// :global(body) {
-//   overflow: hidden;
-//             }

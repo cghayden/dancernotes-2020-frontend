@@ -89,7 +89,7 @@ function AddMakeupForm({ toggleForm, studio }) {
           />
         </div>
 
-        <button className="btn-button-primary" type="submit">
+        <button className="btn-action-primary" type="submit">
           Save Makeup Set
         </button>
         <button

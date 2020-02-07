@@ -21,14 +21,10 @@ class DeleteHairStyleButton extends Component {
         variables={{ id: this.props.id }}
         refetchQueries={[{ query: HAIRSTYLES_QUERY }]}
         awaitRefetchQueries={true}
-        onCompleted={() =>
-          Router.push({
-            pathname: "/studio/hairstyles",
-          })
-        }
       >
         {deleteHairStyle => (
           <button
+            className="btn-danger"
             onClick={() => {
               if (confirm("Are you sure you want to delete this Hair Style?")) {
                 //mutation is a Promise, so we can catch it

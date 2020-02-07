@@ -61,13 +61,16 @@ export default class CreateHairStyleForm extends Component {
         variables={this.state}
         refetchQueries={[{ query: HAIRSTYLES_QUERY }]}
         awaitRefetchQueries={true}
-        onCompleted={() => Router.push("hairstyles")}
+        onCompleted={() => {
+          Router.push("/studio/hairstyles");
+        }}
       >
         {(createHairStyle, { error, loading }) => (
           <Card>
             <Form
               method="post"
               onSubmit={async e => {
+                e.preventDefault();
                 await createHairStyle();
                 this.setState({
                   name: "",
@@ -75,7 +78,6 @@ export default class CreateHairStyleForm extends Component {
                   link: "",
                   description: ""
                 });
-                Router.push("hairstyles");
               }}
             >
               <h2>Create a Hairstyle</h2>
