@@ -48,7 +48,8 @@ function StudioDanceDetails({ dance }) {
           <dt>divsion:</dt> <NoteContent>{dance.divsion}</NoteContent>
         </NoteItem>
         <NoteItem>
-          <dt>competitiveLevel:</dt> <NoteContent>{dance.competitiveLevel}</NoteContent>
+          <dt>competitiveLevel:</dt>{" "}
+          <NoteContent>{dance.competitiveLevel}</NoteContent>
         </NoteItem>
         <NoteItem>
           <dt>Style:</dt> <NoteContent>{dance.style}</NoteContent>
@@ -65,16 +66,7 @@ function StudioDanceDetails({ dance }) {
         <NoteItem>
           <dt>Notes:</dt> <NoteContent>{dance.notes}</NoteContent>
         </NoteItem>
-        <NoteItem>
-          <dt>Makeup:</dt>{" "}
-          <NoteContent>
-            {dance.makeupSet ? dance.makeupSet.name : "N/A"}
-          </NoteContent>
-        </NoteItem>
-        <NoteItem>
-          <dt>Hair:</dt>{" "}
-          <NoteContent>{dance.hairStyle ? dance.hairStyle : "N/A"}</NoteContent>
-        </NoteItem>
+
         <NoteItem>
           <dt>Dancers:</dt>
           <NoteContent>

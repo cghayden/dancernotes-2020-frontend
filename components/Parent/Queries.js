@@ -40,8 +40,17 @@ const PARENT_EVENTS_QUERY = gql`
       id
       name
       appliesTo
-      date
+      startDate
+      endDate
       type
+      location
+      street1
+      street2
+      city
+      state
+      zip
+      url
+      notes
       studio {
         id
         studioName
@@ -167,6 +176,31 @@ const DANCER_QUERY = gql`
     }
   }
 `;
+const PARENTS_MAKEUP_QUERY = gql`
+  query PARENTS_MAKEUP_QUERY {
+    parentMakeup {
+      studios {
+        id
+        studioName
+        makeupSets {
+          name
+          lipstick
+          eyeShadow
+          eyeLids
+          eyeCrease
+          eyeLiner
+          eyelashes
+          foundation
+          powder
+          blush
+          bronzer
+          notes
+        }
+      }
+    }
+  }
+`;
+
 export {
   PARENT_USER_QUERY,
   DANCER_QUERY,
@@ -174,5 +208,6 @@ export {
   PARENT_EVENTS_QUERY,
   PARENTS_DANCERS,
   CUSTOM_ROUTINE_QUERY,
-  STUDIOS_AND_DANCERS
+  STUDIOS_AND_DANCERS,
+  PARENTS_MAKEUP_QUERY
 };

@@ -22,7 +22,6 @@ const CREATE_DANCE_CLASS_MUTATION = gql`
     $competitiveLevel: String
     $style: String
     $ageDivision: String
-    $makeupSet: ID
     $size: String
   ) {
     createDanceClass(
@@ -37,7 +36,6 @@ const CREATE_DANCE_CLASS_MUTATION = gql`
       competitiveLevel: $competitiveLevel
       style: $style
       ageDivision: $ageDivision
-      makeupSet: $makeupSet
       size: $size
     ) {
       name
@@ -60,7 +58,6 @@ const initialInputState = {
   tights: "",
   notes: "",
   showSuccessMessage: false,
-  makeupSet: "none",
   size: "",
   audioFile: ""
 };
@@ -73,7 +70,7 @@ function CreateDanceClass({ studio }) {
   const [status, setStatus] = useState();
   const [showFileInput, toggleFileInput] = useState(false);
 
-  const [musicData, setMusicData] = useState({});
+  const [musicId, setMusicId] = useState({});
 
   const [
     createDanceClass,
@@ -115,15 +112,16 @@ function CreateDanceClass({ studio }) {
   const loading = loadingSong || updatingDanceClass || creatingDanceClass;
 
   const cloudinaryCleanup = () => {
-    if (musicData.musicId) {
+    if (musicId) {
       deleteCloudinaryAsset({
-        variables: { publicId: musicData.musicId, resourceType: "video" }
+        variables: { publicId: musicId, resourceType: "video" }
       });
     }
   };
 
   function resetForm() {
     updateInputs({ ...initialInputState });
+    setMusicId();
     toggleFileInput(false);
     setStatus();
   }
@@ -175,6 +173,7 @@ function CreateDanceClass({ studio }) {
       setCloudinaryUploadError(file.error);
     } else {
       setStatus("Updating class...");
+      setMusicId(file.public_id);
       await updateDanceClass({
         variables: {
           id: danceClassId,
@@ -407,26 +406,7 @@ function CreateDanceClass({ studio }) {
               onChange={handleChange}
             />
           </div>
-          <div className="input-item">
-            <label htmlFor="makeupSet">Makeup:</label>
-            <select
-              id="makeupSet"
-              name="makeupSet"
-              value={inputs.makeupSet}
-              onChange={handleChange}
-            >
-              <option default disabled value={""}>
-                Makeup...
-              </option>
-              {studio &&
-                studio.makeupSets.map(set => (
-                  <option key={set.id} value={set.id}>
-                    {set.name}
-                  </option>
-                ))}
-              <option value={"none"}>None at this time, N/A</option>
-            </select>
-          </div>
+
           <button
             type="button"
             className="btn-action-primary"
