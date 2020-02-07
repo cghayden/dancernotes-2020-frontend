@@ -9,14 +9,12 @@ const SIGNUP_PARENT_MUTATION = gql`
   mutation SIGNUP_PARENT_MUTATION(
     $email: String!
     $firstName: String!
-    $lastName: String!
     $password: String!
     $userType: String!
   ) {
     signupParent(
       email: $email
       firstName: $firstName
-      lastName: $lastName
       password: $password
       userType: $userType
     ) {
@@ -35,7 +33,6 @@ class SignupParent extends Component {
   state = {
     email: "",
     firstName: "",
-    lastName: "",
     password: "",
     userType: "parent"
   };
@@ -66,7 +63,6 @@ class SignupParent extends Component {
               await signupParent();
               this.setState({
                 firstName: "",
-                lastName: "",
                 email: "",
                 password: ""
               });
@@ -100,17 +96,6 @@ class SignupParent extends Component {
                 name="firstName"
                 placeholder="firstName"
                 value={this.state.firstName}
-                onChange={this.saveToState}
-              />
-              <label htmlFor="lastName" className="visuallyHidden">
-                Last Name
-              </label>
-              <input
-                aria-label="last name"
-                type="text"
-                name="lastName"
-                placeholder="lastName"
-                value={this.state.lastName}
                 onChange={this.saveToState}
               />
 

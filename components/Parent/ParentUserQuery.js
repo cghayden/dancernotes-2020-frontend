@@ -6,7 +6,6 @@ const PARENT_USER_QUERY = gql`
   query {
     parentUser {
       firstName
-      lastName
       id
       email
       dancersIds
@@ -37,7 +36,7 @@ const ParentUser = props => (
 );
 
 ParentUser.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.func.isRequired
 };
 
 export default ParentUser;
