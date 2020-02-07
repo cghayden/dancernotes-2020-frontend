@@ -63,7 +63,6 @@ const PARENT_USER_QUERY = gql`
   query {
     parentUser {
       firstName
-      lastName
       id
       email
       dancersIds

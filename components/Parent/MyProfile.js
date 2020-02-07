@@ -7,7 +7,6 @@ function MyProfile(props) {
       <div className="card__section">
         <ul>
           <li>First Name {props.user.firstName}</li>
-          <li>Last Name {props.user.lastName}</li>
           <li>Email {props.user.email}</li>
 
           <li>Reset Password</li>
