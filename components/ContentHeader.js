@@ -11,10 +11,10 @@ const HeaderStyle = styled.header`
   /* min-width: 550px; */
   display: flex;
   align-items: center;
-  padding: 0 8vw 2rem 8vw;
-  @media (max-width: ${props => props.theme.largeScreen}) {
+  padding: 0 8vw 0.5rem 8vw;
+  @media (min-width: ${props => props.theme.largeScreen}) {
     display: ${props => !props.mobile && `none`};
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
     margin-top: -10px;
     h1 {
       font-size: 1.4rem;

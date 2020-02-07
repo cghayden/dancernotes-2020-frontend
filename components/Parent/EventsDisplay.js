@@ -33,9 +33,6 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
 
   return (
     <StudioCardsDiv>
-      {activeEvents.map(event => (
-        <p>display all {event}s</p>
-      ))}
       {displayEvents.map(event => {
         const eventBeginDate = new Date(event.beginDate).toLocaleString(
           "en-US",

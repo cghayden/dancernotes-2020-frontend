@@ -110,11 +110,11 @@ class CreateEventForm extends Component {
                     <option default value={""} disabled>
                       (Competition, Rehearsal, etc...)?
                     </option>
-                    <option value="Competition">Competition</option>
-                    <option value="Rehearsal">Rehearsal</option>
-                    <option value="Recital">Recital</option>
-                    <option value="Convention">Convention</option>
-                    <option value="Other">Other</option>
+                    <option value="competition">Competition</option>
+                    <option value="rehearsal">Rehearsal</option>
+                    <option value="recital">Recital</option>
+                    <option value="convention">Convention</option>
+                    <option value="other">Other</option>
                   </select>
                 </div>
 

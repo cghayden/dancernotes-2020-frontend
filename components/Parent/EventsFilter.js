@@ -14,18 +14,13 @@ const EventCheckbox = styled.div`
   display: flex;
   align-items: center;
   label {
-    padding-left: 0.5rem;
+    padding-left: 0.25rem;
+    font-size: 12px;
   }
 `;
 
 function NotesSubNav({ eventFilter, setFilter }) {
-  const eventCategories = [
-    "competition",
-    "convention",
-    "rehearsal",
-    "recital",
-    "other"
-  ];
+  const eventCategories = ["competition", "convention", "rehearsal", "recital"];
   return (
     <EventCheckboxesDiv>
       {eventCategories.map(eventCategory => (
