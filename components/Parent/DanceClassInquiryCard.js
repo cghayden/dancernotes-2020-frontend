@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { DANCER_QUERY } from "./Queries";
+import { BROWSE_STUDIO_CLASSES_QUERY } from "../../pages/parent/account/browseStudio";
 import Error from "../../components/Error";
 
 const ClassListing = styled.div`
@@ -59,17 +60,16 @@ const ADD_DANCE_TO_REQUESTS = gql`
     $danceId: ID!
     $dancerId: ID!
     $studioId: ID!
+    $parentEmail: String!
   ) {
     requestDance(
       requestId: $requestId
       danceId: $danceId
       dancerId: $dancerId
       studioId: $studioId
+      parentEmail: $parentEmail
     ) {
-      id
-      classesRequested {
-        name
-      }
+      message
     }
   }
 `;
@@ -90,14 +90,18 @@ function DanceClassInquiryCard({
   dancersRequestsId,
   requested,
   studioId,
-  dancerName
+  dancerName,
+  parentEmail
 }) {
   const [
     removeClassFromRequest,
     { error: errorRemovingRequest, loading: removeRequestLoading }
   ] = useMutation(REMOVE_CLASS_FROM_REQUESTS, {
-    variables: { requestId: dancersRequestsId, danceClassId: dance.id }
-    // refetchQueries: [{ query: DANCER_QUERY, variables: { id: dancerId } }]
+    variables: { requestId: dancersRequestsId, danceClassId: dance.id },
+    refetchQueries: [
+      { query: DANCER_QUERY, variables: { id: dancerId } },
+      { query: BROWSE_STUDIO_CLASSES_QUERY, variables: { id: studioId } }
+    ]
   });
 
   const [
@@ -108,9 +112,13 @@ function DanceClassInquiryCard({
       requestId: dancersRequestsId || "new",
       danceId: dance.id,
       dancerId: dancerId,
-      studioId: studioId
+      studioId: studioId,
+      parentEmail
     },
-    refetchQueries: [{ query: DANCER_QUERY, variables: { id: dancerId } }]
+    refetchQueries: [
+      { query: DANCER_QUERY, variables: { id: dancerId } },
+      { query: BROWSE_STUDIO_CLASSES_QUERY, variables: { id: studioId } }
+    ]
   });
   const loading = requestingDance || removeRequestLoading;
   const error = errorRequestingDance || errorRemovingRequest;

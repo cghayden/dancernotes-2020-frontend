@@ -101,3 +101,4 @@ const BrowseStudioPage = () => {
 };
 
 export default BrowseStudioPage;
+export { BROWSE_STUDIO_CLASSES_QUERY };

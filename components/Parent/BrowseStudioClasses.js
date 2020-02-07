@@ -109,7 +109,6 @@ function BrowseStudioClasses({ classFilter, studio }) {
     : [];
 
   const activeFilters = [].concat.apply([], Object.values(classFilter));
-
   return (
     <>
       <DancerTabs>
@@ -153,6 +152,7 @@ function BrowseStudioClasses({ classFilter, studio }) {
           if (dance.size === "Group") {
             return (
               <DanceClassInquiryCard
+                parentEmail={parentUser.email}
                 dancerName={dancer.firstName}
                 dance={dance}
                 dancerId={activeDancerId}
