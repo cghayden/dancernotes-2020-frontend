@@ -182,7 +182,6 @@ function CreateDancerForm() {
 
   return (
     <Fragment>
-      <h2 className="mobileHeader hideOnDesktop">Add a Dancer</h2>
       {hasDancers && (
         <Card className="message">
           <p>Welcome to Dancernotes! To begin, add a Dancer to your account.</p>
