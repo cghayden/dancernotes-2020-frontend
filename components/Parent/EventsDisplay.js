@@ -67,7 +67,7 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
               </div>
               <div className="card__section">
                 <a rel="noreferrer noopener" href={event.url}>
-                  {event.url}
+                  Event Website
                 </a>
               </div>
             </Card>
