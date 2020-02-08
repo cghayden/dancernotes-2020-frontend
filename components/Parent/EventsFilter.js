@@ -27,7 +27,7 @@ function NotesSubNav({ eventFilter, setFilter }) {
   return (
     <EventCheckboxesDiv>
       {eventCategories.map(eventCategory => (
-        <EventCheckbox>
+        <EventCheckbox key={eventCategory}>
           <input
             type="checkbox"
             checked={eventFilter[eventCategory]}

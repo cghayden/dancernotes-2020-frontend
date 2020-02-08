@@ -2,17 +2,8 @@ import Head from "next/head";
 
 const Meta = () => (
   <Head>
-    <script
-      src="https://cdn.lr-ingest.io/LogRocket.min.js"
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      window.LogRocket &&
-      window.LogRocket.init('3ztnzz/dancernotes-production');
-    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charSet="utf-8" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="shortcut icon" href="/dnIcon.png" />
     <link rel="apple-touch-icon" href="/dnIcon.png" />
     <link rel="stylesheet" href="https://use.typekit.net/gkh6amt.css" />
