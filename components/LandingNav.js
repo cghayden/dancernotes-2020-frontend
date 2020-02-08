@@ -54,7 +54,7 @@ const LandingNav = ({ setActive }) => {
   return (
     <header>
       <LandingNavStyle>
-        <AboutButton className="brand" onClick={() => setActive("about")}>
+        <AboutButton className="brand" onClick={() => setActive("aboutParent")}>
           dancernotes
         </AboutButton>
         <div className="login">
