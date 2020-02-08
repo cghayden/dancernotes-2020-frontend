@@ -17,16 +17,16 @@ Router.onRouteChangeError = () => {
 
 const StudioMobileNav = () => (
   <NavStyles>
-    <StyledLink activeClassName="active" href="home">
+    <StyledLink activeClassName="active" href="/studio/home">
       <a>Home</a>
     </StyledLink>
-    <StyledLink activeClassName="active" href="classes">
+    <StyledLink activeClassName="active" href="/studio/classes">
       <a>Classes</a>
     </StyledLink>
-    <StyledLink activeClassName="active" href="dancers">
+    <StyledLink activeClassName="active" href="/studio/dancers">
       <a>Dancers</a>
     </StyledLink>
-    <StyledLink activeClassName="active" href="account">
+    <StyledLink activeClassName="active" href="/studio/account">
       <a>Account</a>
     </StyledLink>
     <RequestsNavLink />
