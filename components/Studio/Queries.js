@@ -68,6 +68,11 @@ const STUDIO_ALL_DANCERS_QUERY = gql`
     studioDancers {
       id
       firstName
+      parent {
+        id
+        firstName
+        email
+      }
       danceClasses {
         name
       }
