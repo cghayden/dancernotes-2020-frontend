@@ -54,7 +54,7 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
               <h3>{event.name}</h3>
               <div className="card__section">
                 <p>
-                  {eventBeginDate} - {eventEndDate}
+                  {eventBeginDate} {eventEndDate ? ` - ${eventEndDate}` : null}
                 </p>
               </div>
               <div className="card-section">
