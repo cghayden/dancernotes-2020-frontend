@@ -8,7 +8,6 @@ import RoutinesDisplay from "../../../components/Parent/RoutinesDisplay";
 import Card from "../../../components/styles/Card";
 import NotesSubNav from "../../../components/Parent/NotesSubNav";
 import ControlPanel from "../../../components/Parent/ControlPanel";
-import OffScreenControlsToggler from "../../../components/Parent/OffscreenControlsToggler";
 
 import { PARENT_USER_QUERY } from "../../../components/Parent/Queries";
 
@@ -18,6 +17,12 @@ const ParentHome = () => {
   console.log("parentUser:", parentUser);
   if (error) {
     console.log("error:", error);
+  }
+  if (loading) {
+    console.log("loading");
+  }
+  if (data) {
+    console.log("data:", data);
   }
   const AddRoutineButton = (
     <Link href="/parent/createCustomRoutine">
@@ -32,7 +37,6 @@ const ParentHome = () => {
           mobileHeader={"Notes"}
           page="Routines"
           pageAction={AddRoutineButton}
-          // pageAction={<OffScreenControlsToggler text="Display" />}
         >
           {loading && <Loading />}
           {error && <Error error={error} />}
