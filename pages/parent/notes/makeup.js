@@ -8,7 +8,11 @@ import Error from "../../../components/Error";
 
 function makeupPage() {
   const { data, loading, error } = useQuery(PARENTS_MAKEUP_QUERY);
+  if (error) {
+    console.log("error:", error);
+  }
   console.log("data:", data);
+
   return (
     <>
       <NotesSubNav />

@@ -5,7 +5,7 @@ import { STUDIOS_AND_DANCERS } from "../../components/Parent/Queries";
 import Error from "../../components/Error";
 import BackButton from "../../components/BackButton";
 import NotesSubNav from "../../components/Parent/NotesSubNav";
-
+import Loading from "../../components/Loading";
 function createCustomRoutinePage() {
   const { data: parent, loading, error } = useQuery(STUDIOS_AND_DANCERS);
   if (loading || error)
