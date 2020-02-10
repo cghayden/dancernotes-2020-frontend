@@ -8,7 +8,6 @@ import styled from "styled-components";
 
 const MainStyle = styled.main`
   margin-top: ${props => props.theme.mobileMainTop};
-  padding-top: 1rem;
   padding-bottom: 100px;
   display: flex;
   flex-direction: column;

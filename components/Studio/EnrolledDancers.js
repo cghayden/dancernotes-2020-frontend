@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { STUDIO_ALL_DANCERS_QUERY } from "./Queries";
 import StudioDancerCard from "./StudioDancerCard";

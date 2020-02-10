@@ -2,20 +2,16 @@ import styled from "styled-components";
 
 const NavStyles = styled.nav`
   position: fixed;
-  /* grid-gap: 5px; */
+  font-size: 1.2rem;
   left: 0;
   right: 0;
   bottom: 0;
   display: flex;
   justify-content: space-around;
-
   align-items: center;
-  /* grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); */
-  /* place-items: center; */
   height: ${props => props.theme.navHeight};
   z-index: 1000;
   background-color: ${props => props.theme.background};
-  /* color: ${props => props.theme.indigo9}; */
 
   a,
   button {
@@ -27,12 +23,14 @@ const NavStyles = styled.nav`
     border: none;
     font-weight: 400;
     box-shadow: none;
-    :hover{
+    padding-bottom: 16px;
+
+    :hover {
       margin-bottom: -2px;
       border-radius: 0;
       background: none;
       color: ${props => props.theme.indigo8};
-      border-bottom: 2px solid ${props => props.theme.indigo8}; 
+      border-bottom: 2px solid ${props => props.theme.indigo8};
     }
   }
 

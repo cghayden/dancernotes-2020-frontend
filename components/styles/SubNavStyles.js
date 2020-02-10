@@ -37,7 +37,7 @@ const SubNavStyles = styled.nav`
   button {
     border-radius: 0;
     margin: 0;
-    padding: 0.5rem;
+    padding: 10px 0.5rem 0.5rem 0.5rem;
     display: flex;
     align-items: center;
     justify-content: center;

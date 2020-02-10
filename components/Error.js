@@ -9,7 +9,6 @@ const ErrorStyles = styled.div`
   background: inherit;
   margin: 2rem 0;
   border: 1px solid rgba(0, 0, 0, 0.05);
-  border-left: 5px solid red;
   p {
     margin: 0;
     font-weight: 100;
@@ -20,6 +19,7 @@ const ErrorStyles = styled.div`
 `;
 
 const Error = ({ error }) => {
+  console.error("ERRROORRR:", error);
   if (!error || !error.message) return null;
   if (
     error.networkError &&
@@ -35,10 +35,31 @@ const Error = ({ error }) => {
       </ErrorStyles>
     ));
   }
+  if (error.message.includes("unique constraint would be violated")) {
+    return (
+      <ErrorStyles>
+        <p data-test="graphql-error">
+          <strong>Shoot!</strong>
+          An account using this email already exists
+        </p>
+        <p>
+          Visit the Sign in link above to sign in or reset your password,
+        </p>{" "}
+        <p>
+          Or email{" "}
+          <a href="mailto:admin@coreyhayden.tech for assistance">
+            admin@coreyhayden.tech
+          </a>{" "}
+          for assistance
+        </p>
+      </ErrorStyles>
+    );
+  }
   return (
     <ErrorStyles>
       <p data-test="graphql-error">
         <strong>Shoot!</strong>
+        {error.message}
         {error.message.replace("GraphQL error: ", "")}
       </p>
     </ErrorStyles>

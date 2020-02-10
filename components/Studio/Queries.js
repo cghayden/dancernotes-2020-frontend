@@ -99,10 +99,33 @@ const ENROLLMENT_REQUESTS_QUERY = gql`
   }
 `;
 
+const STUDIO_EVENTS_QUERY = gql`
+  query STUDIO_EVENTS_QUERY {
+    myStudio {
+      id
+      events {
+        name
+        type
+        appliesTo
+        beginDate
+        endDate
+        location
+        street1
+        city
+        state
+        zip
+        url
+        notes
+      }
+    }
+  }
+`;
+
 export {
   CATEGORIES_QUERY,
   ALL_DANCE_CLASSES_QUERY,
   STUDIO_ALL_DANCERS_QUERY,
   SINGLE_DANCE_QUERY,
-  ENROLLMENT_REQUESTS_QUERY
+  ENROLLMENT_REQUESTS_QUERY,
+  STUDIO_EVENTS_QUERY
 };

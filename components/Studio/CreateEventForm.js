@@ -133,15 +133,14 @@ class CreateEventForm extends Component {
                 <div className="input-item">
                   <label htmlFor="beginDate">Start Date</label>
                   <input
-                    required
-                    type="text"
+                    type="date"
                     name="beginDate"
                     value={this.state.beginDate}
                     onChange={this.handleChange}
                   />
                   <label htmlFor="endDate">End Date</label>
                   <input
-                    type="text"
+                    type="date"
                     name="endDate"
                     value={this.state.endDate}
                     onChange={this.handleChange}
