@@ -35,7 +35,7 @@ const SubNavMainLayout = ({
       <StudioMobileNav />
       <StudioDesktopNav />
       <MainStyle>
-        <ContentHeader page={page} pageAction={pageAction} />
+        <ContentHeader mobile page={page} pageAction={pageAction} />
         {children}
       </MainStyle>
     </Fragment>

@@ -42,11 +42,13 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
             year: "numeric"
           }
         );
-        const eventEndDate = new Date(event.endDate).toLocaleString("en-US", {
-          month: "long",
-          day: "numeric",
-          year: "numeric"
-        });
+        const eventEndDate = event.endDate
+          ? new Date(event.endDate).toLocaleString("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric"
+            })
+          : "";
 
         if (event.appliesTo.some(attr => allRoutineAttributes.includes(attr))) {
           return (

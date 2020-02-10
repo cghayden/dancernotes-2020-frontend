@@ -15,15 +15,6 @@ const ParentHome = () => {
   const { data, loading, error } = useQuery(PARENT_USER_QUERY);
   const parentUser = data ? data.parentUser : {};
   console.log("parentUser:", parentUser);
-  if (error) {
-    console.log("error:", error);
-  }
-  if (loading) {
-    console.log("loading");
-  }
-  if (data) {
-    console.log("data:", data);
-  }
   const AddRoutineButton = (
     <Link href="/parent/createCustomRoutine">
       <a className="textOnly-primary-action">Create a Routine</a>
