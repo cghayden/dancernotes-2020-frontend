@@ -6,16 +6,8 @@ import ContentHeader from "./ContentHeader";
 import styled from "styled-components";
 
 const MainStyle = styled.main`
-  margin-top: ${props => props.theme.mobileMainTop};
-  padding-top: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 100px;
-  align-items: center;
   @media (min-width: ${props => props.theme.largeScreen}) {
-    margin-top: ${props => props.theme.navHeight};
     margin-left: ${props => props.theme.sidebarWidth};
-    padding-top: 1rem;
   }
 `;
 

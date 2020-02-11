@@ -9,10 +9,12 @@ const HeaderStyle = styled.header`
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0 8vw 0.5rem 8vw;
+  display: ${props => (props.mobile ? "flex" : `none`)};
+  padding: 0 8vw 10px 8vw;
+
   @media (min-width: ${props => props.theme.largeScreen}) {
-    /* display: ${props => !props.mobile && `none`}; */
-    padding-bottom: 2rem;
+    display: flex;
+    padding: 1rem 8vw 1.5rem 8vw;
     margin-top: -10px;
     h1 {
       font-size: 1.4rem;
@@ -22,9 +24,9 @@ const HeaderStyle = styled.header`
 
 const PageAction = styled.div`
   margin-left: auto;
-  display: ${props => !props.mobile && `none`};
-  @media (min-width: ${props => props.theme.largeScreen}) {
-    display: inline-block;
+  a,
+  button {
+    margin: 0;
   }
 `;
 

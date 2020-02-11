@@ -192,6 +192,19 @@ const GlobalStyle = createGlobalStyle`
     padding-top: 1rem;
     padding-bottom: 1rem;
   }
+
+main {
+  margin-top: ${props => props.theme.mobileMainTop};
+  padding-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 100px;
+  align-items: center;
+  @media (min-width: ${props => props.theme.largeScreen}) {
+    margin-top: ${props => props.theme.navHeight};
+    padding-top: 1rem;
+  }
+}
 `;
 
 export default class GlobalStyles extends Component {
