@@ -36,6 +36,7 @@
     "react": "^16.9.0",
     "react-adopt": "^0.6.0",
     "react-apollo": "^3.1.1",
+    "react-datepicker": "^2.12.1",
     "react-dom": "^16.9.0",
     "react-select": "^3.0.8",
     "react-spring": "^8.0.27",

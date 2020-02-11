@@ -54,7 +54,7 @@ const Alert = styled.div`
   background: white;
 `;
 
-const ChosenDancers = styled.ul`
+const SelectChoices = styled.ul`
   margin-bottom: 0.5rem;
   display: flex;
   li {
@@ -63,6 +63,10 @@ const ChosenDancers = styled.ul`
     margin-left: 1rem;
     background-color: ${props => props.theme.teal6};
     color: white;
+  }
+  button {
+    padding: 0;
+    margin: 0 0 0 5px;
   }
 `;
 
@@ -229,51 +233,17 @@ function CreateCustomRoutineForm({ parent }) {
 
   return (
     <Fragment>
-      {/* <Modal open={showModal} setOpen={toggleModal}>
-        <div>
-          {errorCreatingCustomRoutine && (
-            <>
-              <p>
-                Warning: there was a problem saving your class. Please try
-                again:
-              </p>
-              <button role="button" onClick={() => toggleModal(false)}>
-                Try Again
-              </button>
-            </>
-          )}
-
-          {newDanceClass && <p>Success - you created {newDanceClass.name}</p>}
-          {newDanceClass && errorUploadingSong && (
-            <p>
-              Warning: there was a problem uploading the music for{" "}
-              {newDanceClass.name}. You can try to add music now or later by
-              updating the dance class:
-              <Link href={`/studio/updateClass/${newDanceClass.id}`}>
-                <a>Update Class</a>
-              </Link>
-            </p>
-          )}
-
-          <button role="button" onClick={() => toggleModal(false)}>
-            Create Another Class
-          </button>
-          <Link href="/parent/notes/routines">
-            <a>I'm finished creating classes</a>
-          </Link>
-        </div>
-      </Modal> */}
       <Card>
         <Form method="post" onSubmit={async e => await saveNewCustomRoutine(e)}>
           <fieldset disabled={loading} aria-busy={loading}>
             <h2>Create Your Own Routine</h2>
             <div className="input-item">
-              <ChosenDancers>
+              <SelectChoices>
                 <label htmlFor="dancer">Dancer(s):*</label>
                 {dancers.map((dancer, index) => (
                   <li key={index}>{dancer}</li>
                 ))}
-              </ChosenDancers>
+              </SelectChoices>
 
               {parent.dancers.length > 1 && (
                 <select
@@ -281,7 +251,6 @@ function CreateCustomRoutineForm({ parent }) {
                   name="dancer"
                   value={""}
                   onChange={e => {
-                    // handleChange(e);
                     handleSelectChange(e);
                   }}
                 >
@@ -512,3 +481,4 @@ function CreateCustomRoutineForm({ parent }) {
 }
 
 export default CreateCustomRoutineForm;
+export { SelectChoices };
