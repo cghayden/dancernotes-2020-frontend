@@ -92,11 +92,10 @@ function CreateCustomRoutineForm({ parent }) {
   const [showFileInput, toggleFileInput] = useState(false);
   const [musicForUpload, setMusicForUpload] = useState();
   const [musicData, setMusicData] = useState({});
-  const [dancers, setDancers] = useState(() =>
-    parent.dancers.length > 1 ? [] : [parent.dancers[0].firstName]
-  );
-  const [dancerIds, setDancerIds] = useState(() =>
-    parent.dancers.length > 1 ? [] : [parent.dancers[0].id]
+  const [dancerChoice, setDancerChoice] = useState(() =>
+    parent.dancers.length > 1
+      ? {}
+      : { [parent.dancers[0].firstName]: parent.dancers[0].id }
   );
 
   const [
@@ -107,15 +106,11 @@ function CreateCustomRoutineForm({ parent }) {
       loading: creatingCustomRoutine
     }
   ] = useMutation(CREATE_CUSTOM_ROUTINE_MUTATION, {
-    variables: { ...inputs, dancerIds: dancerIds },
+    variables: { ...inputs, dancerIds: Object.values(dancerChoice) },
     onCompleted: () => {
       resetForm();
     },
-    refetchQueries: [
-      { query: ALL_Rs },
-      { query: PARENT_USER_QUERY },
-      { query: DANCER_QUERY, variables: { id: inputs.dancer } }
-    ],
+    refetchQueries: [{ query: ALL_Rs }, { query: PARENT_USER_QUERY }],
     awaitRefetchQueries: true
   });
 
@@ -211,24 +206,13 @@ function CreateCustomRoutineForm({ parent }) {
   }
 
   function handleSelectChange(e) {
-    const dancerName = e.target.selectedOptions[0].label;
-    const dancerId = e.target.selectedOptions[0].value;
-    updateInputs({
-      ...inputs,
-      dancer: dancerName
-    });
-    // if dancername is in dancers array, remove it
-    if (dancers.indexOf(dancerName) !== -1) {
-      const newDancers = [...dancers];
-      const newDancerIds = [...dancerIds];
-      newDancers.splice(dancers.indexOf(dancerName), 1);
-      newDancerIds.splice(dancerIds.indexOf(dancerId), 1);
-      setDancers(newDancers);
-      setDancerIds(newDancerIds);
-    } else {
-      setDancers([...dancers, dancerName]);
-      setDancerIds([...dancerIds, dancerId]);
-    }
+    const chosenDancerName = e.target.selectedOptions[0].label;
+    const chosenDancerId = e.target.selectedOptions[0].value;
+    setDancerChoice({ ...dancerChoice, [chosenDancerName]: chosenDancerId });
+  }
+
+  function removeChosenDancer(selection) {
+    setDancerChoice(dancerChoice => delete dancerChoice[selection]);
   }
 
   return (
@@ -240,8 +224,18 @@ function CreateCustomRoutineForm({ parent }) {
             <div className="input-item">
               <SelectChoices>
                 <label htmlFor="dancer">Dancer(s):*</label>
-                {dancers.map((dancer, index) => (
-                  <li key={index}>{dancer}</li>
+                {Object.entries(dancerChoice).map(dancer => (
+                  <li key={dancer[0]}>
+                    {dancer[0]}
+                    <span>
+                      <button
+                        type="button"
+                        onClick={() => removeChosenDancer(entry[0])}
+                      >
+                        X
+                      </button>
+                    </span>
+                  </li>
                 ))}
               </SelectChoices>
 

@@ -87,7 +87,6 @@ const initialInputState = {
 function CreateEventForm() {
   const { inputs, updateInputs, handleChange } = useForm(initialInputState);
   const [appliesTo, setAppliesTo] = useState({});
-  const [appliesToDisplay, setAppliesToDisplay] = useState([]);
   const [createStudioEvent, { error, loading }] = useMutation(
     CREATE_STUDIO_EVENT,
     {
@@ -100,11 +99,9 @@ function CreateEventForm() {
     const selectedValue = e.target.selectedOptions[0].value;
     const selectedLabel = e.target.selectedOptions[0].label;
     setAppliesTo({ ...appliesTo, [selectedValue]: selectedLabel });
-    // setAppliesToDisplay([...appliesToDisplay, selectedLabel]);
   }
 
   function removeAppliesTo(selection) {
-    console.log("remove:", selection);
     setAppliesTo(appliesTo => delete appliesTo[selection]);
   }
 
