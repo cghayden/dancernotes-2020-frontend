@@ -6,7 +6,6 @@ import Card from "../styles/Card";
 const Events = () => {
   const { data, loading, error } = useQuery(STUDIO_EVENTS_QUERY);
   const studioEvents = data ? data.myStudio.events : {};
-  console.log("studioEvents:", studioEvents);
 
   if (loading) return <p>5,6,7,8 ...</p>;
   if (error) return <Error error={error} />;

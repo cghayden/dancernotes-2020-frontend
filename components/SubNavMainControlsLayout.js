@@ -7,13 +7,7 @@ import ContentHeader from "./ContentHeader";
 import styled from "styled-components";
 
 const MainStyle = styled.main`
-  margin-top: ${props => props.theme.mobileMainTop};
-  padding-bottom: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   @media (min-width: ${props => props.theme.largeScreen}) {
-    margin-top: ${props => props.theme.navHeight};
     /* left margin to give room for subnav */
     margin-left: ${props => props.theme.sidebarWidth};
     /* right margin to give room for control panel */
