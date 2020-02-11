@@ -138,6 +138,14 @@ option {
     width: 90%;
     margin: 0 auto 1rem auto;
   }
+  .datePicker{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    text-align: left;
+    input{
+    max-width: 200px;}
+  }
   .form-row {
     margin: 0 auto 1rem auto;
     display: flex;

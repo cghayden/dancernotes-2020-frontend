@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import Router from "next/router";
 import Form from "../styles/Form";
+import Card from "../styles/Card";
 import Error from "../Error";
 import useForm from "../../lib/useForm";
-
 import { SelectChoices } from "../Parent/CreateCustomRoutineForm";
 import { STUDIO_EVENTS_QUERY } from "./Queries";
 
@@ -73,8 +74,6 @@ const initialInputState = {
   type: "",
   name: "",
   type: "",
-  beginDate: "2020-03-03T01:17:13.506Z",
-  endDate: "2021-03-03T01:17:13.506Z",
   name: "",
   location: "",
   street1: "",
@@ -87,6 +86,8 @@ const initialInputState = {
 function CreateEventForm() {
   const { inputs, updateInputs, handleChange } = useForm(initialInputState);
   const [appliesTo, setAppliesTo] = useState({});
+  const [beginDate, setBeginDate] = useState();
+  const [endDate, setEndDate] = useState();
   const [createStudioEvent, { error, loading }] = useMutation(
     CREATE_STUDIO_EVENT,
     {
@@ -105,127 +106,144 @@ function CreateEventForm() {
     setAppliesTo(appliesTo => delete appliesTo[selection]);
   }
 
+  async function saveEvent(e) {
+    e.preventDefault();
+    const applyTo = Object.values(appliesTo);
+    const beginningDate = beginDate ? beginDate.toISOString() : null;
+    const endingDate = endDate ? endDate.toISOString() : null;
+    await createStudioEvent({
+      variables: {
+        ...inputs,
+        appliesTo: applyTo,
+        beginDate: beginningDate,
+        endDate: endingDate
+      }
+    });
+  }
+
   return (
-    <Form
-      method="post"
-      onSubmit={async e => {
-        e.preventDefault();
-        const applyTo = Object.values(appliesTo);
-        await createStudioEvent({
-          variables: { ...inputs, appliesTo: applyTo }
-        });
-      }}
-    >
-      <fieldset disabled={loading} aria-busy={loading}>
-        <legend>Add A New Event</legend>
-        <Error error={error} />
-        <div className="input-item">
-          <label htmlFor="name">Name</label>
-          <input
-            required
-            type="text"
-            name="name"
-            value={inputs.name}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="input-item">
-          <label htmlFor="type">Type:</label>
-          <select
-            id="type"
-            name="type"
-            value={inputs.type}
-            onChange={handleChange}
-          >
-            <option default value={""} disabled>
-              (Competition, Rehearsal, etc...)?
-            </option>
-            <option value="competition">Competition</option>
-            <option value="rehearsal">Rehearsal</option>
-            <option value="recital">Recital</option>
-            <option value="convention">Convention</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-
-        <div className="input-item">
-          <SelectChoices>
-            <label htmlFor="appliesTo">Apply To:</label>
-            {Object.entries(appliesTo).map(entry => (
-              <li key={entry[0]}>
-                {entry[1]}
-                <span>
-                  <button
-                    type="button"
-                    onClick={() => removeAppliesTo(entry[0])}
-                  >
-                    X
-                  </button>
-                </span>
-              </li>
-            ))}
-          </SelectChoices>
-          <select
-            name="appliesTo"
-            value={""}
-            onChange={e => handleAppliesToChange(e)}
-          >
-            <option default value={""} disabled>
-              Applies to...
-            </option>
-            {appliesToOptions.map(category => (
-              <option
-                key={category.value}
-                value={category.value}
-                label={category.label}
-              >
-                {category.label}
+    <Card>
+      <Form
+        method="post"
+        onSubmit={async e => {
+          await saveEvent(e);
+        }}
+      >
+        <fieldset disabled={loading} aria-busy={loading}>
+          <legend>Add A New Event</legend>
+          <Error error={error} />
+          <div className="input-item">
+            <label htmlFor="name">Name</label>
+            <input
+              required
+              type="text"
+              name="name"
+              value={inputs.name}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="input-item">
+            <label htmlFor="type">Type:</label>
+            <select
+              id="type"
+              name="type"
+              value={inputs.type}
+              onChange={handleChange}
+            >
+              <option default value={""} disabled>
+                (Competition, Rehearsal, etc...)?
               </option>
-            ))}
-          </select>
-        </div>
+              <option value="competition">Competition</option>
+              <option value="rehearsal">Rehearsal</option>
+              <option value="recital">Recital</option>
+              <option value="convention">Convention</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
 
-        {/* Dates */}
-        <div className="input-item">
-          <label htmlFor="beginDate">Start Date</label>
-          <input
-            type="date"
-            name="beginDate"
-            value={inputs.beginDate}
-            onChange={handleChange}
-          />
-          <label htmlFor="endDate">End Date</label>
-          <input
-            type="date"
-            name="endDate"
-            value={inputs.nameendDate}
-            onChange={handleChange}
-          />
-        </div>
-        {/* Address */}
-        <div className="input-item">
-          <label htmlFor="location">Location</label>
-          <input
-            type="text"
-            name="location"
-            value={inputs.location}
-            onChange={handleChange}
-          />
-        </div>
+          <div className="input-item">
+            <SelectChoices>
+              <label htmlFor="appliesTo">Apply To:</label>
+              {Object.entries(appliesTo).map(entry => (
+                <li key={entry[0]}>
+                  {entry[1]}
+                  <span>
+                    <button
+                      type="button"
+                      onClick={() => removeAppliesTo(entry[0])}
+                    >
+                      X
+                    </button>
+                  </span>
+                </li>
+              ))}
+            </SelectChoices>
+            <select
+              name="appliesTo"
+              value={""}
+              onChange={e => handleAppliesToChange(e)}
+            >
+              <option default value={""} disabled>
+                Applies to...
+              </option>
+              {appliesToOptions.map(category => (
+                <option
+                  key={category.value}
+                  value={category.value}
+                  label={category.label}
+                >
+                  {category.label}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        {/* footer */}
-        <div>
-          <button
-            className="btn-action-primary"
-            type="submit"
-            disabled={loading}
-          >
-            Creat
-            {loading ? "ing " : "e "} Event
-          </button>
-        </div>
-      </fieldset>
-    </Form>
+          {/* Dates */}
+          <div className="form-row">
+            <div className="datePicker">
+              <label htmlFor="beginDate">Begin Date:</label>
+              <DatePicker
+                dateFormat="yyyy/MM/dd"
+                id="beginDate"
+                selected={beginDate}
+                onChange={date => setBeginDate(date)}
+              />
+            </div>
+            <div className="datePicker">
+              <label htmlFor="endDate">End Date:</label>
+              <DatePicker
+                dateFormat="yyyy/MM/dd"
+                id="endDate"
+                selected={endDate}
+                onChange={date => setEndDate(date)}
+              />
+            </div>
+          </div>
+          {/* Address */}
+          <div className="input-item">
+            <label htmlFor="location">Location</label>
+            <input
+              type="text"
+              name="location"
+              value={inputs.location}
+              onChange={handleChange}
+            />
+          </div>
+
+          {/* footer */}
+          <div>
+            <button
+              className="btn-action-primary"
+              type="submit"
+              disabled={loading}
+            >
+              Creat
+              {loading ? "ing " : "e "} Event
+            </button>
+          </div>
+        </fieldset>
+      </Form>
+    </Card>
   );
 }
 

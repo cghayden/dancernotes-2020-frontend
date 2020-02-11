@@ -13,14 +13,13 @@ const Events = () => {
     <>
       {studioEvents.length < 1 && <p>There are no events to display</p>}
       {studioEvents.map(event => {
-        const eventBeginDate = new Date(event.beginDate).toLocaleString(
-          "en-US",
-          {
-            month: "long",
-            day: "numeric",
-            year: "numeric"
-          }
-        );
+        const eventBeginDate = event.beginDate
+          ? new Date(event.beginDate).toLocaleString("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric"
+            })
+          : "";
         const eventEndDate = event.endDate
           ? new Date(event.endDate).toLocaleString("en-US", {
               month: "long",
@@ -40,15 +39,17 @@ const Events = () => {
               <p>{event.location}</p>
               <p>{event.street1}</p>
               <span>
-                <span>{event.city},</span> <span>{event.state}</span>{" "}
-                <span>{event.zip}</span>
+                {event.city && <span>{`${event.city},`}</span>}{" "}
+                <span>{event.state}</span> <span>{event.zip}</span>
               </span>
             </div>
-            <div className="card__section">
-              <a rel="noreferrer noopener" href={event.url}>
-                Event Website
-              </a>
-            </div>
+            {event.url && (
+              <div className="card__section">
+                <a rel="noreferrer noopener" href={event.url}>
+                  Event Website
+                </a>
+              </div>
+            )}
           </Card>
         );
       })}
