@@ -205,6 +205,14 @@ main {
     padding-top: 1rem;
   }
 }
+.subLabel{
+  font-size: 12px;
+}
+.date-picker{ margin-bottom: 0;}
+.left{
+  text-align: left;
+}
+
 `;
 
 export default class GlobalStyles extends Component {

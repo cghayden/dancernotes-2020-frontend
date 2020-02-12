@@ -57,10 +57,12 @@ const Alert = styled.div`
 const SelectChoices = styled.ul`
   margin-bottom: 0.5rem;
   display: flex;
+  flex-wrap: wrap;
   li {
     border-radius: ${props => props.theme.borderRadius};
     padding: 0.25rem 0.5rem;
     margin-left: 1rem;
+    margin-bottom: 2px;
     background-color: ${props => props.theme.teal6};
     color: white;
   }

@@ -19,7 +19,8 @@ const CREATE_STUDIO_EVENT = gql`
     $beginDate: DateTime
     $endDate: DateTime
     $location: String
-    $street1: String
+    $address1: String
+    $address2: String
     $city: String
     $state: String
     $zip: String
@@ -33,7 +34,8 @@ const CREATE_STUDIO_EVENT = gql`
       beginDate: $beginDate
       endDate: $endDate
       location: $location
-      street1: $street1
+      address1: $address1
+      address2: $address2
       city: $city
       state: $state
       zip: $zip
@@ -76,7 +78,7 @@ const initialInputState = {
   type: "",
   name: "",
   location: "",
-  street1: "",
+  address2: "",
   city: "",
   state: "",
   zip: "",
@@ -88,6 +90,7 @@ function CreateEventForm() {
   const [appliesTo, setAppliesTo] = useState({});
   const [beginDate, setBeginDate] = useState();
   const [endDate, setEndDate] = useState();
+  const [showAddress2, toggleshowAddress2] = useState(false);
   const [createStudioEvent, { error, loading }] = useMutation(
     CREATE_STUDIO_EVENT,
     {
@@ -199,27 +202,30 @@ function CreateEventForm() {
           </div>
 
           {/* Dates */}
-          <div className="form-row">
-            <div className="datePicker">
-              <label htmlFor="beginDate">Begin Date:</label>
-              <DatePicker
-                dateFormat="yyyy/MM/dd"
-                id="beginDate"
-                selected={beginDate}
-                onChange={date => setBeginDate(date)}
-              />
-            </div>
-            <div className="datePicker">
-              <label htmlFor="endDate">End Date:</label>
-              <DatePicker
-                dateFormat="yyyy/MM/dd"
-                id="endDate"
-                selected={endDate}
-                onChange={date => setEndDate(date)}
-              />
+          <div className="input-item">
+            <div className="form-row">
+              <div className="datePicker">
+                <label htmlFor="beginDate">Begin Date:</label>
+                <DatePicker
+                  dateFormat="yyyy/MM/dd"
+                  id="beginDate"
+                  selected={beginDate}
+                  onChange={date => setBeginDate(date)}
+                />
+              </div>
+              <div className="datePicker">
+                <label htmlFor="endDate">End Date:</label>
+                <DatePicker
+                  dateFormat="yyyy/MM/dd"
+                  id="endDate"
+                  selected={endDate}
+                  onChange={date => setEndDate(date)}
+                />
+              </div>
             </div>
           </div>
-          {/* Address */}
+
+          {/* Location */}
           <div className="input-item">
             <label htmlFor="location">Location</label>
             <input
@@ -229,9 +235,72 @@ function CreateEventForm() {
               onChange={handleChange}
             />
           </div>
+          {/* Address */}
+
+          <section>
+            <h3 className="left">Address:</h3>
+            <p className="subLabel left">Optional</p>
+            <div className="input-item card__section">
+              <label htmlFor="address1">
+                Address Line 1<span className="subLabel">Optional</span>
+              </label>
+              <input
+                type="text"
+                name="address1"
+                value={inputs.address1}
+                onChange={handleChange}
+              />
+            </div>
+            {showAddress2 && (
+              <div className="input-item">
+                <label htmlFor="address2">
+                  Address Line 2<span className="subLabel">Optional</span>
+                </label>
+                <input
+                  type="text"
+                  name="address2"
+                  value={inputs.address2}
+                  onChange={handleChange}
+                />
+              </div>
+            )}
+            <div className="input-item">
+              <div className="form-row">
+                <div className="form-row-item">
+                  <label htmlFor="city">City</label>
+                  <input
+                    type="text"
+                    name="city"
+                    value={inputs.city}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-row-item">
+                  <label htmlFor="state">State</label>
+                  <input
+                    className="state"
+                    type="text"
+                    name="state"
+                    value={inputs.state}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-row-item">
+                  <label htmlFor="zip">Zip Code</label>
+                  <input
+                    className="zip"
+                    type="text"
+                    name="zip"
+                    value={inputs.zip}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
 
           {/* footer */}
-          <div>
+          <div className="form-footer">
             <button
               className="btn-action-primary"
               type="submit"

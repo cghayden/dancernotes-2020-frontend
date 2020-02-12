@@ -37,7 +37,7 @@ const Events = () => {
             </div>
             <div className="card-section">
               <p>{event.location}</p>
-              <p>{event.street1}</p>
+              <p>{event.address1}</p>
               <span>
                 {event.city && <span>{`${event.city},`}</span>}{" "}
                 <span>{event.state}</span> <span>{event.zip}</span>

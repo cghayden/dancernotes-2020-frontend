@@ -44,8 +44,8 @@ const PARENT_EVENTS_QUERY = gql`
       endDate
       type
       location
-      street1
-      street2
+      address1
+      address2
       city
       state
       zip
