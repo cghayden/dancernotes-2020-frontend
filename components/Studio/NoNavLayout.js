@@ -18,10 +18,10 @@ const NoNavLayout = ({
       />
       <StudioMobileNav />
       <StudioDesktopNav />
-      <MainStyle>
+      <main>
         <ContentHeader page={page} pageAction={pageAction} />
         {children}
-      </MainStyle>
+      </main>
     </Fragment>
   );
 };

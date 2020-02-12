@@ -54,15 +54,21 @@ const Alert = styled.div`
   background: white;
 `;
 
-const ChosenDancers = styled.ul`
+const SelectChoices = styled.ul`
   margin-bottom: 0.5rem;
   display: flex;
+  flex-wrap: wrap;
   li {
     border-radius: ${props => props.theme.borderRadius};
     padding: 0.25rem 0.5rem;
     margin-left: 1rem;
+    margin-bottom: 2px;
     background-color: ${props => props.theme.teal6};
     color: white;
+  }
+  button {
+    padding: 0;
+    margin: 0 0 0 5px;
   }
 `;
 
@@ -88,11 +94,10 @@ function CreateCustomRoutineForm({ parent }) {
   const [showFileInput, toggleFileInput] = useState(false);
   const [musicForUpload, setMusicForUpload] = useState();
   const [musicData, setMusicData] = useState({});
-  const [dancers, setDancers] = useState(() =>
-    parent.dancers.length > 1 ? [] : [parent.dancers[0].firstName]
-  );
-  const [dancerIds, setDancerIds] = useState(() =>
-    parent.dancers.length > 1 ? [] : [parent.dancers[0].id]
+  const [dancerChoice, setDancerChoice] = useState(() =>
+    parent.dancers.length > 1
+      ? {}
+      : { [parent.dancers[0].firstName]: parent.dancers[0].id }
   );
 
   const [
@@ -103,15 +108,11 @@ function CreateCustomRoutineForm({ parent }) {
       loading: creatingCustomRoutine
     }
   ] = useMutation(CREATE_CUSTOM_ROUTINE_MUTATION, {
-    variables: { ...inputs, dancerIds: dancerIds },
+    variables: { ...inputs, dancerIds: Object.values(dancerChoice) },
     onCompleted: () => {
       resetForm();
     },
-    refetchQueries: [
-      { query: ALL_Rs },
-      { query: PARENT_USER_QUERY },
-      { query: DANCER_QUERY, variables: { id: inputs.dancer } }
-    ],
+    refetchQueries: [{ query: ALL_Rs }, { query: PARENT_USER_QUERY }],
     awaitRefetchQueries: true
   });
 
@@ -207,73 +208,38 @@ function CreateCustomRoutineForm({ parent }) {
   }
 
   function handleSelectChange(e) {
-    const dancerName = e.target.selectedOptions[0].label;
-    const dancerId = e.target.selectedOptions[0].value;
-    updateInputs({
-      ...inputs,
-      dancer: dancerName
-    });
-    // if dancername is in dancers array, remove it
-    if (dancers.indexOf(dancerName) !== -1) {
-      const newDancers = [...dancers];
-      const newDancerIds = [...dancerIds];
-      newDancers.splice(dancers.indexOf(dancerName), 1);
-      newDancerIds.splice(dancerIds.indexOf(dancerId), 1);
-      setDancers(newDancers);
-      setDancerIds(newDancerIds);
-    } else {
-      setDancers([...dancers, dancerName]);
-      setDancerIds([...dancerIds, dancerId]);
-    }
+    const chosenDancerName = e.target.selectedOptions[0].label;
+    const chosenDancerId = e.target.selectedOptions[0].value;
+    setDancerChoice({ ...dancerChoice, [chosenDancerName]: chosenDancerId });
+  }
+
+  function removeChosenDancer(selection) {
+    setDancerChoice(dancerChoice => delete dancerChoice[selection]);
   }
 
   return (
     <Fragment>
-      {/* <Modal open={showModal} setOpen={toggleModal}>
-        <div>
-          {errorCreatingCustomRoutine && (
-            <>
-              <p>
-                Warning: there was a problem saving your class. Please try
-                again:
-              </p>
-              <button role="button" onClick={() => toggleModal(false)}>
-                Try Again
-              </button>
-            </>
-          )}
-
-          {newDanceClass && <p>Success - you created {newDanceClass.name}</p>}
-          {newDanceClass && errorUploadingSong && (
-            <p>
-              Warning: there was a problem uploading the music for{" "}
-              {newDanceClass.name}. You can try to add music now or later by
-              updating the dance class:
-              <Link href={`/studio/updateClass/${newDanceClass.id}`}>
-                <a>Update Class</a>
-              </Link>
-            </p>
-          )}
-
-          <button role="button" onClick={() => toggleModal(false)}>
-            Create Another Class
-          </button>
-          <Link href="/parent/notes/routines">
-            <a>I'm finished creating classes</a>
-          </Link>
-        </div>
-      </Modal> */}
       <Card>
         <Form method="post" onSubmit={async e => await saveNewCustomRoutine(e)}>
           <fieldset disabled={loading} aria-busy={loading}>
             <h2>Create Your Own Routine</h2>
             <div className="input-item">
-              <ChosenDancers>
+              <SelectChoices>
                 <label htmlFor="dancer">Dancer(s):*</label>
-                {dancers.map((dancer, index) => (
-                  <li key={index}>{dancer}</li>
+                {Object.entries(dancerChoice).map(dancer => (
+                  <li key={dancer[0]}>
+                    {dancer[0]}
+                    <span>
+                      <button
+                        type="button"
+                        onClick={() => removeChosenDancer(entry[0])}
+                      >
+                        X
+                      </button>
+                    </span>
+                  </li>
                 ))}
-              </ChosenDancers>
+              </SelectChoices>
 
               {parent.dancers.length > 1 && (
                 <select
@@ -281,7 +247,6 @@ function CreateCustomRoutineForm({ parent }) {
                   name="dancer"
                   value={""}
                   onChange={e => {
-                    // handleChange(e);
                     handleSelectChange(e);
                   }}
                 >
@@ -512,3 +477,4 @@ function CreateCustomRoutineForm({ parent }) {
 }
 
 export default CreateCustomRoutineForm;
+export { SelectChoices };

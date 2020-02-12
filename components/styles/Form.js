@@ -31,7 +31,7 @@ const Form = styled.form`
   }
 
   label {
-    margin-bottom: 5px;
+    margin-bottom: 2px;
     text-align: left;
     &.visuallyHidden {
       display: none;
@@ -76,18 +76,6 @@ option {
     &[disabled] {
       opacity: 0.7;
     }
-    /* &::after {
-      height: 2px;
-      margin: 4px 0;
-      content: "";
-      display: block;
-      background-image: linear-gradient(
-        to right,
-        ${props => props.theme.red9} 0%,
-        ${props => props.theme.red0} 50%,
-        ${props => props.theme.red9} 100%
-      );
-    } */
     &[aria-busy="true"]::after {
       height: 2px;
       margin: 4px 0;
@@ -136,12 +124,20 @@ option {
   .input-item {
     display: grid;
     width: 90%;
-    margin: 0 auto 1rem auto;
+    margin: 0 auto .5rem auto;
   }
-  .form-row {
-    margin: 0 auto 1rem auto;
+  .datePicker{
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    text-align: left;
+    input{
+    max-width: 200px;}
+  }
+
+  .form-row {
+    display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
 
     .form-row-item {
@@ -162,6 +158,14 @@ option {
     display: flex;
     justify-content: space-evenly;
 
+  }
+
+  .state{
+    width: 80px;
+  }
+
+  .zip {
+    width: 100px
   }
   @media (min-width: ${props => props.theme.largeScreen}) {
     input,

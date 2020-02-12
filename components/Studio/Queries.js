@@ -110,7 +110,8 @@ const STUDIO_EVENTS_QUERY = gql`
         beginDate
         endDate
         location
-        street1
+        address1
+        address2
         city
         state
         zip
