@@ -5,10 +5,10 @@ import EventsDisplay from "./EventsDisplay";
 const EventsContent = ({ events, allRoutines }) => {
   const [eventFilter, setFilter] = useState({
     competition: true,
-    convention: false,
+    convention: true,
     rehearsal: true,
-    recital: false,
-    camp: false,
+    recital: true,
+    camp: true,
     other: true
   });
   return (

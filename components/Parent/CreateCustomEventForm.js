@@ -8,6 +8,7 @@ import Card from "../styles/Card";
 import Error from "../Error";
 import useForm from "../../lib/useForm";
 import { SelectChoices } from "./CreateCustomRoutineForm";
+import { CUSTOM_EVENTS_QUERY } from "./Queries";
 
 const CREATE_CUSTOM_EVENT = gql`
   mutation CREATE_CUSTOM_EVENT(
@@ -73,7 +74,10 @@ function CreateCustomEventForm({ parent }) {
   const [createCustomEvent, { error, loading }] = useMutation(
     CREATE_CUSTOM_EVENT,
     {
-      // refetchQueries: [{ query: STUDIO_EVENTS_QUERY }]
+      refetchQueries: [{ query: CUSTOM_EVENTS_QUERY }],
+      onCompleted: () => {
+        Router.push("/parent/notes/events");
+      }
     }
   );
 
@@ -114,7 +118,7 @@ function CreateCustomEventForm({ parent }) {
       >
         <fieldset disabled={loading} aria-busy={loading}>
           <legend>Add A New Event</legend>
-          <Error error={error} />
+
           <div className="input-item">
             <label htmlFor="name">Name</label>
             <input
@@ -290,8 +294,18 @@ function CreateCustomEventForm({ parent }) {
               </div>
             </div>
           </section>
-
-          {/* footer */}
+          <div className="input-item">
+            <label htmlFor="notes">Notes</label>
+            <textarea
+              id="notes"
+              type="text"
+              name="notes"
+              rows="5"
+              value={inputs.notes}
+              onChange={handleChange}
+            />
+          </div>
+          <Error error={error} />
           <div className="form-footer">
             <button
               className="btn-action-primary"

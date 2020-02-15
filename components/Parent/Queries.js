@@ -59,6 +59,17 @@ const PARENT_EVENTS_QUERY = gql`
   }
 `;
 
+const CUSTOM_EVENTS_QUERY = gql`
+  query {
+    customEvents {
+      id
+      name
+      type
+      dancerIds
+    }
+  }
+`;
+
 const PARENT_USER_QUERY = gql`
   query {
     parentUser {
@@ -208,5 +219,6 @@ export {
   PARENTS_DANCERS,
   CUSTOM_ROUTINE_QUERY,
   STUDIOS_AND_DANCERS,
-  PARENTS_MAKEUP_QUERY
+  PARENTS_MAKEUP_QUERY,
+  CUSTOM_EVENTS_QUERY
 };

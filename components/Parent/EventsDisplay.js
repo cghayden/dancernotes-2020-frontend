@@ -7,6 +7,10 @@ const StudioCardsDiv = styled.div`
   width: 100%;
 `;
 
+const EventNotes = styled.p`
+  white-space: pre-wrap;
+`;
+
 const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
   // console.log("all studio events:", events);
   const displayEvents = events
@@ -25,7 +29,6 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
       allRoutineAttributes.push(routine.ageDivision.toLowerCase());
     }
   }
-  // console.log("allRoutineAttributes:", allRoutineAttributes);
 
   function hasAttribute(attr) {
     return allRoutineAttributes.includes(attr);
@@ -63,15 +66,23 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
                 <p>{event.location}</p>
                 <p>{event.address1}</p>
                 <span>
-                  <span>{event.city},</span> <span>{event.state}</span>{" "}
+                  <span>{event.city}</span>{" "}
+                  <span>{event.state && `, ${event.state}`}</span>{" "}
                   <span>{event.zip}</span>
                 </span>
               </div>
-              <div className="card__section">
-                <a rel="noreferrer noopener" href={event.url}>
-                  Event Website
-                </a>
-              </div>
+              {event.url && (
+                <div className="card__section">
+                  <a rel="noreferrer noopener" href={event.url}>
+                    Event Website
+                  </a>
+                </div>
+              )}
+              {event.notes && (
+                <div className="card__section">
+                  <EventNotes>{event.notes}</EventNotes>
+                </div>
+              )}
             </Card>
           );
         }

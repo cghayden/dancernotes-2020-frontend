@@ -111,7 +111,7 @@ function CreateEventForm() {
 
   async function saveEvent(e) {
     e.preventDefault();
-    const applyTo = Object.values(appliesTo);
+    const applyTo = Object.keys(appliesTo);
     const beginningDate = beginDate ? beginDate.toISOString() : null;
     const endingDate = endDate ? endDate.toISOString() : null;
     await createStudioEvent({
@@ -298,6 +298,17 @@ function CreateEventForm() {
               </div>
             </div>
           </section>
+          <div className="input-item">
+            <label htmlFor="notes">Notes</label>
+            <textarea
+              id="notes"
+              type="text"
+              name="notes"
+              rows="5"
+              value={inputs.notes}
+              onChange={handleChange}
+            />
+          </div>
 
           {/* footer */}
           <div className="form-footer">
