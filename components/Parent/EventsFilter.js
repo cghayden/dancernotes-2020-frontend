@@ -23,7 +23,14 @@ const EventCheckbox = styled.div`
 `;
 
 function NotesSubNav({ eventFilter, setFilter }) {
-  const eventCategories = ["competition", "convention", "rehearsal", "recital"];
+  const eventCategories = [
+    "competition",
+    "convention",
+    "rehearsal",
+    "recital",
+    "camp",
+    "other"
+  ];
   return (
     <EventCheckboxesDiv>
       {eventCategories.map(eventCategory => (

@@ -2,6 +2,11 @@ import React from "react";
 import { STUDIO_EVENTS_QUERY } from "./Queries";
 import { useQuery } from "@apollo/react-hooks";
 import Card from "../styles/Card";
+import styled from "styled-components";
+
+const EventNotes = styled.p`
+  white-space: pre-wrap;
+`;
 
 const Events = () => {
   const { data, loading, error } = useQuery(STUDIO_EVENTS_QUERY);
@@ -48,6 +53,11 @@ const Events = () => {
                 <a rel="noreferrer noopener" href={event.url}>
                   Event Website
                 </a>
+              </div>
+            )}
+            {event.notes && (
+              <div className="card__section">
+                <EventNotes>{event.notes}</EventNotes>
               </div>
             )}
           </Card>

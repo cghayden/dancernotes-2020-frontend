@@ -39,10 +39,10 @@ const PARENT_EVENTS_QUERY = gql`
     parentEvents {
       id
       name
+      type
       appliesTo
       beginDate
       endDate
-      type
       location
       address1
       address2
@@ -55,6 +55,32 @@ const PARENT_EVENTS_QUERY = gql`
         id
         studioName
       }
+    }
+  }
+`;
+
+const CUSTOM_EVENTS_QUERY = gql`
+  query {
+    customEvents {
+      id
+      name
+      type
+      appliesTo
+      beginDate
+      endDate
+      location
+      address1
+      address2
+      city
+      state
+      zip
+      url
+      notes
+      studio {
+        id
+        studioName
+      }
+      dancerIds
     }
   }
 `;
@@ -208,5 +234,6 @@ export {
   PARENTS_DANCERS,
   CUSTOM_ROUTINE_QUERY,
   STUDIOS_AND_DANCERS,
-  PARENTS_MAKEUP_QUERY
+  PARENTS_MAKEUP_QUERY,
+  CUSTOM_EVENTS_QUERY
 };

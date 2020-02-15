@@ -205,12 +205,16 @@ main {
     padding-top: 1rem;
   }
 }
-.subLabel{
+.subHeading{
   font-size: 12px;
+  ${"" /* font-weight: normal; */}
 }
-.date-picker{ margin-bottom: 0;}
 .left{
   text-align: left;
+}
+
+.react-datepicker-popper{
+  transform: translate3d(50%, 190%, 0px)
 }
 
 `;

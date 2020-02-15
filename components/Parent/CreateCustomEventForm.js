@@ -7,14 +7,14 @@ import Form from "../styles/Form";
 import Card from "../styles/Card";
 import Error from "../Error";
 import useForm from "../../lib/useForm";
-import { SelectChoices } from "../Parent/CreateCustomRoutineForm";
-import { STUDIO_EVENTS_QUERY } from "./Queries";
+import { SelectChoices } from "./CreateCustomRoutineForm";
+import { CUSTOM_EVENTS_QUERY } from "./Queries";
 
-const CREATE_STUDIO_EVENT = gql`
-  mutation CREATE_STUDIO_EVENT(
+const CREATE_CUSTOM_EVENT = gql`
+  mutation CREATE_CUSTOM_EVENT(
     $name: String!
     $type: String!
-    $appliesTo: [String!]!
+    $dancerIds: [ID!]!
     $beginDate: DateTime
     $endDate: DateTime
     $location: String
@@ -25,11 +25,12 @@ const CREATE_STUDIO_EVENT = gql`
     $zip: String
     $url: String
     $notes: String
+    $appliesTo: String!
   ) {
-    createStudioEvent(
+    createCustomEvent(
       name: $name
       type: $type
-      appliesTo: $appliesTo
+      dancerIds: $dancerIds
       beginDate: $beginDate
       endDate: $endDate
       location: $location
@@ -40,37 +41,15 @@ const CREATE_STUDIO_EVENT = gql`
       zip: $zip
       url: $url
       notes: $notes
+      appliesTo: $appliesTo
     ) {
       id
       type
       name
-      appliesTo
     }
   }
 `;
-const appliesToOptions = [
-  { value: "recreational", label: "Recreational", name: "appliesTo" },
-  { value: "company", label: " All Company", name: "appliesTo" },
-  { value: "star", label: "All Star", name: "appliesTo" },
-  { value: "all", label: "All Classes", name: "appliesTo" },
-  { value: "mini star", label: "Mini Star", name: "appliesTo" },
-  { value: "mini company", label: "Mini Company", name: "appliesTo" },
-  { value: "junior star", label: "Junior Star", name: "appliesTo" },
-  { value: "junior company", label: "Junior Company", name: "appliesTo" },
-  { value: "teen 1 star", label: "Teen Star", name: "appliesTo" },
-  { value: "teen 1 company", label: "Teen 1 Company", name: "appliesTo" },
-  { value: "teen 2 star", label: "Teen Star", name: "appliesTo" },
-  { value: "teen 2 company", label: "Teen 2 Company", name: "appliesTo" },
-  { value: "senior star", label: "Senior Star", name: "appliesTo" },
-  { value: "senior company", label: "Senior Company", name: "appliesTo" },
-  { value: "lyric", label: "Lyric", name: "appliesTo" },
-  { value: "jazz", label: "Jazz", name: "appliesTo" },
-  { value: "hip hop", label: "Hip Hop", name: "appliesTo" },
-  { value: "tap", label: "Tap", name: "appliesTo" },
-  { value: "production", label: "Production", name: "appliesTo" },
-  { value: "acro team", label: "Acro Team", name: "appliesTo" },
-  { value: "mini acro team", label: "Mini Acro Team", name: "appliesTo" }
-];
+
 const initialInputState = {
   type: "",
   name: "",
@@ -81,47 +60,55 @@ const initialInputState = {
   state: "",
   zip: "",
   url: "",
-  notes: ""
+  notes: "",
+  appliesTo: "all"
 };
-function CreateEventForm() {
+
+function CreateCustomEventForm({ parent }) {
   const { inputs, updateInputs, handleChange } = useForm(initialInputState);
-  const [appliesTo, setAppliesTo] = useState({});
+  const [dancerChoice, setDancerChoice] = useState(() =>
+    parent.dancers.length > 1
+      ? {}
+      : { [parent.dancers[0].firstName]: parent.dancers[0].id }
+  );
   const [beginDate, setBeginDate] = useState();
   const [endDate, setEndDate] = useState();
   const [showAddress2, toggleshowAddress2] = useState(false);
-  const [createStudioEvent, { error, loading }] = useMutation(
-    CREATE_STUDIO_EVENT,
+  const [createCustomEvent, { error, loading }] = useMutation(
+    CREATE_CUSTOM_EVENT,
     {
-      refetchQueries: [{ query: STUDIO_EVENTS_QUERY }]
+      refetchQueries: [{ query: CUSTOM_EVENTS_QUERY }],
+      onCompleted: () => {
+        Router.push("/parent/notes/events");
+      }
     }
   );
 
-  function handleAppliesToChange(e) {
-    if (!e) return;
-    const selectedValue = e.target.selectedOptions[0].value;
-    const selectedLabel = e.target.selectedOptions[0].label;
-    setAppliesTo({ ...appliesTo, [selectedValue]: selectedLabel });
-  }
-
-  function removeAppliesTo(selection) {
-    const choices = { ...appliesTo };
-    delete choices[selection];
-    setAppliesTo(choices);
-  }
-
   async function saveEvent(e) {
     e.preventDefault();
-    const applyTo = Object.keys(appliesTo);
+    const dancerIds = Object.values(dancerChoice);
     const beginningDate = beginDate ? beginDate.toISOString() : null;
     const endingDate = endDate ? endDate.toISOString() : null;
-    await createStudioEvent({
+    await createCustomEvent({
       variables: {
         ...inputs,
-        appliesTo: applyTo,
+        dancerIds,
         beginDate: beginningDate,
         endDate: endingDate
       }
     });
+  }
+
+  function handleSelectChange(e) {
+    const chosenDancerName = e.target.selectedOptions[0].label;
+    const chosenDancerId = e.target.selectedOptions[0].value;
+    setDancerChoice({ ...dancerChoice, [chosenDancerName]: chosenDancerId });
+  }
+
+  function removeChosenDancer(selection) {
+    const dancers = { ...dancerChoice };
+    delete dancers[selection];
+    setDancerChoice(dancers);
   }
 
   return (
@@ -134,7 +121,7 @@ function CreateEventForm() {
       >
         <fieldset disabled={loading} aria-busy={loading}>
           <legend>Add A New Event</legend>
-          <Error error={error} />
+
           <div className="input-item">
             <label htmlFor="name">Name</label>
             <input
@@ -167,39 +154,50 @@ function CreateEventForm() {
 
           <div className="input-item">
             <SelectChoices>
-              <label htmlFor="appliesTo">Apply To:</label>
-              {Object.entries(appliesTo).map(entry => (
-                <li key={entry[0]}>
-                  {entry[1]}
-                  <span>
-                    <button
-                      type="button"
-                      onClick={() => removeAppliesTo(entry[0])}
-                    >
-                      X
-                    </button>
-                  </span>
-                </li>
-              ))}
+              <label htmlFor="dancer">Dancer(s):*</label>
+              {Object.entries(dancerChoice).map(dancer => {
+                return (
+                  <li key={dancer[0]}>
+                    {dancer[0]}
+                    <span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          console.log("remove", dancer[0]);
+                          removeChosenDancer(dancer[0]);
+                        }}
+                      >
+                        X
+                      </button>
+                    </span>
+                  </li>
+                );
+              })}
             </SelectChoices>
-            <select
-              name="appliesTo"
-              value={""}
-              onChange={e => handleAppliesToChange(e)}
-            >
-              <option default value={""} disabled>
-                Applies to...
-              </option>
-              {appliesToOptions.map(category => (
-                <option
-                  key={category.value}
-                  value={category.value}
-                  label={category.label}
-                >
-                  {category.label}
+            {parent.dancers.length > 1 && (
+              <select
+                id="dancer"
+                name="dancer"
+                value={""}
+                onChange={e => {
+                  handleSelectChange(e);
+                }}
+              >
+                <option default value={""} disabled>
+                  Dancer(s)...
                 </option>
-              ))}
-            </select>
+                {parent &&
+                  parent.dancers.map(dancer => (
+                    <option
+                      key={dancer.id}
+                      value={dancer.id}
+                      label={dancer.firstName}
+                    >
+                      {dancer.firstName}
+                    </option>
+                  ))}
+              </select>
+            )}
           </div>
 
           {/* Dates */}
@@ -311,8 +309,7 @@ function CreateEventForm() {
               onChange={handleChange}
             />
           </div>
-
-          {/* footer */}
+          <Error error={error} />
           <div className="form-footer">
             <button
               className="btn-action-primary"
@@ -329,4 +326,4 @@ function CreateEventForm() {
   );
 }
 
-export default CreateEventForm;
+export default CreateCustomEventForm;

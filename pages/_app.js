@@ -5,6 +5,7 @@ import { ApolloProvider } from "react-apollo";
 import withApollo from "../lib/withApollo";
 
 import "../public/normalize.css";
+import "react-datepicker/dist/react-datepicker.css";
 import GlobalStyles from "../components/GlobalStyles";
 
 import ParentDisplayProvider from "../components/ParentDisplayProvider";

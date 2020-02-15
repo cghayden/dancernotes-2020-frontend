@@ -16,10 +16,10 @@ const NoNavLayout = ({
       <MobileStatusBar mobileHeader={mobileHeader} pageAction={pageAction} />
       <MobileNav />
       <DesktopNav />
-      <MainStyle>
+      <main>
         <ContentHeader page={page} pageAction={pageAction} />
         {children}
-      </MainStyle>
+      </main>
     </Fragment>
   );
 };
