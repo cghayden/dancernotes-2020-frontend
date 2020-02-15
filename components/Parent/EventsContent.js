@@ -6,9 +6,10 @@ const EventsContent = ({ events, allRoutines }) => {
   const [eventFilter, setFilter] = useState({
     competition: true,
     convention: false,
-    rehearsal: false,
+    rehearsal: true,
     recital: false,
-    other: false
+    camp: false,
+    other: true
   });
   return (
     <>

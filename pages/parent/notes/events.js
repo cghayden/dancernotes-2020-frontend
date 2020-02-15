@@ -1,11 +1,11 @@
 import React from "react";
+import Link from "next/link";
 import SubNavMainControlsLayout from "../../../components/SubNavMainControlsLayout";
 import EventsContent from "../../../components/Parent/EventsContent";
 import NotesSubNav from "../../../components/Parent/NotesSubNav";
 // import ControlPanel from "../../../components/Parent/ControlPanel";
 import { useQuery } from "@apollo/react-hooks";
 import { PARENT_EVENTS_QUERY } from "../../../components/Parent/Queries";
-import { PARENT_USER_QUERY } from "../../../components/Parent/Queries";
 import { ALL_Rs } from "../../../components/Parent/Queries";
 
 import Error from "../../../components/Error";
@@ -31,6 +31,13 @@ function EventsPage() {
 
   const loading = loadingEvents || loadingRoutines;
   const error = errorLoadingEvents || errorLoadingRoutines;
+
+  const AddEventButton = (
+    <Link href="/parent/createCustomEvent">
+      <a className="textOnly-primary-action">Create a Routine</a>
+    </Link>
+  );
+
   if (loading || error)
     return (
       <>
@@ -38,7 +45,7 @@ function EventsPage() {
         <SubNavMainControlsLayout
           mobileHeader={"Notes"}
           page="Events"
-          // pageAction="Add Event"
+          pageAction={AddEventButton}
         >
           {loading && <p>5, 6, 7, 8 ...</p>}
           {error && <Error error={error} />}
@@ -53,7 +60,7 @@ function EventsPage() {
       <SubNavMainControlsLayout
         mobileHeader={"Notes"}
         page="Events"
-        // pageAction="Add Event"
+        pageAction={AddEventButton}
       >
         <EventsContent allRoutines={allRoutines} events={data.parentEvents} />
       </SubNavMainControlsLayout>

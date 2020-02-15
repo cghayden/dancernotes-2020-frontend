@@ -10,7 +10,6 @@ import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
 import Form from "../styles/Form";
 import Card from "../styles/Card";
 import useForm from "../../lib/useForm";
-import Modal from "../Modal";
 import BackButton from "../BackButton";
 import { DANCER_QUERY } from "./Queries";
 
@@ -214,7 +213,9 @@ function CreateCustomRoutineForm({ parent }) {
   }
 
   function removeChosenDancer(selection) {
-    setDancerChoice(dancerChoice => delete dancerChoice[selection]);
+    const dancers = { ...dancerChoice };
+    delete dancers[selection];
+    setDancerChoice(dancers);
   }
 
   return (
@@ -232,7 +233,7 @@ function CreateCustomRoutineForm({ parent }) {
                     <span>
                       <button
                         type="button"
-                        onClick={() => removeChosenDancer(entry[0])}
+                        onClick={() => removeChosenDancer(dancer[0])}
                       >
                         X
                       </button>

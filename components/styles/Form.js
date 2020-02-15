@@ -13,16 +13,21 @@ const loading = keyframes`
 `;
 
 const Form = styled.form`
-   /* each form should be inside a card */
+  /* each form should be inside a card */
   text-align: center;
   border-radius: ${props => props.theme.borderRadius};
   color: ${props => props.theme.blackText};
   background: ${props => props.theme.gray0};
-  /* box-shadow: ${props => props.theme.dropShadow1}; */
   width: 100%;
-  /* min-width: 320px; */
   max-width: 550px;
-  /* margin: 0 auto 1rem auto; */
+
+  .datePicker {
+    margin-bottom: 0.5rem;
+  }
+  #endDate,
+  #beginDate {
+    width: 115px;
+  }
   legend,
   h2 {
     font-size: 1.25em;
@@ -64,10 +69,9 @@ const Form = styled.form`
     }
   }
 
- 
-option {
-  background: inherit;
-}
+  option {
+    background: inherit;
+  }
 
   fieldset {
     border: 0;
@@ -97,7 +101,7 @@ option {
     padding: 0.5rem;
     justify-items: center;
 
-    input{
+    input {
       width: 100px;
     }
     label {
@@ -110,69 +114,62 @@ option {
     width: 80px;
     display: block;
     padding: 0.5rem;
-    select{
+    select {
       padding: 0;
     }
     label {
       display: inline-block;
     }
   }
-  
+
   .fileLoader {
     background: ${props => props.theme.indigo2};
   }
   .input-item {
     display: grid;
     width: 90%;
-    margin: 0 auto .5rem auto;
-  }
-  .datePicker{
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-    text-align: left;
-    input{
-    max-width: 200px;}
+    margin: 0 auto 12px auto;
   }
 
   .form-row {
+    margin: 0 auto 12px auto;
+    width: 90%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
 
     .form-row-item {
       display: grid;
       place-content: center;
+      margin-bottom: 12px;
     }
   }
-  .form-row-day-time{
+  .form-row-day-time {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
     align-items: center;
     margin: 0 0 1rem 0;
-
   }
   .form-footer {
     padding-top: 1rem;
     display: flex;
     justify-content: space-evenly;
-
   }
 
-  .state{
+  .state {
     width: 80px;
   }
 
   .zip {
-    width: 100px
+    width: 100px;
   }
   @media (min-width: ${props => props.theme.largeScreen}) {
     input,
-  textarea,
-  select {
-    padding: 0.5rem;
-  }
+    textarea,
+    select {
+      padding: 0.5rem;
+    }
   }
 `;
 
