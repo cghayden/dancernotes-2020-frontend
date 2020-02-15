@@ -12,8 +12,7 @@ const EventNotes = styled.p`
 `;
 
 const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
-  // console.log("all studio events:", events);
-  const displayEvents = events
+  const eventsToDisplay = events
     .filter(event => activeEvents.includes(event.type))
     .sort(function(a, b) {
       return a.beginDate < b.beginDate ? -1 : a.beginDate > b.beginDate ? 1 : 0;
@@ -36,7 +35,7 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
 
   return (
     <StudioCardsDiv>
-      {displayEvents.map(event => {
+      {eventsToDisplay.map(event => {
         const eventBeginDate = new Date(event.beginDate).toLocaleString(
           "en-US",
           {

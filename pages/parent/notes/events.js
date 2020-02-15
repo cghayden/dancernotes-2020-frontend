@@ -74,7 +74,8 @@ function EventsPage() {
       >
         <EventsContent
           allRoutines={allRoutines}
-          events={parentEvents.parentEvents}
+          events={allEvents}
+          // allEvents={allEvents}
         />
       </SubNavMainControlsLayout>
       {/* <ControlPanel/> */}

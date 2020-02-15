@@ -39,10 +39,10 @@ const PARENT_EVENTS_QUERY = gql`
     parentEvents {
       id
       name
+      type
       appliesTo
       beginDate
       endDate
-      type
       location
       address1
       address2
@@ -65,6 +65,21 @@ const CUSTOM_EVENTS_QUERY = gql`
       id
       name
       type
+      appliesTo
+      beginDate
+      endDate
+      location
+      address1
+      address2
+      city
+      state
+      zip
+      url
+      notes
+      studio {
+        id
+        studioName
+      }
       dancerIds
     }
   }

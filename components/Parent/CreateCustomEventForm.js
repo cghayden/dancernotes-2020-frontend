@@ -25,6 +25,7 @@ const CREATE_CUSTOM_EVENT = gql`
     $zip: String
     $url: String
     $notes: String
+    $appliesTo: String!
   ) {
     createCustomEvent(
       name: $name
@@ -40,6 +41,7 @@ const CREATE_CUSTOM_EVENT = gql`
       zip: $zip
       url: $url
       notes: $notes
+      appliesTo: $appliesTo
     ) {
       id
       type
@@ -58,7 +60,8 @@ const initialInputState = {
   state: "",
   zip: "",
   url: "",
-  notes: ""
+  notes: "",
+  appliesTo: "all"
 };
 
 function CreateCustomEventForm({ parent }) {
@@ -153,7 +156,6 @@ function CreateCustomEventForm({ parent }) {
             <SelectChoices>
               <label htmlFor="dancer">Dancer(s):*</label>
               {Object.entries(dancerChoice).map(dancer => {
-                console.log("dancer:", dancer);
                 return (
                   <li key={dancer[0]}>
                     {dancer[0]}
@@ -207,6 +209,7 @@ function CreateCustomEventForm({ parent }) {
                 id="beginDate"
                 selected={beginDate}
                 onChange={date => setBeginDate(date)}
+                popperPlacement="auto"
               />
             </div>
             <div className="form-row-item">
@@ -216,6 +219,7 @@ function CreateCustomEventForm({ parent }) {
                 id="endDate"
                 selected={endDate}
                 onChange={date => setEndDate(date)}
+                popperPlacement="auto"
               />
             </div>
           </div>

@@ -211,6 +211,7 @@ function CreateEventForm() {
                 id="beginDate"
                 selected={beginDate}
                 onChange={date => setBeginDate(date)}
+                popperPlacement="auto"
               />
             </div>
             <div className="form-row-item">
@@ -220,6 +221,7 @@ function CreateEventForm() {
                 id="endDate"
                 selected={endDate}
                 onChange={date => setEndDate(date)}
+                popperPlacement="auto"
               />
             </div>
           </div>

@@ -213,6 +213,10 @@ main {
   text-align: left;
 }
 
+.react-datepicker-popper{
+  transform: translate3d(50%, 190%, 0px)
+}
+
 `;
 
 export default class GlobalStyles extends Component {
