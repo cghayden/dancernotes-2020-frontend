@@ -1,17 +1,15 @@
-import SubNavMainLayout from "../../components/Studio/SubNavMainLayout";
-import ClassesSubNav from "../../components/Studio/ClassesSubNav";
+import NoNavLayout from "../../components/Studio/NoNavLayout";
 import EditClassCategories from "../../components/Studio/EditClassCategories";
 
 function configureClassCategoriesPage() {
   return (
     <>
-      <ClassesSubNav />
-      <SubNavMainLayout
+      <NoNavLayout
         mobileHeader="Configure Class Option"
         page="Configure class options"
       >
         <EditClassCategories />
-      </SubNavMainLayout>
+      </NoNavLayout>
     </>
   );
 }

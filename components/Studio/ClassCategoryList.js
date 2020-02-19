@@ -4,27 +4,39 @@ import styled from "styled-components";
 import gql from "graphql-tag";
 import { CATEGORIES_QUERY } from "./Queries";
 import { STUDIO_USER_QUERY } from "./useStudio";
-import XIcon from "../Icons/X";
+import DeleteIcon from "../Icons/Delete";
 import Card from "../styles/Card";
 import Form from "../styles/Form";
+import Error from "../Error";
 
 //TODO - add optimistic return to add category to list
 const CategoryCard = styled(Card)`
   min-width: unset;
   width: unset;
+  label {
+    font-size: 0.875rem;
+  }
 `;
 
 const StyledDeleteButton = styled.button`
+  transform: rotate(0.5turn);
+  color: red;
   height: 1.5em;
   width: 1.5em;
   padding: 0;
-  margin: 0 1rem 0 0;
+  margin: 0 0.5rem 2px 0;
   border-radius: 50%;
   background: none;
   box-shadow: none;
   border: none;
   svg {
+    width: 20px;
+    height: 20px;
     pointer-events: none;
+  }
+  :hover {
+    background: inherit;
+    color: red;
   }
 `;
 
@@ -99,17 +111,19 @@ function ClassCategoryList({ existingItems, category }) {
             {existingItems.map(item => (
               <li key={item}>
                 <StyledDeleteButton
+                  type="button"
+                  aria-label={`delete ${item}`}
                   value={item}
                   onClick={e => deleteItemFromCategoryList(e)}
                 >
-                  <XIcon />
+                  <DeleteIcon />
                 </StyledDeleteButton>{" "}
                 {item}
               </li>
             ))}
           </StyledUl>
         </div>
-        <fieldset>
+        <fieldset disabled={loading} aria-busy={loading}>
           <div className="input-item">
             <label>
               {`Add ${categoryHeading.slice(0, -1)}(s), separated by a comma`}
@@ -123,11 +137,10 @@ function ClassCategoryList({ existingItems, category }) {
               onChange={e => setNewItems(e.target.value)}
             />
           </div>
-          <div className="form-footer">
-            <button type="submit" className="btn-action-primary">
-              Add to Category
-            </button>
-          </div>
+          <Error error={error} />
+          <button type="submit" className="btn-action-primary">
+            Add to Category
+          </button>
         </fieldset>
       </Form>
     </CategoryCard>
