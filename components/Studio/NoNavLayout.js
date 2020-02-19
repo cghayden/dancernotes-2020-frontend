@@ -1,4 +1,3 @@
-import React, { Fragment } from "react";
 import StudioMobileStatusBar from "./StudioMobileStatusBar";
 import StudioDesktopNav from "./StudioDesktopNav";
 import StudioMobileNav from "./StudioMobileNav";
@@ -11,7 +10,7 @@ const NoNavLayout = ({
   pageAction = null
 }) => {
   return (
-    <Fragment>
+    <>
       <StudioMobileStatusBar
         mobileHeader={mobileHeader}
         pageAction={pageAction}
@@ -22,7 +21,7 @@ const NoNavLayout = ({
         <ContentHeader page={page} pageAction={pageAction} />
         {children}
       </main>
-    </Fragment>
+    </>
   );
 };
 
