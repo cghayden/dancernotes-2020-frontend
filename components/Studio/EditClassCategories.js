@@ -4,11 +4,10 @@ import { useQuery } from "@apollo/react-hooks";
 import { CATEGORIES_QUERY } from "./Queries";
 import ClassCategoryList from "./ClassCategoryList";
 
-const StyledClassCategories = styled.div`
-  padding: 1rem;
+const CategoryCards = styled.div`
   width: 90%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+  grid-template-columns: repeat(auto-fit, 275px);
   justify-content: center;
   grid-gap: 20px;
   h3 {
@@ -18,11 +17,8 @@ const StyledClassCategories = styled.div`
 
   h4 {
     text-align: center;
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
     margin: 0;
-  }
-  input {
-    max-width: 80%;
   }
 `;
 
@@ -33,15 +29,15 @@ const EditClassCategories = () => {
   if (loading) return <h1>5, 6, 7, 8...</h1>;
   if (error) return <Error error={error} />;
   return (
-    <StyledClassCategories>
+    <CategoryCards>
       {categories.map(cat => (
         <ClassCategoryList
           key={cat}
           category={cat}
-          currentItems={studioCategories[cat]}
+          existingItems={studioCategories[cat]}
         />
       ))}
-    </StyledClassCategories>
+    </CategoryCards>
   );
 };
 

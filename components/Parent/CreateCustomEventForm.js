@@ -163,7 +163,6 @@ function CreateCustomEventForm({ parent }) {
                       <button
                         type="button"
                         onClick={() => {
-                          console.log("remove", dancer[0]);
                           removeChosenDancer(dancer[0]);
                         }}
                       >

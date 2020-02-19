@@ -21,14 +21,17 @@ function StudioHome() {
       <Card>
         <p>Welcome to dancernotes!</p>
 
-        {/* <p>Add dances to your account to create your class schedule.</p> */}
         {data.myStudio.danceClasses.length < 1 && (
           <>
-            To begin, configure your class categories that you will use to
-            create and describe your dance classes.
-            <Link href="configureClassCategories">
-              <a>Configure Class Categories</a>
-            </Link>
+            <div className="card__section">
+              To begin, configure your class categories that you will use to
+              create and describe your dance classes.
+            </div>
+            <div className="card__section">
+              <Link href="configureClassCategories">
+                <a className="btn-action-primary">Configure Class Categories</a>
+              </Link>
+            </div>
           </>
         )}
       </Card>

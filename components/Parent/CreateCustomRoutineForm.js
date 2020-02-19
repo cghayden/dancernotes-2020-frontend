@@ -57,6 +57,7 @@ const SelectChoices = styled.ul`
   margin-bottom: 0.5rem;
   display: flex;
   flex-wrap: wrap;
+  
   li {
     border-radius: ${props => props.theme.borderRadius};
     padding: 0.25rem 0.5rem;
