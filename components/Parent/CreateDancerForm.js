@@ -262,7 +262,7 @@ function CreateDancerForm() {
               <div className="input-item">
                 <label htmlFor="image">
                   Add a picture of your dancer to easily identify the activities
-                  he/she is involved in. (ptional)
+                  he/she is involved in. (Optional)
                 </label>
                 <input
                   type="file"
