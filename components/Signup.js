@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const SignupButton = styled.button`
@@ -16,8 +15,6 @@ const SignupDiv = styled.div`
 `;
 
 const Signup = ({ setActive }) => {
-  const handleTypeChange = radioEvent => setActive(radioEvent.target.value);
-
   return (
     <SignupDiv>
       <SignupButton onClick={() => setActive("signupParent")}>

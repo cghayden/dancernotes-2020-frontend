@@ -130,6 +130,9 @@ const Form = styled.form`
     width: 90%;
     margin: 0 auto 12px auto;
   }
+  input {
+    width: 100%;
+  }
 
   .form-row {
     margin: 0 auto 12px auto;
