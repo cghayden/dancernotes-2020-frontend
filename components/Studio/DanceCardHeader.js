@@ -57,9 +57,7 @@ const DanceCardHeader = ({ dance, setShowBody }) => {
           <p>{dance.startTime}</p>
         </DanceCardTime>
       </HeaderStyle>
-      <DanceCardNav>
-        <button onClick={() => setShowBody(true)}>Details</button>
-      </DanceCardNav>
+     
     </>
   );
 };

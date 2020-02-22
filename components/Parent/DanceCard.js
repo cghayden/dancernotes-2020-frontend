@@ -73,8 +73,7 @@ const DanceCardNav = styled.div`
   }
 `;
 
-function DanceCard(props) {
-  const { dance, visibleDancersIds } = props;
+function DanceCard({ dance, visibleDancersIds }) {
   const [showBody, setShowBody] = useState(false);
   const [showMediaPlayer, setShowMediaPlayer] = useState(false);
   const [bind, { height }] = useMeasure();
@@ -85,8 +84,6 @@ function DanceCard(props) {
   });
 
   function toggleBody() {
-    //if closing body, close media player too
-
     setShowBody(!showBody);
   }
 
@@ -129,7 +126,7 @@ function DanceCard(props) {
 
       <animated.div style={animation}>
         <div {...bind}>
-          <DanceCardBody dance={dance} showMediaPlayer={showMediaPlayer} />
+          <DanceCardBody dance={dance} />
         </div>
       </animated.div>
     </DanceCardStyles>
