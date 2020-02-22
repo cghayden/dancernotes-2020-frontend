@@ -1,5 +1,5 @@
-import React from "react";
-import { Mutation } from "react-apollo";
+// import { ApolloConsumer } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import Router from "next/router";
 
@@ -11,17 +11,14 @@ const SIGN_OUT_MUTATION = gql`
   }
 `;
 
-const Signout = () => (
-  <Mutation
-    mutation={SIGN_OUT_MUTATION}
-    onCompleted={data => {
+function Signout() {
+  const [signout, { error, loading, client }] = useMutation(SIGN_OUT_MUTATION, {
+    onCompleted: () => {
       Router.push(`/`);
-    }}
-  >
-    {(signout, { client }) => {
-      return <button onClick={async () => await signout()}>Sign Out</button>;
-    }}
-  </Mutation>
-);
+      client.clearStore();
+    }
+  });
+  return <button onClick={async () => await signout()}>Sign Out</button>;
+}
 export default Signout;
 export { SIGN_OUT_MUTATION };

@@ -80,9 +80,7 @@ function UpdateParentNote({ danceId, existingNote, toggleEditNotes }) {
         )}
         <DeleteNote
           noteId={existingNote.id}
-          danceId={danceId}
           toggleEditNotes={toggleEditNotes}
-          // refetchQuery={PARENT_NOTES_QUERY}
         />
 
         <button

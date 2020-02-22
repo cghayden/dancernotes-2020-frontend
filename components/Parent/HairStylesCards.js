@@ -7,7 +7,7 @@ import Error from "../Error";
 import Loading from "../Loading";
 const HAIRSTYLES_QUERY = gql`
   query HAIRSTYLES_QUERY {
-    parentStudios {
+    parentHairstyles {
       studioName
       hairStyles {
         id
@@ -24,12 +24,12 @@ class HairStylesCards extends Component {
   render() {
     return (
       <Query query={HAIRSTYLES_QUERY}>
-        {({ data: { parentStudios } = {}, error, loading }) => {
+        {({ data: { parentHairstyles } = {}, error, loading }) => {
           if (loading) return <Loading />;
           if (error) return <Error error={error} />;
           return (
             <>
-              {parentStudios.map(studio => {
+              {parentHairstyles.map(studio => {
                 return (
                   <Card>
                     <div className="card__header">

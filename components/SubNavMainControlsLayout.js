@@ -1,4 +1,3 @@
-import React, { Fragment } from "react";
 import MobileStatusBar from "./Parent/MobileStatusBar";
 import MobileNav from "./Parent/MobileNav";
 import DesktopNav from "./Parent/DesktopNav";
@@ -29,7 +28,7 @@ const SubNavMainLayout = ({
   pageAction = null
 }) => {
   return (
-    <Fragment>
+    <>
       <MobileStatusBar
         offscreenToggler={offscreenToggler}
         mobileHeader={mobileHeader}
@@ -41,7 +40,7 @@ const SubNavMainLayout = ({
         <ContentHeader mobile page={page} pageAction={pageAction} />
         {children}
       </MainStyle>
-    </Fragment>
+    </>
   );
 };
 

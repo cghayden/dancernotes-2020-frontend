@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { DANCER_QUERY } from "./Queries";
 import { BROWSE_STUDIO_CLASSES_QUERY } from "../../pages/parent/account/browseStudio";
+import WithdrawButton from "./WithdrawButton";
 import Error from "../../components/Error";
 
 const ClassListing = styled.div`
@@ -134,13 +135,11 @@ function DanceClassInquiryCard({
     }
   }
 
-  function getStatus(enrolled, requested, dancerName) {
+  function getStatus(enrolled, requested) {
     if (enrolled) {
-      // const text = `${dancerName} is Enrolled in This Class`;
       return "enrolled";
     }
     if (requested) {
-      // const text = `${dancerName} has Requested This Class`;
       return "requested";
     } else {
       return "available";
@@ -148,18 +147,6 @@ function DanceClassInquiryCard({
   }
   const enrolled = isEnrolled(dancerId, dance.dancers);
   const status = getStatus(enrolled, requested, dancerName);
-
-  function withdrawFromClass() {
-    if (
-      confirm(
-        "are you sure you want to withdraw from this class? You will be removed from the class and will lose access to the notes for the class."
-      )
-    ) {
-      console.log("confirmed removal");
-    } else {
-      console.log("not confirmed - keep class");
-    }
-  }
 
   return (
     <ClassListing>
@@ -186,6 +173,7 @@ function DanceClassInquiryCard({
       <DanceClassOptions>
         {status === "available" && (
           <button
+            type="button"
             className="btn-action-primary"
             disabled={loading}
             onClick={async () => {
@@ -199,6 +187,7 @@ function DanceClassInquiryCard({
           <div>
             <p>Requested for {dancerName}</p>
             <button
+              type="button"
               className="btn-danger"
               onClick={async () => await removeClassFromRequest()}
             >
@@ -209,9 +198,11 @@ function DanceClassInquiryCard({
         {status === "enrolled" && (
           <div>
             <p>{dancerName} is enrolled</p>
-            <button className="btn-danger" onClick={() => withdrawFromClass()}>
-              Withdraw
-            </button>
+            <WithdrawButton
+              danceClassId={dance.id}
+              dancerId={dancerId}
+              studioId={studioId}
+            />
           </div>
         )}
       </DanceClassOptions>

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
-import Router from "next/router";
 
 import { HAIRSTYLES_QUERY } from "../../pages/studio/hairstyles";
 
@@ -27,7 +26,6 @@ class DeleteHairStyleButton extends Component {
             className="btn-danger"
             onClick={() => {
               if (confirm("Are you sure you want to delete this Hair Style?")) {
-                //mutation is a Promise, so we can catch it
                 deleteHairStyle().catch(err => alert(err.message));
               }
             }}

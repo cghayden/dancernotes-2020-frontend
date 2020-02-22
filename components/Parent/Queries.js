@@ -226,6 +226,37 @@ const PARENTS_MAKEUP_QUERY = gql`
   }
 `;
 
+const STUDIO_CARD_QUERY = gql`
+  query STUDIO_CARD_QUERY {
+    parentUser {
+      id
+      studios {
+        id
+        studioName
+        website
+      }
+      dancers {
+        id
+        firstName
+        danceClasses {
+          id
+          name
+          studio {
+            id
+          }
+        }
+        customRoutines {
+          id
+          name
+          studio {
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
 export {
   PARENT_USER_QUERY,
   DANCER_QUERY,
@@ -235,5 +266,6 @@ export {
   CUSTOM_ROUTINE_QUERY,
   STUDIOS_AND_DANCERS,
   PARENTS_MAKEUP_QUERY,
-  CUSTOM_EVENTS_QUERY
+  CUSTOM_EVENTS_QUERY,
+  STUDIO_CARD_QUERY
 };

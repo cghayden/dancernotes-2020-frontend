@@ -81,11 +81,16 @@ function BrowseStudioClasses({ classFilter, studio }) {
 
   //get browsing dancer from cookies so it will still be available if page is refreshed
   const activeDancerId = Cookies.get("browsingDancerId");
+  console.log("activeDancerId:", activeDancerId);
 
-  const { data: parentData } = useQuery(PARENT_USER_QUERY);
+  const { data: parentData, loading, error } = useQuery(PARENT_USER_QUERY);
   const parentUser = parentData ? parentData.parentUser : {};
 
-  const { data: dancerData } = useQuery(DANCER_QUERY, {
+  const {
+    data: dancerData,
+    loading: loadingDancer,
+    error: errorLoadingDancer
+  } = useQuery(DANCER_QUERY, {
     variables: { id: activeDancerId }
   });
   const dancer = dancerData ? dancerData.dancer : {};
@@ -108,7 +113,12 @@ function BrowseStudioClasses({ classFilter, studio }) {
       )
     : [];
 
+  if (loading || loadingDancer) return "5, 6, 7, 8...";
+  if (error || errorLoadingDancer)
+    return "There was an error loading the page.";
+
   const activeFilters = [].concat.apply([], Object.values(classFilter));
+  console.log("dancer:", dancer);
   return (
     <>
       <DancerTabs>
