@@ -75,9 +75,6 @@ function StudioDanceDetails({ dance }) {
             ))}
           </NoteContent>
         </NoteItem>
-        {/* {this.state.addNote && (
-            <AddNote hideNote={this.hideNote} danceId={dance.id} />
-          )} */}
       </dl>
       <div>
         <Link href={`/studio/updateClass/${dance.id}`}>

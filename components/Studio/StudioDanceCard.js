@@ -1,11 +1,13 @@
 import React, { useState, Fragment } from "react";
 import styled from "styled-components";
-// import { useSpring, animated } from "react-spring";
-// import useMeasure from "../../lib/useMeasure";
+import Link from "next/link";
+import { useSpring, animated } from "react-spring";
+import useMeasure from "../../lib/useMeasure";
 import Card from "../styles/Card";
-import Modal from "../Modal";
+// import Modal from "../Modal";
 import DanceCardHeader from "./DanceCardHeader";
 import StudioDanceDetails from "./StudioDanceDetails";
+import MusicPlayer from "../Parent/MusicPlayer";
 
 const DanceCardStyles = styled(Card)`
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -57,17 +59,49 @@ const DanceCardNav = styled.div`
 `;
 
 function StudioDanceCard({ dance }) {
-  const [showDetails, toggleShowDetails] = useState(false);
+  const [showBody, setShowBody] = useState(false);
+  const [showMediaPlayer, setShowMediaPlayer] = useState(false);
+  const [bind, { height }] = useMeasure();
 
+  const animation = useSpring({
+    overflow: "hidden",
+    height: showBody ? height : 0
+  });
+
+  function toggleBody() {
+    setShowBody(!showBody);
+  }
   return (
     <Fragment>
       <DanceCardStyles>
-        <DanceCardHeader dance={dance} setShowBody={toggleShowDetails} />
+        <DanceCardHeader dance={dance} setShowBody={setShowBody} />
+        <DanceCardNav>
+          <button className="textOnly-primary-action" onClick={toggleBody}>
+            Details
+          </button>
+          <button
+            className="textOnly-primary-action"
+            onClick={() => setShowMediaPlayer(!showMediaPlayer)}
+          >
+            Music
+          </button>
+          <Link href={`/studio/updateClass/${dance.id}`}>
+            <a className="textOnly-primary-action">Edit</a>
+          </Link>
+        </DanceCardNav>
+        {showMediaPlayer && (
+          <MusicPlayer danceName={dance.name} src={dance.music} />
+        )}
+        <animated.div style={animation}>
+          <div {...bind}>
+            <StudioDanceDetails dance={dance} />
+          </div>
+        </animated.div>
       </DanceCardStyles>
-      <Modal open={showDetails} setOpen={toggleShowDetails}>
-        <StudioDanceDetails dance={dance} />
+      {/* <Modal open={showDetails} setOpen={toggleShowDetails}>
+        
         <button onClick={() => toggleShowDetails(false)}>Close</button>
-      </Modal>
+      </Modal> */}
     </Fragment>
   );
 }
