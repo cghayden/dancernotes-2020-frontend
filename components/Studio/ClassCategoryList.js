@@ -1,36 +1,45 @@
-import React, { Fragment, Component } from "react";
-import { Mutation } from "react-apollo";
+import { useState } from "react";
+import { useMutation } from "@apollo/react-hooks";
 import styled from "styled-components";
-
-import { UPDATE_CATEGORY_MUTATION } from "../Mutations";
+import gql from "graphql-tag";
 import { CATEGORIES_QUERY } from "./Queries";
 import { STUDIO_USER_QUERY } from "./useStudio";
-import XIcon from "../Icons/X";
-//TODO - add optimistic return to add category to list
+import DeleteIcon from "../Icons/Delete";
+import Card from "../styles/Card";
+import Form from "../styles/Form";
+import Error from "../Error";
 
-const EditCategoriesCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  background: ${props => props.theme.gray0};
-  padding: 1rem;
-  input {
-    background: ${props => props.theme.gray1};
+//TODO - add optimistic return to add category to list
+const CategoryCard = styled(Card)`
+  min-width: unset;
+  width: unset;
+  label {
+    font-size: 0.875rem;
   }
 `;
 
 const StyledDeleteButton = styled.button`
+  transform: rotate(0.5turn);
+  color: red;
   height: 1.5em;
   width: 1.5em;
   padding: 0;
-  margin: 0 1rem 0 0;
+  margin: 0 0.5rem 2px 0;
   border-radius: 50%;
   background: none;
   box-shadow: none;
   border: none;
   svg {
+    width: 20px;
+    height: 20px;
     pointer-events: none;
   }
+  :hover {
+    background: inherit;
+    color: red;
+  }
 `;
+
 const StyledUl = styled.ul`
   li {
     display: flex;
@@ -39,113 +48,103 @@ const StyledUl = styled.ul`
   }
 `;
 
-const EditCategoriesCardFooter = styled.div`
-  margin-top: auto;
+const UPDATE_CATEGORY_MUTATION = gql`
+  mutation UPDATE_CATEGORY_MUTATION($category: String!, $items: [String]!) {
+    updateStudioClassCategory(category: $category, items: $items) {
+      id
+    }
+  }
 `;
 
-export default class ClassCategoryList extends Component {
-  state = {
-    newItem: ""
-  };
+function ClassCategoryList({ existingItems, category }) {
+  const [newItems, setNewItems] = useState("");
 
-  handleInputChange = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  };
-
-  addItemToCategory = async updateCategoryMutation => {
-    const newItems = [...this.props.currentItems, this.state.newItem];
-    return await updateCategoryMutation({
-      variables: {
-        category: this.props.category,
-        items: newItems
-      },
+  const [updateCategoryMutation, { loading, error }] = useMutation(
+    UPDATE_CATEGORY_MUTATION,
+    {
       refetchQueries: [
-        { query: STUDIO_USER_QUERY },
-        { query: CATEGORIES_QUERY }
+        { query: CATEGORIES_QUERY },
+        { query: STUDIO_USER_QUERY }
       ]
-    })
-      .then(() => this.setState({ newItem: "" }))
-      .catch(err => {
-        alert(err.message);
-      });
-  };
+    }
+  );
 
-  deleteItemFromCategoryList = async (e, updateCategoryMutation) => {
-    const newItems = this.props.currentItems.filter(
-      item => item !== e.target.value
-    );
+  const regex = new RegExp(`,\s*`, "g");
+
+  async function deleteItemFromCategoryList(e) {
+    const newItems = existingItems.filter(item => item !== e.target.value);
     return await updateCategoryMutation({
       variables: {
-        category: this.props.category,
+        category,
         items: newItems
       }
-    }).catch(err => {
-      alert(err.message);
     });
-  };
-  configure;
-  formatCategoryHeading = category => {
+  }
+
+  function formatCategoryHeading(category) {
     if (category === "styles") return "Styles";
     if (category === "ageDivisions") return "Age Divisions";
     if (category === "competitiveLevels") return "Competitive Levels";
-  };
-  render() {
-    const currentItems = this.props.currentItems;
-    const category = this.formatCategoryHeading(this.props.category);
-    const disabled = this.state.newItem === "" ? true : false;
-    return (
-      <Mutation
-        mutation={UPDATE_CATEGORY_MUTATION}
-        refetchQueries={[{ query: CATEGORIES_QUERY }]}
-      >
-        {(updateStudioClassCategory, error) => (
-          <EditCategoriesCard>
-            <div>
-              <h4>{category}</h4>
-              <StyledUl>
-                {currentItems.map(item => (
-                  <li key={item}>
-                    <StyledDeleteButton
-                      value={item}
-                      onClick={e =>
-                        this.deleteItemFromCategoryList(
-                          e,
-                          updateStudioClassCategory
-                        )
-                      }
-                    >
-                      <XIcon />
-                    </StyledDeleteButton>{" "}
-                    {item}
-                  </li>
-                ))}
-              </StyledUl>
-            </div>
-            <EditCategoriesCardFooter>
-              <input
-                required
-                title="this field is required"
-                pattern="\S+"
-                type="text"
-                name="newItem"
-                value={this.state.newItem}
-                placeholder={`Add a new ${category.slice(0, -1)}`}
-                onChange={this.handleInputChange}
-              />
-              <button
-                className="btn-action-primary"
-                disabled={disabled}
-                onClick={() =>
-                  this.addItemToCategory(updateStudioClassCategory)
-                }
-              >
-                Add to Category
-              </button>
-            </EditCategoriesCardFooter>
-          </EditCategoriesCard>
-        )}
-      </Mutation>
-    );
   }
+
+  const categoryHeading = formatCategoryHeading(category);
+
+  return (
+    <CategoryCard>
+      <Form
+        method="post"
+        onSubmit={async e => {
+          e.preventDefault(e);
+          const newItemsArray = newItems.split(regex);
+          const items = [...existingItems, ...newItemsArray];
+          console.log("items:", items);
+          await updateCategoryMutation({
+            variables: { category, items }
+          });
+          setNewItems("");
+        }}
+      >
+        <h4>{categoryHeading}</h4>
+
+        <div className="card__section">
+          <StyledUl>
+            {existingItems.map(item => (
+              <li key={item}>
+                <StyledDeleteButton
+                  type="button"
+                  aria-label={`delete ${item}`}
+                  value={item}
+                  onClick={e => deleteItemFromCategoryList(e)}
+                >
+                  <DeleteIcon />
+                </StyledDeleteButton>{" "}
+                {item}
+              </li>
+            ))}
+          </StyledUl>
+        </div>
+        <fieldset disabled={loading} aria-busy={loading}>
+          <div className="input-item">
+            <label>
+              {`Add ${categoryHeading.slice(0, -1)}(s), separated by a comma`}
+            </label>
+            <input
+              // pattern="\S+"
+              type="text"
+              name="newItem"
+              value={newItems}
+              placeholder={`${categoryHeading.slice(0, -1)}s...`}
+              onChange={e => setNewItems(e.target.value)}
+            />
+          </div>
+          <Error error={error} />
+          <button type="submit" className="btn-action-primary">
+            Add to Category
+          </button>
+        </fieldset>
+      </Form>
+    </CategoryCard>
+  );
 }
+
+export default ClassCategoryList;

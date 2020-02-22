@@ -115,7 +115,7 @@ const Form = styled.form`
     display: block;
     padding: 0.5rem;
     select {
-      padding: 0;
+      padding-left: 0;
     }
     label {
       display: inline-block;

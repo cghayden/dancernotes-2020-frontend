@@ -6,6 +6,7 @@ import { ALL_DANCE_CLASSES_QUERY } from "./Queries";
 import { UPDATE_DANCECLASS_MUTATION } from "./UpdateDanceClass";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
 import Form from "../styles/Form";
+import Card from "../styles/Card";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 
@@ -221,227 +222,238 @@ function CreateDanceClass({ studio }) {
           </Link>
         </div>
       </Modal>
-      <Form method="post" onSubmit={async e => await saveNewDanceClass(e)}>
-        <fieldset disabled={loading} aria-busy={loading}>
-          <legend>Add A New Dance Class To Your Schedule</legend>
-          <Link href="configureClassCategories">
-            <a className="btn-action-primary">Configure Class Categories</a>
-          </Link>
-          <div className="input-item">
-            <label htmlFor="name">Class Name *</label>
-            <input
-              required
-              type="text"
-              name="name"
-              value={inputs.name}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-item">
-            <label htmlFor="size">Size: *</label>
-            <select
-              required
-              id="size"
-              name="size"
-              value={inputs.size}
-              onChange={handleChange}
-            >
-              <option default value={""} disabled>
-                (Group/Solo/Duo/Trio)?
-              </option>
-              <option value="Group">Group</option>
-              <option value="Solo">Solo</option>
-              <option value="Duo">Duo</option>
-              <option value="Trio">Trio</option>
-            </select>
-          </div>
+      <Card>
+        <Form method="post" onSubmit={async e => await saveNewDanceClass(e)}>
+          <fieldset disabled={loading} aria-busy={loading}>
+            <legend>Add A New Dance Class To Your Schedule</legend>
 
-          <div className="form-row">
-            <div className="form-row-item day">
-              <label htmlFor="day">Day: </label>
+            <div className="input-item">
+              <label htmlFor="name">Class Name *</label>
+              <input
+                required
+                type="text"
+                name="name"
+                value={inputs.name}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input-item">
+              <label htmlFor="performanceName">Performance Name</label>
+              <input
+                type="text"
+                name="performanceName"
+                placeholder="Performance Name, or Name of Song"
+                value={inputs.performanceName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input-item">
+              <label htmlFor="size">Size: *</label>
               <select
-                id="day"
-                name="day"
-                value={inputs.day}
+                required
+                id="size"
+                name="size"
+                value={inputs.size}
                 onChange={handleChange}
               >
                 <option default value={""} disabled>
-                  Day...
+                  (Group/Solo/Duo/Trio)?
                 </option>
-                {/* <option value="TBD">TBD</option> */}
-                <option value="Mon.">Mon.</option>
-                <option value="Tue.">Tue.</option>
-                <option value="Wed.">Wed.</option>
-                <option value="Thur.">Thur.</option>
-                <option value="Fri.">Fri.</option>
-                <option value="Sat.">Sat.</option>
-                <option value="Sun.">Sun.</option>
+                <option value="Group">Group</option>
+                <option value="Solo">Solo</option>
+                <option value="Duo">Duo</option>
+                <option value="Trio">Trio</option>
               </select>
             </div>
 
-            <div className="form-row-item">
-              <label htmlFor="startTime">Start Time:</label>
-              <input
-                type="time"
-                id="startTime"
-                name="startTime"
-                min="0:00"
-                max="23:59"
-                value={inputs.startTime}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="form-row-item">
-              <label htmlFor="endTime">End Time: </label>
-              <input
-                type="time"
-                id="endTime"
-                name="endTime"
-                min="0:00"
-                max="23:59"
-                value={inputs.endTime}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="input-item">
-            <label htmlFor="style">Style: *</label>
-            <select
-              required
-              id="style"
-              name="style"
-              value={inputs.style}
-              onChange={handleChange}
-            >
-              <option default value={""} disabled>
-                Style...
-              </option>
-              {studio &&
-                studio.styles.map(style => (
-                  <option key={style} value={style}>
-                    {style}
+            <section>
+              <h3>Class Categories</h3>
+              <Link href="configureClassCategories">
+                <a className="btn-action-primary">Configure Class Categories</a>
+              </Link>
+              <div className="input-item">
+                <label htmlFor="style">Style: *</label>
+                <select
+                  required
+                  id="style"
+                  name="style"
+                  value={inputs.style}
+                  onChange={handleChange}
+                >
+                  <option default value={""} disabled>
+                    Style...
                   </option>
-                ))}
-            </select>
-          </div>
-          <div className="input-item">
-            <label htmlFor="competitiveLevel">competitiveLevel: *</label>
-            <select
-              required
-              id="competitiveLevel"
-              name="competitiveLevel"
-              value={inputs.competitiveLevel}
-              onChange={handleChange}
-            >
-              <option default disabled value={""}>
-                Competitive Level...
-              </option>
-              {studio &&
-                studio.competitiveLevels.map(competitiveLevel => (
-                  <option key={competitiveLevel} value={competitiveLevel}>
-                    {competitiveLevel}
+                  {studio &&
+                    studio.styles.map(style => (
+                      <option key={style} value={style}>
+                        {style}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              <div className="input-item">
+                <label htmlFor="competitiveLevel">competitiveLevel: *</label>
+                <select
+                  required
+                  id="competitiveLevel"
+                  name="competitiveLevel"
+                  value={inputs.competitiveLevel}
+                  onChange={handleChange}
+                >
+                  <option default disabled value={""}>
+                    Competitive Level...
                   </option>
-                ))}
-            </select>
-          </div>
-          <div className="input-item">
-            <label htmlFor="ageDivision">Age Division:</label>
-            <select
-              id="ageDivision"
-              name="ageDivision"
-              value={inputs.ageDivision}
-              onChange={handleChange}
-            >
-              <option default disabled value={""}>
-                Age Division...
-              </option>
-              {studio &&
-                studio.ageDivisions.map(ageDivision => (
-                  <option key={ageDivision} value={ageDivision}>
-                    {ageDivision}
+                  {studio &&
+                    studio.competitiveLevels.map(competitiveLevel => (
+                      <option key={competitiveLevel} value={competitiveLevel}>
+                        {competitiveLevel}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              <div className="input-item">
+                <label htmlFor="ageDivision">Age Division:</label>
+                <select
+                  id="ageDivision"
+                  name="ageDivision"
+                  value={inputs.ageDivision}
+                  onChange={handleChange}
+                >
+                  <option default disabled value={""}>
+                    Age Division...
                   </option>
-                ))}
-            </select>
-          </div>
-          <div className="input-item">
-            <label htmlFor="performanceName">Performance Name</label>
-            <input
-              type="text"
-              name="performanceName"
-              placeholder="Performance Name, or Name of Song"
-              value={inputs.performanceName}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-item">
-            <label htmlFor="tights">Tights:</label>
-            <input
-              type="text"
-              name="tights"
-              placeholder="The style of tights required..."
-              value={inputs.tights}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-item">
-            <label htmlFor="shoes">Shoes</label>
-            <input
-              type="text"
-              name="shoes"
-              placeholder="The style of shoes required..."
-              value={inputs.shoes}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-item">
-            <label htmlFor="notes">Notes</label>
-            <textarea
-              id="notes"
-              type="text"
-              name="notes"
-              rows="5"
-              value={inputs.notes}
-              onChange={handleChange}
-            />
-          </div>
+                  {studio &&
+                    studio.ageDivisions.map(ageDivision => (
+                      <option key={ageDivision} value={ageDivision}>
+                        {ageDivision}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            </section>
+            <section>
+              <h3>Day & Time</h3>
+              <div className="form-row">
+                <div className="form-row-item day">
+                  <label htmlFor="day">Day: </label>
+                  <select
+                    id="day"
+                    name="day"
+                    value={inputs.day}
+                    onChange={handleChange}
+                  >
+                    <option default value={""} disabled>
+                      Day...
+                    </option>
+                    {/* <option value="TBD">TBD</option> */}
+                    <option value="Mon.">Mon.</option>
+                    <option value="Tue.">Tue.</option>
+                    <option value="Wed.">Wed.</option>
+                    <option value="Thur.">Thur.</option>
+                    <option value="Fri.">Fri.</option>
+                    <option value="Sat.">Sat.</option>
+                    <option value="Sun.">Sun.</option>
+                  </select>
+                </div>
 
-          <button
-            type="button"
-            className="btn-action-primary"
-            onClick={() => toggleFileInput(true)}
-          >
-            Add Music
-          </button>
-          {showFileInput && (
+                <div className="form-row-item">
+                  <label htmlFor="startTime">Start Time:</label>
+                  <input
+                    type="time"
+                    id="startTime"
+                    name="startTime"
+                    min="0:00"
+                    max="23:59"
+                    value={inputs.startTime}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="form-row-item">
+                  <label htmlFor="endTime">End Time: </label>
+                  <input
+                    type="time"
+                    id="endTime"
+                    name="endTime"
+                    min="0:00"
+                    max="23:59"
+                    value={inputs.endTime}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <div className="input-item">
+                <label htmlFor="tights">Tights:</label>
+                <input
+                  type="text"
+                  name="tights"
+                  placeholder="The style of tights required..."
+                  value={inputs.tights}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="input-item">
+                <label htmlFor="shoes">Shoes</label>
+                <input
+                  type="text"
+                  name="shoes"
+                  placeholder="The style of shoes required..."
+                  value={inputs.shoes}
+                  onChange={handleChange}
+                />
+              </div>
+            </section>
             <div className="input-item">
-              <label htmlFor="audioFile">
-                Upload the music for this dance...
-              </label>
-              <input
-                type="file"
-                id="audioFile"
-                name="audioFile"
-                placeholder="Upload music for this dance"
-                onChange={setSongtoState}
+              <label htmlFor="notes">Notes</label>
+              <textarea
+                id="notes"
+                type="text"
+                name="notes"
+                rows="5"
+                value={inputs.notes}
+                onChange={handleChange}
               />
             </div>
-          )}
 
-          <p>{status}</p>
-          <div className="form-footer">
             <button
+              type="button"
               className="btn-action-primary"
-              type="submit"
-              disabled={loading}
+              onClick={() => toggleFileInput(true)}
             >
-              Creat
-              {loading ? "ing " : "e "} Class
+              Add Music
             </button>
-          </div>
-        </fieldset>
-      </Form>
+            {showFileInput && (
+              <div className="input-item">
+                <label htmlFor="audioFile">
+                  Upload the music for this dance...
+                </label>
+                <input
+                  type="file"
+                  id="audioFile"
+                  name="audioFile"
+                  placeholder="Upload music for this dance"
+                  onChange={setSongtoState}
+                />
+              </div>
+            )}
+
+            <p>{status}</p>
+            <div className="form-footer">
+              <button
+                className="btn-action-primary"
+                type="submit"
+                disabled={loading}
+              >
+                Creat
+                {loading ? "ing " : "e "} Class
+              </button>
+            </div>
+          </fieldset>
+        </Form>
+      </Card>
     </Fragment>
   );
 }

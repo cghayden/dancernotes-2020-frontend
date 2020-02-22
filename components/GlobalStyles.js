@@ -194,7 +194,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
 main {
-  margin-top: ${props => props.theme.mobileMainTop};
+  margin-top: ${props => props.theme.mobileStatusBarHeight};
   padding-top: 0.5rem;
   display: flex;
   flex-direction: column;

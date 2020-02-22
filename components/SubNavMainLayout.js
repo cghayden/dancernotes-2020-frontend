@@ -6,6 +6,8 @@ import ContentHeader from "./ContentHeader";
 import styled from "styled-components";
 
 const MainStyle = styled.main`
+  margin-top: ${props => props.theme.mobileMainTop};
+
   @media (min-width: ${props => props.theme.largeScreen}) {
     margin-left: ${props => props.theme.sidebarWidth};
   }

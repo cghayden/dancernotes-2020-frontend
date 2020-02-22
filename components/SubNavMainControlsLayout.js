@@ -1,4 +1,3 @@
-import React, { Fragment } from "react";
 import MobileStatusBar from "./Parent/MobileStatusBar";
 import MobileNav from "./Parent/MobileNav";
 import DesktopNav from "./Parent/DesktopNav";
@@ -7,6 +6,8 @@ import ContentHeader from "./ContentHeader";
 import styled from "styled-components";
 
 const MainStyle = styled.main`
+  margin-top: ${props => props.theme.mobileMainTop};
+
   @media (min-width: ${props => props.theme.largeScreen}) {
     /* left margin to give room for subnav */
     margin-left: ${props => props.theme.sidebarWidth};
@@ -27,7 +28,7 @@ const SubNavMainLayout = ({
   pageAction = null
 }) => {
   return (
-    <Fragment>
+    <>
       <MobileStatusBar
         offscreenToggler={offscreenToggler}
         mobileHeader={mobileHeader}
@@ -39,7 +40,7 @@ const SubNavMainLayout = ({
         <ContentHeader mobile page={page} pageAction={pageAction} />
         {children}
       </MainStyle>
-    </Fragment>
+    </>
   );
 };
 

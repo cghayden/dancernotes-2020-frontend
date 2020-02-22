@@ -1,7 +1,5 @@
-import React from "react";
 import CreateDanceClassForm from "../../components/Studio/CreateDanceClassForm";
-import SubNavMainLayout from "../../components/Studio/SubNavMainLayout";
-import ClassesSubNav from "../../components/Studio/ClassesSubNav";
+import NoNavLayout from "../../components/Studio/NoNavLayout";
 import { useStudio } from "../../components/Studio/useStudio";
 
 // query studio for categories, makeupsets and dancers and pass to createclassform
@@ -11,13 +9,12 @@ const DanceClassesPage = () => {
 
   return (
     <>
-      <ClassesSubNav />
-      <SubNavMainLayout
+      <NoNavLayout
         mobileHeader="Create a Dance Class"
         page="Create a New Class"
       >
         <CreateDanceClassForm studio={studio} />
-      </SubNavMainLayout>
+      </NoNavLayout>
     </>
   );
 };
