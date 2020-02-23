@@ -64,7 +64,7 @@ function EventsPage() {
   return (
     <>
       <NotesSubNav />
-      <SubNavMainControlsLayout
+      <SubNavMainLayout
         mobileHeader={"Notes"}
         page="Events"
         pageAction={AddEventButton}
@@ -74,7 +74,7 @@ function EventsPage() {
           events={allEvents}
           // allEvents={allEvents}
         />
-      </SubNavMainControlsLayout>
+      </SubNavMainLayout>
       {/* <ControlPanel/> */}
     </>
   );
