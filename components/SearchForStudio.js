@@ -21,6 +21,12 @@ class SearchForStudio extends React.Component {
     studios: [],
     loading: false
   };
+
+  textInput = React.createRef();
+  componentDidMount() {
+    this.textInput.current.focus();
+  }
+
   onChange = debounce(async (e, client) => {
     // turn loading on
     this.setState({ loading: true });
@@ -66,6 +72,7 @@ class SearchForStudio extends React.Component {
                     <ApolloConsumer>
                       {client => (
                         <input
+                          ref={this.textInput}
                           {...getInputProps({
                             type: "search",
                             placeholder: "Search...",
