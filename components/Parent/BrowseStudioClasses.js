@@ -86,7 +86,6 @@ function BrowseStudioClasses({ classFilter, studio }) {
 
   //get browsing dancer from cookies so it will still be available if page is refreshed
   const activeDancerId = Cookies.get("browsingDancerId");
-  console.log("activeDancerId:", activeDancerId);
 
   const { data: parentData, loading, error } = useQuery(PARENT_USER_QUERY);
   const parentUser = parentData ? parentData.parentUser : {};
@@ -103,11 +102,9 @@ function BrowseStudioClasses({ classFilter, studio }) {
   const isParentLinkedToStudio =
     parentUser.studios &&
     parentUser.studios.some(parentStudio => parentStudio.id === studio.id);
-  console.log("isParentLinkedToStudio:", isParentLinkedToStudio);
 
   function compareDanceToFilter(danceClass, filter) {
     let pass = true;
-    const danceClassValues = Object.values(danceClass);
     const filterCategories = Object.keys(filter);
     filterCategories.forEach(category => {
       if (!filter[category].includes(danceClass[category])) {
@@ -123,7 +120,7 @@ function BrowseStudioClasses({ classFilter, studio }) {
       )
     : [];
 
-  if (loading || loadingDancer) return "5, 6, 7, 8...";
+  if (loading) return "5, 6, 7, 8...";
   if (error || errorLoadingDancer)
     return "There was an error loading the page.";
 

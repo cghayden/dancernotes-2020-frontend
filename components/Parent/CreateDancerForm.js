@@ -169,6 +169,7 @@ function CreateDancerForm() {
     //1 .save dancer
     setStatus("Saving Dancer...");
     const newDancer = await createDancer();
+    console.log("newDancer:", newDancer);
     //2 get dancerId
     const newDancerId = newDancer.data.createDancer.id;
 
@@ -205,12 +206,17 @@ function CreateDancerForm() {
             </>
           )}
 
-          {newDancer && <p>Success - you created {newDancer.firstName}</p>}
+          {newDancer && (
+            <p>
+              Success - you added {newDancer.createDancer.firstName} as a dancer
+              to your account
+            </p>
+          )}
           {newDancer && errorUploadingAvatar && (
             <p>
               Warning: there was a problem uploading the image for
-              {newDancer.firstName}. You can try to add an image now or later by
-              updating the dancer
+              {newDancer.createDancer.firstName}. You can try to add an image
+              now or later by updating the dancer
             </p>
           )}
 

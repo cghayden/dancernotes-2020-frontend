@@ -69,11 +69,7 @@ function EventsPage() {
         page="Events"
         pageAction={AddEventButton}
       >
-        <EventsContent
-          allRoutines={allRoutines}
-          events={allEvents}
-          // allEvents={allEvents}
-        />
+        <EventsContent allRoutines={allRoutines} events={allEvents} />
       </SubNavMainLayout>
       {/* <ControlPanel/> */}
     </>

@@ -29,7 +29,6 @@ const StudioMobileNav = () => (
     <StyledLink activeClassName="active" href="/studio/account">
       <a>Account</a>
     </StyledLink>
-    <RequestsNavLink />
   </NavStyles>
 );
 
