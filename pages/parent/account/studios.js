@@ -6,7 +6,7 @@ import { STUDIO_CARD_QUERY } from "../../../components/Parent/Queries";
 import StudioCard from "../../../components/Parent/StudioCard";
 import Error from "../../../components/Error";
 import Loading from "../../../components/Loading";
-
+import Card from "../../../components/styles/Card";
 function MyStudiosPage() {
   const { data, loading, error } = useQuery(STUDIO_CARD_QUERY);
 
