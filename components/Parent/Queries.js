@@ -121,6 +121,7 @@ const PARENT_USER_QUERY = gql`
           }
         }
       }
+      accessRequests
     }
   }
 `;

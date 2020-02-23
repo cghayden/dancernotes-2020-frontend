@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import DanceClassInquiryCard from "./DanceClassInquiryCard";
-// import SoloDuoTrioSubscribe from "./SoloDuoTrioSubscribe";
-// import LinkDancerToStudioButton from "./LinkDancerToStudioButton";
+import Cookies from "js-cookie";
 import styled from "styled-components";
-import { PARENT_USER_QUERY } from "./Queries";
-
+import DanceClassInquiryCard from "./DanceClassInquiryCard";
 import { ActiveFilters } from "./BrowseClassFilter";
+import { PARENT_USER_QUERY } from "./Queries";
 import { DANCER_QUERY } from "./Queries";
 import { RegistrationContext } from "./RegistrationContext";
-import Cookies from "js-cookie";
 import Card from "../styles/Card";
+import RequestAccessButton from "./RequestAccessButton";
+// import LinkDancerToStudioButton from "./LinkDancerToStudioButton";
+// import SoloDuoTrioSubscribe from "./SoloDuoTrioSubscribe";
 
 // 1. get all classes from studio
 //2. get filters
@@ -75,6 +75,11 @@ const LargeScreenActiveFilters = styled(ActiveFilters)`
   }
 `;
 
+const RequestNotice = styled.p`
+  color: ${props => props.theme.red7};
+  font-size: 1.1rem;
+`;
+
 function BrowseStudioClasses({ classFilter, studio }) {
   const BrowsingContext = useContext(RegistrationContext);
   const setBrowsingDancer = BrowsingContext.setBrowsingDancer;
@@ -94,6 +99,11 @@ function BrowseStudioClasses({ classFilter, studio }) {
     variables: { id: activeDancerId }
   });
   const dancer = dancerData ? dancerData.dancer : {};
+
+  const isParentLinkedToStudio =
+    parentUser.studios &&
+    parentUser.studios.some(parentStudio => parentStudio.id === studio.id);
+  console.log("isParentLinkedToStudio:", isParentLinkedToStudio);
 
   function compareDanceToFilter(danceClass, filter) {
     let pass = true;
@@ -118,7 +128,7 @@ function BrowseStudioClasses({ classFilter, studio }) {
     return "There was an error loading the page.";
 
   const activeFilters = [].concat.apply([], Object.values(classFilter));
-  console.log("dancer:", dancer);
+
   return (
     <>
       <DancerTabs>
@@ -137,9 +147,24 @@ function BrowseStudioClasses({ classFilter, studio }) {
       <ClassListCard>
         <BrowsingHeader>
           <p>
-            To register {dancer.firstName} for classes, or manage classes he/she
-            is enrolled in or has requested, follow the links below.
+            The following dance classes are available at {studio.studioName}
           </p>
+          {!isParentLinkedToStudio &&
+            !parentUser.accessRequests.includes(studio.id) && (
+              <>
+                <p>
+                  If your classes are not listed here, you can request access to
+                  the studio's notes here
+                </p>
+                <RequestAccessButton
+                  accessRequests={parentUser.accessRequests}
+                  studioId={studio.id}
+                />
+              </>
+            )}
+          {parentUser.accessRequests.includes(studio.id) && (
+            <RequestNotice>Notes are requested from this studio</RequestNotice>
+          )}
         </BrowsingHeader>
         <LargeScreenActiveFilters>
           {/*display a list of the active filters */}
