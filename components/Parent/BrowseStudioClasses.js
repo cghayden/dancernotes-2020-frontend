@@ -154,7 +154,7 @@ function BrowseStudioClasses({ classFilter, studio }) {
               <>
                 <p>
                   If your classes are not listed here, you can request access to
-                  the studio's notes here
+                  the studio's notes
                 </p>
                 <RequestAccessButton
                   accessRequests={parentUser.accessRequests}
