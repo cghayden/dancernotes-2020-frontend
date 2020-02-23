@@ -98,6 +98,18 @@ const ENROLLMENT_REQUESTS_QUERY = gql`
     }
   }
 `;
+const ACCESS_REQUESTS_QUERY = gql`
+  query ACCESS_REQUESTS_QUERY {
+    accessRequests {
+      id
+      parent {
+        id
+        firstName
+        lastName
+      }
+    }
+  }
+`;
 
 const STUDIO_EVENTS_QUERY = gql`
   query STUDIO_EVENTS_QUERY {
@@ -128,5 +140,6 @@ export {
   STUDIO_ALL_DANCERS_QUERY,
   SINGLE_DANCE_QUERY,
   ENROLLMENT_REQUESTS_QUERY,
+  ACCESS_REQUESTS_QUERY,
   STUDIO_EVENTS_QUERY
 };
