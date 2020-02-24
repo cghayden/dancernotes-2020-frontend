@@ -42,12 +42,7 @@ const BROWSE_STUDIO_CLASSES_QUERY = gql`
 
 const BrowseStudioPage = () => {
   const [classFilter, setFilter] = useState({});
-  // let browsingDancer = useContext(RegistrationContext);
-  // console.log("browsingDancer from context:", browsingDancer);
-  // if (!browsingDancer.Id) {
-  //   // browsingDancer = localStorage.getItem("browsingDancer");
-  //   console.log("browsingDancer from local Storage:", browsingDancer);
-  // }
+
   const router = useRouter();
   const { data: studioData, loading: loading, error: error } = useQuery(
     BROWSE_STUDIO_CLASSES_QUERY,

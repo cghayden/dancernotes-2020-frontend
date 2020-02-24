@@ -18,7 +18,9 @@ const EventCheckbox = styled.div`
     font-size: 12px;
   }
   @media (min-width: ${props => props.theme.largeScreen}) {
-    font-size: 1rem;
+    label {
+      font-size: 1rem;
+    }
   }
 `;
 

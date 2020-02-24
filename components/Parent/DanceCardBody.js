@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import NotesDiv from "./NotesDiv";
 import CustomNotesDiv from "./CustomNotesDiv";
+
 const DanceCardBodyStyles = styled.div`
   padding-bottom: 1rem;
   li {

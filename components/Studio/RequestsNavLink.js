@@ -1,11 +1,26 @@
 import React from "react";
 import Link from "next/link";
 import { useQuery } from "@apollo/react-hooks";
+import styled from "styled-components";
 
 import { ENROLLMENT_REQUESTS_QUERY } from "./Queries";
 import { ACCESS_REQUESTS_QUERY } from "./Queries";
 
 import RequestsCount from "./RequestsCount";
+
+const RequestsAnchor = styled.a`
+  background-color: ${props => props.theme.indigo1};
+  color: ${props => props.theme.indigo9};
+  display: flex;
+  align-items: center;
+  :hover {
+    background-color: ${props => props.theme.indigo9};
+  }
+`;
+const RequestsAnchorInternal = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const RequestsNavLink = () => {
   const { data, loading, error } = useQuery(ENROLLMENT_REQUESTS_QUERY);
@@ -21,16 +36,14 @@ const RequestsNavLink = () => {
     : [];
   const totalRequests = enrollmentRequests.length + accessRequests.length;
 
-  console.log("enrollmentRequests:", enrollmentRequests);
-  console.log("accessRequests:", accessRequests);
-  console.log("totalRequests:", totalRequests);
-
   return totalRequests > 0 ? (
     <Link href="requests">
-      <a>
-        Requests
-        <RequestsCount count={totalRequests} />
-      </a>
+      <RequestsAnchor>
+        <RequestsAnchorInternal>
+          Requests
+          <RequestsCount count={totalRequests} />
+        </RequestsAnchorInternal>
+      </RequestsAnchor>
     </Link>
   ) : null;
 };

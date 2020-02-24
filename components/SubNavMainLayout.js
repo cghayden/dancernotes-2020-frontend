@@ -9,6 +9,7 @@ const MainStyle = styled.main`
   margin-top: ${props => props.theme.mobileMainTop};
 
   @media (min-width: ${props => props.theme.largeScreen}) {
+    margin-top: ${props => props.theme.navHeight};
     margin-left: ${props => props.theme.sidebarWidth};
   }
 `;

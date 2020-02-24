@@ -5,17 +5,17 @@ const Dot = styled.div`
   background: ${props => props.theme.red5};
   color: white;
   border-radius: 50%;
-  /* padding: 0.5rem; */
-  width: 2rem;
-  height: 2rem;
+  width: 24px;
+  height: 24px;
   display: grid;
   place-items: center;
-  /* line-height: 2rem; */
-  /* max-width: 2rem;
-  min-width: 1rem; */
   margin-left: 0.5rem;
   font-feature-settings: "tnum";
   font-variant-numeric: tabular-nums;
+  @media (min-width: ${props => props.theme.largeScreen}) {
+    width: 2rem;
+    height: 2rem;
+  }
 `;
 
 const RequestsCount = ({ count }) => <Dot>{count}</Dot>;

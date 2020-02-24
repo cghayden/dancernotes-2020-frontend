@@ -174,8 +174,8 @@ function DancerCard({ dancer }) {
                       <p>You can create your own routines,</p>
                       <p>OR</p>
                       <p>
-                        Search a studio to request notes, signup for classes, or
-                        browse the studio's class offerings
+                        Search for a studio to request notes, signup for
+                        classes, or browse the studio's class offerings...
                       </p>
                     </>
                   )}
