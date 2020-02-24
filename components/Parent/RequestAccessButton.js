@@ -4,15 +4,23 @@ import { PARENT_USER_QUERY } from "./Queries";
 // import { BROWSE_STUDIO_CLASSES_QUERY } from "../../pages/parent/account/browseStudio";
 
 const REQUEST_STUDIO_ACCESS = gql`
-  mutation REQUEST_STUDIO_ACCESS($studioId: ID!, $accessRequests: [ID!]!) {
-    requestStudioAccess(studioId: $studioId, accessRequests: $accessRequests) {
+  mutation REQUEST_STUDIO_ACCESS(
+    $studioId: ID!
+    $accessRequests: [ID!]!
+    $parentEmail: String!
+  ) {
+    requestStudioAccess(
+      studioId: $studioId
+      accessRequests: $accessRequests
+      parentEmail: $parentEmail
+    ) {
       id
       accessRequests
     }
   }
 `;
 
-function RequestAccessButton({ accessRequests, studioId }) {
+function RequestAccessButton({ accessRequests, studioId, parentEmail }) {
   const [requestStudioAccess, { data, error, loading }] = useMutation(
     REQUEST_STUDIO_ACCESS,
     {
@@ -27,7 +35,11 @@ function RequestAccessButton({ accessRequests, studioId }) {
       onClick={async () => {
         const newAccessRequests = [...accessRequests, studioId];
         await requestStudioAccess({
-          variables: { accessRequests: newAccessRequests, studioId }
+          variables: {
+            accessRequests: newAccessRequests,
+            studioId,
+            parentEmail
+          }
         });
       }}
     >

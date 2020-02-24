@@ -155,6 +155,7 @@ function BrowseStudioClasses({ classFilter, studio }) {
                 </p>
                 <RequestAccessButton
                   accessRequests={parentUser.accessRequests}
+                  parentEmail={parentUser.email}
                   studioId={studio.id}
                 />
               </>
