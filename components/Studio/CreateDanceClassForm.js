@@ -269,7 +269,9 @@ function CreateDanceClass({ studio }) {
             <section>
               <h3>Class Categories</h3>
               <Link href="configureClassCategories">
-                <a className="btn-action-primary">Configure Class Categories</a>
+                <a className="btn-action-primary btn-small">
+                  Configure Class Categories
+                </a>
               </Link>
               <div className="input-item">
                 <label htmlFor="style">Style: *</label>
@@ -420,7 +422,7 @@ function CreateDanceClass({ studio }) {
 
             <button
               type="button"
-              className="btn-action-primary"
+              className="btn-action-primary-outline"
               onClick={() => toggleFileInput(true)}
             >
               Add Music

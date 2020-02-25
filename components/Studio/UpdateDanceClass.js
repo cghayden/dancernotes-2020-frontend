@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import Link from "next/link";
 import Router from "next/router";
 import Form from "../styles/Form";
+import Card from "../styles/Card";
 import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 import DeleteDanceClass from "../DeleteDanceClass";
@@ -218,232 +219,233 @@ function UpdateDanceClass({ danceClass, studio }) {
           </Link>
         </div>
       </Modal>
-      <Form onSubmit={e => saveChanges(e)}>
-        <h2>Update {danceClass.name}</h2>
-        <fieldset disabled={loading} aria-busy={loading}>
-          {/* <Error error={error} /> */}
-          <div className="input-item">
-            <label htmlFor="name">Class Name </label>
-            <input
-              required
-              type="text"
-              name="name"
-              placeholder="name"
-              defaultValue={danceClass.name}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-item">
-            <label htmlFor="performanceName">Performance Name</label>
-            <input
-              type="text"
-              name="performanceName"
-              placeholder="Performance Name, or Name of Song"
-              defaultValue={danceClass.performanceName}
-              onChange={handleChange}
-            />
-          </div>
-          <button
-            type="button"
-            className="btn-action-primary"
-            onClick={() => toggleFileInput(true)}
-          >
-            Add/Change Music
-          </button>
-          {showFileInput && (
+      <Card>
+        <Form onSubmit={e => saveChanges(e)}>
+          <h2>Update {danceClass.name}</h2>
+          <fieldset disabled={loading} aria-busy={loading}>
+            {/* <Error error={error} /> */}
             <div className="input-item">
-              <label htmlFor="audioFile">
-                Upload the music for this dance...
-              </label>
+              <label htmlFor="name">Class Name </label>
               <input
-                type="file"
-                id="audioFile"
-                name="audioFile"
-                placeholder="Upload music for this dance"
-                onChange={setSongtoState}
-              />
-            </div>
-          )}
-          <div className="input-item">
-            <label htmlFor="size">
-              {`Size...(Currently ${danceClass.size})`}
-            </label>
-            <select
-              id="size"
-              name="size"
-              defaultValue={danceClass.size}
-              onChange={handleChange}
-            >
-              <option value="Group">Group</option>
-              <option value="Solo">Solo</option>
-              <option value="Duo">Duo</option>
-              <option value="Trio">Trio</option>
-            </select>
-          </div>
-
-          <div className="form-row">
-            <div className="day form-row-item">
-              <label htmlFor="day">Day:</label>
-              <select
-                id="day"
-                name="day"
-                defaultValue={danceClass.day}
-                onChange={handleChange}
-              >
-                <option value="Mon.">Mon.</option>
-                <option value="Tue.">Tue.</option>
-                <option value="Wed.">Wed.</option>
-                <option value="Thur.">Thur.</option>
-                <option value="Fri.">Fri.</option>
-                <option value="Sat.">Sat.</option>
-                <option value="Sun.">Sun.</option>
-              </select>
-            </div>
-            <div className="form-row-item">
-              <label htmlFor="startTime">Start Time:</label>
-              <input
-                type="time"
-                id="startTime"
-                name="startTime"
-                min="0:00"
-                max="23:59"
-                defaultValue={danceClass.startTime}
+                required
+                type="text"
+                name="name"
+                placeholder="name"
+                defaultValue={danceClass.name}
                 onChange={handleChange}
               />
             </div>
-
-            <div className="form-row-item">
-              <label htmlFor="endTime">End Time: </label>
-
-              <input
-                type="time"
-                id="endTime"
-                name="endTime"
-                min="0:00"
-                max="23:59"
-                defaultValue={danceClass.endTime}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="form-row">
-            <div className="form-row-item">
-              <label htmlFor="style">Style: </label>
-
-              <select
-                required
-                id="style"
-                name="style"
-                defaultValue={danceClass.style}
-                onChange={handleChange}
-              >
-                {studio.styles.map(style => (
-                  <option key={style} value={style}>
-                    {style}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="form-row-item">
-              <label htmlFor="competitiveLevel">competitiveLevel: </label>
-
-              <select
-                required
-                id="competitiveLevel"
-                name="competitiveLevel"
-                defaultValue={danceClass.competitiveLevel}
-                onChange={handleChange}
-              >
-                {studio.competitiveLevels.map(competitiveLevel => (
-                  <option key={competitiveLevel} value={competitiveLevel}>
-                    {competitiveLevel}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="form-row-item">
-              <label htmlFor="ageDivision">ageDivision: </label>
-
-              <select
-                required
-                id="ageDivision"
-                name="ageDivision"
-                defaultValue={danceClass.ageDivision}
-                onChange={handleChange}
-              >
-                {studio.ageDivisions.map(ageDivision => (
-                  <option key={ageDivision} value={ageDivision}>
-                    {ageDivision}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className="form-row">
-            <div className="form-row-item">
-              <label htmlFor="tights">Tights </label>
+            <div className="input-item">
+              <label htmlFor="performanceName">Performance Name</label>
               <input
                 type="text"
-                name="tights"
-                placeholder="The style of tights required..."
-                defaultValue={danceClass.tights}
+                name="performanceName"
+                placeholder="Performance Name, or Name of Song"
+                defaultValue={danceClass.performanceName}
                 onChange={handleChange}
               />
             </div>
-
-            <div className="form-row-item">
-              <label htmlFor="shoes">Shoes </label>
-              <input
-                type="text"
-                name="shoes"
-                placeholder="The style of shoes required..."
-                defaultValue={danceClass.shoes}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="input-item">
-            <label htmlFor="notes">Notes</label>
-
-            <textarea
-              id="notes"
-              type="text"
-              name="notes"
-              rows="5"
-              defaultValue={danceClass.notes}
-              onChange={handleChange}
-            />
-          </div>
-          <p>{status}</p>
-          <div>
             <button
-              className="btn-action-primary"
-              type="submit"
-              disabled={disableButton}
-            >
-              SAV
-              {loading ? "ING " : "E "} Class
-            </button>
-            <button
-              className="btn-action-secondary"
               type="button"
-              onClick={() =>
-                Router.push({
-                  pathname: "/studio/classes"
-                })
-              }
+              className="btn-action-primary-outline"
+              onClick={() => toggleFileInput(true)}
             >
-              Cancel
+              Add/Change Music
             </button>
-            <DeleteDanceClass id={danceClass.id}>
-              Delete this Class
-            </DeleteDanceClass>
-          </div>
-        </fieldset>
-      </Form>
+            {showFileInput && (
+              <div className="input-item">
+                <label htmlFor="audioFile">
+                  Upload the music for this dance...
+                </label>
+                <input
+                  type="file"
+                  id="audioFile"
+                  name="audioFile"
+                  placeholder="Upload music for this dance"
+                  onChange={setSongtoState}
+                />
+              </div>
+            )}
+            <div className="input-item">
+              <label htmlFor="size">
+                {`Size...(Currently ${danceClass.size})`}
+              </label>
+              <select
+                id="size"
+                name="size"
+                defaultValue={danceClass.size}
+                onChange={handleChange}
+              >
+                <option value="Group">Group</option>
+                <option value="Solo">Solo</option>
+                <option value="Duo">Duo</option>
+                <option value="Trio">Trio</option>
+              </select>
+            </div>
+            <section>
+              <h3>Class Categories</h3>
+              <div className="form-row">
+                <div className="form-row-item">
+                  <label htmlFor="style">Style: </label>
+
+                  <select
+                    required
+                    id="style"
+                    name="style"
+                    defaultValue={danceClass.style}
+                    onChange={handleChange}
+                  >
+                    {studio.styles.map(style => (
+                      <option key={style} value={style}>
+                        {style}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-row-item">
+                  <label htmlFor="competitiveLevel">competitiveLevel: </label>
+
+                  <select
+                    required
+                    id="competitiveLevel"
+                    name="competitiveLevel"
+                    defaultValue={danceClass.competitiveLevel}
+                    onChange={handleChange}
+                  >
+                    {studio.competitiveLevels.map(competitiveLevel => (
+                      <option key={competitiveLevel} value={competitiveLevel}>
+                        {competitiveLevel}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-row-item">
+                  <label htmlFor="ageDivision">ageDivision: </label>
+
+                  <select
+                    required
+                    id="ageDivision"
+                    name="ageDivision"
+                    defaultValue={danceClass.ageDivision}
+                    onChange={handleChange}
+                  >
+                    {studio.ageDivisions.map(ageDivision => (
+                      <option key={ageDivision} value={ageDivision}>
+                        {ageDivision}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </section>
+            <div className="form-row">
+              <div className="day form-row-item">
+                <label htmlFor="day">Day:</label>
+                <select
+                  id="day"
+                  name="day"
+                  defaultValue={danceClass.day}
+                  onChange={handleChange}
+                >
+                  <option value="Mon.">Mon.</option>
+                  <option value="Tue.">Tue.</option>
+                  <option value="Wed.">Wed.</option>
+                  <option value="Thur.">Thur.</option>
+                  <option value="Fri.">Fri.</option>
+                  <option value="Sat.">Sat.</option>
+                  <option value="Sun.">Sun.</option>
+                </select>
+              </div>
+              <div className="form-row-item">
+                <label htmlFor="startTime">Start Time:</label>
+                <input
+                  type="time"
+                  id="startTime"
+                  name="startTime"
+                  min="0:00"
+                  max="23:59"
+                  defaultValue={danceClass.startTime}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-row-item">
+                <label htmlFor="endTime">End Time: </label>
+
+                <input
+                  type="time"
+                  id="endTime"
+                  name="endTime"
+                  min="0:00"
+                  max="23:59"
+                  defaultValue={danceClass.endTime}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="form-row-item">
+                <label htmlFor="tights">Tights </label>
+                <input
+                  type="text"
+                  name="tights"
+                  placeholder="The style of tights required..."
+                  defaultValue={danceClass.tights}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-row-item">
+                <label htmlFor="shoes">Shoes </label>
+                <input
+                  type="text"
+                  name="shoes"
+                  placeholder="The style of shoes required..."
+                  defaultValue={danceClass.shoes}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="input-item">
+              <label htmlFor="notes">Notes</label>
+
+              <textarea
+                id="notes"
+                type="text"
+                name="notes"
+                rows="5"
+                defaultValue={danceClass.notes}
+                onChange={handleChange}
+              />
+            </div>
+            <p>{status}</p>
+            <div>
+              <button
+                className="btn-action-primary"
+                type="submit"
+                disabled={disableButton}
+              >
+                SAV
+                {loading ? "ING " : "E "} Class
+              </button>
+              <button
+                className="btn-action-secondary"
+                type="button"
+                onClick={() =>
+                  Router.push({
+                    pathname: "/studio/classes"
+                  })
+                }
+              >
+                Cancel
+              </button>
+              <DeleteDanceClass id={danceClass.id} />
+            </div>
+          </fieldset>
+        </Form>
+      </Card>
     </Fragment>
   );
 }

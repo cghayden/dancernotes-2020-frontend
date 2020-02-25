@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import Router from "next/router";
 
@@ -13,35 +12,31 @@ const DELETE_DANCECLASS_MUTATION = gql`
   }
 `;
 
-class DeleteDanceButton extends Component {
-  render() {
-    return (
-      <Mutation
-        mutation={DELETE_DANCECLASS_MUTATION}
-        variables={{ id: this.props.id }}
-        refetchQueries={[{ query: ALL_DANCE_CLASSES_QUERY }]}
-        awaitRefetchQueries={true}
-        onCompleted={() =>
-          Router.push({
-            pathname: "/studio/classes"
-          })
+function DeleteDanceButton({ id, children }) {
+  const [deleteDanceClass, { loading, error }] = useMutation(
+    DELETE_DANCECLASS_MUTATION,
+    {
+      variables: { id },
+      refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }],
+      awaitRefetchQueries: true,
+      onCompleted: () => Router.push("/studio/classes")
+    }
+  );
+  return (
+    <button
+      type="button"
+      className="btn-danger"
+      disabled={loading}
+      onClick={() => {
+        if (confirm("Are you sure you want to delete this Class?")) {
+          //mutation is a Promise, so we can catch it
+          deleteDanceClass();
         }
-      >
-        {deleteDanceClass => (
-          <button
-            onClick={() => {
-              if (confirm("Are you sure you want to delete this Class?")) {
-                //mutation is a Promise, so we can catch it
-                deleteDanceClass().catch(err => alert(err.message));
-              }
-            }}
-          >
-            {this.props.children}
-          </button>
-        )}
-      </Mutation>
-    );
-  }
+      }}
+    >
+      Delet{loading ? `ing...` : `e`}
+    </button>
+  );
 }
 
 export default DeleteDanceButton;
