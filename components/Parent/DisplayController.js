@@ -19,8 +19,6 @@ const DancerControlsStyle = styled.div`
   background-color: ${props => props.theme.gray1};
   display: flex;
   flex-direction: column;
-  /* grid-gap: 1rem; */
-  /* justify-items: start; */
   align-items: center;
   border-radius: 5px;
   padding-bottom: 1rem;
@@ -29,7 +27,6 @@ const DancerControlsStyle = styled.div`
   padding-top: 0.5rem;
   margin-bottom: 1rem;
   box-shadow: ${props => props.theme.dropShadow1};
-
   input[type="checkbox"] {
     margin-right: 0.5rem;
   }
@@ -50,7 +47,7 @@ function DisplayController({ dancerId }) {
   return (
     <DancerControlsStyle key={dancer.id}>
       <DancerToggler dancer={dancer} />
-      {dancer.allRoutines.length < 1 && (
+      {!dancer.allRoutines.length && (
         <Link href="/parent/account/dancers">
           <a className="textOnly-primary-action">Create or Find a Class</a>
         </Link>

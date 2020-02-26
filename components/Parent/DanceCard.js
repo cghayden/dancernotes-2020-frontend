@@ -78,6 +78,20 @@ function DanceCard({ dance, visibleDancersIds }) {
   const [showMediaPlayer, setShowMediaPlayer] = useState(false);
   const [bind, { height }] = useMeasure();
 
+  function formatTime(timeString) {
+    const array = timeString.split(":");
+    let hours = parseInt(array[0]);
+    if (hours == 12) {
+      return hours + ":" + array[1] + "pm";
+    }
+    if (hours > 12) {
+      hours -= 12;
+      return hours + ":" + array[1] + "pm";
+    } else {
+      return timeString + "am";
+    }
+  }
+
   const animation = useSpring({
     overflow: "hidden",
     height: showBody ? height : 0
@@ -100,7 +114,7 @@ function DanceCard({ dance, visibleDancersIds }) {
         </DanceCardTitle>
         <DanceCardTime>
           <p>{dance.day}</p>
-          <p>{dance.startTime}</p>
+          <p>{formatTime(dance.startTime)}</p>
         </DanceCardTime>
       </DanceCardHeader>
       <DanceCardNav>
@@ -134,30 +148,3 @@ function DanceCard({ dance, visibleDancersIds }) {
 }
 
 export default DanceCard;
-
-// const AnimationStyles = styled.span`
-//   position: relative;
-//   .element {
-//     display: block;
-//   }
-//   .element-enter {
-//     opacity: 0.01;
-//     transform: translateY(-100%) scale(0.1);
-//   }
-//   .element-enter-active {
-//     opacity: 0.5;
-//     transform: translateY(0%) scale(0.9);
-//     transition: all 300ms ease-in-out;
-//     /* transition: all 300ms cubic-bezier(0.6, -0.28, 0.735, 0.045); */
-//   }
-//   .element-exit {
-//     opacity: 0.3;
-//     transform: translateY(-1%) scale(0.9);
-//   }
-//   .element-exit-active {
-//     opacity: 0.01;
-//     transform: translateY(-100%) scale(0.1);
-//     transition: all 300ms ease-in-out;
-//     /* transition: all 0.6s cubic-bezier(0.6, -0.28, 0.735, 0.045); */
-//   }
-// `;

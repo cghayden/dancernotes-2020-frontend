@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
+import styled from "styled-components";
 import DisplayController from "./DisplayController";
+import SliderToggler from "../styles/SliderToggler";
 import { ParentDisplayContext } from "../ParentDisplayProvider";
 import { ParentDisplayConsumer } from "../ParentDisplayProvider";
-
-import styled from "styled-components";
 
 const ControlPanelStyles = styled.div`
   padding: 1rem 1rem 100px 1rem;
@@ -90,10 +90,20 @@ const DancerCheckboxes = styled.div`
     }
   }
 `;
-
+const CompModeToggler = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+  p {
+    display: inline-block;
+    padding-right: 10px;
+  }
+`;
 const ControlPanel = ({ dancerIds, studios, customRoutines }) => {
   const DisplayContext = useContext(ParentDisplayContext);
   const showControlPanel = DisplayContext.showControlPanel;
+
   const independents = customRoutines.filter(routine => !routine.studio);
   const hasStudioAndIndependents =
     studios.length > 0 && independents.length > 0;
@@ -101,9 +111,6 @@ const ControlPanel = ({ dancerIds, studios, customRoutines }) => {
   return (
     <ParentDisplayConsumer>
       {({
-        hiddenDances,
-        hiddenDancers,
-        toggleDance,
         toggleIndependent,
         hiddenIndependents,
         hiddenStudios,
@@ -112,6 +119,10 @@ const ControlPanel = ({ dancerIds, studios, customRoutines }) => {
         return (
           <ControlPanelStyles showControlPanel={showControlPanel}>
             <ControlPanelHeading>Display:</ControlPanelHeading>
+            {/* <CompModeToggler>
+              <p>Competiton Mode:</p>
+              <SliderToggler />
+            </CompModeToggler> */}
             {/* checkbox for each parent studio */}
             {showAllStudioFilter && (
               <AllStudioCheckboxes>

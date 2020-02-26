@@ -13,16 +13,11 @@ function shopPage() {
       </Card>
       <Card>
         <div className="card__header">
-          <h2>Capezio</h2>
+          <h2>Julia's Alterations</h2>
         </div>
         <div className="card__section">
-          <p>
-            President's Day Sale - 30% Your entire prurchase + free shipping
-          </p>
-          <p>Use Code: PRES30</p>
-          <a href="https://www.capezio.com/?test-birthdate=@BIRTHDATE@&dm_i=4ZOM,9KOC,2ZTJPC,10188,1">
-            Visit Capezio
-          </a>
+          <p>25 Wyman St.</p> <p>Stoughton, MA 02072</p>
+          <p>(781) 297-9900</p>
         </div>
       </Card>
     </NoNavLayout>
