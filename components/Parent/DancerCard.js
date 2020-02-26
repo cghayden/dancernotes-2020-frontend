@@ -190,7 +190,7 @@ function DancerCard({ dancer }) {
                         className="btn-action-secondary"
                         onClick={() => setBrowsingDancer(dancer.id)}
                       >
-                        Browse Classes at {studio.studioName}
+                        Manage Classes at {studio.studioName}
                       </button>
                     </Link>
                   ))}

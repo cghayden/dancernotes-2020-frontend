@@ -79,7 +79,10 @@ const RequestNotice = styled.p`
   color: ${props => props.theme.red7};
   font-size: 1.1rem;
 `;
-
+const FiltersDisplay = styled.div`
+  text-align: left;
+  display: flex;
+`;
 function BrowseStudioClasses({ classFilter, studio }) {
   const BrowsingContext = useContext(RegistrationContext);
   const setBrowsingDancer = BrowsingContext.setBrowsingDancer;
@@ -168,15 +171,14 @@ function BrowseStudioClasses({ classFilter, studio }) {
           {/*display a list of the active filters */}
           {Object.keys(classFilter).length > 0 && (
             <>
-              <div>
+              <FiltersDisplay>
                 <h2>Active Filters:</h2>
-              </div>
-
-              <ul>
-                {activeFilters.map(choice => (
-                  <li key={choice}>{choice}</li>
-                ))}
-              </ul>
+                <ul>
+                  {activeFilters.map(choice => (
+                    <li key={choice}>{choice}</li>
+                  ))}
+                </ul>
+              </FiltersDisplay>
             </>
           )}
         </LargeScreenActiveFilters>

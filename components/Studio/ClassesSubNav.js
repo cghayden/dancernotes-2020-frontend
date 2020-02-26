@@ -14,7 +14,7 @@ function ClassesSubNav() {
         </li>
         <li>
           <StyledLink activeClassName="active" href="configureClassCategories">
-            <a>Configure Class Categories</a>
+            <a>Edit Class Categories</a>
           </StyledLink>
         </li>
       </ul>

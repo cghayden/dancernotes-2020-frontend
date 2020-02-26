@@ -97,7 +97,6 @@ function ClassCategoryList({ existingItems, category }) {
           e.preventDefault(e);
           const newItemsArray = newItems.split(regex);
           const items = [...existingItems, ...newItemsArray];
-          console.log("items:", items);
           await updateCategoryMutation({
             variables: { category, items }
           });
@@ -111,6 +110,7 @@ function ClassCategoryList({ existingItems, category }) {
             {existingItems.map(item => (
               <li key={item}>
                 <StyledDeleteButton
+                  title="Delete this option"
                   type="button"
                   aria-label={`delete ${item}`}
                   value={item}

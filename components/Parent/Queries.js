@@ -181,6 +181,7 @@ const DANCER_QUERY = gql`
         studio {
           id
         }
+        custom
       }
       customRoutines {
         id
@@ -188,6 +189,7 @@ const DANCER_QUERY = gql`
         studio {
           id
         }
+        custom
       }
       studios {
         id

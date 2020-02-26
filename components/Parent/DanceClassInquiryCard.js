@@ -180,7 +180,7 @@ function DanceClassInquiryCard({
               await requestDance();
             }}
           >
-            Enroll
+            Enroll {dancerName}
           </button>
         )}
         {status === "requested" && (

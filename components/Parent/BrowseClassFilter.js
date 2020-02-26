@@ -39,7 +39,7 @@ const ActiveFilters = styled.div`
 
     li {
       padding: 0.25rem 0.5rem;
-      margin: 0rem 0.5rem;
+      margin: 0.25rem 0.5rem;
       background: ${props => props.theme.indigo7};
       color: ${props => props.theme.gray0};
       border-radius: 5px;

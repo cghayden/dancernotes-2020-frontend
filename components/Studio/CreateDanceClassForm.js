@@ -270,7 +270,7 @@ function CreateDanceClass({ studio }) {
               <h3>Class Categories</h3>
               <Link href="configureClassCategories">
                 <a className="btn-action-primary btn-small">
-                  Configure Class Categories
+                  Edit Class Categories
                 </a>
               </Link>
               <div className="input-item">
@@ -449,7 +449,7 @@ function CreateDanceClass({ studio }) {
                 type="submit"
                 disabled={loading}
               >
-                Creat
+                Sav
                 {loading ? "ing " : "e "} Class
               </button>
             </div>

@@ -7,7 +7,7 @@ import useForm from "../../lib/useForm";
 import Modal from "../Modal";
 import BackButton from "../BackButton";
 import Card from "../styles/Card";
-import DeleteDanceClass from "../DeleteDanceClass";
+import DeleteCustomRoutineButton from "./DeleteCustomRoutineButton";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
 import { ALL_Rs, PARENT_USER_QUERY } from "./Queries";
 
@@ -109,7 +109,7 @@ function UpdateCustomRoutine({ dance, parent }) {
       if (dance.musicId) {
         setStatus("Deleting Old Music");
         await deleteCloudinaryAsset({
-          variables: { publicId: danceClass.musicId, resourceType: "video" }
+          variables: { publicId: dance.musicId, resourceType: "video" }
         });
       }
       setStatus("Uploading Music...");
@@ -343,7 +343,7 @@ function UpdateCustomRoutine({ dance, parent }) {
             </div>
             <button
               type="button"
-              className="btn-action-primary"
+              className="btn-action-primary-outline"
               onClick={() => toggleFileInput(true)}
             >
               Add/Change Music
@@ -364,13 +364,18 @@ function UpdateCustomRoutine({ dance, parent }) {
             )}
             <div className="form-footer">
               <button
+                className="btn-action-primary"
                 type="submit"
                 disabled={disableButton || updatingRoutine || loadingSong}
               >
                 Sav
                 {updatingRoutine ? "ing " : "e "} Changes
               </button>
-              <BackButton text="Cancel" classNames="btn-danger" />{" "}
+              <BackButton text="Cancel" classNames="btn-danger-outline" />{" "}
+              <DeleteCustomRoutineButton
+                id={dance.id}
+                musicId={dance.musicId}
+              />
             </div>
           </fieldset>
         </Form>
