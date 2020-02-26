@@ -119,10 +119,10 @@ const ControlPanel = ({ dancerIds, studios, customRoutines }) => {
         return (
           <ControlPanelStyles showControlPanel={showControlPanel}>
             <ControlPanelHeading>Display:</ControlPanelHeading>
-            <CompModeToggler>
+            {/* <CompModeToggler>
               <p>Competiton Mode:</p>
               <SliderToggler />
-            </CompModeToggler>
+            </CompModeToggler> */}
             {/* checkbox for each parent studio */}
             {showAllStudioFilter && (
               <AllStudioCheckboxes>
