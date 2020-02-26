@@ -27,7 +27,7 @@ function createCustomEventPage() {
     <>
       <NotesSubNav />
       <SubNavMainLayout
-        page={"Create Your own Routine"}
+        page={"Create Your own Event"}
         pageAction={<BackButton text={"Cancel"} />}
         mobileHeader="Notes"
       >

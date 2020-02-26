@@ -13,6 +13,33 @@ import Card from "../../components/styles/Card";
 
 class RoutinesDisplay extends Component {
   state = { showStudioSearch: false };
+
+  formatSortValue = (day, startTime) => {
+    const dayValues = {
+      "Mon.": 1,
+      "Tue.": 2,
+      "Wed.": 3,
+      "Thur.": 4,
+      "Fri.": 5,
+      "Sat.": 6,
+      "Sun.": 7
+    };
+    const timeValue = dayValues[day] + startTime;
+    timeValue.replace(":", "");
+    return timeValue;
+  };
+
+  sortByName = function(a, b) {
+    const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+    const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+  };
+
   render() {
     return (
       <ParentDisplayConsumer>
@@ -71,6 +98,10 @@ class RoutinesDisplay extends Component {
                 }
 
                 for (const dance of allRs) {
+                  dance.sortValue = this.formatSortValue(
+                    dance.day,
+                    dance.startTime
+                  );
                   const dancerIds = [];
                   for (const dancer of dance.dancers) {
                     dancerIds.push(dancer.id);
@@ -84,67 +115,64 @@ class RoutinesDisplay extends Component {
 
                 return (
                   <>
-                    {allRs &&
-                      allRs
-                        .sort(function(a, b) {
-                          const nameA = a.name.toUpperCase(); // ignore upper and lowercase
-                          const nameB = b.name.toUpperCase(); // ignore upper and lowercase
-                          if (nameA < nameB) {
-                            return -1;
+                    {allRs
+                      .sort((a, b) => {
+                        if (a.sortValue <= b.sortValue) {
+                          return -1;
+                        }
+                        if (a.sortValue > b.sortValue) {
+                          return 1;
+                        }
+                      })
+                      .map(dance => {
+                        //independent dances...
+                        if (!dance.studio) {
+                          if (
+                            hiddenIndependents.includes("all") ||
+                            dance.dancerIds.some(dancerId =>
+                              hiddenIndependents.includes(dancerId)
+                            )
+                          ) {
+                            return null;
                           }
-                          if (nameA > nameB) {
-                            return 1;
+                          if (
+                            !hiddenDances.includes(dance.id) &&
+                            visibleDancersIds.some(visibleDancerId =>
+                              dance.dancerIds.includes(visibleDancerId)
+                            )
+                          ) {
+                            return (
+                              <DanceCard
+                                visibleDancersIds={visibleDancersIds}
+                                key={dance.id}
+                                dance={dance}
+                              />
+                            );
                           }
-                        })
-                        .map(dance => {
-                          //independent dances...
-                          if (!dance.studio) {
-                            if (
-                              hiddenIndependents.includes("all") ||
-                              dance.dancerIds.some(dancerId =>
-                                hiddenIndependents.includes(dancerId)
-                              )
-                            ) {
-                              return null;
-                            }
-                            if (
-                              !hiddenDances.includes(dance.id) &&
-                              visibleDancersIds.some(visibleDancerId =>
-                                dance.dancerIds.includes(visibleDancerId)
-                              )
-                            ) {
-                              return (
-                                <DanceCard
-                                  visibleDancersIds={visibleDancersIds}
-                                  key={dance.id}
-                                  dance={dance}
-                                />
-                              );
-                            }
+                        }
+                        //all other dances ( linked with a studio & studioId)
+                        {
+                          /* !hiddenStudios.includes(dance.studio.id) && */
+                        }
+                        {
+                          if (
+                            dance.studio &&
+                            !hiddenDances.includes(dance.id) &&
+                            !hiddenStudios.includes(dance.studio.id) &&
+                            visibleDancersIds.some(visibleDancerId =>
+                              dance.dancerIds.includes(visibleDancerId)
+                            )
+                          ) {
+                            return (
+                              <DanceCard
+                                visibleDancersIds={visibleDancersIds}
+                                key={dance.id}
+                                dance={dance}
+                              />
+                            );
                           }
-                          //all other dances ( linked with a studio & studioId)
-                          {
-                            /* !hiddenStudios.includes(dance.studio.id) && */
-                          }
-                          {
-                            if (
-                              dance.studio &&
-                              !hiddenDances.includes(dance.id) &&
-                              !hiddenStudios.includes(dance.studio.id) &&
-                              visibleDancersIds.some(visibleDancerId =>
-                                dance.dancerIds.includes(visibleDancerId)
-                              )
-                            ) {
-                              return (
-                                <DanceCard
-                                  visibleDancersIds={visibleDancersIds}
-                                  key={dance.id}
-                                  dance={dance}
-                                />
-                              );
-                            }
-                          }
-                        })}
+                        }
+                      })}
                   </>
                 );
               }}
