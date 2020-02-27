@@ -1,4 +1,3 @@
-import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import styled from "styled-components";
 import Link from "next/link";
@@ -39,11 +38,14 @@ function DisplayController({ dancerId }) {
   if (loading) return null;
   if (error) return <p>ERROR</p>;
   if (!data) return <p>Not found</p>;
+
   const dancer = data.dancer;
+
   dancer.allRoutines = [...dancer.danceClasses, ...dancer.customRoutines];
   const independentRoutines = dancer.allRoutines.filter(
     routine => !routine.studio
   );
+
   return (
     <DancerControlsStyle key={dancer.id}>
       <DancerToggler dancer={dancer} />

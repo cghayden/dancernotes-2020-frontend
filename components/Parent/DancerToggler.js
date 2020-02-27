@@ -1,6 +1,5 @@
-import React, { Component } from "react";
 import styled from "styled-components";
-import { ParentDisplayConsumer } from "../../components/ParentDisplayProvider";
+import { useDisplayControls } from "../../components/ParentDisplayProvider";
 
 const ActiveDancerButton = styled.button`
   justify-self: center;
@@ -53,42 +52,37 @@ const InActiveDancerButton = styled.button`
   }
 `;
 
-export default class DancerToggler extends Component {
-  render() {
-    const { dancer } = this.props;
+function DancerToggler({ dancer }) {
+  const { hiddenIds, toggleId } = useDisplayControls();
+
+  if (hiddenIds.includes(dancer.id)) {
     return (
-      <ParentDisplayConsumer>
-        {({ hiddenDancers, toggleDancer }) => {
-          if (hiddenDancers.includes(dancer.id)) {
-            return (
-              <InActiveDancerButton
-                onClick={() => {
-                  toggleDancer(dancer.id, hiddenDancers);
-                }}
-              >
-                {dancer.avatar ? (
-                  <img src={dancer.avatar} alt={dancer.firstName} />
-                ) : (
-                  <p>{dancer.firstName}</p>
-                )}
-              </InActiveDancerButton>
-            );
-          }
-          return (
-            <ActiveDancerButton
-              onClick={() => {
-                toggleDancer(dancer.id, hiddenDancers);
-              }}
-            >
-              {dancer.avatar ? (
-                <img src={dancer.avatar} alt={dancer.firstName} />
-              ) : (
-                <p>{dancer.firstName}</p>
-              )}
-            </ActiveDancerButton>
-          );
+      <InActiveDancerButton
+        onClick={() => {
+          toggleId(dancer.id);
         }}
-      </ParentDisplayConsumer>
+      >
+        {dancer.avatar ? (
+          <img src={dancer.avatar} alt={dancer.firstName} />
+        ) : (
+          <p>{dancer.firstName}</p>
+        )}
+      </InActiveDancerButton>
     );
   }
+  return (
+    <ActiveDancerButton
+      onClick={() => {
+        toggleId(dancer.id);
+      }}
+    >
+      {dancer.avatar ? (
+        <img src={dancer.avatar} alt={dancer.firstName} />
+      ) : (
+        <p>{dancer.firstName}</p>
+      )}
+    </ActiveDancerButton>
+  );
 }
+
+export default DancerToggler;

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 
 const SliderInput = styled.input`
@@ -51,20 +50,18 @@ const Slider = styled.span`
   }
 `;
 
-function SliderToggler() {
-  const [compMode, toggleCompMode] = useState(false);
+function SliderToggler({ competitionMode, toggleCompetitionMode }) {
   return (
     <SliderLabel id="compModeToggerLabel" htmlFor="compModeToggler">
-      <p>Competition Mode:</p>
       <SliderInput
         aria-labelledby="compModeToggerLabel"
         name="compModeToggler"
         id="compModeToggler"
         type="checkbox"
-        checked={compMode}
-        onChange={() => toggleCompMode(compMode => !compMode)}
+        checked={competitionMode}
+        onChange={toggleCompetitionMode}
       />
-      <Slider checked={compMode}></Slider>
+      <Slider checked={competitionMode}></Slider>
     </SliderLabel>
   );
 }
