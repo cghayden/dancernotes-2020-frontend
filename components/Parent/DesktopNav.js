@@ -24,7 +24,7 @@ function DesktopNav() {
       <Link href="/parent/discover">
         <a>Discover</a>
       </Link>
-      <Link href="#">
+      <Link href="/parent/shop">
         <a>Shop</a>
       </Link>
       <Link href="/parent/account/profile">
