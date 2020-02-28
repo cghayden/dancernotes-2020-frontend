@@ -37,17 +37,27 @@ const DanceCardTime = styled.div`
     font-size: 0.825rem;
   }
 `;
-
-const DanceCardNav = styled.div`
-  display: flex;
-  justify-content: space-around;
+const DanceCardEntryInfo = styled.div`
+  color: red;
   font-size: 0.825rem;
+  grid-column: 1/2;
+  grid-row: 1;
+
+  @media (min-width: ${props => props.theme.largeScreen}) {
+    font-size: 0.825rem;
+  }
 `;
 
-const DanceCardHeader = ({ dance, setShowBody }) => {
+const DanceCardHeader = ({ dance }) => {
+  console.log("dance:", dance);
   return (
     <>
       <HeaderStyle>
+        <DanceCardEntryInfo>
+          <p>{dance.entryNumber}</p>
+          <p>{dance.entryDay}</p>
+          <p>{dance.entryTime}</p>
+        </DanceCardEntryInfo>
         <DanceCardTitle>
           <p>{dance.name}</p>
           <p>{dance.performanceName}</p>
@@ -57,7 +67,6 @@ const DanceCardHeader = ({ dance, setShowBody }) => {
           <p>{dance.startTime}</p>
         </DanceCardTime>
       </HeaderStyle>
-     
     </>
   );
 };

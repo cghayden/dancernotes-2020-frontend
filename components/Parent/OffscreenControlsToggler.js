@@ -1,6 +1,5 @@
-import React from "react";
-import { ParentDisplayConsumer } from "../ParentDisplayProvider";
 import styled from "styled-components";
+import { useDisplayControls } from "../Parent/ParentDisplayProvider";
 
 const OffScreenTogglerButton = styled.button`
   @media (min-width: ${props => props.theme.largeScreen}) {
@@ -9,21 +8,16 @@ const OffScreenTogglerButton = styled.button`
 `;
 
 function OffScreenControlsToggler({ text }) {
+  const { toggleControlPanel } = useDisplayControls();
   return (
-    <ParentDisplayConsumer>
-      {({ toggleControlPanel }) => {
-        return (
-          <OffScreenTogglerButton
-            className="textOnly-primary-action"
-            onClick={() => {
-              toggleControlPanel();
-            }}
-          >
-            {text}
-          </OffScreenTogglerButton>
-        );
+    <OffScreenTogglerButton
+      className="textOnly-primary-action"
+      onClick={() => {
+        toggleControlPanel();
       }}
-    </ParentDisplayConsumer>
+    >
+      {text}
+    </OffScreenTogglerButton>
   );
 }
 

@@ -26,6 +26,9 @@ const SINGLE_DANCE_QUERY = gql`
       musicId
       performanceName
       size
+      entryNumber
+      entryDay
+      entryTime
     }
   }
 `;

@@ -30,6 +30,9 @@ const ALL_Rs = gql`
       studio {
         id
       }
+      entryNumber
+      entryDay
+      entryTime
     }
   }
 `;
@@ -108,17 +111,25 @@ const PARENT_USER_QUERY = gql`
         firstName
         avatar
         avatarId
-        # todo: remove when changing dancers page query
-        studios {
-          studioName
-          id
-        }
         danceClasses {
           id
           name
           studio {
             id
           }
+          custom
+        }
+        customRoutines {
+          id
+          name
+          studio {
+            id
+          }
+          custom
+        }
+        studios {
+          id
+          studioName
         }
       }
       accessRequests
@@ -166,6 +177,9 @@ const CUSTOM_ROUTINE_QUERY = gql`
       style
       ageDivision
       competitiveLevel
+      entryNumber
+      entryDay
+      entryTime
     }
   }
 `;

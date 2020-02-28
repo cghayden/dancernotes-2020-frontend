@@ -61,7 +61,7 @@ const ParentHome = () => {
       <NotesSubNav />
       <SubNavMainControlsLayout
         mobileHeader={"Notes"}
-        page="Routines"
+        page="All Routines"
         pageAction={AddRoutineButton}
         offscreenToggler="Display"
       >
@@ -71,6 +71,7 @@ const ParentHome = () => {
         studios={parentUser.studios}
         dancerIds={parentUser.dancersIds}
         customRoutines={parentUser.customRoutines}
+        dancers={parentUser.dancers}
       />
     </>
   );

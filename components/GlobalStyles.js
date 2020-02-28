@@ -115,9 +115,18 @@ const GlobalStyle = createGlobalStyle`
       color: ${theme.indigo0};
       :hover {
       background-color: ${theme.indigo6};
+      }   
+    }
+
+    &.btn-comp-outline{
+      background-color: none;
+      color: ${theme.green8};
+      :hover {
+      background-color: ${theme.green6};
       } 
       
     }
+
     &.btn-action-secondary-outline{
       background-color: none;
       color: ${theme.indigo5};

@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import { useState, Fragment } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import styled from "styled-components";
@@ -11,7 +11,6 @@ import Form from "../styles/Form";
 import Card from "../styles/Card";
 import useForm from "../../lib/useForm";
 import BackButton from "../BackButton";
-import { DANCER_QUERY } from "./Queries";
 
 const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
   mutation CREATE_CUSTOM_ROUTINE_MUTATION(
@@ -25,6 +24,9 @@ const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
     $notes: String
     $dancerIds: [ID!]!
     $studio: ID!
+    $entryNumber: String
+    $entryDay: String
+    $entryTime: String
   ) {
     createCustomRoutine(
       name: $name
@@ -37,6 +39,9 @@ const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
       notes: $notes
       dancerIds: $dancerIds
       studio: $studio
+      entryNumber: $entryNumber
+      entryDay: $entryDay
+      entryTime: $entryTime
     ) {
       name
       id
@@ -57,7 +62,7 @@ const SelectChoices = styled.ul`
   margin-bottom: 0.5rem;
   display: flex;
   flex-wrap: wrap;
-  
+
   li {
     border-radius: ${props => props.theme.borderRadius};
     padding: 0.25rem 0.5rem;
@@ -82,7 +87,10 @@ const initialInputState = {
   shoes: "",
   tights: "",
   notes: "",
-  studio: ""
+  studio: "",
+  entryNumber: "",
+  entryDay: "",
+  entryTime: ""
 };
 
 function CreateCustomRoutineForm({ parent }) {
@@ -92,6 +100,7 @@ function CreateCustomRoutineForm({ parent }) {
   const [showModal, toggleModal] = useState(false);
   const [status, setStatus] = useState();
   const [showFileInput, toggleFileInput] = useState(false);
+  const [showCompInput, toggleCompInput] = useState(false);
   const [musicForUpload, setMusicForUpload] = useState();
   const [musicData, setMusicData] = useState({});
   const [dancerChoice, setDancerChoice] = useState(() =>
@@ -398,9 +407,16 @@ function CreateCustomRoutineForm({ parent }) {
             <button
               type="button"
               className="btn-action-primary-outline"
-              onClick={() => toggleFileInput(true)}
+              onClick={() => toggleFileInput(!showFileInput)}
             >
               Add Music
+            </button>
+            <button
+              type="button"
+              className="btn-comp-outline"
+              onClick={() => toggleFileInput(!showCompInput)}
+            >
+              Add Entry
             </button>
             {showFileInput && (
               <div className="input-item">
@@ -415,6 +431,52 @@ function CreateCustomRoutineForm({ parent }) {
                   onChange={setSongtoState}
                 />
               </div>
+            )}
+            {showCompInput && (
+              <section>
+                <h3>Competition Entry Information</h3>
+                <div className="form-row">
+                  <div className="form-row-item">
+                    <label htmlFor="entryNumber">Entry Number:</label>
+                    <input
+                      type="text"
+                      id="entryNumber"
+                      name="entryNumber"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="day form-row-item">
+                    <label htmlFor="entryDay">Day:</label>
+                    <select
+                      id="entryDay"
+                      name="entryDay"
+                      onChange={handleChange}
+                    >
+                      <option value="" disabled>
+                        Day...
+                      </option>
+                      <option value="Sat.">Sat.</option>
+                      <option value="Sun.">Sun.</option>
+                      <option value="Mon.">Mon.</option>
+                      <option value="Tue.">Tue.</option>
+                      <option value="Wed.">Wed.</option>
+                      <option value="Thur.">Thur.</option>
+                      <option value="Fri.">Fri.</option>
+                    </select>
+                  </div>
+                  <div className="form-row-item">
+                    <label htmlFor="entryTime">Entry Time: </label>
+                    <input
+                      type="time"
+                      id="entryTime"
+                      name="entryTime"
+                      min="0:00"
+                      max="23:59"
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+              </section>
             )}
 
             <p>{status}</p>

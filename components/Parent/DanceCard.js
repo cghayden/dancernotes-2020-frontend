@@ -1,11 +1,11 @@
-import React, { useState, Fragment } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { useSpring, animated } from "react-spring";
 import useMeasure from "../../lib/useMeasure";
 import Card from "../styles/Card";
-import EnrolledDancers from "./EnrolledDancers";
 import DanceCardBody from "./DanceCardBody";
+import DanceCardHeader from "./DanceCardHeader";
 import MusicPlayer from "./MusicPlayer";
 
 const DanceCardStyles = styled(Card)`
@@ -14,43 +14,6 @@ const DanceCardStyles = styled(Card)`
     -1px -1px 1px 0px rgba(0, 0, 0, 0.02);
   img {
     margin: 0;
-  }
-`;
-
-const DanceCardHeader = styled.div`
-  display: grid;
-  grid-template-columns: 33% 1fr 50px;
-  align-items: center;
-  ul {
-    display: flex;
-    li {
-      padding: 0 5px;
-    }
-  }
-`;
-const DanceCardTitle = styled.div`
-  font-size: 0.875rem;
-  grid-column: 1 / -1;
-  grid-row: 1;
-  p:first-child {
-    font-weight: 600;
-    font-size: larger;
-  }
-  p:last-child {
-    font-style: italic;
-  }
-  @media (min-width: ${props => props.theme.largeScreen}) {
-    font-size: 1rem;
-  }
-`;
-
-const DanceCardTime = styled.div`
-  font-size: 0.675rem;
-  grid-column: 3/-1;
-  grid-row: 1;
-
-  @media (min-width: ${props => props.theme.largeScreen}) {
-    font-size: 0.825rem;
   }
 `;
 
@@ -78,20 +41,6 @@ function DanceCard({ dance, visibleDancersIds }) {
   const [showMediaPlayer, setShowMediaPlayer] = useState(false);
   const [bind, { height }] = useMeasure();
 
-  function formatTime(timeString) {
-    const array = timeString.split(":");
-    let hours = parseInt(array[0]);
-    if (hours == 12) {
-      return hours + ":" + array[1] + "pm";
-    }
-    if (hours > 12) {
-      hours -= 12;
-      return hours + ":" + array[1] + "pm";
-    } else {
-      return timeString + "am";
-    }
-  }
-
   const animation = useSpring({
     overflow: "hidden",
     height: showBody ? height : 0
@@ -103,20 +52,7 @@ function DanceCard({ dance, visibleDancersIds }) {
 
   return (
     <DanceCardStyles>
-      <DanceCardHeader>
-        <EnrolledDancers
-          visibleDancersIds={visibleDancersIds}
-          dancers={dance.dancers}
-        />
-        <DanceCardTitle>
-          <p>{dance.name}</p>
-          <p>{dance.performanceName}</p>
-        </DanceCardTitle>
-        <DanceCardTime>
-          <p>{dance.day}</p>
-          <p>{formatTime(dance.startTime)}</p>
-        </DanceCardTime>
-      </DanceCardHeader>
+      <DanceCardHeader dance={dance} visibleDancersIds={visibleDancersIds} />
       <DanceCardNav>
         <button className="textOnly-primary-action" onClick={toggleBody}>
           Details

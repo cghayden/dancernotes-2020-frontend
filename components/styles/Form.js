@@ -152,6 +152,9 @@ const Form = styled.form`
       display: grid;
       place-content: center;
       margin-bottom: 12px;
+      #entryNumber {
+        width: 70px;
+      }
     }
   }
   .form-row-day-time {

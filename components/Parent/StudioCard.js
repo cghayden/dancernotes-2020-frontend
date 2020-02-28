@@ -39,7 +39,7 @@ const StudioCard = ({ studio, dancers }) => {
             setBrowsingDancer(dancers[0].id);
           }}
         >
-          Browse Classes at {studio.studioName}
+          Manage Classes at {studio.studioName}
         </button>
       </Link>
     </Card>

@@ -8,10 +8,8 @@ import AccountSubNav from "../../../components/Parent/AccountSubNav";
 import BrowseStudioClasses from "../../../components/Parent/BrowseStudioClasses";
 import SubNavMainControlsLayout from "../../../components/SubNavMainControlsLayout";
 import BrowseClassFilter from "../../../components/Parent/BrowseClassFilter";
-import { ParentDisplayConsumer } from "../../../components/ParentDisplayProvider";
+import { useDisplayControls } from "../../../components/Parent/ParentDisplayProvider";
 import OffScreenControlsToggler from "../../../components/Parent/OffscreenControlsToggler";
-
-import { RegistrationContext } from "../../../components/Parent/RegistrationContext";
 
 const BROWSE_STUDIO_CLASSES_QUERY = gql`
   query BROWSE_STUDIO_CLASSES_QUERY($id: ID!) {
@@ -42,6 +40,7 @@ const BROWSE_STUDIO_CLASSES_QUERY = gql`
 
 const BrowseStudioPage = () => {
   const [classFilter, setFilter] = useState({});
+  const { showControlPanel, toggleControlPanel } = useDisplayControls();
 
   const router = useRouter();
   const { data: studioData, loading: loading, error: error } = useQuery(
@@ -50,7 +49,6 @@ const BrowseStudioPage = () => {
       variables: { id: router.query.studioId }
     }
   );
-  // const dancerName = browsingDancer.browsingDancerName;
   const studio = studioData ? studioData.studio : {};
   if (loading || error)
     return (
@@ -64,34 +62,27 @@ const BrowseStudioPage = () => {
     );
 
   return (
-    <ParentDisplayConsumer>
-      {({ showControlPanel, toggleControlPanel }) => {
-        return (
-          <>
-            <AccountSubNav />
-            <SubNavMainControlsLayout
-              page={`Classes at ${studio.studioName}`}
-              pageAction={<OffScreenControlsToggler text="Filter" />}
-            >
-              <BrowseStudioClasses
-                // dancerName={dancerName}
-                classFilter={classFilter}
-                studio={studio}
-                // dancerId={router.query.dancerId}
-                toggleControls={toggleControlPanel}
-              />
-              <BrowseClassFilter
-                studio={studio}
-                filter={classFilter}
-                setFilter={setFilter}
-                open={showControlPanel}
-                closeControls={toggleControlPanel}
-              />
-            </SubNavMainControlsLayout>
-          </>
-        );
-      }}
-    </ParentDisplayConsumer>
+    <>
+      <AccountSubNav />
+      <SubNavMainControlsLayout
+        mobileHeader="My Account"
+        page={`Classes at ${studio.studioName}`}
+        pageAction={<OffScreenControlsToggler text="Filter" />}
+      >
+        <BrowseStudioClasses
+          classFilter={classFilter}
+          studio={studio}
+          toggleControls={toggleControlPanel}
+        />
+        <BrowseClassFilter
+          studio={studio}
+          filter={classFilter}
+          setFilter={setFilter}
+          open={showControlPanel}
+          closeControls={toggleControlPanel}
+        />
+      </SubNavMainControlsLayout>
+    </>
   );
 };
 

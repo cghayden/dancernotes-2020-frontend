@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
 import styled from "styled-components";
 import DisplayController from "./DisplayController";
 import SliderToggler from "../styles/SliderToggler";
-import { ParentDisplayContext } from "../ParentDisplayProvider";
-import { ParentDisplayConsumer } from "../ParentDisplayProvider";
+import { useDisplayControls } from "./ParentDisplayProvider";
+import OffScreenControlsToggler from "./OffscreenControlsToggler";
 
 const ControlPanelStyles = styled.div`
   padding: 1rem 1rem 100px 1rem;
@@ -43,8 +42,11 @@ const ControlPanelStyles = styled.div`
   }
 `;
 
-const ControlPanelHeading = styled.h3`
+const ControlPanelHeading = styled.div`
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const AllStudioCheckboxes = styled.div`
@@ -100,76 +102,74 @@ const CompModeToggler = styled.div`
     padding-right: 10px;
   }
 `;
-const ControlPanel = ({ dancerIds, studios, customRoutines }) => {
-  const DisplayContext = useContext(ParentDisplayContext);
-  const showControlPanel = DisplayContext.showControlPanel;
+const ControlPanel = ({ dancerIds, studios, customRoutines, dancers }) => {
+  const {
+    hiddenIds,
+    toggleId,
+    competitionMode,
+    toggleCompetitionMode,
+    showControlPanel
+  } = useDisplayControls();
 
   const independents = customRoutines.filter(routine => !routine.studio);
   const hasStudioAndIndependents =
     studios.length > 0 && independents.length > 0;
   const showAllStudioFilter = studios.length > 1 || hasStudioAndIndependents;
   return (
-    <ParentDisplayConsumer>
-      {({
-        toggleIndependent,
-        hiddenIndependents,
-        hiddenStudios,
-        toggleStudio
-      }) => {
-        return (
-          <ControlPanelStyles showControlPanel={showControlPanel}>
-            <ControlPanelHeading>Display:</ControlPanelHeading>
-            {/* <CompModeToggler>
-              <p>Competiton Mode:</p>
-              <SliderToggler />
-            </CompModeToggler> */}
-            {/* checkbox for each parent studio */}
-            {showAllStudioFilter && (
-              <AllStudioCheckboxes>
-                {studios.map(studio => (
-                  <div key={studio.id}>
-                    <input
-                      checked={!hiddenStudios.includes(studio.id)}
-                      onChange={() => toggleStudio(studio.id, hiddenStudios)}
-                      type="checkbox"
-                      id={studio.studioName}
-                      name={studio.studioName}
-                      value={studio.studioName}
-                    />
-                    <StudioLabel htmlFor={studio.studioName}>
-                      {studio.studioName}
-                    </StudioLabel>
-                  </div>
-                ))}
-                {independents.length > 0 && (
-                  <div>
-                    <input
-                      checked={!hiddenIndependents.includes("all")}
-                      onChange={() => {
-                        toggleIndependent("all", hiddenIndependents);
-                      }}
-                      type="checkbox"
-                      id={"allIndependent"}
-                      name={"allIndependent"}
-                      value={"allIndependent"}
-                    />
-                    <StudioLabel htmlFor={"allIndependent"}>
-                      Independents
-                    </StudioLabel>
-                  </div>
-                )}
-              </AllStudioCheckboxes>
-            )}
+    <ControlPanelStyles showControlPanel={showControlPanel}>
+      <ControlPanelHeading>
+        <h3>Display:</h3>
+        <OffScreenControlsToggler text="Close" />
+      </ControlPanelHeading>
+      <CompModeToggler>
+        <p>Competiton Mode:</p>
+        <SliderToggler
+          competitionMode={competitionMode}
+          toggleCompetitionMode={toggleCompetitionMode}
+        />
+      </CompModeToggler>
+      {/* checkbox for each parent studio */}
+      {showAllStudioFilter && (
+        <AllStudioCheckboxes>
+          {studios.map(studio => (
+            <div key={studio.id}>
+              <input
+                checked={!hiddenIds.includes(studio.id)}
+                onChange={() => toggleId(studio.id)}
+                type="checkbox"
+                id={studio.studioName}
+                name={studio.studioName}
+                value={studio.studioName}
+              />
+              <StudioLabel htmlFor={studio.studioName}>
+                {studio.studioName}
+              </StudioLabel>
+            </div>
+          ))}
+          {independents.length > 0 && (
+            <div>
+              <input
+                checked={!hiddenIds.includes("all")}
+                onChange={() => {
+                  toggleId("all");
+                }}
+                type="checkbox"
+                id={"allIndependent"}
+                name={"allIndependent"}
+                value={"allIndependent"}
+              />
+              <StudioLabel htmlFor={"allIndependent"}>Independents</StudioLabel>
+            </div>
+          )}
+        </AllStudioCheckboxes>
+      )}
 
-            <DancerCheckboxes>
-              {dancerIds.map(id => {
-                return <DisplayController key={id} dancerId={id} />;
-              })}
-            </DancerCheckboxes>
-          </ControlPanelStyles>
-        );
-      }}
-    </ParentDisplayConsumer>
+      <DancerCheckboxes>
+        {dancers.map(dancer => {
+          return <DisplayController key={dancer.id} dancer={dancer} />;
+        })}
+      </DancerCheckboxes>
+    </ControlPanelStyles>
   );
 };
 
