@@ -28,6 +28,9 @@ const UPDATE_DANCECLASS_MUTATION = gql`
     $musicId: String
     $performanceName: String
     $size: String
+    $entryNumber: String
+    $entryDay: String
+    $entryTime: String
   ) {
     updateDanceClass(
       id: $id
@@ -45,6 +48,9 @@ const UPDATE_DANCECLASS_MUTATION = gql`
       musicId: $musicId
       performanceName: $performanceName
       size: $size
+      entryNumber: $entryNumber
+      entryDay: $entryDay
+      entryTime: $entryTime
     ) {
       id
       name
@@ -420,6 +426,51 @@ function UpdateDanceClass({ danceClass, studio }) {
                 onChange={handleChange}
               />
             </div>
+            <section>
+              <h3>Competition Entry Information</h3>
+              <div className="form-row">
+                <div className="form-row-item">
+                  <label htmlFor="entryNumber">Entry Number:</label>
+                  <input
+                    type="text"
+                    id="entryNumber"
+                    name="entryNumber"
+                    defaultValue={danceClass.entryNumber}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="day form-row-item">
+                  <label htmlFor="entryDay">Day:</label>
+                  <select
+                    id="entryDay"
+                    name="entryDay"
+                    defaultValue={danceClass.entryDay}
+                    onChange={handleChange}
+                  >
+                    <option value="Mon.">Mon.</option>
+                    <option value="Tue.">Tue.</option>
+                    <option value="Wed.">Wed.</option>
+                    <option value="Thur.">Thur.</option>
+                    <option value="Fri.">Fri.</option>
+                    <option value="Sat.">Sat.</option>
+                    <option value="Sun.">Sun.</option>
+                  </select>
+                </div>
+                <div className="form-row-item">
+                  <label htmlFor="entryTime">Entry Time: </label>
+                  <input
+                    type="time"
+                    id="entryTime"
+                    name="entryTime"
+                    min="0:00"
+                    max="23:59"
+                    defaultValue={danceClass.entryTime}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+            </section>
+
             <p>{status}</p>
             <div>
               <button

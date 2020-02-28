@@ -12,7 +12,7 @@ const MusicPlayer = ({ src }) => {
           autoPlay={false}
           controls
           src={src}
-          onerror={() => setError(true)}
+          onError={() => setError(true)}
         />
       </>
     );

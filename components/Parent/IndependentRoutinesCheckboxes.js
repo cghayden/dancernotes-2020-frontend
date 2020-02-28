@@ -1,7 +1,4 @@
-import React from "react";
-import styled from "styled-components";
-
-import { useDisplayControls } from "../../components/ParentDisplayProvider";
+import { useDisplayControls } from "./ParentDisplayProvider";
 import {
   CheckboxLabel,
   Checkboxes,

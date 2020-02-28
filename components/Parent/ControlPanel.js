@@ -1,8 +1,7 @@
-// import { useContext } from "react";
 import styled from "styled-components";
 import DisplayController from "./DisplayController";
 import SliderToggler from "../styles/SliderToggler";
-import { useDisplayControls } from "../ParentDisplayProvider";
+import { useDisplayControls } from "./ParentDisplayProvider";
 
 const ControlPanelStyles = styled.div`
   padding: 1rem 1rem 100px 1rem;

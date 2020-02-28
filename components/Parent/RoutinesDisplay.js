@@ -5,7 +5,7 @@ import DanceCard from "./DanceCard";
 import { useQuery } from "@apollo/react-hooks";
 import { ALL_Rs } from "./Queries";
 import Error from "../Error";
-import { useDisplayControls } from "../../components/ParentDisplayProvider";
+import { useDisplayControls } from "../../components/Parent/ParentDisplayProvider";
 import SearchForStudio from "../SearchForStudio";
 import Card from "../../components/styles/Card";
 //query all dances where ids of parents dancers are in the ids of enrolled dancers for the dance.  On the server, filter out all dancers not belonging to this parent.const NoRoutinesDiv = styled.div`
@@ -88,29 +88,47 @@ function RoutinesDisplay({ dancerIds }) {
 
   const visibleDancersIds = dancerIds.filter(id => !hiddenIds.includes(id));
 
-  return (
-    <>
-      {competitionMode && <p>Competition Mode On</p>}
-      {allRs
-        .sort((a, b) => {
-          if (a.sortValue <= b.sortValue) {
-            return -1;
-          }
-          if (a.sortValue > b.sortValue) {
-            return 1;
-          }
-        })
-        .map(dance => {
-          //independent dances...
-          if (!dance.studio) {
-            if (
-              hiddenIds.includes("all") ||
-              dance.dancerIds.some(dancerId => hiddenIds.includes(dancerId))
-            ) {
-              return null;
+  if (!competitionMode)
+    return (
+      <>
+        {allRs
+          .sort((a, b) => {
+            if (a.sortValue <= b.sortValue) {
+              return -1;
             }
+            if (a.sortValue > b.sortValue) {
+              return 1;
+            }
+          })
+          .map(dance => {
+            //independent dances...
+            if (!dance.studio) {
+              if (
+                hiddenIds.includes("all") ||
+                dance.dancerIds.some(dancerId => hiddenIds.includes(dancerId))
+              ) {
+                return null;
+              }
+              if (
+                !hiddenIds.includes(dance.id) &&
+                visibleDancersIds.some(visibleDancerId =>
+                  dance.dancerIds.includes(visibleDancerId)
+                )
+              ) {
+                return (
+                  <DanceCard
+                    visibleDancersIds={visibleDancersIds}
+                    key={dance.id}
+                    dance={dance}
+                  />
+                );
+              }
+            }
+            //all other dances ( linked with a studio & studioId)
+
             if (
               !hiddenIds.includes(dance.id) &&
+              !hiddenIds.includes(dance.studio.id) &&
               visibleDancersIds.some(visibleDancerId =>
                 dance.dancerIds.includes(visibleDancerId)
               )
@@ -123,27 +141,68 @@ function RoutinesDisplay({ dancerIds }) {
                 />
               );
             }
-          }
-          //all other dances ( linked with a studio & studioId)
+          })}
+      </>
+    );
 
-          if (
-            !hiddenIds.includes(dance.id) &&
-            !hiddenIds.includes(dance.studio.id) &&
-            visibleDancersIds.some(visibleDancerId =>
-              dance.dancerIds.includes(visibleDancerId)
-            )
-          ) {
-            return (
-              <DanceCard
-                visibleDancersIds={visibleDancersIds}
-                key={dance.id}
-                dance={dance}
-              />
-            );
-          }
-        })}
-    </>
-  );
+  if (competitionMode) {
+    const compRoutines = allRs.filter(routine => routine.entryNumber);
+    return (
+      <>
+        {compRoutines
+          .sort((a, b) => {
+            if (parseInt(a.entryNumber) < parseInt(b.entryNumber)) {
+              return -1;
+            }
+            if (parseInt(a.entryNumber) > parseInt(b.entryNumber)) {
+              return 1;
+            }
+          })
+          .map(dance => {
+            //independent dances...
+            if (!dance.studio) {
+              if (
+                hiddenIds.includes("all") ||
+                dance.dancerIds.some(dancerId => hiddenIds.includes(dancerId))
+              ) {
+                return null;
+              }
+              if (
+                !hiddenIds.includes(dance.id) &&
+                visibleDancersIds.some(visibleDancerId =>
+                  dance.dancerIds.includes(visibleDancerId)
+                )
+              ) {
+                return (
+                  <DanceCard
+                    visibleDancersIds={visibleDancersIds}
+                    key={dance.id}
+                    dance={dance}
+                  />
+                );
+              }
+            }
+            //all other dances ( linked with a studio & studioId)
+
+            if (
+              !hiddenIds.includes(dance.id) &&
+              !hiddenIds.includes(dance.studio.id) &&
+              visibleDancersIds.some(visibleDancerId =>
+                dance.dancerIds.includes(visibleDancerId)
+              )
+            ) {
+              return (
+                <DanceCard
+                  visibleDancersIds={visibleDancersIds}
+                  key={dance.id}
+                  dance={dance}
+                />
+              );
+            }
+          })}
+      </>
+    );
+  }
 }
 
 export default RoutinesDisplay;

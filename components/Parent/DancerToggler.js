@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useDisplayControls } from "../../components/ParentDisplayProvider";
+import { useDisplayControls } from "./ParentDisplayProvider";
 
 const ActiveDancerButton = styled.button`
   justify-self: center;

@@ -1,5 +1,6 @@
-import React from "react";
 import styled from "styled-components";
+import EnrolledDancers from "./EnrolledDancers";
+import { useDisplayControls } from "./ParentDisplayProvider";
 
 const HeaderStyle = styled.div`
   display: grid;
@@ -32,6 +33,7 @@ const DanceCardTime = styled.div`
   font-size: 0.675rem;
   grid-column: 3/-1;
   grid-row: 1;
+  color: ${props => (props.comp ? props.theme.green8 : "inherit")};
 
   @media (min-width: ${props => props.theme.largeScreen}) {
     font-size: 0.825rem;
@@ -48,26 +50,45 @@ const DanceCardEntryInfo = styled.div`
   }
 `;
 
-const DanceCardHeader = ({ dance }) => {
-  console.log("dance:", dance);
+function formatTime(timeString) {
+  const array = timeString.split(":");
+  let hours = parseInt(array[0]);
+  if (hours == 12) {
+    return hours + ":" + array[1] + "pm";
+  }
+  if (hours > 12) {
+    hours -= 12;
+    return hours + ":" + array[1] + "pm";
+  } else {
+    return timeString + "am";
+  }
+}
+
+const DanceCardHeader = ({ dance, visibleDancersIds }) => {
+  const { competitionMode } = useDisplayControls();
   return (
-    <>
-      <HeaderStyle>
-        <DanceCardEntryInfo>
+    <HeaderStyle>
+      <EnrolledDancers
+        visibleDancersIds={visibleDancersIds}
+        dancers={dance.dancers}
+      />
+      <DanceCardTitle>
+        <p>{dance.name}</p>
+        <p>{dance.performanceName}</p>
+      </DanceCardTitle>
+      {!competitionMode ? (
+        <DanceCardTime>
+          <p>{dance.day}</p>
+          {dance.time && <p>{formatTime(dance.startTime)}</p>}
+        </DanceCardTime>
+      ) : (
+        <DanceCardTime comp={competitionMode}>
           <p>{dance.entryNumber}</p>
           <p>{dance.entryDay}</p>
           <p>{dance.entryTime}</p>
-        </DanceCardEntryInfo>
-        <DanceCardTitle>
-          <p>{dance.name}</p>
-          <p>{dance.performanceName}</p>
-        </DanceCardTitle>
-        <DanceCardTime>
-          <p>{dance.day}</p>
-          <p>{dance.startTime}</p>
         </DanceCardTime>
-      </HeaderStyle>
-    </>
+      )}
+    </HeaderStyle>
   );
 };
 

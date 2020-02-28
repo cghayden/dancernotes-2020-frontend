@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useDisplayControls } from "../ParentDisplayProvider";
+import { useDisplayControls } from "../Parent/ParentDisplayProvider";
 
 const OffScreenTogglerButton = styled.button`
   @media (min-width: ${props => props.theme.largeScreen}) {

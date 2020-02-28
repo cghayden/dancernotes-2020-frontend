@@ -8,7 +8,7 @@ import "../public/normalize.css";
 import "react-datepicker/dist/react-datepicker.css";
 import GlobalStyles from "../components/GlobalStyles";
 
-import ParentDisplayProvider from "../components/ParentDisplayProvider";
+import ParentDisplayProvider from "../components/Parent/ParentDisplayProvider";
 import RegistrationContextProvider from "../components/Parent/RegistrationContext";
 class MyApp extends App {
   render() {

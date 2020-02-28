@@ -8,7 +8,7 @@ import AccountSubNav from "../../../components/Parent/AccountSubNav";
 import BrowseStudioClasses from "../../../components/Parent/BrowseStudioClasses";
 import SubNavMainControlsLayout from "../../../components/SubNavMainControlsLayout";
 import BrowseClassFilter from "../../../components/Parent/BrowseClassFilter";
-import { useDisplayControls } from "../../../components/ParentDisplayProvider";
+import { useDisplayControls } from "../../../components/Parent/ParentDisplayProvider";
 import OffScreenControlsToggler from "../../../components/Parent/OffscreenControlsToggler";
 
 const BROWSE_STUDIO_CLASSES_QUERY = gql`

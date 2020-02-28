@@ -30,6 +30,9 @@ const ALL_Rs = gql`
       studio {
         id
       }
+      entryNumber
+      entryDay
+      entryTime
     }
   }
 `;
@@ -166,6 +169,9 @@ const CUSTOM_ROUTINE_QUERY = gql`
       style
       ageDivision
       competitiveLevel
+      entryNumber
+      entryDay
+      entryTime
     }
   }
 `;

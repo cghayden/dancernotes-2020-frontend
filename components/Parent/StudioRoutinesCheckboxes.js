@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useDisplayControls } from "../ParentDisplayProvider";
+import { useDisplayControls } from "./ParentDisplayProvider";
 
 // styles for checkbox and label of each dance for the studio
 const Checkboxes = styled.div`

@@ -1,17 +1,16 @@
-import React, { useState, Fragment } from "react";
+import { useState, Fragment } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import styled from "styled-components";
 
 import Link from "next/link";
-import { ALL_Rs, PARENT_USER_QUERY } from "./Queries";
+import { ALL_Rs, PARENT_USER_QUERY, DANCER_QUERY } from "./Queries";
 import { UPDATE_CUSTOM_ROUTINE } from "./UpdateCustomRoutine";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
 import Form from "../styles/Form";
 import Card from "../styles/Card";
 import useForm from "../../lib/useForm";
 import BackButton from "../BackButton";
-import { DANCER_QUERY } from "./Queries";
 
 const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
   mutation CREATE_CUSTOM_ROUTINE_MUTATION(
@@ -57,7 +56,7 @@ const SelectChoices = styled.ul`
   margin-bottom: 0.5rem;
   display: flex;
   flex-wrap: wrap;
-  
+
   li {
     border-radius: ${props => props.theme.borderRadius};
     padding: 0.25rem 0.5rem;
@@ -112,7 +111,11 @@ function CreateCustomRoutineForm({ parent }) {
     onCompleted: () => {
       resetForm();
     },
-    refetchQueries: [{ query: ALL_Rs }, { query: PARENT_USER_QUERY }],
+    refetchQueries: [
+      { query: ALL_Rs },
+      { query: PARENT_USER_QUERY },
+      { query: DANCER_QUERY, variables: { id: Object.values(dancerChoice)[0] } }
+    ],
     awaitRefetchQueries: true
   });
 

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import BackButton from "../BackButton";
 import Card from "../styles/Card";
 import DeleteCustomRoutineButton from "./DeleteCustomRoutineButton";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
-import { ALL_Rs, PARENT_USER_QUERY } from "./Queries";
+import { ALL_Rs } from "./Queries";
 
 const UPDATE_CUSTOM_ROUTINE = gql`
   mutation UPDATE_CUSTOM_ROUTINE(
@@ -24,6 +24,9 @@ const UPDATE_CUSTOM_ROUTINE = gql`
     $notes: String
     $music: String
     $musicId: String
+    $entryNumber: String
+    $entryDay: String
+    $entryTime: String
   ) {
     updateCustomRoutine(
       id: $id
@@ -37,6 +40,9 @@ const UPDATE_CUSTOM_ROUTINE = gql`
       notes: $notes
       music: $music
       musicId: $musicId
+      entryNumber: $entryNumber
+      entryDay: $entryDay
+      entryTime: $entryTime
     ) {
       id
       name
@@ -47,7 +53,7 @@ const UPDATE_CUSTOM_ROUTINE = gql`
 `;
 const initialInputState = {};
 
-function UpdateCustomRoutine({ dance, parent }) {
+function UpdateCustomRoutine({ dance }) {
   const { inputs, updateInputs, handleChange } = useForm();
   const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState();
   const [loadingSong, setLoadingSong] = useState(false);
@@ -218,7 +224,6 @@ function UpdateCustomRoutine({ dance, parent }) {
         >
           <fieldset disabled={loading} aria-busy={loading}>
             <h2>Update {dance.name}</h2>
-            {/* <Error error={errorUpdatingRoutine} /> */}
             <div className="input-item">
               <label htmlFor="name">Name</label>
               <input
@@ -229,24 +234,6 @@ function UpdateCustomRoutine({ dance, parent }) {
                 onChange={handleChange}
               />
             </div>
-            {/* <div className="input-item">
-      <label htmlFor="studio">Studio:</label>
-      <select
-      id="studio"
-      name="studio"
-      value={inputs.studio}
-      defaultValue={dance.studio ? dance.studio : "None"}
-      onChange={handleChange}
-      >
-      {parent.studios.map(studio => (
-      <option key={studio.id} value={studio.id}>
-      {studio.studioName}
-      </option>
-      ))}
-      <option value={"None"}>None</option>
-      </select>
-      </div> */}
-
             <div className="form-row-day-time">
               <div className="day">
                 <label htmlFor="day">Day:</label>
@@ -344,7 +331,7 @@ function UpdateCustomRoutine({ dance, parent }) {
             <button
               type="button"
               className="btn-action-primary-outline"
-              onClick={() => toggleFileInput(true)}
+              onClick={() => toggleFileInput(!showFileInput)}
             >
               Add/Change Music
             </button>
@@ -362,6 +349,54 @@ function UpdateCustomRoutine({ dance, parent }) {
                 />
               </div>
             )}
+            <section>
+              <h3>Competition Entry Information</h3>
+              <div className="form-row">
+                <div className="form-row-item">
+                  <label htmlFor="entryNumber">Entry Number:</label>
+                  <input
+                    type="text"
+                    id="entryNumber"
+                    name="entryNumber"
+                    defaultValue={dance.entryNumber}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="day form-row-item">
+                  <label htmlFor="entryDay">Day:</label>
+                  <select
+                    id="entryDay"
+                    name="entryDay"
+                    defaultValue={dance.entryDay ? dance.entryDay : "Day..."}
+                    onChange={handleChange}
+                  >
+                    <option value="" disabled>
+                      Day...
+                    </option>
+                    <option value="Sat.">Sat.</option>
+                    <option value="Sun.">Sun.</option>
+                    <option value="Mon.">Mon.</option>
+                    <option value="Tue.">Tue.</option>
+                    <option value="Wed.">Wed.</option>
+                    <option value="Thur.">Thur.</option>
+                    <option value="Fri.">Fri.</option>
+                  </select>
+                </div>
+                <div className="form-row-item">
+                  <label htmlFor="entryTime">Entry Time: </label>
+                  <input
+                    type="time"
+                    id="entryTime"
+                    name="entryTime"
+                    min="0:00"
+                    max="23:59"
+                    defaultValue={dance.entryTime}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+            </section>
+            <p>{status}</p>
             <div className="form-footer">
               <button
                 className="btn-action-primary"

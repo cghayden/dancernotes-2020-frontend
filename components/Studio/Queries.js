@@ -55,6 +55,9 @@ const ALL_DANCE_CLASSES_QUERY = gql`
       tights
       shoes
       notes
+      entryNumber
+      entryDay
+      entryTime
       dancers {
         firstName
       }

@@ -13,6 +13,7 @@ const MainStyle = styled.main`
     margin-left: ${props => props.theme.sidebarWidth};
     /* right margin to give room for control panel */
     margin-right: ${props => props.theme.controlPanelWidth};
+    margin-top: ${props => props.theme.navHeight};
   }
 `;
 
