@@ -79,7 +79,7 @@ const DanceCardHeader = ({ dance, visibleDancersIds }) => {
       {!competitionMode ? (
         <DanceCardTime>
           <p>{dance.day}</p>
-          {dance.time && <p>{formatTime(dance.startTime)}</p>}
+          {dance.startTime && <p>{formatTime(dance.startTime)}</p>}
         </DanceCardTime>
       ) : (
         <DanceCardTime comp={competitionMode}>

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import DisplayController from "./DisplayController";
 import SliderToggler from "../styles/SliderToggler";
 import { useDisplayControls } from "./ParentDisplayProvider";
+import OffScreenControlsToggler from "./OffscreenControlsToggler";
 
 const ControlPanelStyles = styled.div`
   padding: 1rem 1rem 100px 1rem;
@@ -41,8 +42,11 @@ const ControlPanelStyles = styled.div`
   }
 `;
 
-const ControlPanelHeading = styled.h3`
+const ControlPanelHeading = styled.div`
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const AllStudioCheckboxes = styled.div`
@@ -113,7 +117,10 @@ const ControlPanel = ({ dancerIds, studios, customRoutines, dancers }) => {
   const showAllStudioFilter = studios.length > 1 || hasStudioAndIndependents;
   return (
     <ControlPanelStyles showControlPanel={showControlPanel}>
-      <ControlPanelHeading>Display:</ControlPanelHeading>
+      <ControlPanelHeading>
+        <h3>Display:</h3>
+        <OffScreenControlsToggler text="Close" />
+      </ControlPanelHeading>
       <CompModeToggler>
         <p>Competiton Mode:</p>
         <SliderToggler
