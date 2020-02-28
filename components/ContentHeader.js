@@ -10,11 +10,16 @@ const HeaderStyle = styled.header`
   display: flex;
   align-items: center;
   display: ${props => (props.mobile ? "flex" : `none`)};
-  padding: 0 8vw 10px 8vw;
+  padding: 0 5vw 10px 5vw;
+  a,
+  button {
+    text-align: end;
+    padding-right: 0;
+  }
 
   @media (min-width: ${props => props.theme.largeScreen}) {
-    display: flex;
     padding: 1rem 5vw 1.5rem 5vw;
+    display: flex;
     margin-top: -10px;
     h1 {
       font-size: 1.4rem;
