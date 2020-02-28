@@ -98,7 +98,7 @@ const CompModeToggler = styled.div`
     padding-right: 10px;
   }
 `;
-const ControlPanel = ({ dancerIds, studios, customRoutines }) => {
+const ControlPanel = ({ dancerIds, studios, customRoutines, dancers }) => {
   const {
     hiddenIds,
     toggleId,
@@ -158,8 +158,8 @@ const ControlPanel = ({ dancerIds, studios, customRoutines }) => {
       )}
 
       <DancerCheckboxes>
-        {dancerIds.map(id => {
-          return <DisplayController key={id} dancerId={id} />;
+        {dancers.map(dancer => {
+          return <DisplayController key={dancer.id} dancer={dancer} />;
         })}
       </DancerCheckboxes>
     </ControlPanelStyles>

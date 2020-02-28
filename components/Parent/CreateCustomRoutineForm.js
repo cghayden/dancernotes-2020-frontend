@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import styled from "styled-components";
 
 import Link from "next/link";
-import { ALL_Rs, PARENT_USER_QUERY, DANCER_QUERY } from "./Queries";
+import { ALL_Rs, PARENT_USER_QUERY } from "./Queries";
 import { UPDATE_CUSTOM_ROUTINE } from "./UpdateCustomRoutine";
 import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
 import Form from "../styles/Form";
@@ -111,11 +111,7 @@ function CreateCustomRoutineForm({ parent }) {
     onCompleted: () => {
       resetForm();
     },
-    refetchQueries: [
-      { query: ALL_Rs },
-      { query: PARENT_USER_QUERY },
-      { query: DANCER_QUERY, variables: { id: Object.values(dancerChoice)[0] } }
-    ],
+    refetchQueries: [{ query: ALL_Rs }, { query: PARENT_USER_QUERY }],
     awaitRefetchQueries: true
   });
 

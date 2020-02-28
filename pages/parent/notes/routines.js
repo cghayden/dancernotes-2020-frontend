@@ -71,6 +71,7 @@ const ParentHome = () => {
         studios={parentUser.studios}
         dancerIds={parentUser.dancersIds}
         customRoutines={parentUser.customRoutines}
+        dancers={parentUser.dancers}
       />
     </>
   );

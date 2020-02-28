@@ -31,15 +31,15 @@ const DancerControlsStyle = styled.div`
   }
 `;
 
-function DisplayController({ dancerId }) {
-  const { data, loading, error } = useQuery(DANCER_QUERY, {
-    variables: { id: dancerId }
-  });
-  if (loading) return null;
-  if (error) return <p>ERROR</p>;
-  if (!data) return <p>Not found</p>;
+function DisplayController({ dancer }) {
+  // const { data, loading, error } = useQuery(DANCER_QUERY, {
+  //   variables: { id: dancerId }
+  // });
+  // if (loading) return null;
+  // if (error) return <p>ERROR</p>;
+  // if (!data) return <p>Not found</p>;
 
-  const dancer = data.dancer;
+  // const dancer = data.dancer;
 
   dancer.allRoutines = [...dancer.danceClasses, ...dancer.customRoutines];
   const independentRoutines = dancer.allRoutines.filter(
