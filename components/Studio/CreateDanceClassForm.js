@@ -294,7 +294,7 @@ function CreateDanceClass({ studio }) {
                 </select>
               </div>
               <div className="input-item">
-                <label htmlFor="competitiveLevel">competitiveLevel: *</label>
+                <label htmlFor="competitiveLevel">Competitive Team ?: *</label>
                 <select
                   required
                   id="competitiveLevel"

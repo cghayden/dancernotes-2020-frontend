@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import CategoryFilter from "./CategoryFilter";
+import CategoryFilter from "../Parent/CategoryFilter";
 import { ControlPanelStyles } from "../styles/ControlPanelStyles";
 
 const FilterPanelStyles = styled(ControlPanelStyles)`

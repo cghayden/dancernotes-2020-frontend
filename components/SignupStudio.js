@@ -11,12 +11,16 @@ const SIGNUP_STUDIO_MUTATION = gql`
     $studioName: String!
     $userType: String!
     $password: String!
+    $agreeToTerms: DateTime!
+    $readPrivacy: DateTime!
   ) {
     signupStudio(
       email: $email
       studioName: $studioName
       userType: $userType
       password: $password
+      agreeToTerms: $agreeToTerms
+      readPrivacy: $readPrivacy
     ) {
       id
       email
@@ -30,10 +34,18 @@ class StudioSignup extends Component {
     studioName: "",
     password: "",
     email: "",
-    userType: "studio"
+    userType: "studio",
+    agreeToTerms: false,
+    readPrivacy: false
   };
   saveToState = e => {
     this.setState({ [e.target.name]: e.target.value });
+  };
+  toggleAgreeToTerms = () => {
+    this.setState({ agreeToTerms: !this.state.agreeToTerms });
+  };
+  toggleReadPrivacy = () => {
+    this.setState({ readPrivacy: !this.state.readPrivacy });
   };
 
   render() {
@@ -92,7 +104,50 @@ class StudioSignup extends Component {
                   onChange={this.saveToState}
                 />
               </div>
-
+              <Terms>
+                <input
+                  required
+                  checked={this.state.agreeToTerms}
+                  type="checkbox"
+                  id="agreeToTerms"
+                  name="agreeToTerms"
+                  value={this.state.agreeToTerms}
+                  onChange={() => this.toggleAgreeToTerms()}
+                />
+                <label>
+                  I have read an agree to the{" "}
+                  <a
+                    rel="noreferrer noopener"
+                    target="_blank"
+                    href="https://www.websitepolicies.com/policies/view/Xd9syaYo
+"
+                  >
+                    terms of service
+                  </a>
+                </label>
+              </Terms>
+              <Terms>
+                <input
+                  required
+                  checked={this.state.readPrivacy}
+                  type="checkbox"
+                  id="readPrivacy"
+                  name="readPrivacy"
+                  value={this.state.readPrivacy}
+                  onChange={() => this.toggleReadPrivacy()}
+                />
+                <label>
+                  I have read an agree to the{" "}
+                  <a
+                    rel="noreferrer noopener"
+                    target="_blank"
+                    href="https://www.websitepolicies.com/policies/view/Xd9syaYo
+"
+                  >
+                    privacy policy
+                  </a>
+                </label>
+              </Terms>
               <button type="submit">Let's Go !!!</button>
             </fieldset>
           </LandingPageForm>

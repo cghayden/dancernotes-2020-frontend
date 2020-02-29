@@ -1,7 +1,7 @@
-import MobileStatusBar from "./Parent/MobileStatusBar";
-import MobileNav from "./Parent/MobileNav";
-import DesktopNav from "./Parent/DesktopNav";
-import ContentHeader from "./ContentHeader";
+import StudioMobileStatusBar from "./StudioMobileStatusBar";
+import StudioMobileNav from "./StudioMobileNav";
+import StudioDesktopNav from "./StudioDesktopNav";
+import ContentHeader from "../ContentHeader";
 import styled from "styled-components";
 
 const MainStyle = styled.main`
@@ -29,13 +29,13 @@ const SubNavMainLayout = ({
 }) => {
   return (
     <>
-      <MobileStatusBar
+      <StudioMobileStatusBar
         offscreenToggler={offscreenToggler}
         mobileHeader={mobileHeader}
         pageAction={pageAction}
       />
-      <MobileNav />
-      <DesktopNav />
+      <StudioMobileNav />
+      <StudioDesktopNav />
       <MainStyle>
         <ContentHeader mobile page={page} pageAction={pageAction} />
         {children}

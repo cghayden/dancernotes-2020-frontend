@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import OffScreenControlsToggler from "../Parent/OffscreenControlsToggler";
 
 const StudioMobileStatusBarStyles = styled.div`
   height: ${props => props.theme.mobileStatusBarHeight};
@@ -26,11 +27,20 @@ const PageAction = styled.div`
   margin-left: auto;
 `;
 
-function StudioMobileStatusBar({ mobileHeader, pageAction=null }) {
+function StudioMobileStatusBar({
+  mobileHeader,
+  offscreenToggler = null,
+  pageAction = null
+}) {
   return (
     <StudioMobileStatusBarStyles>
       <Title>{mobileHeader}</Title>
-      <PageAction>{pageAction}</PageAction>
+      {offscreenToggler && (
+        <PageAction>
+          <OffScreenControlsToggler text={offscreenToggler} />
+        </PageAction>
+      )}
+      {!offscreenToggler && pageAction && <PageAction>{pageAction}</PageAction>}{" "}
     </StudioMobileStatusBarStyles>
   );
 }

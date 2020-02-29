@@ -88,6 +88,8 @@ const ENROLLMENT_REQUESTS_QUERY = gql`
     enrollmentRequests {
       id
       parent {
+        firstName
+        lastName
         id
       }
       dancer {

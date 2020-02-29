@@ -199,10 +199,7 @@ function UpdateDanceClass({ danceClass, studio }) {
           )}
 
           {updatedDanceClass && (
-            <p>
-              Success - you updated
-              {updatedDanceClass.name}
-            </p>
+            <p>Success - you updated {updatedDanceClass.name}</p>
           )}
           {updatedDanceClass && errorUploadingToCloudinary && (
             <>
@@ -309,7 +306,7 @@ function UpdateDanceClass({ danceClass, studio }) {
                   </select>
                 </div>
                 <div className="form-row-item">
-                  <label htmlFor="competitiveLevel">competitiveLevel: </label>
+                  <label htmlFor="competitiveLevel">Competitive Team ?: </label>
 
                   <select
                     required
@@ -326,7 +323,7 @@ function UpdateDanceClass({ danceClass, studio }) {
                   </select>
                 </div>
                 <div className="form-row-item">
-                  <label htmlFor="ageDivision">ageDivision: </label>
+                  <label htmlFor="ageDivision">Age Division: </label>
 
                   <select
                     required

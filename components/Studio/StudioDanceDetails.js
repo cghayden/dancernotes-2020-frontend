@@ -1,13 +1,11 @@
-import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import Card from "../styles/Card";
 
-const DanceCardBodyStyles = styled(Card)`
+const DanceCardBodyStyles = styled.div`
   padding: 0;
   width: unset;
   min-width: unset;
-
   padding-bottom: 20px;
   li {
     padding: 0.25rem;
@@ -31,10 +29,18 @@ const AudioPlayer = styled.audio`
   max-width: 475px;
 `;
 
+const Dt = styled.dt`
+  font-weight: bold;
+`;
+const Dd = styled.dd`
+  margin-left: 1rem;
+  text-align: left;
+  white-space: pre-wrap;
+`;
+
 function StudioDanceDetails({ dance }) {
   return (
     <DanceCardBodyStyles>
-      <h1>{dance.name}</h1>
       {dance.music && (
         <AudioPlayer
           id="musicPlayer"
@@ -45,35 +51,34 @@ function StudioDanceDetails({ dance }) {
       )}
       <dl>
         <NoteItem>
-          <dt>divsion:</dt> <NoteContent>{dance.divsion}</NoteContent>
+          <Dt>Age Divsion:</Dt> <Dd>{dance.ageDivision}</Dd>
         </NoteItem>
         <NoteItem>
-          <dt>competitiveLevel:</dt>{" "}
-          <NoteContent>{dance.competitiveLevel}</NoteContent>
+          <Dt>Level:</Dt> <Dd>{dance.competitiveLevel}</Dd>
         </NoteItem>
         <NoteItem>
-          <dt>Style:</dt> <NoteContent>{dance.style}</NoteContent>
+          <Dt>Style:</Dt> <Dd>{dance.style}</Dd>
         </NoteItem>
         <NoteItem>
-          <dt>Size:</dt> <NoteContent>{dance.size}</NoteContent>
+          <Dt>Size:</Dt> <Dd>{dance.size}</Dd>
         </NoteItem>
         <NoteItem>
-          <dt>Shoes:</dt> <NoteContent>{dance.shoes}</NoteContent>
+          <Dt>Shoes:</Dt> <Dd>{dance.shoes}</Dd>
         </NoteItem>
         <NoteItem>
-          <dt>Tights:</dt> <NoteContent>{dance.tights}</NoteContent>
+          <Dt>Tights:</Dt> <Dd>{dance.tights}</Dd>
         </NoteItem>
         <NoteItem>
-          <dt>Notes:</dt> <NoteContent>{dance.notes}</NoteContent>
+          <Dt>Notes:</Dt> <Dd>{dance.notes}</Dd>
         </NoteItem>
 
         <NoteItem>
-          <dt>Dancers:</dt>
-          <NoteContent>
+          <Dt>Dancers:</Dt>
+          <Dd>
             {dance.dancers.map((dancer, index) => (
               <p key={index}>{dancer.firstName}</p>
             ))}
-          </NoteContent>
+          </Dd>
         </NoteItem>
       </dl>
       <div>
