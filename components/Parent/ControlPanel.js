@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import DisplayController from "./DisplayController";
 import SliderToggler from "../styles/SliderToggler";
@@ -43,7 +44,7 @@ const ControlPanelStyles = styled.div`
 `;
 
 const ControlPanelHeading = styled.div`
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -101,8 +102,34 @@ const CompModeToggler = styled.div`
     display: inline-block;
     padding-right: 10px;
   }
+  button {
+    margin-top: 0;
+    margin-left: auto;
+    border-radius: 50%;
+    font-size: 18px;
+    padding: 4px 12px;
+  }
 `;
-const ControlPanel = ({ dancerIds, studios, customRoutines, dancers }) => {
+
+const HelpMessage = styled.p`
+  font-size: 14px;
+  padding-bottom: 4px;
+`;
+
+const HelpDiv = styled.div`
+  button {
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+`;
+const ControlPanel = ({ studios, customRoutines, dancers }) => {
+  const [showHelp, setShowHelp] = useState(false);
+
+  // const [visited, setVisited] = useState();
+  // console.log("visited:", visited);
+  // useEffect(() => {
+  //   setVisited(window.localStorage.getItem("visited"));
+  // }, [setVisited]);
   const {
     hiddenIds,
     toggleId,
@@ -119,14 +146,44 @@ const ControlPanel = ({ dancerIds, studios, customRoutines, dancers }) => {
     <ControlPanelStyles showControlPanel={showControlPanel}>
       <ControlPanelHeading>
         <h3>Display:</h3>
-        <OffScreenControlsToggler text="Close" />
+        <OffScreenControlsToggler outline="true" text="Close" />
       </ControlPanelHeading>
+
+      {showHelp && (
+        <HelpDiv>
+          <HelpMessage>
+            Control what routines are displayed by selecting a dance
+            individually, or clicking on a dancer's name/image to toggle all of
+            his/her dances.
+          </HelpMessage>
+          <HelpMessage>
+            Competition View will show only those routines that have a
+            competition entry number, sorted by entry number/ performance time
+          </HelpMessage>
+          <button
+            type="button"
+            className="btn-danger-outline"
+            onClick={() => {
+              setShowHelp(false);
+            }}
+          >
+            Dismiss
+          </button>
+        </HelpDiv>
+      )}
       <CompModeToggler>
-        <p>Competiton Mode:</p>
+        <p>Competiton View:</p>
         <SliderToggler
           competitionMode={competitionMode}
           toggleCompetitionMode={toggleCompetitionMode}
         />
+        <button
+          type="button"
+          className="btn-danger-outline btn-small"
+          onClick={() => setShowHelp(!showHelp)}
+        >
+          ?
+        </button>
       </CompModeToggler>
       {/* checkbox for each parent studio */}
       {showAllStudioFilter && (
