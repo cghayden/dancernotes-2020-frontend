@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/react-hooks";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import gql from "graphql-tag";
 import Loading from "../../../components/Loading";
 import Error from "../../../components/Error";

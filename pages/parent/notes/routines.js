@@ -60,8 +60,8 @@ const ParentHome = () => {
     <>
       <NotesSubNav />
       <SubNavMainControlsLayout
-        mobileHeader={"Notes"}
         page="All Routines"
+        mobileHeader="Notes"
         pageAction={AddRoutineButton}
         offscreenToggler="Filter"
       >
