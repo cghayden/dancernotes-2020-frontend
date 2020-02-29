@@ -11,7 +11,6 @@ function makeupPage() {
   if (error) {
     console.log("error:", error);
   }
-  console.log("data:", data);
 
   return (
     <>

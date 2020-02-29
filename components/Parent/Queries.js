@@ -225,6 +225,7 @@ const PARENTS_MAKEUP_QUERY = gql`
         id
         studioName
         makeupSets {
+          id
           name
           lipstick
           eyeShadow

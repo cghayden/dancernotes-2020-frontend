@@ -63,13 +63,12 @@ const ParentHome = () => {
         mobileHeader={"Notes"}
         page="All Routines"
         pageAction={AddRoutineButton}
-        offscreenToggler="Display"
+        offscreenToggler="Filter"
       >
         <RoutinesDisplay dancerIds={parentUser.dancersIds} />
       </SubNavMainControlsLayout>
       <ControlPanel
         studios={parentUser.studios}
-        dancerIds={parentUser.dancersIds}
         customRoutines={parentUser.customRoutines}
         dancers={parentUser.dancers}
       />
