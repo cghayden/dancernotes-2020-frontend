@@ -106,8 +106,8 @@ const CompModeToggler = styled.div`
     margin-top: 0;
     margin-left: auto;
     border-radius: 50%;
-    font-size: 18px;
-    padding: 4px 12px;
+    font-size: 16px;
+    padding: 0px 7px;
   }
 `;
 
