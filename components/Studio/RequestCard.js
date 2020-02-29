@@ -14,7 +14,10 @@ const CardStyle = styled(Card)`
 const RequestCard = ({ request }) => {
   return (
     <CardStyle>
-      <h2>{request.dancer.firstName} Requests:</h2>
+      <p>
+        {request.parent.firstName} Requests for {request.dancer.firstName} to be
+        enrolled in:
+      </p>
       <ul>
         {request.classesRequested.map(dance => (
           <li key={dance.id}>

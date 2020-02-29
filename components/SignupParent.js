@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { Mutation } from "react-apollo";
 import Router from "next/router";
 import gql from "graphql-tag";
 import { LandingPageForm } from "./styles/Form";
 import Error from "./Error";
+import styled from "styled-components";
 
 const SIGNUP_PARENT_MUTATION = gql`
   mutation SIGNUP_PARENT_MUTATION(
@@ -11,12 +12,16 @@ const SIGNUP_PARENT_MUTATION = gql`
     $firstName: String!
     $password: String!
     $userType: String!
+    $agreeToTerms: DateTime!
+    $readPrivacy: DateTime!
   ) {
     signupParent(
       email: $email
       firstName: $firstName
       password: $password
       userType: $userType
+      agreeToTerms: $agreeToTerms
+      readPrivacy: $readPrivacy
     ) {
       id
       email
@@ -29,24 +34,54 @@ const SIGNUP_PARENT_MUTATION = gql`
   }
 `;
 
+const Terms = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.5rem;
+    margin-bottom: 0;
+  }
+  a {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    text-decoration: underline;
+    text-transform: uppercase;
+  }
+`;
+
 class SignupParent extends Component {
   state = {
     email: "",
     firstName: "",
     password: "",
-    userType: "parent"
+    userType: "parent",
+    agreeToTerms: false,
+    readPrivacy: false
   };
   saveToState = e => {
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  toggleAgreeToTerms = () => {
+    this.setState({ agreeToTerms: !this.state.agreeToTerms });
+  };
+  toggleReadPrivacy = () => {
+    this.setState({ readPrivacy: !this.state.readPrivacy });
   };
 
   render() {
     return (
       <Mutation
         mutation={SIGNUP_PARENT_MUTATION}
-        variables={this.state}
+        variables={{
+          ...this.state,
+          agreeToTerms: new Date(Date.now()),
+          readPrivacy: new Date(Date.now())
+        }}
         onCompleted={data => {
-          console.log("data:", data);
           Router.push({
             pathname: "/parent/account/addDancer",
             query: {
@@ -110,6 +145,50 @@ class SignupParent extends Component {
                 value={this.state.password}
                 onChange={this.saveToState}
               />
+              <Terms>
+                <input
+                  required
+                  checked={this.state.agreeToTerms}
+                  type="checkbox"
+                  id="agreeToTerms"
+                  name="agreeToTerms"
+                  value={this.state.agreeToTerms}
+                  onChange={() => this.toggleAgreeToTerms()}
+                />
+                <label>
+                  I have read an agree to the{" "}
+                  <a
+                    rel="noreferrer noopener"
+                    target="_blank"
+                    href="https://www.websitepolicies.com/policies/view/Xd9syaYo
+"
+                  >
+                    terms of service
+                  </a>
+                </label>
+              </Terms>
+              <Terms>
+                <input
+                  required
+                  checked={this.state.readPrivacy}
+                  type="checkbox"
+                  id="readPrivacy"
+                  name="readPrivacy"
+                  value={this.state.readPrivacy}
+                  onChange={() => this.toggleReadPrivacy()}
+                />
+                <label>
+                  I have read an agree to the{" "}
+                  <a
+                    rel="noreferrer noopener"
+                    target="_blank"
+                    href="https://www.websitepolicies.com/policies/view/Xd9syaYo
+"
+                  >
+                    privacy policy
+                  </a>
+                </label>
+              </Terms>
               <button type="submit">Let's Go !!!</button>
             </fieldset>
           </LandingPageForm>
