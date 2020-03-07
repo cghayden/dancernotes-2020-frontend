@@ -30,7 +30,7 @@ const DanceCardTitle = styled.div`
 `;
 
 const DanceCardTime = styled.div`
-  font-size: 0.675rem;
+  font-size: 0.75rem;
   grid-column: 3/-1;
   grid-row: 1;
   color: ${props => (props.comp ? props.theme.green8 : "inherit")};
