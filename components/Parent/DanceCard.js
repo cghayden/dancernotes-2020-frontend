@@ -7,6 +7,7 @@ import Card from "../styles/Card";
 import DanceCardBody from "./DanceCardBody";
 import DanceCardHeader from "./DanceCardHeader";
 import MusicPlayer from "./MusicPlayer";
+import VideoPlayer from "./VideoPlayer";
 
 const DanceCardStyles = styled(Card)`
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -20,7 +21,7 @@ const DanceCardStyles = styled(Card)`
 const DanceCardNav = styled.div`
   display: flex;
   justify-content: space-around;
-  font-size: 0.825rem;
+  font-size: 1rem;
   a,
   button {
     border-radius: 0;
@@ -39,6 +40,7 @@ const DanceCardNav = styled.div`
 function DanceCard({ dance, visibleDancersIds }) {
   const [showBody, setShowBody] = useState(false);
   const [showMediaPlayer, setShowMediaPlayer] = useState(false);
+  const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   const [bind, { height }] = useMeasure();
 
   const animation = useSpring({
@@ -63,6 +65,14 @@ function DanceCard({ dance, visibleDancersIds }) {
         >
           Music
         </button>
+        {dance.videoUrl && (
+          <button
+            className="textOnly-primary-action"
+            onClick={() => setShowVideoPlayer(!showVideoPlayer)}
+          >
+            Video
+          </button>
+        )}
         {dance.custom && (
           <Link href={`/parent/updateDance/${dance.id}`}>
             <a className="textOnly-primary-action">Edit</a>
@@ -70,9 +80,9 @@ function DanceCard({ dance, visibleDancersIds }) {
         )}
       </DanceCardNav>
 
-      {showMediaPlayer && (
-        <MusicPlayer danceName={dance.name} src={dance.music} />
-      )}
+      {showMediaPlayer && <MusicPlayer src={dance.music} />}
+
+      {showVideoPlayer && <VideoPlayer src={dance.videoUrl} />}
 
       <animated.div style={animation}>
         <div {...bind}>
