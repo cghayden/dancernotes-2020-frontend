@@ -33,6 +33,7 @@ const ALL_Rs = gql`
       entryNumber
       entryDay
       entryTime
+      videoUrl
     }
   }
 `;
@@ -91,6 +92,8 @@ const CUSTOM_EVENTS_QUERY = gql`
 const PARENT_USER_QUERY = gql`
   query {
     parentUser {
+      agreeToTerms
+      readPrivacy
       firstName
       id
       email
