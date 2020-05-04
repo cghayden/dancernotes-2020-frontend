@@ -1,10 +1,10 @@
-import { Component } from "react";
-import { Mutation } from "react-apollo";
-import Router from "next/router";
-import gql from "graphql-tag";
-import { LandingPageForm } from "./styles/Form";
-import Error from "./Error";
-import styled from "styled-components";
+import { Component } from "react"
+import { Mutation } from "react-apollo"
+import Router from "next/router"
+import gql from "graphql-tag"
+import { LandingPageForm } from "./styles/Form"
+import Error from "./Error"
+import styled from "styled-components"
 
 const SIGNUP_PARENT_MUTATION = gql`
   mutation SIGNUP_PARENT_MUTATION(
@@ -12,16 +12,14 @@ const SIGNUP_PARENT_MUTATION = gql`
     $firstName: String!
     $password: String!
     $userType: String!
-    $agreeToTerms: DateTime!
-    $readPrivacy: DateTime!
+    $agreedToTermsAndPrivacy: DateTime!
   ) {
     signupParent(
       email: $email
       firstName: $firstName
       password: $password
       userType: $userType
-      agreeToTerms: $agreeToTerms
-      readPrivacy: $readPrivacy
+      agreedToTermsAndPrivacy: $agreedToTermsAndPrivacy
     ) {
       id
       email
@@ -32,25 +30,20 @@ const SIGNUP_PARENT_MUTATION = gql`
       }
     }
   }
-`;
+`
 
 const Terms = styled.div`
   display: flex;
   align-items: center;
-  padding: 0.5rem 0;
-  input[type="checkbox"] {
-    width: auto;
-    margin-right: 0.5rem;
-    margin-bottom: 0;
-  }
+  margin-bottom: 1.25rem;
   a {
     display: inline-block;
-    padding: 0;
+    padding: 0 5px;
     margin: 0;
     text-decoration: underline;
     text-transform: uppercase;
   }
-`;
+`
 
 class SignupParent extends Component {
   state = {
@@ -58,19 +51,10 @@ class SignupParent extends Component {
     firstName: "",
     password: "",
     userType: "parent",
-    agreeToTerms: false,
-    readPrivacy: false
-  };
-  saveToState = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  toggleAgreeToTerms = () => {
-    this.setState({ agreeToTerms: !this.state.agreeToTerms });
-  };
-  toggleReadPrivacy = () => {
-    this.setState({ readPrivacy: !this.state.readPrivacy });
-  };
+  }
+  saveToState = (e) => {
+    this.setState({ [e.target.name]: e.target.value })
+  }
 
   render() {
     return (
@@ -78,36 +62,33 @@ class SignupParent extends Component {
         mutation={SIGNUP_PARENT_MUTATION}
         variables={{
           ...this.state,
-          agreeToTerms: new Date(Date.now()),
-          readPrivacy: new Date(Date.now())
+          agreedToTermsAndPrivacy: new Date(Date.now()),
         }}
-        onCompleted={data => {
+        onCompleted={(data) => {
           Router.push({
             pathname: "/parent/account/addDancer",
             query: {
-              hasDancers: false
-            }
-          });
+              hasDancers: false,
+            },
+          })
         }}
       >
         {(signupParent, { error, loading }) => (
           <LandingPageForm
             method="post"
-            onSubmit={async e => {
-              e.preventDefault();
-              await signupParent();
+            onSubmit={async (e) => {
+              e.preventDefault()
+              await signupParent()
               this.setState({
                 firstName: "",
                 email: "",
-                password: ""
-              });
+                password: "",
+              })
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
               <h2>Sign Up For A Parent Account</h2>
-
               <Error error={error} />
-
               <div>
                 <label htmlFor="email" className="visuallyHidden">
                   Email
@@ -124,7 +105,6 @@ class SignupParent extends Component {
               <label htmlFor="firstName" className="visuallyHidden">
                 First Name
               </label>
-
               <input
                 aria-label="first name"
                 type="text"
@@ -133,7 +113,6 @@ class SignupParent extends Component {
                 value={this.state.firstName}
                 onChange={this.saveToState}
               />
-
               <label htmlFor="password" className="visuallyHidden">
                 Password
               </label>
@@ -146,56 +125,32 @@ class SignupParent extends Component {
                 onChange={this.saveToState}
               />
               <Terms>
-                <input
-                  required
-                  checked={this.state.agreeToTerms}
-                  type="checkbox"
-                  id="agreeToTerms"
-                  name="agreeToTerms"
-                  value={this.state.agreeToTerms}
-                  onChange={() => this.toggleAgreeToTerms()}
-                />
-                <label>
-                  I have read an agree to the{" "}
+                <p>
+                  By signing up, you acknowledge your agreement to our
                   <a
                     rel="noreferrer noopener"
                     target="_blank"
-                    href="https://www.websitepolicies.com/policies/view/Xd9syaYo
-"
+                    href="https://www.websitepolicies.com/policies/view/Xd9syaYo"
                   >
-                    terms of service
+                    Terms
                   </a>
-                </label>
-              </Terms>
-              <Terms>
-                <input
-                  required
-                  checked={this.state.readPrivacy}
-                  type="checkbox"
-                  id="readPrivacy"
-                  name="readPrivacy"
-                  value={this.state.readPrivacy}
-                  onChange={() => this.toggleReadPrivacy()}
-                />
-                <label>
-                  I have read an agree to the{" "}
+                  and
                   <a
                     rel="noreferrer noopener"
                     target="_blank"
-                    href="https://www.websitepolicies.com/policies/view/Xd9syaYo
-"
+                    href="https://www.websitepolicies.com/policies/view/Xd9syaYo"
                   >
-                    privacy policy
+                    Privacy Policy
                   </a>
-                </label>
+                </p>
               </Terms>
-              <button type="submit">Let's Go !!!</button>
+              <button type="submit">Sign Up</button>
             </fieldset>
           </LandingPageForm>
         )}
       </Mutation>
-    );
+    )
   }
 }
 
-export default SignupParent;
+export default SignupParent
