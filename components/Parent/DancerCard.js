@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import styled from "styled-components";

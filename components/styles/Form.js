@@ -15,9 +15,9 @@ const loading = keyframes`
 const Form = styled.form`
   /* each form should be inside a card */
   text-align: center;
-  border-radius: ${props => props.theme.borderRadius};
-  color: ${props => props.theme.blackText};
-  background: ${props => props.theme.gray0};
+  border-radius: ${(props) => props.theme.borderRadius};
+  color: ${(props) => props.theme.blackText};
+  background: ${(props) => props.theme.gray0};
   width: 100%;
   max-width: 550px;
 
@@ -52,16 +52,16 @@ const Form = styled.form`
   input,
   textarea,
   select {
-    background: ${props => props.theme.blue0};
-    color: ${props => props.theme.indigo9};
+    background: ${(props) => props.theme.blue0};
+    color: ${(props) => props.theme.indigo9};
     border-radius: 10px;
     font: inherit;
     padding: 0.5rem 1rem;
     margin: 0;
     font-size: 1rem;
-    border: 1px solid ${props => props.theme.gray2};
+    border: 1px solid ${(props) => props.theme.gray2};
     :focus {
-      border-color: ${props => props.theme.teal7};
+      border-color: ${(props) => props.theme.teal7};
     }
   }
 
@@ -94,9 +94,9 @@ const Form = styled.form`
       display: block;
       background-image: linear-gradient(
         to right,
-        ${props => props.theme.red9} 0%,
-        ${props => props.theme.red0} 50%,
-        ${props => props.theme.red9} 100%
+        ${(props) => props.theme.red9} 0%,
+        ${(props) => props.theme.red0} 50%,
+        ${(props) => props.theme.red9} 100%
       );
       background-size: 50% auto;
       animation: ${loading} 1s linear infinite;
@@ -130,7 +130,7 @@ const Form = styled.form`
   }
 
   .fileLoader {
-    background: ${props => props.theme.indigo2};
+    background: ${(props) => props.theme.indigo2};
   }
   .input-item {
     display: grid;
@@ -177,7 +177,7 @@ const Form = styled.form`
   .zip {
     width: 100px;
   }
-  @media (min-width: ${props => props.theme.largeScreen}) {
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
     input,
     textarea,
     select {
@@ -189,22 +189,22 @@ const Form = styled.form`
 const LandingPageForm = styled(Form)`
   border: none;
   background: transparent;
-  color: ${props => props.theme.newBlue[0].hsl};
-
+  color: ${(props) => props.theme.newBlue[0].hsl};
+  max-width: 330px;
   h2 {
-    color: ${props => props.theme.newBlue[0].hsl};
+    color: ${(props) => props.theme.newBlue[0].hsl};
   }
   input {
-    background-color: ${props => props.theme.cream};
-    color: ${props => props.theme.newBlue[90].hsl};
+    background-color: ${(props) => props.theme.cream};
+    color: ${(props) => props.theme.newBlue[90].hsl};
     font-size: larger;
     display: block;
     margin: 0 auto 1.25rem auto;
   }
   button[type="submit"] {
     width: 80%;
-    background-color: ${props => props.theme.newBlue[70].hsl};
-    color: ${props => props.theme.newBlue[0].hsl};
+    background-color: ${(props) => props.theme.newBlue[70].hsl};
+    color: ${(props) => props.theme.newBlue[0].hsl};
     margin: 0 auto 1.25rem auto;
   }
 `;

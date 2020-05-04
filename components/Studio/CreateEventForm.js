@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import DatePicker from "react-datepicker";
 import Router from "next/router";
@@ -8,7 +8,7 @@ import Card from "../styles/Card";
 import Error from "../Error";
 import useForm from "../../lib/useForm";
 import { SelectChoices } from "../Parent/CreateCustomRoutineForm";
-import { STUDIO_EVENTS_QUERY } from "./Queries";
+import { STUDIO_EVENTS_QUERY, CATEGORIES_QUERY } from "./Queries";
 
 const CREATE_STUDIO_EVENT = gql`
   mutation CREATE_STUDIO_EVENT(
@@ -89,12 +89,28 @@ function CreateEventForm() {
   const [beginDate, setBeginDate] = useState();
   const [endDate, setEndDate] = useState();
   const [showAddress2, toggleshowAddress2] = useState(false);
+
+  const {
+    data,
+    error: errorLoadingCategories,
+    loading: loadingCategories
+  } = useQuery(CATEGORIES_QUERY);
+
   const [createStudioEvent, { error, loading }] = useMutation(
     CREATE_STUDIO_EVENT,
     {
       refetchQueries: [{ query: STUDIO_EVENTS_QUERY }]
     }
   );
+
+  const categories = data ? data.studioCategories : {};
+
+  const allCategories = [
+    ...categories.ageDivisions,
+    ...categories.styles,
+    ...categories.competitiveLevels
+  ];
+  console.log("allCategories:", allCategories);
 
   function handleAppliesToChange(e) {
     if (!e) return;

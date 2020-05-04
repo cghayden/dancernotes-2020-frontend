@@ -1,9 +1,11 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
-import { LandingPageForm } from "./styles/Form";
-import Error from "./Error";
-import Router from "next/router";
+import React, { Component } from "react"
+import { Mutation } from "react-apollo"
+import gql from "graphql-tag"
+import styled from "styled-components"
+
+import { LandingPageForm } from "./styles/Form"
+import Error from "./Error"
+import Router from "next/router"
 
 const SIGNUP_STUDIO_MUTATION = gql`
   mutation SIGNUP_STUDIO_MUTATION(
@@ -11,23 +13,21 @@ const SIGNUP_STUDIO_MUTATION = gql`
     $studioName: String!
     $userType: String!
     $password: String!
-    $agreeToTerms: DateTime!
-    $readPrivacy: DateTime!
+    $agreedToTermsAndPrivacy: DateTime!
   ) {
     signupStudio(
       email: $email
       studioName: $studioName
       userType: $userType
       password: $password
-      agreeToTerms: $agreeToTerms
-      readPrivacy: $readPrivacy
+      agreedToTermsAndPrivacy: $agreedToTermsAndPrivacy
     ) {
       id
       email
       studioName
     }
   }
-`;
+`
 
 class StudioSignup extends Component {
   state = {
@@ -35,36 +35,36 @@ class StudioSignup extends Component {
     password: "",
     email: "",
     userType: "studio",
-    agreeToTerms: false,
-    readPrivacy: false
-  };
-  saveToState = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+  }
+  saveToState = (e) => {
+    this.setState({ [e.target.name]: e.target.value })
+  }
   toggleAgreeToTerms = () => {
-    this.setState({ agreeToTerms: !this.state.agreeToTerms });
-  };
+    this.setState({ agreeToTerms: !this.state.agreeToTerms })
+  }
   toggleReadPrivacy = () => {
-    this.setState({ readPrivacy: !this.state.readPrivacy });
-  };
+    this.setState({ readPrivacy: !this.state.readPrivacy })
+  }
 
   render() {
     return (
       <Mutation
         mutation={SIGNUP_STUDIO_MUTATION}
-        variables={this.state}
-        onCompleted={data => {
-          Router.push(`/studio/home`);
+        variables={{
+          ...this.state,
+          agreedToTermsAndPrivacy: new Date(Date.now()),
         }}
-        // refetchQueries={[{ query: CURRENT_USER_QUERY }]}
+        onCompleted={() => {
+          Router.push(`/studio/home`)
+        }}
       >
         {(signupStudio, { error, loading }) => (
           <LandingPageForm
             method="post"
-            onSubmit={async e => {
-              e.preventDefault();
-              await signupStudio();
-              this.setState({ studioName: "", email: "", password: "" });
+            onSubmit={async (e) => {
+              e.preventDefault()
+              await signupStudio()
+              this.setState({ studioName: "", email: "", password: "" })
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
@@ -105,56 +105,45 @@ class StudioSignup extends Component {
                 />
               </div>
               <Terms>
-                <input
-                  required
-                  checked={this.state.agreeToTerms}
-                  type="checkbox"
-                  id="agreeToTerms"
-                  name="agreeToTerms"
-                  value={this.state.agreeToTerms}
-                  onChange={() => this.toggleAgreeToTerms()}
-                />
-                <label>
-                  I have read an agree to the{" "}
+                <p>
+                  By signing up, you agree to our
                   <a
                     rel="noreferrer noopener"
                     target="_blank"
-                    href="https://www.websitepolicies.com/policies/view/Xd9syaYo
-"
+                    href="https://www.websitepolicies.com/policies/view/Xd9syaYo"
                   >
-                    terms of service
+                    Terms
                   </a>
-                </label>
-              </Terms>
-              <Terms>
-                <input
-                  required
-                  checked={this.state.readPrivacy}
-                  type="checkbox"
-                  id="readPrivacy"
-                  name="readPrivacy"
-                  value={this.state.readPrivacy}
-                  onChange={() => this.toggleReadPrivacy()}
-                />
-                <label>
-                  I have read an agree to the{" "}
+                  and
                   <a
                     rel="noreferrer noopener"
                     target="_blank"
-                    href="https://www.websitepolicies.com/policies/view/Xd9syaYo
-"
+                    href="https://www.websitepolicies.com/policies/view/Xd9syaYo"
                   >
-                    privacy policy
+                    Privacy Policy
                   </a>
-                </label>
+                </p>
               </Terms>
-              <button type="submit">Let's Go !!!</button>
+              <button type="submit">Sign Up</button>
             </fieldset>
           </LandingPageForm>
         )}
       </Mutation>
-    );
+    )
   }
 }
 
-export default StudioSignup;
+const Terms = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  a {
+    display: inline-block;
+    padding: 0 5px;
+    margin: 0;
+    text-decoration: underline;
+    text-transform: uppercase;
+  }
+`
+
+export default StudioSignup

@@ -14,7 +14,7 @@ const HeaderStyle = styled.header`
   a,
   button {
     text-align: end;
-    padding-right: 0;
+    /* padding-right: 0; */
   }
 
   @media (min-width: ${props => props.theme.largeScreen}) {
