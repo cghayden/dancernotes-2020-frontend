@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import styled from "styled-components";
+import React, { useState } from "react"
+import { useMutation } from "@apollo/react-hooks"
+import gql from "graphql-tag"
+import styled from "styled-components"
 
-import Form from "../styles/Form";
-import Error from "../Error";
-import useForm from "../../lib/useForm";
-import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
-import { PARENT_USER_QUERY } from "./Queries";
+import Form from "../styles/Form"
+import Error from "../Error"
+import useForm from "../../lib/useForm"
+import { DELETE_CLOUDINARY_ASSET } from "../Mutations"
+import { PARENT_USER_QUERY } from "./Queries"
 
 const FormStyles = styled(Form)`
   box-shadow: none;
   padding: 0;
-`;
+`
 
 const UPDATE_DANCER_MUTATION = gql`
   mutation UPDATE_DANCER_MUTATION(
@@ -32,113 +32,117 @@ const UPDATE_DANCER_MUTATION = gql`
       avatar
     }
   }
-`;
-const initialInputState = {};
+`
+const initialInputState = {}
 
 function UpdateDancerForm({ dancer, closeFunc, hasAvatar, showAvatarPreview }) {
-  const { inputs, updateInputs, handleChange } = useForm(initialInputState);
-  const [showFileInput, toggleFileInput] = useState(false);
-  const [avatarForUpload, setAvatarForUpload] = useState();
-  const [status, setStatus] = useState();
-  const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState();
+  const { inputs, updateInputs, handleChange } = useForm(initialInputState)
+  const [showFileInput, toggleFileInput] = useState(false)
+  const [avatarForUpload, setAvatarForUpload] = useState()
+  const [status, setStatus] = useState()
+  const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState()
 
   const [
     updateDancer,
-    { data: updatedDancer, loading: updatingDancer, error: errorUpdatingDancer }
+    {
+      data: updatedDancer,
+      loading: updatingDancer,
+      error: errorUpdatingDancer,
+    },
   ] = useMutation(UPDATE_DANCER_MUTATION, {
     variables: {
       ...inputs,
-      id: dancer.id
+      id: dancer.id,
     },
     refetchQueries: [{ query: PARENT_USER_QUERY }],
     awaitRefetchQueries: true,
-    onError: () => cloudinaryCleanup()
-  });
+    onError: () => cloudinaryCleanup(),
+  })
 
   const [
     deleteCloudinaryAsset,
-    { loading: deletingAsset, error: errorDeletingAsset }
-  ] = useMutation(DELETE_CLOUDINARY_ASSET);
+    { loading: deletingAsset, error: errorDeletingAsset },
+  ] = useMutation(DELETE_CLOUDINARY_ASSET)
 
   const cloudinaryCleanup = () => {
     if (inputs.avatarId) {
       deleteCloudinaryAsset({
-        variables: { publicId: inputs.avatarId, resourceType: "image" }
-      });
+        variables: { publicId: inputs.avatarId, resourceType: "image" },
+      })
     }
-  };
+  }
 
-  const loading = updatingDancer || deletingAsset;
-  const error = errorUpdatingDancer || errorUploadingToCloudinary;
+  const loading = updatingDancer || deletingAsset
+  const error = errorUpdatingDancer || errorUploadingToCloudinary
   function resetForm() {
-    updateInputs({ ...initialInputState });
-    setStatus();
+    updateInputs({ ...initialInputState })
+    setStatus()
   }
   function handleFileInput(e) {
-    setAvatarForUpload(e.target.files[0]);
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = e => {
+    setAvatarForUpload(e.target.files[0])
+    const file = e.target.files[0]
+    const reader = new FileReader()
+    reader.onload = (e) => {
       // get img from chosen file render thumbnail/avatar.
-      const readerResult = e.target.result;
+      const readerResult = e.target.result
       //send preview url up to dancerCard:
-      showAvatarPreview(readerResult);
-    };
+      showAvatarPreview(readerResult)
+    }
     // read the image file as a data URL in order to display in html<img>.
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(file)
   }
 
   async function uploadNewAvatar() {
-    const data = new FormData();
-    data.append("file", avatarForUpload);
-    data.append("upload_preset", "dancernotes-avatars");
-    data.append("tags", dancer.id);
+    const data = new FormData()
+    data.append("file", avatarForUpload)
+    data.append("upload_preset", "dancernotes-avatars")
+    data.append("tags", [dancer.id, dancer.parent.id])
 
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/coreytesting/image/upload",
       {
         method: "POST",
-        body: data
+        body: data,
       }
-    );
-    const file = await res.json();
+    )
+    const file = await res.json()
     if (file.error) {
-      setCloudinaryUploadError(file.error);
+      setCloudinaryUploadError(file.error)
     } else {
       // file upload successful, set url and id to input state to send with update
       updateInputs({
         ...inputs,
         avatar: file.eager[0].secure_url,
-        avatarId: file.public_id
-      });
+        avatarId: file.public_id,
+      })
     }
   }
 
   async function saveChanges(e) {
-    e.preventDefault();
-    setStatus("Saving Changes...");
+    e.preventDefault()
+    setStatus("Saving Changes...")
     //if newAvatar, upload img to cloudinary, and get new url form cloudinary into state.avatar
     if (avatarForUpload) {
       // if dancer already had an avatar, delete it.
       if (dancer.avatarId) {
         await deleteCloudinaryAsset({
-          variables: { publicId: dancer.avatarId, resourceType: "image" }
-        });
+          variables: { publicId: dancer.avatarId, resourceType: "image" },
+        })
       }
-      await uploadNewAvatar().catch(err => {
-        delete inputs.avatar;
-        delete inputs.avatarId;
-        setCloudinaryUploadError(err);
-      });
+      await uploadNewAvatar().catch((err) => {
+        delete inputs.avatar
+        delete inputs.avatarId
+        setCloudinaryUploadError(err)
+      })
     }
-    await updateDancer();
-    closeFunc();
+    await updateDancer()
+    closeFunc()
   }
 
-  const disableButton = Object.keys(inputs).length < 1 && !avatarForUpload;
+  const disableButton = Object.keys(inputs).length < 1 && !avatarForUpload
 
   return (
-    <FormStyles onSubmit={e => saveChanges(e)}>
+    <FormStyles onSubmit={(e) => saveChanges(e)}>
       <Error error={error} />
       <fieldset disabled={loading} aria-busy={loading}>
         <h5>Update {dancer.firstName}'s Profile</h5>
@@ -184,8 +188,8 @@ function UpdateDancerForm({ dancer, closeFunc, hasAvatar, showAvatarPreview }) {
             className="btn-danger"
             type="button"
             onClick={async () => {
-              await showAvatarPreview("");
-              closeFunc();
+              await showAvatarPreview("")
+              closeFunc()
             }}
           >
             Cancel
@@ -193,8 +197,8 @@ function UpdateDancerForm({ dancer, closeFunc, hasAvatar, showAvatarPreview }) {
         </div>
       </fieldset>
     </FormStyles>
-  );
+  )
 }
 
-export default UpdateDancerForm;
-export { UPDATE_DANCER_MUTATION };
+export default UpdateDancerForm
+export { UPDATE_DANCER_MUTATION }

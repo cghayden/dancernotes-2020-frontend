@@ -56,18 +56,18 @@ function DanceCard({ dance, visibleDancersIds }) {
     <DanceCardStyles>
       <DanceCardHeader dance={dance} visibleDancersIds={visibleDancersIds} />
       <DanceCardNav>
-        <button className="textOnly-primary-action" onClick={toggleBody}>
+        <button className="btn-action-primary-textOnly" onClick={toggleBody}>
           Details
         </button>
         <button
-          className="textOnly-primary-action"
+          className="btn-action-primary-textOnly"
           onClick={() => setShowMediaPlayer(!showMediaPlayer)}
         >
           Music
         </button>
         {dance.videoUrl && (
           <button
-            className="textOnly-primary-action"
+            className="btn-action-primary-textOnly"
             onClick={() => setShowVideoPlayer(!showVideoPlayer)}
           >
             Video
@@ -75,7 +75,7 @@ function DanceCard({ dance, visibleDancersIds }) {
         )}
         {dance.custom && (
           <Link href={`/parent/updateDance/${dance.id}`}>
-            <a className="textOnly-primary-action">Edit</a>
+            <a className="btn-action-primary-textOnly">Edit</a>
           </Link>
         )}
       </DanceCardNav>

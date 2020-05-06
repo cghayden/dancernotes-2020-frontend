@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import Meta from "./Meta";
-import { ThemeProvider, createGlobalStyle } from "styled-components";
-import { theme } from "./themeVariables";
+import React, { Component } from "react"
+import Meta from "./Meta"
+import { ThemeProvider, createGlobalStyle } from "styled-components"
+import { theme } from "./themeVariables"
 //adobe font = 1. lato, 2. source-sans-pro, 300,400,700, reg and italic
 
 const GlobalStyle = createGlobalStyle`
@@ -52,7 +52,7 @@ const GlobalStyle = createGlobalStyle`
   margin-right: .5rem;
 }
   a, button {
-    display:inline-block;
+  display:inline-block;
   padding: .5rem 1rem;
   margin: .5rem;
   border: none;
@@ -62,46 +62,39 @@ const GlobalStyle = createGlobalStyle`
   text-decoration: none;
   border-radius: 5px;
   background: transparent;
-    :hover {
+  :hover {
     background-color: inherit;
     color: inherit;
     transition: background-color .25s ease-out;
-    }
-    :disabled{
-      
+  }
+  :disabled {
       cursor: not-allowed;
-    }
-
-    &.btn-danger{
-      background-color: ${theme.red6};
-      color: ${theme.red0};
-      :hover {
+  }
+  &.btn-danger {
+    background-color: ${theme.red6};
+    color: ${theme.red0};
+    :hover {
       background-color: ${theme.red7}; 
       color: ${theme.red0};
-      }
-    }
-    &.btn-danger-outline{
-      background-color: none;
-      color: ${theme.red7};
-      border: 1px solid ${theme.red7};
-      :hover {
-        background-color: ${theme.red6};
-      color: ${theme.red0};
-      }
-    }
-
-    &.btn-action-primary{
-      background-color: ${theme.indigo1};
-      color: ${theme.indigo9};
-      :hover {
-        background-color: ${theme.indigo9};
-      } 
-      :disabled{
-      
-      cursor: not-allowed;
     }
   }
-  &.btn-action-primary-outline{
+  &.btn-danger-outline{
+    background-color: none;
+    color: ${theme.red7};
+    border: 1px solid ${theme.red7};
+    :hover {
+      background-color: ${theme.red6};
+      color: ${theme.red0};
+    }
+  }
+  &.btn-action-secondary{
+    background-color: ${theme.indigo1};
+    color: ${theme.indigo9};
+    :hover {
+        background-color: ${theme.indigo9};
+    } 
+  }
+  &.btn-action-secondary-outline{
       background-color: none;
       color: ${theme.indigo8};
       border: 1px solid ${theme.indigo8};
@@ -110,43 +103,42 @@ const GlobalStyle = createGlobalStyle`
       color: ${theme.indigo0};
       } 
   }
-  &.btn-action-secondary{
+  &.btn-action-primary{
       background-color: ${theme.indigo5};
       color: ${theme.indigo0};
       :hover {
       background-color: ${theme.indigo6};
       }   
     }
-
-    &.btn-comp-outline{
-      background-color: none;
-      color: ${theme.green8};
-      :hover {
-      background-color: ${theme.green6};
-      } 
-      
-    }
-
-    &.btn-action-secondary-outline{
+    &.btn-action-primary-outline{
       background-color: none;
       color: ${theme.indigo5};
       border: 1px solid ${theme.indigo5};
-    } :hover {
+     :hover {
       background-color: ${theme.indigo5};
       color: ${theme.indigo0};
+      }
     }
-
+    &.btn-comp-outline{
+      background-color: none;
+      color: ${theme.green8};
+      border: 1px solid ${theme.green8};
+      :hover {
+        border: none;
+      background-color: ${theme.green6};
+      color: white;
+      } 
+    }
     &.btn-small{
       font-size: 14px;
       padding: .25rem .75rem;
     }
-
   &.landingPage{
     font-size: 1.5rem;
     width: 200px;
     height: 50px;
   }
-  &.textOnly-primary-action{
+  &.btn-action-primary-textOnly{
     border-radius: 0;
     color: ${theme.indigo8};
     border: none;
@@ -179,11 +171,11 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .active {
-    color: ${props => props.theme.green8};
+    color: ${(props) => props.theme.green8};
     font-weight: bold;
   }
 
-  @media (min-width: ${props => props.theme.largeScreen}) {
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
     .hideOnMobile {
       display: block;
     }
@@ -203,14 +195,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
 main {
-  margin-top: ${props => props.theme.mobileStatusBarHeight};
+  margin-top: ${(props) => props.theme.mobileStatusBarHeight};
   padding-top: 0.5rem;
   display: flex;
   flex-direction: column;
   padding-bottom: 100px;
   align-items: center;
-  @media (min-width: ${props => props.theme.largeScreen}) {
-    margin-top: ${props => props.theme.navHeight};
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
+    margin-top: ${(props) => props.theme.navHeight};
     padding-top: 1rem;
   }
 }
@@ -226,7 +218,7 @@ main {
   transform: translate3d(50%, 190%, 0px)
 }
 
-`;
+`
 
 export default class GlobalStyles extends Component {
   render() {
@@ -238,6 +230,6 @@ export default class GlobalStyles extends Component {
           {this.props.children}
         </>
       </ThemeProvider>
-    );
+    )
   }
 }

@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from "react"
+import styled from "styled-components"
 
 const HeaderStyle = styled.div`
   display: grid;
@@ -11,7 +11,7 @@ const HeaderStyle = styled.div`
       padding: 0 5px;
     }
   }
-`;
+`
 const DanceCardTitle = styled.div`
   font-size: 0.875rem;
   grid-column: 1 / -1;
@@ -23,33 +23,32 @@ const DanceCardTitle = styled.div`
   p:last-child {
     font-style: italic;
   }
-  @media (min-width: ${props => props.theme.largeScreen}) {
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
     font-size: 1rem;
   }
-`;
+`
 
 const DanceCardTime = styled.div`
   font-size: 0.675rem;
   grid-column: 3/-1;
   grid-row: 1;
 
-  @media (min-width: ${props => props.theme.largeScreen}) {
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
     font-size: 0.825rem;
   }
-`;
+`
 const DanceCardEntryInfo = styled.div`
   color: red;
   font-size: 0.825rem;
   grid-column: 1/2;
   grid-row: 1;
 
-  @media (min-width: ${props => props.theme.largeScreen}) {
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
     font-size: 0.825rem;
   }
-`;
+`
 
 const DanceCardHeader = ({ dance }) => {
-  console.log("dance:", dance);
   return (
     <>
       <HeaderStyle>
@@ -68,7 +67,7 @@ const DanceCardHeader = ({ dance }) => {
         </DanceCardTime>
       </HeaderStyle>
     </>
-  );
-};
+  )
+}
 
-export default DanceCardHeader;
+export default DanceCardHeader

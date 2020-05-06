@@ -36,7 +36,7 @@ function EventsPage() {
 
   const AddEventButton = (
     <Link href="/parent/createCustomEvent">
-      <a className="textOnly-primary-action">Create an Event</a>
+      <a className="btn-action-primary-textOnly">Create an Event</a>
     </Link>
   );
 

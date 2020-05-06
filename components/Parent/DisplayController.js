@@ -51,7 +51,7 @@ function DisplayController({ dancer }) {
       <DancerToggler dancer={dancer} />
       {!dancer.allRoutines.length && (
         <Link href="/parent/account/dancers">
-          <a className="textOnly-primary-action">Create or Find a Class</a>
+          <a className="btn-action-primary-textOnly">Create or Find a Class</a>
         </Link>
       )}
       {dancer.studios &&
