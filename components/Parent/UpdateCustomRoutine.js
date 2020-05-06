@@ -1,15 +1,15 @@
-import { Fragment, useState } from "react";
-import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import Link from "next/link";
-import Form from "../styles/Form";
-import useForm from "../../lib/useForm";
-import Modal from "../Modal";
-import BackButton from "../BackButton";
-import Card from "../styles/Card";
-import DeleteCustomRoutineButton from "./DeleteCustomRoutineButton";
-import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
-import { ALL_Rs } from "./Queries";
+import { Fragment, useState } from "react"
+import { useMutation } from "@apollo/react-hooks"
+import gql from "graphql-tag"
+import Link from "next/link"
+import Form from "../styles/Form"
+import useForm from "../../lib/useForm"
+import Modal from "../Modal"
+import BackButton from "../BackButton"
+import Card from "../styles/Card"
+import DeleteCustomRoutineButton from "./DeleteCustomRoutineButton"
+import { DELETE_CLOUDINARY_ASSET } from "../Mutations"
+import { ALL_Rs } from "./Queries"
 
 const UPDATE_CUSTOM_ROUTINE = gql`
   mutation UPDATE_CUSTOM_ROUTINE(
@@ -50,127 +50,126 @@ const UPDATE_CUSTOM_ROUTINE = gql`
       musicId
     }
   }
-`;
-const initialInputState = {};
+`
+const initialInputState = {}
 
-function UpdateCustomRoutine({ dance }) {
-  const { inputs, updateInputs, handleChange } = useForm();
-  const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState();
-  const [loadingSong, setLoadingSong] = useState(false);
-  const [showModal, toggleModal] = useState(false);
-  const [status, setStatus] = useState();
-  const [showFileInput, toggleFileInput] = useState(false);
+function UpdateCustomRoutine({ dance, parent }) {
+  const { inputs, updateInputs, handleChange } = useForm()
+  const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState()
+  const [loadingSong, setLoadingSong] = useState(false)
+  const [showModal, toggleModal] = useState(false)
+  const [status, setStatus] = useState()
+  const [showFileInput, toggleFileInput] = useState(false)
 
   const [
     updateCustomRoutine,
     {
       data: updatedRoutine,
       loading: updatingRoutine,
-      error: errorUpdatingRoutine
-    }
+      error: errorUpdatingRoutine,
+    },
   ] = useMutation(UPDATE_CUSTOM_ROUTINE, {
     onError: () => cloudinaryCleanup,
     variables: { ...inputs, id: dance.id },
     refetchQueries: [{ query: ALL_Rs }],
     awaitRefetchQueries: true,
     onCompleted: () => {
-      resetForm();
-    }
-  });
+      resetForm()
+    },
+  })
 
   const [
     deleteCloudinaryAsset,
-    { loading: deletingAsset, error: errorDeletingAsset }
-  ] = useMutation(DELETE_CLOUDINARY_ASSET);
+    { loading: deletingAsset, error: errorDeletingAsset },
+  ] = useMutation(DELETE_CLOUDINARY_ASSET)
 
-  const updatedDanceClass =
-    updatedRoutine && updatedRoutine.updateCustomRoutine;
-  const loading = loadingSong || updatingRoutine || deletingAsset;
+  const updatedDanceClass = updatedRoutine && updatedRoutine.updateCustomRoutine
+  const loading = loadingSong || updatingRoutine || deletingAsset
 
   const cloudinaryCleanup = () => {
     if (inputs.musicId) {
       deleteCloudinaryAsset({
-        variables: { publicId: inputs.musicId, resourceType: "video" }
-      });
+        variables: { publicId: inputs.musicId, resourceType: "video" },
+      })
     }
-  };
+  }
 
   function resetForm() {
-    updateInputs({ ...initialInputState });
-    toggleFileInput(false);
-    setStatus();
+    updateInputs({ ...initialInputState })
+    toggleFileInput(false)
+    setStatus()
   }
 
   function setSongtoState(e) {
-    const audioFile = e.target.files[0];
-    updateInputs({ ...inputs, audioFile });
+    const audioFile = e.target.files[0]
+    updateInputs({ ...inputs, audioFile })
   }
 
-  const saveChanges = async (e, updateMutation) => {
-    e.preventDefault();
+  const saveChanges = async (e) => {
+    e.preventDefault()
     //A. update class with audioFile:
     if (inputs.audioFile) {
       // if dance already has a song, delete it
-      setLoadingSong(true);
+      setLoadingSong(true)
       if (dance.musicId) {
-        setStatus("Deleting Old Music");
+        setStatus("Deleting Old Music")
         await deleteCloudinaryAsset({
-          variables: { publicId: dance.musicId, resourceType: "video" }
-        });
+          variables: { publicId: dance.musicId, resourceType: "video" },
+        })
       }
-      setStatus("Uploading Music...");
+      setStatus("Uploading Music...")
       //upload song to cloudinary and set id and url to state
-      await uploadSong(dance.id, inputs.audioFile).catch(err => {
+      await uploadSong(dance.id, inputs.audioFile, parent.id).catch((err) => {
         //if error uploading to cloudinary, delete from inputs.  Why? because if there are no other updates besides the music, the update does not need to be run, because the music upload to cloudinary has failed.
-        delete inputs.audioFile;
-        setCloudinaryUploadError(err);
-      });
-      setLoadingSong(false);
+        delete inputs.audioFile
+        setCloudinaryUploadError(err)
+      })
+      setLoadingSong(false)
       //if upload song errored out, and there are other inputs to update, update them
       if (Object.keys(inputs).length > 0) {
-        setStatus("Updating Class");
-        await updateDanceClass();
+        setStatus("Updating Class")
+        await updateCustomRoutine()
       }
     }
     // B. update class without audiofile
     else {
-      setStatus("Updating Class");
-      await updateCustomRoutine();
+      setStatus("Updating Class")
+      await updateCustomRoutine()
     }
     //c. clean up
-    setStatus();
-    toggleModal(true);
-    resetForm();
-  };
+    setStatus()
+    toggleModal(true)
+    resetForm()
+  }
 
-  async function uploadSong(danceClassId, asset) {
-    const data = new FormData();
-    data.append("file", audioFile);
-    data.append("upload_preset", "dancernotes-music");
-    data.append("tags", routineId);
+  async function uploadSong(danceClassId, asset, assetOwnerId) {
+    const data = new FormData()
+    data.append("file", asset)
+    data.append("upload_preset", "dancernotes-music")
+    data.append("tags", [danceClassId, assetOwnerId])
 
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/coreytesting/video/upload",
       {
         method: "POST",
-        body: data
+        body: data,
       }
-    ).catch(error => {
-      setCloudinaryUploadError(error);
-    });
-    const file = await res.json();
+    ).catch((error) => {
+      setCloudinaryUploadError(error)
+    })
+    const file = await res.json()
     if (file.error) {
-      setCloudinaryUploadError(file.error);
+      setCloudinaryUploadError(file.error)
     } else {
       updateInputs({
         ...inputs,
         music: file.secure_url,
-        musicId: file.public_id
-      });
+        musicId: file.public_id,
+      })
     }
   }
   // disable submission of empty state if no updates are made
-  const disableButton = Object.keys(inputs).length < 1;
+  const disableButton = Object.keys(inputs).length < 1
 
   return (
     <Fragment>
@@ -182,45 +181,47 @@ function UpdateCustomRoutine({ dance }) {
                 Warning: there was a problem saving your class. Please try
                 again:
               </p>
-              <button role="button" onClick={() => toggleModal(false)}>
+              <button
+                className="btn-action-primary"
+                role="button"
+                onClick={() => toggleModal(false)}
+              >
                 Try Again
               </button>
               <Link href={`/parent/notes/routines`}>
-                <a>Never Mind!</a>
+                <a className="btn-action-secondary">Never Mind!</a>
               </Link>
             </>
           )}
           {updatedDanceClass && (
-            <p>
-              Success - you updated
-              {updatedDanceClass.name}
-            </p>
+            <>
+              <p>Success! You updated</p>
+              <p>{updatedDanceClass.name}</p>
+            </>
           )}
           {updatedDanceClass && errorUploadingToCloudinary && (
             <>
-              <p>
-                Success - you updated
-                {updatedDanceClass.name}
-              </p>
+              <p>Success! You updated</p>
+              <p>{updatedDanceClass.name}</p>
               <p>
                 Warning: there was a problem uploading the music for
                 {updatedDanceClass.name}. You can try to add music now or later
                 by updating the dance class:
                 <Link href={`/parent/updateDance/${updatedDanceClass.id}`}>
-                  <a>Update Class</a>
+                  <a className="btn-action-primary">Update Class</a>
                 </Link>
               </p>
             </>
           )}
           <Link href="/parent/notes/routines">
-            <a>Return to Routines</a>
+            <a className="btn-action-primary">Return to Routines</a>
           </Link>
         </div>
       </Modal>
       <Card>
         <Form
           method="post"
-          onSubmit={async e => await saveChanges(e, updateCustomRoutine)}
+          onSubmit={async (e) => await saveChanges(e, updateCustomRoutine)}
         >
           <fieldset disabled={loading} aria-busy={loading}>
             <h2>Update {dance.name}</h2>
@@ -416,8 +417,8 @@ function UpdateCustomRoutine({ dance }) {
         </Form>
       </Card>
     </Fragment>
-  );
+  )
 }
 
-export default UpdateCustomRoutine;
-export { UPDATE_CUSTOM_ROUTINE };
+export default UpdateCustomRoutine
+export { UPDATE_CUSTOM_ROUTINE }

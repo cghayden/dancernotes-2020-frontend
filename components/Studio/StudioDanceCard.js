@@ -37,17 +37,17 @@ function StudioDanceCard({ dance }) {
     <DanceCardStyles>
       <DanceCardHeader dance={dance} setShowBody={setShowBody} />
       <DanceCardNav>
-        <button className="textOnly-primary-action" onClick={toggleBody}>
+        <button className="btn-action-primary-textOnly" onClick={toggleBody}>
           Details
         </button>
         <button
-          className="textOnly-primary-action"
+          className="btn-action-primary-textOnly"
           onClick={() => setShowMediaPlayer(!showMediaPlayer)}
         >
           Music
         </button>
         <Link href={`/studio/updateClass/${dance.id}`}>
-          <a className="textOnly-primary-action">Edit</a>
+          <a className="btn-action-primary-textOnly">Edit</a>
         </Link>
       </DanceCardNav>
       {showMediaPlayer && (

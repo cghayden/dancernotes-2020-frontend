@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components"
 
 const loading = keyframes`
   from {
@@ -10,7 +10,7 @@ const loading = keyframes`
     background-position: 100% 100%;
     /* rotate: 360deg; */
   }
-`;
+`
 
 const Form = styled.form`
   /* each form should be inside a card */
@@ -52,7 +52,7 @@ const Form = styled.form`
   input,
   textarea,
   select {
-    background: ${(props) => props.theme.blue0};
+    background: white;
     color: ${(props) => props.theme.indigo9};
     border-radius: 10px;
     font: inherit;
@@ -63,6 +63,10 @@ const Form = styled.form`
     :focus {
       border-color: ${(props) => props.theme.teal7};
     }
+  }
+
+  select {
+    height: 38px;
   }
 
   button[type="submit"],
@@ -104,28 +108,36 @@ const Form = styled.form`
   }
   .time {
     display: grid;
-    grid-template-columns: 110px 110px;
-    padding: 0.5rem;
+    grid-template-columns: 1fr 1fr;
+    /* padding: 0.5rem; */
     justify-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
 
     input {
-      width: 100px;
+      width: 140px;
+      padding-top: 6px;
+      padding-bottom: 6px;
     }
     label {
-      display: inline-block;
+      margin-right: 10px;
     }
   }
 
   .day {
+    margin: 5px 0;
     text-align: center;
-    width: 80px;
-    display: block;
-    padding: 0.5rem;
+    display: flex;
+    /* padding: 0.5rem; */
+    justify-content: center;
+    align-items: center;
     select {
       padding-left: 0;
+      width: 100px;
     }
     label {
       display: inline-block;
+      margin-right: 10px;
     }
   }
 
@@ -184,7 +196,7 @@ const Form = styled.form`
       padding: 0.5rem;
     }
   }
-`;
+`
 
 const LandingPageForm = styled(Form)`
   border: none;
@@ -207,7 +219,7 @@ const LandingPageForm = styled(Form)`
     color: ${(props) => props.theme.newBlue[0].hsl};
     margin: 0 auto 1.25rem auto;
   }
-`;
+`
 
-export default Form;
-export { LandingPageForm };
+export default Form
+export { LandingPageForm }

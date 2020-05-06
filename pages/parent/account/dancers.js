@@ -15,7 +15,7 @@ function DancersPage() {
 
   const AddDancerButton = (
     <Link href="addDancer">
-      <a className="textOnly-primary-action">Add a Dancer</a>
+      <a className="btn-action-primary-textOnly">Add a Dancer</a>
     </Link>
   );
 

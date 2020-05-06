@@ -1,14 +1,14 @@
-import React, { useState, Fragment } from "react";
-import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import Link from "next/link";
-import { ALL_DANCE_CLASSES_QUERY } from "./Queries";
-import { UPDATE_DANCECLASS_MUTATION } from "./UpdateDanceClass";
-import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
-import Form from "../styles/Form";
-import Card from "../styles/Card";
-import useForm from "../../lib/useForm";
-import Modal from "../Modal";
+import React, { useState, Fragment } from "react"
+import { useMutation } from "@apollo/react-hooks"
+import gql from "graphql-tag"
+import Link from "next/link"
+import { ALL_DANCE_CLASSES_QUERY } from "./Queries"
+import { UPDATE_DANCECLASS_MUTATION } from "./UpdateDanceClass"
+import { DELETE_CLOUDINARY_ASSET } from "../Mutations"
+import Form from "../styles/Form"
+import Card from "../styles/Card"
+import useForm from "../../lib/useForm"
+import Modal from "../Modal"
 
 const CREATE_DANCE_CLASS_MUTATION = gql`
   mutation CREATE_DANCE_CLASS_MUTATION(
@@ -44,7 +44,7 @@ const CREATE_DANCE_CLASS_MUTATION = gql`
       id
     }
   }
-`;
+`
 
 const initialInputState = {
   name: "",
@@ -60,130 +60,133 @@ const initialInputState = {
   notes: "",
   showSuccessMessage: false,
   size: "",
-  audioFile: ""
-};
+  audioFile: "",
+}
 
 function CreateDanceClass({ studio }) {
-  const { inputs, updateInputs, handleChange } = useForm(initialInputState);
-  const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState();
-  const [loadingSong, setLoadingSong] = useState(false);
-  const [showModal, toggleModal] = useState(false);
-  const [status, setStatus] = useState();
-  const [showFileInput, toggleFileInput] = useState(false);
+  const { inputs, updateInputs, handleChange } = useForm(initialInputState)
+  const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState()
+  const [loadingSong, setLoadingSong] = useState(false)
+  const [showModal, toggleModal] = useState(false)
+  const [status, setStatus] = useState()
+  const [showFileInput, toggleFileInput] = useState(false)
 
-  const [musicId, setMusicId] = useState({});
+  const [musicId, setMusicId] = useState({})
 
   const [
     createDanceClass,
     {
       data: newDance,
       loading: creatingDanceClass,
-      error: errorCreatingDanceClass
-    }
+      error: errorCreatingDanceClass,
+    },
   ] = useMutation(CREATE_DANCE_CLASS_MUTATION, {
     variables: { ...inputs },
     refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }],
-    awaitRefetchQueries: true
-  });
+    awaitRefetchQueries: true,
+  })
 
   const [
     updateDanceClass,
     {
       data: updatedDance,
       error: errorUpdatingDanceClass,
-      loading: updatingDanceClass
-    }
+      loading: updatingDanceClass,
+    },
   ] = useMutation(UPDATE_DANCECLASS_MUTATION, {
     onError: () => cloudinaryCleanup(),
     refetchQueries: [{ query: ALL_DANCE_CLASSES_QUERY }],
     awaitRefetchQueries: true,
     onCompleted: () => {
-      resetForm();
-    }
-  });
+      resetForm()
+    },
+  })
 
   const [
     deleteCloudinaryAsset,
-    { error: errorDeletingAsset, loading: deletingAsset }
-  ] = useMutation(DELETE_CLOUDINARY_ASSET);
+    { error: errorDeletingAsset, loading: deletingAsset },
+  ] = useMutation(DELETE_CLOUDINARY_ASSET)
 
-  const newDanceClass = newDance && newDance.createDanceClass;
+  const newDanceClass = newDance && newDance.createDanceClass
   const errorUploadingSong =
-    errorUpdatingDanceClass || errorUploadingToCloudinary;
-  const loading = loadingSong || updatingDanceClass || creatingDanceClass;
+    errorUpdatingDanceClass || errorUploadingToCloudinary
+  const loading = loadingSong || updatingDanceClass || creatingDanceClass
 
   const cloudinaryCleanup = () => {
     if (musicId) {
       deleteCloudinaryAsset({
-        variables: { publicId: musicId, resourceType: "video" }
-      });
+        variables: { publicId: musicId, resourceType: "video" },
+      })
     }
-  };
+  }
 
   function resetForm() {
-    updateInputs({ ...initialInputState });
-    setMusicId();
-    toggleFileInput(false);
-    setStatus();
+    updateInputs({ ...initialInputState })
+    setMusicId()
+    toggleFileInput(false)
+    setStatus()
   }
 
   function setSongtoState(e) {
-    const audioFile = e.target.files[0];
-    updateInputs({ ...inputs, audioFile });
+    const audioFile = e.target.files[0]
+    updateInputs({ ...inputs, audioFile })
   }
 
   async function saveNewDanceClass(e) {
-    e.preventDefault();
-    setStatus("Creating Class...");
-    const newDanceClass = await createDanceClass();
+    e.preventDefault()
+    setStatus("Creating Class...")
+    const newDanceClass = await createDanceClass()
     //A. if music file is queued in state, create dance, upload music with tag of routineId, then update routine with the music url and musicId
     if (inputs.audioFile) {
-      setStatus("Uploading Music...");
-      const newDanceClassId = newDanceClass.data.createDanceClass.id;
-      await uploadSongAndUpdateClass(newDanceClassId, inputs.audioFile).catch(
-        err => {
-          setStatus();
-          toggleModal(true);
-          setCloudinaryUploadError(err);
-        }
-      );
+      setStatus("Uploading Music...")
+      const newDanceClassId = newDanceClass.data.createDanceClass.id
+      await uploadSongAndUpdateClass(
+        newDanceClassId,
+        inputs.audioFile,
+        studio.id
+      ).catch((err) => {
+        setStatus()
+        toggleModal(true)
+        setCloudinaryUploadError(err)
+      })
     }
-    resetForm();
-    toggleModal(true);
+    resetForm()
+    toggleModal(true)
   }
 
-  async function uploadSongAndUpdateClass(danceClassId, asset) {
-    setLoadingSong(true);
-    const data = new FormData();
-    data.append("file", asset);
-    data.append("upload_preset", "dancernotes-music");
-    data.append("tags", danceClassId);
+  async function uploadSongAndUpdateClass(danceClassId, asset, assetOwnerId) {
+    setLoadingSong(true)
+    const data = new FormData()
+    data.append("file", asset)
+    data.append("upload_preset", "dancernotes-music")
+    data.append("tags", [danceClassId, assetOwnerId])
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/coreytesting/video/upload",
       {
         method: "POST",
-        body: data
+        body: data,
       }
-    ).catch(error => {
-      setCloudinaryUploadError(error);
-    });
+    ).catch((error) => {
+      setCloudinaryUploadError(error)
+    })
 
-    const file = await res.json();
-    setLoadingSong(false);
+    const file = await res.json()
+    setLoadingSong(false)
     if (file.error) {
-      setCloudinaryUploadError(file.error);
+      setCloudinaryUploadError(file.error)
+      setLoadingSong(false)
     } else {
-      setStatus("Updating class...");
-      setMusicId(file.public_id);
+      setStatus("Updating class...")
+      setMusicId(file.public_id)
       await updateDanceClass({
         variables: {
           id: danceClassId,
           music: file.secure_url,
-          musicId: file.public_id
-        }
-      });
+          musicId: file.public_id,
+        },
+      })
     }
-    setStatus();
+    setStatus()
   }
 
   return (
@@ -223,7 +226,7 @@ function CreateDanceClass({ studio }) {
         </div>
       </Modal>
       <Card>
-        <Form method="post" onSubmit={async e => await saveNewDanceClass(e)}>
+        <Form method="post" onSubmit={async (e) => await saveNewDanceClass(e)}>
           <fieldset disabled={loading} aria-busy={loading}>
             <legend>Add A New Dance Class To Your Schedule</legend>
 
@@ -286,7 +289,7 @@ function CreateDanceClass({ studio }) {
                     Style...
                   </option>
                   {studio &&
-                    studio.styles.map(style => (
+                    studio.styles.map((style) => (
                       <option key={style} value={style}>
                         {style}
                       </option>
@@ -306,7 +309,7 @@ function CreateDanceClass({ studio }) {
                     Competitive Level...
                   </option>
                   {studio &&
-                    studio.competitiveLevels.map(competitiveLevel => (
+                    studio.competitiveLevels.map((competitiveLevel) => (
                       <option key={competitiveLevel} value={competitiveLevel}>
                         {competitiveLevel}
                       </option>
@@ -325,7 +328,7 @@ function CreateDanceClass({ studio }) {
                     Age Division...
                   </option>
                   {studio &&
-                    studio.ageDivisions.map(ageDivision => (
+                    studio.ageDivisions.map((ageDivision) => (
                       <option key={ageDivision} value={ageDivision}>
                         {ageDivision}
                       </option>
@@ -457,11 +460,11 @@ function CreateDanceClass({ studio }) {
         </Form>
       </Card>
     </Fragment>
-  );
+  )
 }
 
-export default CreateDanceClass;
-export { Form };
+export default CreateDanceClass
+export { Form }
 
 // {inputs.showSuccessMessage && (
 //   <SuccessMessage

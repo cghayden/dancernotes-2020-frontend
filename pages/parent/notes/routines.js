@@ -16,7 +16,7 @@ const ParentHome = () => {
   const parentUser = data ? data.parentUser : {}
   const AddRoutineButton = (
     <Link href="/parent/createCustomRoutine">
-      <a className="textOnly-primary-action">Create a Routine</a>
+      <a className="btn-action-primary-textOnly">Create a Routine</a>
     </Link>
   )
 
