@@ -7,32 +7,35 @@ import { useQuery } from "@apollo/react-hooks";
 import {
   PARENT_EVENTS_QUERY,
   CUSTOM_EVENTS_QUERY,
-  ALL_Rs
+  ALL_Rs,
 } from "../../../components/Parent/Queries";
+import { useParentEvents } from "../../../components/Parent/useParentEvents";
 import Error from "../../../components/Error";
 
 function EventsPage() {
+  // const customEvents = useCustomEvents();
   const {
     data: parentEvents,
     loading: loadingEvents,
-    error: errorLoadingEvents
+    error: errorLoadingEvents,
   } = useQuery(PARENT_EVENTS_QUERY);
+
   const {
     data: customEvents,
     loading: loadingCustomEvents,
-    error: errorLoadingCustomEvents
+    error: errorLoadingCustomEvents,
   } = useQuery(CUSTOM_EVENTS_QUERY);
+  console.log("customEvents:", customEvents);
 
   const {
     data: allRoutinesData,
     loading: loadingRoutines,
-    error: errorLoadingRoutines
+    error: errorLoadingRoutines,
   } = useQuery(ALL_Rs);
   const allRoutines = allRoutinesData ? allRoutinesData.allRs : {};
 
-  const loading = loadingEvents || loadingRoutines || loadingCustomEvents;
-  const error =
-    errorLoadingEvents || errorLoadingRoutines || errorLoadingCustomEvents;
+  const loading = loadingEvents || loadingRoutines;
+  const error = errorLoadingEvents || errorLoadingRoutines;
 
   const AddEventButton = (
     <Link href="/parent/createCustomEvent">
@@ -55,9 +58,12 @@ function EventsPage() {
       </>
     );
 
+  customEvents &&
+    customEvents.customEvents.forEach((event) => (event.appliesTo = ["all"]));
+
   const allEvents = [
     ...customEvents.customEvents,
-    ...parentEvents.parentEvents
+    ...parentEvents.parentEvents,
   ];
   console.log("allEvents:", allEvents);
 

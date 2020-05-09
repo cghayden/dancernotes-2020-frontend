@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import DatePicker from "react-datepicker";
-import Router from "next/router";
 import Form from "../styles/Form";
 import Card from "../styles/Card";
 import Error from "../Error";
@@ -69,7 +68,7 @@ const appliesToOptions = [
   { value: "tap", label: "Tap", name: "appliesTo" },
   { value: "production", label: "Production", name: "appliesTo" },
   { value: "acro team", label: "Acro Team", name: "appliesTo" },
-  { value: "mini acro team", label: "Mini Acro Team", name: "appliesTo" }
+  { value: "mini acro team", label: "Mini Acro Team", name: "appliesTo" },
 ];
 const initialInputState = {
   type: "",
@@ -81,7 +80,7 @@ const initialInputState = {
   state: "",
   zip: "",
   url: "",
-  notes: ""
+  notes: "",
 };
 function CreateEventForm() {
   const { inputs, updateInputs, handleChange } = useForm(initialInputState);
@@ -93,13 +92,13 @@ function CreateEventForm() {
   const {
     data,
     error: errorLoadingCategories,
-    loading: loadingCategories
+    loading: loadingCategories,
   } = useQuery(CATEGORIES_QUERY);
 
   const [createStudioEvent, { error, loading }] = useMutation(
     CREATE_STUDIO_EVENT,
     {
-      refetchQueries: [{ query: STUDIO_EVENTS_QUERY }]
+      refetchQueries: [{ query: STUDIO_EVENTS_QUERY }],
     }
   );
 
@@ -108,9 +107,8 @@ function CreateEventForm() {
   const allCategories = [
     ...categories.ageDivisions,
     ...categories.styles,
-    ...categories.competitiveLevels
+    ...categories.competitiveLevels,
   ];
-  console.log("allCategories:", allCategories);
 
   function handleAppliesToChange(e) {
     if (!e) return;
@@ -135,8 +133,8 @@ function CreateEventForm() {
         ...inputs,
         appliesTo: applyTo,
         beginDate: beginningDate,
-        endDate: endingDate
-      }
+        endDate: endingDate,
+      },
     });
   }
 
@@ -144,7 +142,7 @@ function CreateEventForm() {
     <Card>
       <Form
         method="post"
-        onSubmit={async e => {
+        onSubmit={async (e) => {
           await saveEvent(e);
         }}
       >
@@ -184,7 +182,7 @@ function CreateEventForm() {
           <div className="input-item">
             <SelectChoices>
               <label htmlFor="appliesTo">Apply To:</label>
-              {Object.entries(appliesTo).map(entry => (
+              {Object.entries(appliesTo).map((entry) => (
                 <li key={entry[0]}>
                   {entry[1]}
                   <span>
@@ -201,12 +199,12 @@ function CreateEventForm() {
             <select
               name="appliesTo"
               value={""}
-              onChange={e => handleAppliesToChange(e)}
+              onChange={(e) => handleAppliesToChange(e)}
             >
               <option default value={""} disabled>
                 Applies to...
               </option>
-              {appliesToOptions.map(category => (
+              {appliesToOptions.map((category) => (
                 <option
                   key={category.value}
                   value={category.value}
@@ -226,7 +224,7 @@ function CreateEventForm() {
                 dateFormat="yyyy/MM/dd"
                 id="beginDate"
                 selected={beginDate}
-                onChange={date => setBeginDate(date)}
+                onChange={(date) => setBeginDate(date)}
                 popperPlacement="auto"
               />
             </div>
@@ -236,7 +234,7 @@ function CreateEventForm() {
                 dateFormat="yyyy/MM/dd"
                 id="endDate"
                 selected={endDate}
-                onChange={date => setEndDate(date)}
+                onChange={(date) => setEndDate(date)}
                 popperPlacement="auto"
               />
             </div>

@@ -25,7 +25,6 @@ const CREATE_CUSTOM_EVENT = gql`
     $zip: String
     $url: String
     $notes: String
-    $appliesTo: String!
   ) {
     createCustomEvent(
       name: $name
@@ -41,7 +40,6 @@ const CREATE_CUSTOM_EVENT = gql`
       zip: $zip
       url: $url
       notes: $notes
-      appliesTo: $appliesTo
     ) {
       id
       type
@@ -61,7 +59,6 @@ const initialInputState = {
   zip: "",
   url: "",
   notes: "",
-  appliesTo: "all"
 };
 
 function CreateCustomEventForm({ parent }) {
@@ -80,7 +77,7 @@ function CreateCustomEventForm({ parent }) {
       refetchQueries: [{ query: CUSTOM_EVENTS_QUERY }],
       onCompleted: () => {
         Router.push("/parent/notes/events");
-      }
+      },
     }
   );
 
@@ -94,8 +91,8 @@ function CreateCustomEventForm({ parent }) {
         ...inputs,
         dancerIds,
         beginDate: beginningDate,
-        endDate: endingDate
-      }
+        endDate: endingDate,
+      },
     });
   }
 
@@ -115,7 +112,7 @@ function CreateCustomEventForm({ parent }) {
     <Card>
       <Form
         method="post"
-        onSubmit={async e => {
+        onSubmit={async (e) => {
           await saveEvent(e);
         }}
       >
@@ -155,7 +152,7 @@ function CreateCustomEventForm({ parent }) {
           <div className="input-item">
             <SelectChoices>
               <label htmlFor="dancer">Dancer(s):*</label>
-              {Object.entries(dancerChoice).map(dancer => {
+              {Object.entries(dancerChoice).map((dancer) => {
                 return (
                   <li key={dancer[0]}>
                     {dancer[0]}
@@ -178,7 +175,7 @@ function CreateCustomEventForm({ parent }) {
                 id="dancer"
                 name="dancer"
                 value={""}
-                onChange={e => {
+                onChange={(e) => {
                   handleSelectChange(e);
                 }}
               >
@@ -186,7 +183,7 @@ function CreateCustomEventForm({ parent }) {
                   Dancer(s)...
                 </option>
                 {parent &&
-                  parent.dancers.map(dancer => (
+                  parent.dancers.map((dancer) => (
                     <option
                       key={dancer.id}
                       value={dancer.id}
@@ -207,7 +204,7 @@ function CreateCustomEventForm({ parent }) {
                 dateFormat="yyyy/MM/dd"
                 id="beginDate"
                 selected={beginDate}
-                onChange={date => setBeginDate(date)}
+                onChange={(date) => setBeginDate(date)}
                 popperPlacement="auto"
               />
             </div>
@@ -217,7 +214,7 @@ function CreateCustomEventForm({ parent }) {
                 dateFormat="yyyy/MM/dd"
                 id="endDate"
                 selected={endDate}
-                onChange={date => setEndDate(date)}
+                onChange={(date) => setEndDate(date)}
                 popperPlacement="auto"
               />
             </div>

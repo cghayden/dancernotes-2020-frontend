@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import Card from "../styles/Card";
-import Link from "next/link";
-import { RegistrationContext } from "./RegistrationContext";
+import { useContext } from 'react';
+import Card from '../styles/Card';
+import Link from 'next/link';
+import { RegistrationContext } from './RegistrationContext';
 
 const StudioCard = ({ studio, dancers }) => {
   const BrowsingContext = useContext(RegistrationContext);
@@ -11,20 +11,20 @@ const StudioCard = ({ studio, dancers }) => {
     <Card>
       <>
         <h2>{studio.studioName}</h2>
-        {dancers.map(dancer => {
+        {dancers.map((dancer) => {
           dancer.allClasses = [
             ...dancer.danceClasses,
-            ...dancer.customRoutines
+            ...dancer.customRoutines,
           ];
           const studioClasses = dancer.allClasses.filter(
-            danceClass => danceClass.studio.id === studio.id
+            (danceClass) => danceClass.studio.id === studio.id
           );
           return (
             studioClasses.length > 0 && (
-              <div>
+              <div key={dancer.firstName}>
                 <h4>{dancer.firstName}</h4>
-                {studioClasses.map(danceClass => (
-                  <p>{danceClass.name}</p>
+                {studioClasses.map((danceClass) => (
+                  <p key={danceClass.id}> {danceClass.name}</p>
                 ))}
               </div>
             )
@@ -33,7 +33,7 @@ const StudioCard = ({ studio, dancers }) => {
       </>
       <Link href={`/parent/account/browseStudio?studioId=${studio.id}`}>
         <button
-          className="btn-action-primary"
+          className='btn-action-primary'
           onClick={() => {
             console.log(dancers[0].id);
             setBrowsingDancer(dancers[0].id);
