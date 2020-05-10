@@ -25,7 +25,6 @@ function EventsPage() {
     loading: loadingCustomEvents,
     error: errorLoadingCustomEvents,
   } = useQuery(CUSTOM_EVENTS_QUERY);
-  console.log("customEvents:", customEvents);
 
   const {
     data: allRoutinesData,

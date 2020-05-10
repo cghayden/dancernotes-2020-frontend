@@ -16,8 +16,9 @@ const Avatar = styled.img`
   height: 35px;
   border-radius: 25px;
   margin: 0 0.25rem;
+  object-fit: cover;
 
-  @media (min-width: ${props => props.theme.largeScreen}) {
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
     width: 42px;
     height: 42px;
   }
@@ -27,8 +28,8 @@ const InactiveAvatar = styled(Avatar)`
   width: 32px;
   height: 32px;
   filter: grayscale(80%);
-  border: 2px solid ${props => props.theme.gray3};
-  @media (min-width: ${props => props.theme.largeScreen}) {
+  border: 2px solid ${(props) => props.theme.gray3};
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
     width: 38px;
     height: 38px;
   }
@@ -42,9 +43,9 @@ const Initial = styled.div`
   display: grid;
   place-items: center;
   font-size: 1.2em;
-  color: ${props => props.theme.indigo9};
-  background-color: ${props => props.theme.teal3};
-  @media (min-width: ${props => props.theme.largeScreen}) {
+  color: ${(props) => props.theme.indigo9};
+  background-color: ${(props) => props.theme.teal3};
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
     width: 42px;
     height: 42px;
   }
@@ -53,9 +54,9 @@ const InactiveInitial = styled(Initial)`
   width: 32px;
   height: 32px;
   filter: grayscale(80%);
-  color: ${props => props.theme.gray3};
-  background-color: ${props => props.theme.gray2};
-  @media (min-width: ${props => props.theme.largeScreen}) {
+  color: ${(props) => props.theme.gray3};
+  background-color: ${(props) => props.theme.gray2};
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
     width: 38px;
     height: 38px;
   }
@@ -67,7 +68,7 @@ export default class EnrolledDancers extends Component {
 
     return (
       <EnrolledDiv>
-        {dancers.map(dancer => {
+        {dancers.map((dancer) => {
           const visible =
             visibleDancersIds && visibleDancersIds.includes(dancer.id);
 
