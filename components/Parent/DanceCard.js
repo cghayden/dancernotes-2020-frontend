@@ -13,9 +13,6 @@ const DanceCardStyles = styled(Card)`
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1),
     -1px -1px 1px 0px rgba(0, 0, 0, 0.02);
-  img {
-    margin: 0;
-  }
 `;
 
 const DanceCardNav = styled.div`
@@ -28,10 +25,10 @@ const DanceCardNav = styled.div`
     margin: 0;
     &:hover,
     &:focus {
-      color: ${props => props.theme.indigo8};
+      color: ${(props) => props.theme.indigo8};
       background: none;
       outline: none;
-      border-bottom: 2px solid ${props => props.theme.indigo8};
+      border-bottom: 2px solid ${(props) => props.theme.indigo8};
       margin-bottom: -2px;
     }
   }
@@ -45,7 +42,7 @@ function DanceCard({ dance, visibleDancersIds }) {
 
   const animation = useSpring({
     overflow: "hidden",
-    height: showBody ? height : 0
+    height: showBody ? height : 0,
   });
 
   function toggleBody() {
