@@ -71,12 +71,17 @@ const STUDIO_ALL_DANCERS_QUERY = gql`
     studioDancers {
       id
       firstName
+      lastName
       parent {
         id
         firstName
+        lastName
         email
       }
       danceClasses {
+        studio {
+          id
+        }
         name
       }
     }
@@ -139,6 +144,29 @@ const STUDIO_EVENTS_QUERY = gql`
   }
 `;
 
+const STUDIO_DANCER = gql`
+  query($id: ID!) {
+    studioDancer(id: $id) {
+      id
+      firstName
+      lastName
+      parent {
+        id
+        firstName
+        lastName
+        email
+      }
+      danceClasses {
+        studio {
+          id
+        }
+        id
+        name
+      }
+    }
+  }
+`;
+
 export {
   CATEGORIES_QUERY,
   ALL_DANCE_CLASSES_QUERY,
@@ -146,5 +174,6 @@ export {
   SINGLE_DANCE_QUERY,
   ENROLLMENT_REQUESTS_QUERY,
   ACCESS_REQUESTS_QUERY,
-  STUDIO_EVENTS_QUERY
+  STUDIO_EVENTS_QUERY,
+  STUDIO_DANCER,
 };

@@ -1,7 +1,7 @@
-import React, { Component } from "react"
-import Meta from "./Meta"
-import { ThemeProvider, createGlobalStyle } from "styled-components"
-import { theme } from "./themeVariables"
+import React, { Component } from "react";
+import Meta from "./Meta";
+import { ThemeProvider, createGlobalStyle } from "styled-components";
+import { theme } from "./themeVariables";
 //adobe font = 1. lato, 2. source-sans-pro, 300,400,700, reg and italic
 
 const GlobalStyle = createGlobalStyle`
@@ -25,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
   h2,
   h3,
   h4,
-  h5{
+  h5, h6{
     margin: 0rem;
     letter-spacing: .02em;
   }
@@ -44,6 +44,9 @@ const GlobalStyle = createGlobalStyle`
   }
   h5{
     font-size: 1.05rem;
+  }
+  h6{
+    font-size: 1rem
   }
 
 
@@ -174,6 +177,11 @@ const GlobalStyle = createGlobalStyle`
     color: ${(props) => props.theme.green8};
     font-weight: bold;
   }
+  .activeStudioNav{
+      background: ${(props) => props.theme.indigo6};
+      color: ${(props) => props.theme.indigo0};
+        border-bottom: 2px solid ${(props) => props.theme.indigo8};
+      }
 
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     .hideOnMobile {
@@ -218,7 +226,7 @@ main {
   transform: translate3d(50%, 190%, 0px)
 }
 
-`
+`;
 
 export default class GlobalStyles extends Component {
   render() {
@@ -230,6 +238,6 @@ export default class GlobalStyles extends Component {
           {this.props.children}
         </>
       </ThemeProvider>
-    )
+    );
   }
 }

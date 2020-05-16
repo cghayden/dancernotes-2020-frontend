@@ -64,7 +64,6 @@ function EventsPage() {
     ...customEvents.customEvents,
     ...parentEvents.parentEvents,
   ];
-  console.log("allEvents:", allEvents);
 
   return (
     <>
