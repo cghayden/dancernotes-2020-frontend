@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import NewStudioHeader from "./NewStudioHeader";
 import NewStudioNav from "./NewStudioNav";
@@ -8,7 +7,7 @@ import { useStudio } from "../../components/Studio/useStudio";
 
 const BodyLayout = styled.div`
   display: grid;
-  grid-template-columns: auto 4fr;
+  grid-template-columns: auto 1fr;
 `;
 const Layout = styled.div`
   min-height: 100vh;
@@ -16,7 +15,7 @@ const Layout = styled.div`
 
 const NewStudioMain = styled.div`
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: auto 1fr;
 `;
 
 export default function NewStudioLayout({ children }) {
@@ -25,8 +24,9 @@ export default function NewStudioLayout({ children }) {
   return (
     <Layout>
       <NewStudioHeader />
-      <BodyLayout>
+      <BodyLayout className="bodyLayout">
         <NewStudioNav />
+        {/* subnav on every page */}
         <NewStudioMain>{children}</NewStudioMain>
       </BodyLayout>
     </Layout>

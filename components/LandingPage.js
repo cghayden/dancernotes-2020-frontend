@@ -18,10 +18,13 @@ const StyledLandingPage = styled.div`
   display: grid;
   grid-template-rows: min-content auto;
   color: white;
+  h1 {
+    color: white;
+  }
   background: linear-gradient(
     to bottom right,
-    ${props => props.theme.newBlue[60].hsl},
-    ${props => props.theme.newBlue[50].hsl}
+    ${(props) => props.theme.newBlue[60].hsl},
+    ${(props) => props.theme.newBlue[50].hsl}
   );
 `;
 
@@ -46,10 +49,10 @@ function LandingPage() {
     from: {
       position: "absolute",
       opacity: 0,
-      transform: "translate3d(100%, 0,0)"
+      transform: "translate3d(100%, 0,0)",
     },
     enter: { opacity: 1, transform: "translate3d(0,0,0)" },
-    leave: { opacity: 0, transform: "translate3d(-100%, 0,0)" }
+    leave: { opacity: 0, transform: "translate3d(-100%, 0,0)" },
   });
   return (
     <StyledLandingPage>

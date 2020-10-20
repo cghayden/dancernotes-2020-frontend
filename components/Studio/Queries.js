@@ -150,6 +150,7 @@ const STUDIO_DANCER = gql`
       id
       firstName
       lastName
+      avatar
       parent {
         id
         firstName
