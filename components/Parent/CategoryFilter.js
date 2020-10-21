@@ -13,6 +13,12 @@ const CheckboxDiv = styled.div`
   }
 `;
 
+const MotionContainer = styled(motion.div)`
+  overflow: hidden;
+  position: absolute;
+  background: ${(props) => props.theme.gray0};
+`;
+
 const CategoryFilter = ({ setFilter, filter, category, choices }) => {
   const [isOpen, toggleIsOpen] = useState(false);
 
@@ -61,8 +67,7 @@ const CategoryFilter = ({ setFilter, filter, category, choices }) => {
   return (
     <CheckboxDiv>
       <button
-        // role="button"
-        // tabIndex="0"
+        style={{ position: "relative" }}
         onClick={() => toggleIsOpen(!isOpen)}
         className="category-heading"
       >
@@ -70,12 +75,10 @@ const CategoryFilter = ({ setFilter, filter, category, choices }) => {
       </button>
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <MotionContainer
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.5 }}
-            style={{ overflow: "hidden" }}
           >
             <ul>
               {choices &&
@@ -95,7 +98,7 @@ const CategoryFilter = ({ setFilter, filter, category, choices }) => {
                   );
                 })}
             </ul>
-          </motion.div>
+          </MotionContainer>
         )}
       </AnimatePresence>
     </CheckboxDiv>

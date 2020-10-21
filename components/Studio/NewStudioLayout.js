@@ -14,8 +14,8 @@ const Layout = styled.div`
 `;
 
 const NewStudioMain = styled.div`
-  display: grid;
-  grid-template-columns: auto 1fr;
+  display: flex;
+  /* grid-template-columns: auto 1fr; */
 `;
 
 export default function NewStudioLayout({ children }) {

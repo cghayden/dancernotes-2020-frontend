@@ -18,6 +18,8 @@ const FilterPanelStyles = styled.div`
   background-color: ${(props) => props.theme.gray0};
   z-index: 130;
   overflow-y: scroll;
+  display: flex;
+  align-items: center;
 
   /* buttons on large screen to trigger dropdown of hidden checkboxes */
   a,
@@ -37,21 +39,23 @@ const FilterPanelStyles = styled.div`
   }
 
   @media (min-width: ${(props) => props.theme.largeScreen}) {
-    border-right: 1px solid ${(props) => props.theme.gray3};
-
-    position: static;
+    border-bottom: 1px solid ${(props) => props.theme.gray3};
+    padding: 1rem 1rem 1rem 1rem;
+    position: relative;
     background-color: ${(props) => props.theme.background};
-    width: 20vw;
-    max-width: 200px;
-    min-width: 150px;
-    height: 100vh;
+    width: 100%;
+    /* max-width: 200px; */
+    /* min-width: 150px; */
+    height: auto;
     transform: translateX(0%);
     border-radius: 0;
     box-shadow: none;
-    display: block;
+    display: flex;
+    justify-content: space-evenly;
     left: auto;
     top: auto;
     margin-top: 0;
+    overflow-y: visible;
     ul {
       font-size: 1rem;
       align-items: start;
@@ -103,9 +107,9 @@ const ActiveFilters = styled.div`
 
 const CheckboxArea = styled.div`
   padding: 1rem 0;
-  display: grid;
-  grid-row-gap: 0.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 150px));
+  display: flex;
+  /* grid-row-gap: 0.5rem; */
+  /* grid-template-columns: repeat(auto-fit, minmax(100px, 150px)); */
   justify-content: center;
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     grid-template-columns: repeat(auto-fit, minmax(100px, 200px));
@@ -141,19 +145,16 @@ const NewClassFilter = ({ studio, filter, setFilter, open, closeControls }) => {
   };
   return (
     <FilterPanelStyles showControlPanel={open}>
-      <h2>Filters</h2>
-      <FilterPanelHeader>
-        <CloseFilterPanel onClick={closeControls}>Close</CloseFilterPanel>
-      </FilterPanelHeader>
-      <CheckboxAreaHeader>
-        <h3>Filter By:</h3>
-        {/* show clear button if there are active filters*/}
+      {/* <FilterPanelHeader> */}
+      {/* <h2>Filters</h2> */}
+      {/* <CloseFilterPanel onClick={closeControls}>Close</CloseFilterPanel> */}
+      {/* <CheckboxAreaHeader>
         {Object.keys(filter).length > 0 && (
           <button onClick={clearFilter}>Clear All</button>
         )}
-      </CheckboxAreaHeader>
-      <ActiveFilters>
-        {/*display a list of the active filters */}
+      </CheckboxAreaHeader> */}
+      {/* </FilterPanelHeader> */}
+      {/* <ActiveFilters>
         {Object.keys(filter).length > 0 && (
           <ul>
             {activeFilters.map((choice) => (
@@ -161,21 +162,21 @@ const NewClassFilter = ({ studio, filter, setFilter, open, closeControls }) => {
             ))}
           </ul>
         )}
-      </ActiveFilters>
-      <CheckboxArea>
-        {filterOptions.map((filterCategory) => {
-          const pluralCategory = filterCategory.concat("s");
-          return (
-            <CategoryFilter
-              key={filterCategory}
-              setFilter={setFilter}
-              filter={filter}
-              category={filterCategory}
-              choices={filterCategory === "day" ? days : studio[pluralCategory]}
-            />
-          );
-        })}
-      </CheckboxArea>
+      </ActiveFilters> */}
+      {/* <CheckboxArea> */}
+      {filterOptions.map((filterCategory) => {
+        const pluralCategory = filterCategory.concat("s");
+        return (
+          <CategoryFilter
+            key={filterCategory}
+            setFilter={setFilter}
+            filter={filter}
+            category={filterCategory}
+            choices={filterCategory === "day" ? days : studio[pluralCategory]}
+          />
+        );
+      })}
+      {/* </CheckboxArea> */}
     </FilterPanelStyles>
   );
 };
