@@ -16,9 +16,12 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${theme.background};
     margin: 0;
     line-height: 1.25;
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: "Source Sans Pro", "Roboto", -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue;
+    ${
+      "" /* font-family: "Source Sans Pro", -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue; */
+    }
     font-weight: 400;
-    color: ${theme.blackText};
+    color: ${theme.gray6};
   }
   
   h1,
@@ -28,6 +31,7 @@ const GlobalStyle = createGlobalStyle`
   h5, h6{
     margin: 0rem;
     letter-spacing: .02em;
+    color: ${theme.gray8}
   }
 
   h1{
@@ -107,10 +111,14 @@ const GlobalStyle = createGlobalStyle`
       } 
   }
   &.btn-action-primary{
-      background-color: ${theme.indigo5};
-      color: ${theme.indigo0};
-      :hover {
       background-color: ${theme.indigo6};
+      color: hsl(200,95%,95%);
+      :hover {
+      background-color: ${theme.indigo5};
+      }
+      :focus {
+      background-color: ${theme.indigo4};
+      outline: 2px solid ${theme.indigo0};
       }   
     }
     &.btn-action-primary-outline{
@@ -174,16 +182,25 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .active {
-    color: ${(props) => props.theme.green8};
+    color: ${theme.green8};
     font-weight: bold;
   }
   .activeStudioNav{
-      background: ${(props) => props.theme.indigo6};
-      color: ${(props) => props.theme.indigo0};
-        border-bottom: 2px solid ${(props) => props.theme.indigo8};
+      background: ${theme.indigo6};
+      color: hsl(200, 95%,95%);
+      :focus{
+        outline: 2px solid ${theme.indigo2};
+        background: ${theme.indigo6};
+        box-shadow: 1px -1px 3px 2px ${theme.indigo2}, 1px 1px 3px 2px ${
+  theme.indigo2
+};      
+        ${"" /* box-shadow: 1px 1px 3px 2px ${theme.indigo2};       */}
+        color: hsl(200, 95%,95%);
+
+      }
       }
 
-  @media (min-width: ${(props) => props.theme.largeScreen}) {
+  @media (min-width: ${theme.largeScreen}) {
     .hideOnMobile {
       display: block;
     }

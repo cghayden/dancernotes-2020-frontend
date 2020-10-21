@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import NewStudioLayout from "../../components/Studio/NewStudioLayout";
 import styled from "styled-components";
-import PageOptions from "../../components/styles/PageOptions";
+import NewNavSidebarContainer from "../../components/styles/NewNavSidebarContainer";
+import NavSection from "../../components/styles/NavSection";
 // import SelectionWindow from "../../components/styles/SelectionWindow";
 import Dancer from "../../components/Studio/Dancer";
 import { STUDIO_ALL_DANCERS_QUERY } from "../../components/Studio/Queries";
@@ -10,19 +11,18 @@ import { STUDIO_ALL_DANCERS_QUERY } from "../../components/Studio/Queries";
 export default function newDancersPage() {
   const { data, error, loading } = useQuery(STUDIO_ALL_DANCERS_QUERY);
   const [choice, setChoice] = useState();
-  data && console.log("page query data:", data);
 
   if (data) {
     return (
       <NewStudioLayout>
-        <PageOptions>
+        <NewNavSidebarContainer>
           <NavSection>
             <h2>Dancers</h2>
             <ul>
               {data.studioDancers.map((dancer) => (
                 <button
+                  className={choice === dancer.id ? `activeStudioNav` : null}
                   key={dancer.id}
-                  activeClassName="activeStudioNav"
                   onClick={() => setChoice(dancer.id)}
                 >
                   {dancer.lastName}, {dancer.firstName}
@@ -30,8 +30,7 @@ export default function newDancersPage() {
               ))}
             </ul>
           </NavSection>
-        </PageOptions>
-
+        </NewNavSidebarContainer>
         {choice && (
           <SelectionWindow>
             <Dancer id={choice} />
@@ -42,14 +41,6 @@ export default function newDancersPage() {
   }
   return null;
 }
-
-const NavSection = styled.div`
-  padding: 10px 0;
-  h2 {
-    color: ${(props) => props.theme.black};
-    padding-left: 1rem;
-  }
-`;
 
 const SelectionWindow = styled.div`
   padding: 2rem;

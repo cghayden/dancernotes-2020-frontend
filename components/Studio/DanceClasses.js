@@ -18,7 +18,7 @@ const LargeScreenActiveFilters = styled(ActiveFilters)`
     font-size: 1rem;
   }
   margin-bottom: 0.5rem;
-  @media (min-width: ${props => props.theme.largeScreen}) {
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
     h2 {
       font-size: 1.25rem;
     }
@@ -26,13 +26,13 @@ const LargeScreenActiveFilters = styled(ActiveFilters)`
   }
 `;
 
-const DanceClasses = ({ classFilter, studio }) => {
+const DanceClasses = ({ classFilter }) => {
   const { data, loading, error } = useQuery(ALL_DANCE_CLASSES_QUERY);
   const allStudioDanceClasses = data ? data.allStudioDanceClasses : [];
   function compareDanceToFilter(danceClass, filter) {
     let pass = true;
     const filterCategories = Object.keys(filter);
-    filterCategories.forEach(category => {
+    filterCategories.forEach((category) => {
       if (!filter[category].includes(danceClass[category])) {
         pass = false;
       }
@@ -40,10 +40,13 @@ const DanceClasses = ({ classFilter, studio }) => {
     return pass;
   }
 
-  const filteredClasses = allStudioDanceClasses.filter(danceClass =>
+  const filteredClasses = allStudioDanceClasses.filter((danceClass) =>
     compareDanceToFilter(danceClass, classFilter)
   );
   const activeFilters = [].concat.apply([], Object.values(classFilter));
+
+  console.log("data:", data);
+  console.log("filteredClasses:", filteredClasses);
 
   if (loading) return <Loading />;
   if (error) return <Error error={error} />;
@@ -57,7 +60,7 @@ const DanceClasses = ({ classFilter, studio }) => {
             <FiltersDisplay>
               <h2>Active Filters:</h2>
               <ul>
-                {activeFilters.map(choice => (
+                {activeFilters.map((choice) => (
                   <li key={choice}>{choice}</li>
                 ))}
               </ul>
@@ -65,9 +68,11 @@ const DanceClasses = ({ classFilter, studio }) => {
           </>
         )}
       </LargeScreenActiveFilters>
-      {filteredClasses.map(dance => (
-        <StudioDanceCard key={dance.id} dance={dance} />
-      ))}
+      <div>
+        {filteredClasses.map((dance) => (
+          <StudioDanceCard key={dance.id} dance={dance} />
+        ))}
+      </div>
     </>
   );
 };

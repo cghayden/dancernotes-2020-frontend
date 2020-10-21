@@ -3,16 +3,14 @@ import { useQuery } from "@apollo/react-hooks";
 import Card from "../styles/Card";
 import styled from "styled-components";
 
-// export default function Dancer({ id = null }) {
-//   if (id) {
-
-//   return null;
-// }
-
 const DancerInfoCard = styled(Card)`
   display: grid;
+  max-width: 1000px;
+  font-size: 18px;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 75px 1fr;
+  text-align: left;
+  justify-items: center;
   h4 {
     padding: 5px 0;
   }
@@ -21,7 +19,7 @@ const DancerInfoCard = styled(Card)`
     padding: 5px 0;
   }
   a {
-    padding: 0;
+    padding: 2px 0;
     margin: 0;
   }
   .personalInfo,
@@ -32,11 +30,33 @@ const DancerInfoCard = styled(Card)`
     grid-column: 1/-1;
     grid-row: 1;
     place-self: center;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    /* justify-content: space-b */
+  }
+  .avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 25px;
+    margin: 0 0.25rem;
+    object-fit: cover;
+
+    @media (min-width: ${(props) => props.theme.largeScreen}) {
+      width: 42px;
+      height: 42px;
+    }
+    margin-right: auto;
   }
   .profile {
     grid-column: 1;
     grid-row: 2;
     border-right: 2px solid ${(props) => props.theme.gray3};
+    justify-items: stretch;
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    grid-template-rows: auto 1fr;
   }
   .studioInfo {
     grid-column: 2;
@@ -53,6 +73,7 @@ export default function Dancer({ id }) {
     return (
       <DancerInfoCard>
         <div className="card__header dancerName">
+          {dancer.avatar && <img src={dancer.avatar} alt={dancer.firstName} />}
           <h3>
             {dancer.firstName} {dancer.lastName}
           </h3>
@@ -62,7 +83,7 @@ export default function Dancer({ id }) {
           <section className="dancerInfo">
             <h4>Personal Information</h4>
             <section>
-              <h5>Address</h5>
+              {/* <h5>Address</h5> */}
               <p>123 Scarlet Way</p>
               <p>Begonia, MA 50877</p>
             </section>
@@ -90,9 +111,12 @@ export default function Dancer({ id }) {
               </section>
 
               <section>
-                <p>
-                  781-223-9876 <span>(Mobile)</span>
-                </p>
+                <a
+                  className="btn-action-primary-textOnly"
+                  href={`tel:+1(781)752-6489`}
+                >
+                  781-752-6489 <span>(Mobile)</span>
+                </a>
                 <p>
                   781-508-1368<span>(Home)</span>
                 </p>

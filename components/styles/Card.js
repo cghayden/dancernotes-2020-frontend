@@ -2,11 +2,10 @@ import styled from "styled-components";
 
 const Card = styled.div`
   text-align: center;
-  border-radius: ${props => props.theme.borderRadius};
-  color: ${props => props.theme.blackText};
-  /* color: ${props => props.theme.newBlue[90].hsl}; */
-  background-color: ${props => props.theme.gray0};
-  box-shadow: ${props => props.theme.dropShadow1};
+  border-radius: ${(props) => props.theme.borderRadius};
+  /* color: ${(props) => props.theme.newBlue[90].hsl}; */
+  background-color: ${(props) => props.theme.gray0};
+  box-shadow: ${(props) => props.theme.dropShadow1};
   margin: 0 auto 1rem auto;
   padding: 1rem 3vmin;
   width: 94%;
