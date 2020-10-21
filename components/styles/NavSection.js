@@ -21,7 +21,7 @@ const NavSection = styled.div`
 
   h2 {
     color: ${(props) => props.theme.black};
-    padding: 0.5rem 0 0.5rem 1rem;
+    padding: 1rem 0 1rem 1rem;
   }
 `;
 

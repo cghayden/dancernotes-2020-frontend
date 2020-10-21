@@ -8,7 +8,7 @@ import NavSection from "../../components/styles/NavSection";
 // import Dancer from "../../components/Studio/Dancer";
 import { ALL_DANCE_CLASSES_QUERY } from "../../components/Studio/Queries";
 import DanceClasses from "../../components/Studio/DanceClasses";
-import NewClassFilter from "../../components/Studio/newClassFilter";
+import NewClassFilter from "../../components/Studio/NewClassFilter";
 import { useStudio } from "../../components/Studio/useStudio";
 import { useDisplayControls } from "../../components/Parent/ParentDisplayProvider";
 

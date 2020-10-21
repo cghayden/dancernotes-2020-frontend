@@ -52,36 +52,6 @@ export default function NewStudioNav() {
           </li>
         </ul>
       </NavSection>
-      <NavSection>
-        <h2>My Studio</h2>
-        <ul>
-          <li>
-            <StyledLink activeClassName="active" href="teachers">
-              <a>Classes</a>
-            </StyledLink>
-          </li>
-          <li>
-            <StyledLink activeClassName="active" href="dancers">
-              <a>Dancers</a>
-            </StyledLink>
-          </li>
-          <li>
-            <StyledLink activeClassName="active" href="events">
-              <a>Events</a>
-            </StyledLink>
-          </li>
-          <li>
-            <StyledLink activeClassName="active" href="hairstyles">
-              <a>Hairstyles</a>
-            </StyledLink>
-          </li>
-          <li>
-            <StyledLink activeClassName="active" href="makeup">
-              <a>Makeup</a>
-            </StyledLink>
-          </li>
-        </ul>
-      </NavSection>
     </NewNavSidebarContainer>
   );
 }

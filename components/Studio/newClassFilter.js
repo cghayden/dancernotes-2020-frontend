@@ -27,7 +27,6 @@ const FilterPanelStyles = styled.div`
     max-width: 200px;
     min-width: 150px;
     height: 100vh;
-
     /* padding: 1rem 1rem 100px 3vw; */
     transform: translateX(0%);
     border-radius: 0;
