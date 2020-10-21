@@ -20,6 +20,23 @@ const FilterPanelStyles = styled.div`
   z-index: 130;
   overflow-y: scroll;
 
+  /* buttons on large screen to trigger dropdown of hidden checkboxes */
+  a,
+  button {
+    border-radius: 0;
+    margin: 0;
+    padding: 10px 0.5rem 0.5rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+
+    &:hover {
+      color: hsl(200, 95%, 95%);
+      background: ${(props) => props.theme.indigo5};
+    }
+  }
+
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     position: static;
     background-color: ${(props) => props.theme.background};
@@ -27,13 +44,11 @@ const FilterPanelStyles = styled.div`
     max-width: 200px;
     min-width: 150px;
     height: 100vh;
-    /* padding: 1rem 1rem 100px 3vw; */
     transform: translateX(0%);
     border-radius: 0;
     box-shadow: none;
     display: block;
     left: auto;
-    /* right: 0; */
     top: auto;
     margin-top: 0;
     ul {

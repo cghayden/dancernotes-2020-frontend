@@ -1,5 +1,6 @@
+import { useState } from "react";
 import styled from "styled-components";
-
+import { AnimatePresence, motion } from "framer-motion";
 const CheckboxDiv = styled.div`
   .category-heading {
     text-transform: uppercase;
@@ -13,6 +14,8 @@ const CheckboxDiv = styled.div`
 `;
 
 const CategoryFilter = ({ setFilter, filter, category, choices }) => {
+  const [isOpen, toggleIsOpen] = useState(false);
+
   function removeFromArray(array, item) {
     const index = array.indexOf(item);
     array.splice(index, 1);
@@ -38,7 +41,7 @@ const CategoryFilter = ({ setFilter, filter, category, choices }) => {
       filter[category] = [choice];
     }
 
-    setFilter(filter =>
+    setFilter((filter) =>
       Object.hasOwnProperty([category])
         ? { ...filter, [category]: newChoices }
         : { ...filter }
@@ -57,25 +60,44 @@ const CategoryFilter = ({ setFilter, filter, category, choices }) => {
 
   return (
     <CheckboxDiv>
-      <h4 className="category-heading">{formatHeading(category)}</h4>
-      <ul>
-        {choices &&
-          choices.map(choice => {
-            return (
-              <li key={choice}>
-                <input
-                  type="checkbox"
-                  checked={
-                    filter.hasOwnProperty([category]) &&
-                    filter[category].includes(choice)
-                  }
-                  onChange={() => handleChange(category, choice)}
-                />
-                <label>{choice}</label>
-              </li>
-            );
-          })}
-      </ul>
+      <button
+        // role="button"
+        // tabIndex="0"
+        onClick={() => toggleIsOpen(!isOpen)}
+        className="category-heading"
+      >
+        {formatHeading(category)}
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{ overflow: "hidden" }}
+          >
+            <ul>
+              {choices &&
+                choices.map((choice) => {
+                  return (
+                    <li key={choice}>
+                      <input
+                        type="checkbox"
+                        checked={
+                          filter.hasOwnProperty([category]) &&
+                          filter[category].includes(choice)
+                        }
+                        onChange={() => handleChange(category, choice)}
+                      />
+                      <label>{choice}</label>
+                    </li>
+                  );
+                })}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </CheckboxDiv>
   );
 };
