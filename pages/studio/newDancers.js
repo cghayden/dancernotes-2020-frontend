@@ -32,18 +32,12 @@ export default function newDancersPage() {
           </NavSection>
         </NewNavSidebarContainer>
         {choice && (
-          <SelectionWindow>
+          <div className="selectionWindow">
             <Dancer id={choice} />
-          </SelectionWindow>
+          </div>
         )}
       </NewStudioLayout>
     );
   }
   return null;
 }
-
-const SelectionWindow = styled.div`
-  padding: 2rem;
-  display: grid;
-  justify-items: center;
-`;

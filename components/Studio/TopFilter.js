@@ -41,19 +41,16 @@ const FilterPanelStyles = styled.div`
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     border-bottom: 1px solid ${(props) => props.theme.gray3};
     padding: 1rem 1rem 1rem 1rem;
-    position: relative;
+    top: ${(props) => props.theme.studioHeaderHeight};
+    left: auto;
+    height: ${(props) => props.theme.topFilterHeight};
     background-color: ${(props) => props.theme.background};
     width: 100%;
-    /* max-width: 200px; */
-    /* min-width: 150px; */
-    height: auto;
     transform: translateX(0%);
     border-radius: 0;
     box-shadow: none;
     display: flex;
     justify-content: space-evenly;
-    left: auto;
-    top: auto;
     margin-top: 0;
     overflow-y: visible;
     ul {

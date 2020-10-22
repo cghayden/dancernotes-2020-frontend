@@ -13,20 +13,14 @@ import { useStudio } from "../../components/Studio/useStudio";
 import { useDisplayControls } from "../../components/Parent/ParentDisplayProvider";
 
 export default function newClassesPage() {
-  const { data, error, loading } = useQuery(ALL_DANCE_CLASSES_QUERY);
-  const [choice, setChoice] = useState();
+  // const { data, error, loading } = useQuery(ALL_DANCE_CLASSES_QUERY);
   const [classFilter, setFilter] = useState({});
   const { showControlPanel, toggleControlPanel } = useDisplayControls();
   const studio = useStudio();
-  if (data) {
-    return (
-      <NewStudioLayout>
-        {/* <NewNavSidebarContainer> */}
-        {/* <NavSection> */}
-
-        {/* </NavSection> */}
-        {/* </NewNavSidebarContainer> */}
-        <SelectionWindow>
+  return (
+    <NewStudioLayout>
+      {studio && (
+        <div className="selectionWindow">
           <TopFilter
             studio={studio}
             filter={classFilter}
@@ -36,18 +30,16 @@ export default function newClassesPage() {
           />
           <DanceClasses
             classFilter={classFilter}
-            // studio={studio}
             toggleControls={toggleControlPanel}
           />
-        </SelectionWindow>
-      </NewStudioLayout>
-    );
-  }
-  return null;
+        </div>
+      )}
+    </NewStudioLayout>
+  );
 }
 
 const SelectionWindow = styled.div`
-  padding: 2rem;
+  /* padding: 2rem; */
   height: 100vh;
   width: 100%;
   overflow-y: scroll;

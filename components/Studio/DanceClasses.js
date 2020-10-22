@@ -8,6 +8,11 @@ import Loading from "../Loading";
 import styled from "styled-components";
 import { ActiveFilters } from "./ClassFilter";
 
+const DanceClassesDiv = styled.div`
+  margin-top: ${(props) => props.theme.topFilterHeight};
+  padding-top: 2rem;
+`;
+
 const FiltersDisplay = styled.div`
   text-align: left;
   display: flex;
@@ -68,11 +73,11 @@ const DanceClasses = ({ classFilter }) => {
           </>
         )}
       </LargeScreenActiveFilters>
-      <div>
+      <DanceClassesDiv>
         {filteredClasses.map((dance) => (
           <StudioDanceCard key={dance.id} dance={dance} />
         ))}
-      </div>
+      </DanceClassesDiv>
     </>
   );
 };
