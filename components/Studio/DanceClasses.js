@@ -9,7 +9,7 @@ import styled from "styled-components";
 import { ActiveFilters } from "./ClassFilter";
 
 const DanceClassesDiv = styled.div`
-  margin-top: ${(props) => props.theme.topFilterHeight};
+  /* margin-top: ${(props) => props.theme.topFilterHeight}; */
   padding-top: 2rem;
 `;
 

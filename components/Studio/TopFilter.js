@@ -39,9 +39,10 @@ const FilterPanelStyles = styled.div`
   }
 
   @media (min-width: ${(props) => props.theme.largeScreen}) {
+    position: sticky;
     border-bottom: 1px solid ${(props) => props.theme.gray3};
     padding: 1rem 1rem 1rem 1rem;
-    top: ${(props) => props.theme.studioHeaderHeight};
+    top: 0;
     left: auto;
     height: ${(props) => props.theme.topFilterHeight};
     background-color: ${(props) => props.theme.background};

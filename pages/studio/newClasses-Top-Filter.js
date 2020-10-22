@@ -20,7 +20,7 @@ export default function newClassesPage() {
   return (
     <NewStudioLayout>
       {studio && (
-        <div className="selectionWindow">
+        <>
           <TopFilter
             studio={studio}
             filter={classFilter}
@@ -28,11 +28,13 @@ export default function newClassesPage() {
             open={showControlPanel}
             closeControls={toggleControlPanel}
           />
-          <DanceClasses
-            classFilter={classFilter}
-            toggleControls={toggleControlPanel}
-          />
-        </div>
+          <div className="selectionWindow">
+            <DanceClasses
+              classFilter={classFilter}
+              toggleControls={toggleControlPanel}
+            />
+          </div>
+        </>
       )}
     </NewStudioLayout>
   );

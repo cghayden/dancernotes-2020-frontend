@@ -21,13 +21,12 @@ const Layout = styled.div`
 `;
 
 const NewStudioMain = styled.div`
-  display: flex;
+  display: grid;
   width: 100%;
   grid-column: 2/-1;
   grid-row: 2/-1;
   overflow-y: scroll;
   margin-top: ${(props) => props.theme.filterTopHeight};
-  /* grid-template-columns: auto 1fr; */
 `;
 
 export default function NewStudioLayout({ children }) {
