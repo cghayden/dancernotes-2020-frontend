@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 const CheckboxDiv = styled.div`
@@ -21,6 +21,25 @@ const MotionContainer = styled(motion.div)`
 
 const CategoryFilter = ({ setFilter, filter, category, choices }) => {
   const [isOpen, toggleIsOpen] = useState(false);
+  const dropDownRef = useRef();
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keyup", handleEscKey);
+    return function () {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keyup", handleEscKey);
+    };
+  }, []);
+
+  function handleEscKey(e) {
+    if (e.key === "Escape") toggleIsOpen(false);
+  }
+  function handleClickOutside(e) {
+    if (!dropDownRef?.current?.contains(e.target)) {
+      toggleIsOpen(false);
+    }
+  }
 
   function removeFromArray(array, item) {
     const index = array.indexOf(item);
@@ -64,21 +83,29 @@ const CategoryFilter = ({ setFilter, filter, category, choices }) => {
     return category;
   }
 
+  const FilterDropDownButton = styled.button`
+    position: "relative";
+    pointer-events: ${(props) => (props.ignoreClick ? "none" : "auto")};
+  `;
+
   return (
     <CheckboxDiv>
-      <button
-        style={{ position: "relative" }}
-        onClick={() => toggleIsOpen(!isOpen)}
-        className="category-heading"
+      <FilterDropDownButton
+        ignoreClick={isOpen}
+        onClick={(e) => {
+          toggleIsOpen(!isOpen);
+        }}
+        className={`category-heading`}
       >
         {formatHeading(category)}
-      </button>
+      </FilterDropDownButton>
       <AnimatePresence>
         {isOpen && (
           <MotionContainer
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
+            ref={dropDownRef}
           >
             <ul>
               {choices &&
