@@ -8,14 +8,12 @@ import Loading from "../Loading";
 import styled from "styled-components";
 // import { ActiveFilters } from "./ClassFilter";
 
-const FiltersDisplay = styled.div`
-  text-align: left;
-  display: flex;
+const SelectedDances = styled.div`
+  padding-top: 1rem;
 `;
 
-const ActiveFilters = styled.div`
+const ActiveFilters = styled(motion.div)`
   display: flex;
-  margin-bottom: 0.5rem;
   ul {
     display: flex;
     align-content: center;
@@ -43,12 +41,17 @@ const ActiveFilters = styled.div`
 `;
 
 const DancesSelectionWindow = styled.div`
-  padding: 1rem;
   height: 100vh;
   overflow-y: scroll;
   display: grid;
   grid-template-rows: minmax(4rem, auto) 1fr;
-  grid-column: 2/-1;
+`;
+
+const DancesHeading = styled.div`
+  place-self: center;
+  h2 {
+    font-size: 1.5rem;
+  }
 `;
 
 const DanceClasses = ({ classFilter, setFilter }) => {
@@ -91,93 +94,116 @@ const DanceClasses = ({ classFilter, setFilter }) => {
 
   return (
     <DancesSelectionWindow>
-      <ActiveFilters>
-        <ul>
-          <AnimatePresence>
-            {classFilter.competitiveLevel?.map((selection) => (
-              <motion.li
-                key={selection}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <span>{selection}</span>
-                <button
-                  onClick={() =>
-                    removeChoiceFromFilter("competitiveLevel", selection)
-                  }
-                >
-                  X
-                </button>
-              </motion.li>
-            ))}
-          </AnimatePresence>
-        </ul>
-        <ul>
-          <AnimatePresence>
-            {classFilter.ageDivision?.map((selection) => (
-              <motion.li
-                key={selection}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <span>{selection}</span>
-                <button
-                  onClick={() =>
-                    removeChoiceFromFilter("ageDivision", selection)
-                  }
-                >
-                  X
-                </button>
-              </motion.li>
-            ))}
-          </AnimatePresence>
-        </ul>
-        <ul>
-          <AnimatePresence>
-            {classFilter.style?.map((selection) => (
-              <motion.li
-                key={selection}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <span>{selection}</span>
-                <button
-                  onClick={() => removeChoiceFromFilter("style", selection)}
-                >
-                  X
-                </button>
-              </motion.li>
-            ))}
-          </AnimatePresence>
-        </ul>
-        <ul>
-          <AnimatePresence>
-            {classFilter.day?.map((selection) => (
-              <motion.li
-                key={selection}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <span>{selection}</span>
-                <button
-                  onClick={() => removeChoiceFromFilter("day", selection)}
-                >
-                  X
-                </button>
-              </motion.li>
-            ))}
-          </AnimatePresence>
-        </ul>
-      </ActiveFilters>
-      <div>
+      <DancesHeading>
+        <AnimatePresence exitBeforeEnter>
+          {Object.keys(classFilter).length === 0 ? (
+            <motion.div
+              key={"heading"}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <h2>All Classes</h2>
+            </motion.div>
+          ) : (
+            <ActiveFilters
+              key={"lists"}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <ul>
+                <AnimatePresence>
+                  {classFilter.competitiveLevel?.map((selection) => (
+                    <motion.li
+                      key={selection}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      <span>{selection}</span>
+                      <button
+                        onClick={() =>
+                          removeChoiceFromFilter("competitiveLevel", selection)
+                        }
+                      >
+                        X
+                      </button>
+                    </motion.li>
+                  ))}
+                </AnimatePresence>
+              </ul>
+              <ul>
+                <AnimatePresence>
+                  {classFilter.ageDivision?.map((selection) => (
+                    <motion.li
+                      key={selection}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      <span>{selection}</span>
+                      <button
+                        onClick={() =>
+                          removeChoiceFromFilter("ageDivision", selection)
+                        }
+                      >
+                        X
+                      </button>
+                    </motion.li>
+                  ))}
+                </AnimatePresence>
+              </ul>
+              <ul>
+                <AnimatePresence>
+                  {classFilter.style?.map((selection) => (
+                    <motion.li
+                      key={selection}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      <span>{selection}</span>
+                      <button
+                        onClick={() =>
+                          removeChoiceFromFilter("style", selection)
+                        }
+                      >
+                        X
+                      </button>
+                    </motion.li>
+                  ))}
+                </AnimatePresence>
+              </ul>
+              <ul>
+                <AnimatePresence>
+                  {classFilter.day?.map((selection) => (
+                    <motion.li
+                      key={selection}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      <span>{selection}</span>
+                      <button
+                        onClick={() => removeChoiceFromFilter("day", selection)}
+                      >
+                        X
+                      </button>
+                    </motion.li>
+                  ))}
+                </AnimatePresence>
+              </ul>
+            </ActiveFilters>
+          )}
+        </AnimatePresence>
+      </DancesHeading>
+
+      <SelectedDances>
         {filteredClasses.map((dance) => (
           <StudioDanceCard key={dance.id} dance={dance} />
         ))}
-      </div>
+      </SelectedDances>
     </DancesSelectionWindow>
   );
 };

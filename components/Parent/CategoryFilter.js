@@ -5,9 +5,6 @@ const CheckboxDiv = styled.div`
   .category-heading {
     text-transform: uppercase;
   }
-  ul {
-    padding: 1rem;
-  }
   li {
     padding: 0.25rem 0;
   }

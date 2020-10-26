@@ -20,7 +20,7 @@ export default function NewStudioNav() {
           <li>
             <StyledLink
               activeClassName="activeStudioNav"
-              href="/studio/newDancers"
+              href="/studio/dancers"
             >
               <a>Dancers</a>
             </StyledLink>
@@ -48,6 +48,35 @@ export default function NewStudioNav() {
           <li>
             <StyledLink activeClassName="active" href="accounts">
               <a>Accounts</a>
+            </StyledLink>
+          </li>
+        </ul>
+      </NavSection>
+      <NavSection>
+        <h2>Manage</h2>
+        <ul>
+          <li>
+            <StyledLink
+              activeClassName="activeStudioNav"
+              href="/studio/newClasses"
+            >
+              <a>Classes View 2</a>
+            </StyledLink>
+          </li>
+          <li>
+            <StyledLink
+              activeClassName="activeStudioNav"
+              href="/studio/newClasses-Top-Nav"
+            >
+              <a>Classes v2 TopFilt</a>
+            </StyledLink>
+          </li>
+          <li>
+            <StyledLink
+              activeClassName="activeStudioNav"
+              href="/studio/newDancers"
+            >
+              <a>Dancers View 2</a>
             </StyledLink>
           </li>
         </ul>

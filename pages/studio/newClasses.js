@@ -21,22 +21,17 @@ export default function newClassesPage() {
   if (data) {
     return (
       <NewStudioLayout>
-        {/* <NewNavSidebarContainer> */}
-        {/* <NavSection> */}
+        <DanceClasses
+          classFilter={classFilter}
+          setFilter={setFilter}
+          toggleControls={toggleControlPanel}
+        />
         <NewClassFilter
           studio={studio}
           classFilter={classFilter}
           setFilter={setFilter}
           open={showControlPanel}
           closeControls={toggleControlPanel}
-        />
-        {/* </NavSection> */}
-        {/* </NewNavSidebarContainer> */}
-
-        <DanceClasses
-          classFilter={classFilter}
-          setFilter={setFilter}
-          toggleControls={toggleControlPanel}
         />
       </NewStudioLayout>
     );

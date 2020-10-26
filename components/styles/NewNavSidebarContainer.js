@@ -5,6 +5,7 @@ const NewNavSidebarContainer = styled.div`
   min-width: 150px;
   max-width: 200px;
   width: 20vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   border-right: 1px solid ${(props) => props.theme.gray3};
