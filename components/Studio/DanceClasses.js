@@ -45,10 +45,16 @@ const DancesSelectionWindow = styled.div`
   overflow-y: scroll;
   display: grid;
   grid-template-rows: minmax(4rem, auto) 1fr;
+  position: relative;
 `;
 
 const DancesHeading = styled.div`
-  place-self: center;
+  position: sticky;
+  top: 0px;
+  left: 0;
+  display: grid;
+  place-items: center;
+  /* place-self: center; */
   h2 {
     font-size: 1.5rem;
   }
