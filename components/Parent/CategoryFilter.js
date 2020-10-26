@@ -77,15 +77,17 @@ const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
                 selections.map((selection) => {
                   return (
                     <li key={selection}>
-                      <input
-                        type="checkbox"
-                        checked={
-                          classFilter.hasOwnProperty([category]) &&
-                          classFilter[category].includes(selection)
-                        }
-                        onChange={() => handleChange(category, selection)}
-                      />
-                      <label>{selection}</label>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={
+                            classFilter.hasOwnProperty([category]) &&
+                            classFilter[category].includes(selection)
+                          }
+                          onChange={() => handleChange(category, selection)}
+                        />
+                        {selection}
+                      </label>
                     </li>
                   );
                 })}
