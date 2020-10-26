@@ -13,7 +13,7 @@ const CheckboxDiv = styled.div`
   }
 `;
 
-const CategoryFilter = ({ setFilter, filter, category, choices }) => {
+const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
   const [isOpen, toggleIsOpen] = useState(false);
 
   function removeFromArray(array, item) {
@@ -22,28 +22,28 @@ const CategoryFilter = ({ setFilter, filter, category, choices }) => {
     return array;
   }
 
-  function handleChange(category, choice) {
-    const oldChoices = filter[category];
-    const newChoices = [];
+  function handleChange(category, selection) {
+    // const oldChoices = filter[category];
+    const newSelections = [];
     //if filter already has a key of category, check if the selection is in the array.. add it or take it out, and delete the key&array if it is now empty
-    if (filter.hasOwnProperty([category])) {
-      if (filter[category].includes(choice)) {
-        removeFromArray(filter[category], choice);
-        if (filter[category].length === 0) {
-          delete filter[category];
+    if (classFilter.hasOwnProperty([category])) {
+      if (classFilter[category].includes(selection)) {
+        removeFromArray(classFilter[category], selection);
+        if (classFilter[category].length === 0) {
+          delete classFilter[category];
         }
       } else {
-        filter[category].push(choice);
+        classFilter[category].push(selection);
       }
     }
     //filter does not already have a key of category... make one and put choice in the array.
     else {
-      filter[category] = [choice];
+      classFilter[category] = [selection];
     }
 
     setFilter((filter) =>
       Object.hasOwnProperty([category])
-        ? { ...filter, [category]: newChoices }
+        ? { ...filter, [category]: newSelections }
         : { ...filter }
     );
   }
@@ -61,8 +61,6 @@ const CategoryFilter = ({ setFilter, filter, category, choices }) => {
   return (
     <CheckboxDiv>
       <button
-        // role="button"
-        // tabIndex="0"
         onClick={() => toggleIsOpen(!isOpen)}
         className="category-heading"
       >
@@ -78,19 +76,19 @@ const CategoryFilter = ({ setFilter, filter, category, choices }) => {
             style={{ overflow: "hidden" }}
           >
             <ul>
-              {choices &&
-                choices.map((choice) => {
+              {selections &&
+                selections.map((selection) => {
                   return (
-                    <li key={choice}>
+                    <li key={selection}>
                       <input
                         type="checkbox"
                         checked={
-                          filter.hasOwnProperty([category]) &&
-                          filter[category].includes(choice)
+                          classFilter.hasOwnProperty([category]) &&
+                          classFilter[category].includes(selection)
                         }
-                        onChange={() => handleChange(category, choice)}
+                        onChange={() => handleChange(category, selection)}
                       />
-                      <label>{choice}</label>
+                      <label>{selection}</label>
                     </li>
                   );
                 })}
