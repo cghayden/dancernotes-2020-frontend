@@ -8,6 +8,27 @@ import Loading from "../Loading";
 import styled from "styled-components";
 // import { ActiveFilters } from "./ClassFilter";
 
+const DancesSelectionWindow = styled.div`
+  height: 100vh;
+  overflow-y: scroll;
+  display: grid;
+  grid-template-rows: minmax(4rem, auto) 1fr;
+  position: relative;
+`;
+
+const DancesHeading = styled.div`
+  background-color: ${(props) => props.theme.gray1};
+  position: sticky;
+  top: 0px;
+  left: 0;
+  display: grid;
+  place-items: center;
+  /* place-self: center; */
+  h2 {
+    font-size: 1.5rem;
+  }
+`;
+
 const SelectedDances = styled.div`
   padding-top: 1rem;
 `;
@@ -38,26 +59,6 @@ const ActiveFilters = styled(motion.div)`
   /* @media (min-width: ${(props) => props.theme.largeScreen}) {
     display: block;
   } */
-`;
-
-const DancesSelectionWindow = styled.div`
-  height: 100vh;
-  overflow-y: scroll;
-  display: grid;
-  grid-template-rows: minmax(4rem, auto) 1fr;
-  position: relative;
-`;
-
-const DancesHeading = styled.div`
-  position: sticky;
-  top: 0px;
-  left: 0;
-  display: grid;
-  place-items: center;
-  /* place-self: center; */
-  h2 {
-    font-size: 1.5rem;
-  }
 `;
 
 const DanceClasses = ({ classFilter, setFilter }) => {
