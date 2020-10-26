@@ -138,7 +138,7 @@ const NewClassFilter = ({
   open,
   closeControls,
 }) => {
-  const filterOptions = ["style", "competitiveLevel", "ageDivision", "day"];
+  const filterOptions = ["competitiveLevel", "ageDivision", "style", "day"];
   const days = ["Mon.", "Tue.", "Wed.", "Thur.", "Fri", "Sat.", "Sun."];
   const activeFilters = [].concat.apply([], Object.values(classFilter));
   const clearFilter = () => {
