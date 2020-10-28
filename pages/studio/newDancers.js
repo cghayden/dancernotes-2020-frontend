@@ -31,11 +31,7 @@ export default function newDancersPage() {
             </ul>
           </NavSection>
         </NewNavSidebarContainer>
-        {choice && (
-          <div className="selectionWindow">
-            <Dancer id={choice} />
-          </div>
-        )}
+        {choice && <Dancer id={choice} />}
       </NewStudioLayout>
     );
   }

@@ -132,10 +132,16 @@ const CheckboxAreaHeader = styled.div`
   }
 `;
 
-const NewClassFilter = ({ studio, filter, setFilter, open, closeControls }) => {
-  const filterOptions = ["style", "competitiveLevel", "ageDivision", "day"];
+const NewClassFilter = ({
+  studio,
+  classFilter,
+  setFilter,
+  open,
+  closeControls,
+}) => {
+  const filterOptions = ["competitiveLevel", "ageDivision", "style", "day"];
   const days = ["Mon.", "Tue.", "Wed.", "Thur.", "Fri", "Sat.", "Sun."];
-  const activeFilters = [].concat.apply([], Object.values(filter));
+  const activeFilters = [].concat.apply([], Object.values(classFilter));
   const clearFilter = () => {
     setFilter({});
   };
@@ -148,13 +154,13 @@ const NewClassFilter = ({ studio, filter, setFilter, open, closeControls }) => {
       <CheckboxAreaHeader>
         <h3>Filter By:</h3>
         {/* show clear button if there are active filters*/}
-        {Object.keys(filter).length > 0 && (
+        {Object.keys(classFilter).length > 0 && (
           <button onClick={clearFilter}>Clear All</button>
         )}
       </CheckboxAreaHeader>
       <ActiveFilters>
         {/*display a list of the active filters */}
-        {Object.keys(filter).length > 0 && (
+        {Object.keys(classFilter).length > 0 && (
           <ul>
             {activeFilters.map((choice) => (
               <li key={choice}>{choice}</li>
@@ -169,9 +175,11 @@ const NewClassFilter = ({ studio, filter, setFilter, open, closeControls }) => {
             <CategoryFilter
               key={filterCategory}
               setFilter={setFilter}
-              filter={filter}
+              classFilter={classFilter}
               category={filterCategory}
-              choices={filterCategory === "day" ? days : studio[pluralCategory]}
+              selections={
+                filterCategory === "day" ? days : studio[pluralCategory]
+              }
             />
           );
         })}

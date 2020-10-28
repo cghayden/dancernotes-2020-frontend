@@ -21,37 +21,24 @@ export default function newClassesPage() {
   if (data) {
     return (
       <NewStudioLayout>
-        {/* <NewNavSidebarContainer> */}
-        {/* <NavSection> */}
+        <DanceClasses
+          classFilter={classFilter}
+          setFilter={setFilter}
+          toggleControls={toggleControlPanel}
+        />
         <NewClassFilter
           studio={studio}
-          filter={classFilter}
+          classFilter={classFilter}
           setFilter={setFilter}
           open={showControlPanel}
           closeControls={toggleControlPanel}
         />
-        {/* </NavSection> */}
-        {/* </NewNavSidebarContainer> */}
-        <SelectionWindow>
-          <DanceClasses
-            classFilter={classFilter}
-            // studio={studio}
-            toggleControls={toggleControlPanel}
-          />
-        </SelectionWindow>
       </NewStudioLayout>
     );
   }
   return null;
 }
 
-const SelectionWindow = styled.div`
-  padding: 2rem;
-  height: 100vh;
-  overflow-y: scroll;
-  /* display: grid; */
-  /* justify-items: center; */
-`;
 {
   /* <ul>
               {data.allStudioDanceClasses.map((danceClass) => (
