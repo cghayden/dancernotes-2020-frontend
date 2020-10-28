@@ -8,13 +8,12 @@ import { useStudio } from "../../components/Studio/useStudio";
 const BodyLayout = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: ${(props) => props.theme.studioHeaderHeight} 1fr;
+
+  /* grid-template-rows: ${(props) => props.theme.studioHeaderHeight} 1fr;
   height: 100vh;
   .selectionWindow {
-    /* height: 100vh; */
     width: 100%;
-    /* overflow-y: scroll; */
-  }
+  } */
 `;
 const Layout = styled.div`
   height: 100vh;

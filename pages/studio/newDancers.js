@@ -37,3 +37,9 @@ export default function newDancersPage() {
   }
   return null;
 }
+
+const SelectionWindow = styled.div`
+  padding: 2rem;
+  display: grid;
+  justify-items: center;
+`;

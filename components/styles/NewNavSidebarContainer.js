@@ -9,7 +9,7 @@ const NewNavSidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   border-right: 1px solid ${(props) => props.theme.gray3};
-  grid-row: 2/-1;
+  /* grid-row: 2/-1; */
 
   ul {
     display: flex;

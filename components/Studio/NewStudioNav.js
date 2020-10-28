@@ -66,7 +66,7 @@ export default function NewStudioNav() {
           <li>
             <StyledLink
               activeClassName="activeStudioNav"
-              href="/studio/newClasses-Top-Nav"
+              href="/studio/newClasses-Top-Filter"
             >
               <a>Classes v2 TopFilt</a>
             </StyledLink>

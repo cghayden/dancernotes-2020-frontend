@@ -37,8 +37,7 @@ const FilterPanelStyles = styled.div`
   }
 
   @media (min-width: ${(props) => props.theme.largeScreen}) {
-    border-right: 1px solid ${(props) => props.theme.gray3};
-
+    /* border-right: 1px solid ${(props) => props.theme.gray3}; */
     position: static;
     background-color: ${(props) => props.theme.background};
     width: 20vw;

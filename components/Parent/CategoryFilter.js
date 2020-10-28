@@ -89,7 +89,7 @@ const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
       </button>
       <AnimatePresence>
         {isOpen && (
-          <MotionContainer
+          <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -115,7 +115,7 @@ const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
                   );
                 })}
             </ul>
-          </MotionContainer>
+          </motion.div>
         )}
       </AnimatePresence>
     </CheckboxDiv>

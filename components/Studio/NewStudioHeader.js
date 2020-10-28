@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 const Header = styled.header`
-  position: fixed;
+  /* position: fixed;
   left: 0;
   right: 0;
-  top: 0;
+  top: 0; */
   background: ${(props) => props.theme.black};
   display: flex;
   align-items: center;
