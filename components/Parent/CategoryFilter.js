@@ -14,14 +14,14 @@ const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
   const [isOpen, toggleIsOpen] = useState(false);
   const dropDownRef = useRef();
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keyup", handleEscKey);
-    return function () {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keyup", handleEscKey);
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   document.addEventListener("keyup", handleEscKey);
+  //   return function () {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //     document.removeEventListener("keyup", handleEscKey);
+  //   };
+  // }, []);
 
   function handleEscKey(e) {
     if (e.key === "Escape") toggleIsOpen(false);
