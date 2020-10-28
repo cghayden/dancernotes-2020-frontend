@@ -86,7 +86,7 @@ const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
         className="category-heading"
       >
         {formatHeading(category)}
-      </FilterDropDownButton>
+      </button>
       <AnimatePresence>
         {isOpen && (
           <MotionContainer
