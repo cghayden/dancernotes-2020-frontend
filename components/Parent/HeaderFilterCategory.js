@@ -10,31 +10,32 @@ const CheckboxDiv = styled.div`
   }
 `;
 
-const FilterDropDownButton = styled.button`
-  white-space: nowrap;
-`;
-
-const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
+const HeaderFilterCategory = ({
+  setFilter,
+  classFilter,
+  category,
+  selections,
+}) => {
   const [isOpen, toggleIsOpen] = useState(false);
   const dropDownRef = useRef();
 
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   document.addEventListener("keyup", handleEscKey);
-  //   return function () {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //     document.removeEventListener("keyup", handleEscKey);
-  //   };
-  // }, []);
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keyup", handleEscKey);
+    return function () {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keyup", handleEscKey);
+    };
+  }, []);
 
-  // function handleEscKey(e) {
-  //   if (e.key === "Escape") toggleIsOpen(false);
-  // }
-  // function handleClickOutside(e) {
-  //   if (!dropDownRef?.current?.contains(e.target)) {
-  //     toggleIsOpen(false);
-  //   }
-  // }
+  function handleEscKey(e) {
+    if (e.key === "Escape") toggleIsOpen(false);
+  }
+  function handleClickOutside(e) {
+    if (!dropDownRef?.current?.contains(e.target)) {
+      toggleIsOpen(false);
+    }
+  }
 
   function removeFromArray(array, item) {
     const index = array.indexOf(item);
@@ -79,21 +80,27 @@ const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
   }
 
   const FilterDropDownButton = styled.button`
-    position: "relative";
+    position: relative;
     pointer-events: ${(props) => (props.ignoreClick ? "none" : "auto")};
   `;
 
+  const CheckboxContainer = styled(motion.div)`
+    position: absolute;
+    background: ${(props) => props.theme.gray0};
+    padding: 1rem;
+  `;
+  // ~~~~~~~~~~~~~~~~~~~ CODE ~~~~~~~~~~~~~~~~~~~~~~;
   return (
     <CheckboxDiv>
-      <button
+      <FilterDropDownButton
         onClick={() => toggleIsOpen(!isOpen)}
         className="category-heading"
       >
         {formatHeading(category)}
-      </button>
+      </FilterDropDownButton>
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <CheckboxContainer
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -119,11 +126,11 @@ const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
                   );
                 })}
             </ul>
-          </motion.div>
+          </CheckboxContainer>
         )}
       </AnimatePresence>
     </CheckboxDiv>
   );
 };
 
-export default CategoryFilter;
+export default HeaderFilterCategory;

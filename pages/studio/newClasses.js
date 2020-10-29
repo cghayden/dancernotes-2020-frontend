@@ -11,6 +11,19 @@ import DanceClasses from "../../components/Studio/DanceClasses";
 import NewClassFilter from "../../components/Studio/NewClassFilter";
 import { useStudio } from "../../components/Studio/useStudio";
 import { useDisplayControls } from "../../components/Parent/ParentDisplayProvider";
+import DancesActiveFilterHeading from "./DancesActiveFilterHeading";
+
+// --------------- Styles ------------------------------
+
+const DancesSelectionWindow = styled.div`
+  height: 100vh;
+  overflow-y: scroll;
+  display: grid;
+  grid-template-rows: minmax(4rem, auto) 1fr;
+  position: relative;
+`;
+
+// ~~~~~~~~~~~~~~~~~~~ CODE ~~~~~~~~~~~~~~~~~~~~~~
 
 export default function newClassesPage() {
   const { data, error, loading } = useQuery(ALL_DANCE_CLASSES_QUERY);
@@ -18,14 +31,19 @@ export default function newClassesPage() {
   const [classFilter, setFilter] = useState({});
   const { showControlPanel, toggleControlPanel } = useDisplayControls();
   const studio = useStudio();
-  if (data) {
-    return (
-      <NewStudioLayout>
-        <DanceClasses
+  return (
+    <NewStudioLayout>
+      <DancesSelectionWindow>
+        <DancesActiveFilterHeading
           classFilter={classFilter}
           setFilter={setFilter}
+        />
+        <DanceClasses
+          classFilter={classFilter}
           toggleControls={toggleControlPanel}
         />
+      </DancesSelectionWindow>
+      {studio && (
         <NewClassFilter
           studio={studio}
           classFilter={classFilter}
@@ -33,22 +51,7 @@ export default function newClassesPage() {
           open={showControlPanel}
           closeControls={toggleControlPanel}
         />
-      </NewStudioLayout>
-    );
-  }
-  return null;
-}
-
-{
-  /* <ul>
-              {data.allStudioDanceClasses.map((danceClass) => (
-                <button
-                  className={choice === danceClass.id ? `activeStudioNav` : null}
-                  key={danceClass.id}
-                  onClick={() => setChoice(danceClass.id)}
-                >
-                  {danceClass.name}
-                </button>
-              ))}
-            </ul> */
+      )}
+    </NewStudioLayout>
+  );
 }
