@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import CategoryFilter from "../Parent/CategoryFilter";
 import HeaderFilterCategory from "../Parent/HeaderFilterCategory";
 
 const FilterPanelStyles = styled.div`

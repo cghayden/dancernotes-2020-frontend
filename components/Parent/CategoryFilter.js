@@ -79,18 +79,14 @@ const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
   }
 
   const FilterDropDownButton = styled.button`
-    position: "relative";
-    pointer-events: ${(props) => (props.ignoreClick ? "none" : "auto")};
+    white-space: nowrap;
   `;
 
   return (
     <CheckboxDiv>
-      <button
-        onClick={() => toggleIsOpen(!isOpen)}
-        className="category-heading"
-      >
+      <FilterDropDownButton onClick={() => toggleIsOpen(!isOpen)}>
         {formatHeading(category)}
-      </button>
+      </FilterDropDownButton>
       <AnimatePresence>
         {isOpen && (
           <motion.div
