@@ -51,6 +51,7 @@ const FilterPanelStyles = styled.div`
     left: auto;
     top: auto;
     margin-top: 0;
+    z-index: unset;
     ul {
       font-size: 1rem;
       align-items: start;
@@ -146,7 +147,7 @@ const NewClassFilter = ({
   };
   return (
     <FilterPanelStyles showControlPanel={open}>
-      <h2>Filters</h2>
+      <h2>Filter By:</h2>
       <FilterPanelHeader>
         <CloseFilterPanel onClick={closeControls}>Close</CloseFilterPanel>
       </FilterPanelHeader>

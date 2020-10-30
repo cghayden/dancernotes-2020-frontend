@@ -1,58 +1,57 @@
 import { useState } from "react";
-import Link from "next/link";
-import SubNavMainControlsLayout from "../../components/Studio/SubNavMainControlsLayout";
-import ClassesSubNav from "../../components/Studio/ClassesSubNav";
+import { useQuery } from "@apollo/react-hooks";
+import styled from "styled-components";
+import NewStudioLayout from "../../components/Studio/NewStudioLayout";
+import NewNavSidebarContainer from "../../components/styles/NewNavSidebarContainer";
+import NavSection from "../../components/styles/NavSection";
+// import SelectionWindow from "../../components/styles/SelectionWindow";
+// import Dancer from "../../components/Studio/Dancer";
+import { ALL_DANCE_CLASSES_QUERY } from "../../components/Studio/Queries";
 import DanceClasses from "../../components/Studio/DanceClasses";
-import ClassFilter from "../../components/Studio/ClassFilter";
+import NewClassFilter from "../../components/Studio/NewClassFilter";
 import { useStudio } from "../../components/Studio/useStudio";
 import { useDisplayControls } from "../../components/Parent/ParentDisplayProvider";
+import DancesActiveFilterHeading from "./DancesActiveFilterHeading";
 
-const AddClassButton = (
-  <Link href="createClass">
-    <a>Add a Class</a>
-  </Link>
-);
+// --------------- Styles ------------------------------
 
-function DanceClassesPage() {
+const DancesSelectionWindow = styled.div`
+  height: 100vh;
+  overflow-y: scroll;
+  display: grid;
+  grid-template-rows: minmax(4rem, auto) 1fr;
+  position: relative;
+`;
+
+// ~~~~~~~~~~~~~~~~~~~ CODE ~~~~~~~~~~~~~~~~~~~~~~
+
+export default function newClassesPage() {
+  const { data, error, loading } = useQuery(ALL_DANCE_CLASSES_QUERY);
+  const [choice, setChoice] = useState();
   const [classFilter, setFilter] = useState({});
   const { showControlPanel, toggleControlPanel } = useDisplayControls();
   const studio = useStudio();
-  if (!studio)
-    return (
-      <>
-        <ClassesSubNav />
-        <SubNavMainControlsLayout
-          page="Classes"
-          mobileHeader="Classes"
-          pageAction={AddClassButton}
-        >
-          <p>loading...</p>
-        </SubNavMainControlsLayout>
-      </>
-    );
   return (
-    <>
-      <ClassesSubNav />
-      <SubNavMainControlsLayout
-        page="Classes"
-        mobileHeader="Classes"
-        pageAction={AddClassButton}
-        offscreenToggler="Filter"
-      >
+    <NewStudioLayout>
+      <DancesSelectionWindow>
+        <DancesActiveFilterHeading
+          classFilter={classFilter}
+          setFilter={setFilter}
+        />
         <DanceClasses
           classFilter={classFilter}
-          studio={studio}
           toggleControls={toggleControlPanel}
         />
-        <ClassFilter
+      </DancesSelectionWindow>
+      {studio && (
+        <NewClassFilter
           studio={studio}
-          filter={classFilter}
+          classFilter={classFilter}
           setFilter={setFilter}
           open={showControlPanel}
           closeControls={toggleControlPanel}
         />
-      </SubNavMainControlsLayout>
-    </>
+      )}
+    </NewStudioLayout>
   );
 }
-export default DanceClassesPage;

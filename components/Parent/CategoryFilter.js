@@ -18,24 +18,6 @@ const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
   const [isOpen, toggleIsOpen] = useState(false);
   const dropDownRef = useRef();
 
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   document.addEventListener("keyup", handleEscKey);
-  //   return function () {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //     document.removeEventListener("keyup", handleEscKey);
-  //   };
-  // }, []);
-
-  // function handleEscKey(e) {
-  //   if (e.key === "Escape") toggleIsOpen(false);
-  // }
-  // function handleClickOutside(e) {
-  //   if (!dropDownRef?.current?.contains(e.target)) {
-  //     toggleIsOpen(false);
-  //   }
-  // }
-
   function removeFromArray(array, item) {
     const index = array.indexOf(item);
     array.splice(index, 1);
@@ -43,7 +25,6 @@ const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
   }
 
   function handleChange(category, selection) {
-    // const oldChoices = filter[category];
     const newSelections = [];
     //if filter already has a key of category, check if the selection is in the array.. add it or take it out, and delete the key&array if it is now empty
     if (classFilter.hasOwnProperty([category])) {
@@ -77,10 +58,6 @@ const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
     }
     return category;
   }
-
-  const FilterDropDownButton = styled.button`
-    white-space: nowrap;
-  `;
 
   return (
     <CheckboxDiv>
