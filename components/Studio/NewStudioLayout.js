@@ -3,7 +3,7 @@ import NewStudioHeader from "./NewStudioHeader";
 import NewStudioNav from "./NewStudioNav";
 // import NewPageOptions from "./NewPageOptions";
 // import NewStudioMain from "./NewStudioMain";
-import { useStudio } from "../../components/Studio/useStudio";
+// import { useStudio } from "../../components/Studio/useStudio";
 
 const BodyLayout = styled.div`
   display: grid;
@@ -25,14 +25,13 @@ const NewStudioMain = styled.div`
 `;
 
 export default function NewStudioLayout({ children }) {
-  const studio = useStudio();
+  // const studio = useStudio();
 
   return (
     <Layout>
       <NewStudioHeader />
-      <BodyLayout className="bodyLayout">
+      <BodyLayout>
         <NewStudioNav />
-        {/* subnav on every page */}
         <NewStudioMain>{children}</NewStudioMain>
       </BodyLayout>
     </Layout>
