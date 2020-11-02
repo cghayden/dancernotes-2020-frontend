@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import NewStudioLayout from "../../components/Studio/NewStudioLayout";
 import styled from "styled-components";
-import NewNavSidebarContainer from "../../components/styles/NewNavSidebarContainer";
-import NavSection from "../../components/styles/NavSection";
-// import SelectionWindow from "../../components/styles/SelectionWindow";
+import {
+  NewNavSidebarContainer,
+  NavSection,
+  NavSectionHeading,
+} from "../../components/Studio/NewStudioNav";
 import Dancer from "../../components/Studio/Dancer";
 import { STUDIO_ALL_DANCERS_QUERY } from "../../components/Studio/Queries";
 
