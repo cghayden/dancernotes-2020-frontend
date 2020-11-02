@@ -7,21 +7,16 @@ import NewStudioNav from "./NewStudioNav";
 
 const BodyLayout = styled.div`
   display: grid;
-  grid-template-columns: auto 1fr;
-
-  /* grid-template-rows: ${(props) => props.theme.studioHeaderHeight} 1fr;
-  height: 100vh;
-  .selectionWindow {
-    width: 100%;
-  } */
+  grid-template-columns: repeat(12, 1fr);
 `;
 const Layout = styled.div`
   height: 100vh;
 `;
 
 const NewStudioMain = styled.div`
+  grid-column: 3/-1;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: repeat(12, 1fr);
 `;
 
 export default function NewStudioLayout({ children }) {

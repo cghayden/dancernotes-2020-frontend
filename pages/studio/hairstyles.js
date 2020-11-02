@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useQuery } from "@apollo/react-hooks";
+import styled from "styled-components";
+
 import gql from "graphql-tag";
 import NewStudioLayout from "../../components/Studio/NewStudioLayout";
 import {
@@ -33,7 +35,9 @@ const HAIRSTYLES_QUERY = gql`
 //     <a>Add a Hairstyle</a>
 //   </Link>
 // );
-
+const HairstyleSelectionWindow = styled.div`
+  grid-column: 3/-1;
+`;
 function HairStylesPage() {
   const { data, error, loading } = useQuery(HAIRSTYLES_QUERY);
   const [choice, setChoice] = useState();
@@ -88,8 +92,10 @@ function HairStylesPage() {
           )}
         </NavSection>
       </NewNavSidebarContainer>
-      {choice && <HairStyleCard hairStyle={choice} />}
-      {createNew && <CreateHairStyleForm />}
+      <HairstyleSelectionWindow>
+        {choice && <HairStyleCard hairStyle={choice} />}
+        {createNew && <CreateHairStyleForm />}
+      </HairstyleSelectionWindow>
     </NewStudioLayout>
     // </NoNavLayout>
   );

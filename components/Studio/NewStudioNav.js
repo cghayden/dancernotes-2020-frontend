@@ -27,13 +27,12 @@ const NavSection = styled.div`
 
 const NewNavSidebarContainer = styled.div`
   background: ${(props) => props.theme.gray0};
-  min-width: 150px;
-  max-width: 200px;
-  width: 20vw;
+  min-width: 130px;
   height: 100vh;
   display: flex;
   flex-direction: column;
   border-right: 1px solid ${(props) => props.theme.gray3};
+  grid-column: 1/3;
 
   ul {
     display: flex;

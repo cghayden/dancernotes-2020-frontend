@@ -15,6 +15,7 @@ const DancesSelectionWindow = styled.div`
   display: grid;
   grid-template-rows: minmax(4rem, auto) 1fr;
   position: relative;
+  grid-column: 1/10;
 `;
 
 // ~~~~~~~~~~~~~~~~~~~ CODE ~~~~~~~~~~~~~~~~~~~~~~

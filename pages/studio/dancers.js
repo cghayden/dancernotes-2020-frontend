@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import NewStudioLayout from "../../components/Studio/NewStudioLayout";
 import styled from "styled-components";
+import NewStudioLayout from "../../components/Studio/NewStudioLayout";
 import {
   NewNavSidebarContainer,
   NavSection,
@@ -9,6 +9,10 @@ import {
 } from "../../components/Studio/NewStudioNav";
 import Dancer from "../../components/Studio/Dancer";
 import { STUDIO_ALL_DANCERS_QUERY } from "../../components/Studio/Queries";
+
+const DancerSelectionWindow = styled.div`
+  grid-column: 3/-1;
+`;
 
 export default function newDancersPage() {
   const { data, error, loading } = useQuery(STUDIO_ALL_DANCERS_QUERY);
@@ -33,7 +37,9 @@ export default function newDancersPage() {
             </ul>
           </NavSection>
         </NewNavSidebarContainer>
-        {choice && <Dancer id={choice} />}
+        <DancerSelectionWindow>
+          {choice && <Dancer id={choice} />}
+        </DancerSelectionWindow>
       </NewStudioLayout>
     );
   }
