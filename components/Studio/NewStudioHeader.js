@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import MotionOptions from "./MotionOptions";
 import OptionsDropdown from "./OptionsDropdown";
 const Header = styled.header`
   background: ${(props) => props.theme.gray5};
@@ -20,7 +21,8 @@ export default function NewStudioHeader() {
   return (
     <Header>
       <input type="text" placeholder="Search..." className="search" />
-      <OptionsDropdown />
+      {/* <OptionsDropdown /> */}
+      <MotionOptions />
     </Header>
   );
 }
