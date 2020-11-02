@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Card from "../styles/Card";
 import Edit from "../Icons/Edit";
@@ -12,14 +12,12 @@ const HairImage = styled.div`
   }
 `;
 
-function HairStyleCard(props) {
+function HairStyleCard({ hairStyle }) {
   const [showEdit, setShowEdit] = useState(false);
-  const { hairStyle } = props;
   return !showEdit ? (
     <Card>
       <div className="card__header">
         <h3>{hairStyle.name}</h3>
-
         <button
           onClick={() => setShowEdit(true)}
           className="card__header--editButton"
