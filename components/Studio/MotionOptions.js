@@ -1,16 +1,12 @@
 import styled from "styled-components";
-import { useRef } from "react";
 import { AnimatePresence, motion, useCycle } from "framer-motion";
-import { useDimensions } from "./useDimensions";
 
 const OptionsLinksContainer = styled(motion.div)`
   position: absolute;
   top: 0;
   right: 0;
   width: 300px;
-  /* background: ${(props) => props.theme.gray0}; */
   z-index: 1;
-
   a {
     width: max-content;
     color: ${(props) => props.theme.blackText};
@@ -35,14 +31,14 @@ const MotionUl = styled(motion.ul)`
 `;
 
 const sidebar = {
-  open: (height = 400) => ({
-    clipPath: `circle(${height * 2}px at 89% 10%)`,
+  open: {
+    clipPath: "circle(800px at 89% 10%)",
     transition: {
       type: "spring",
       stiffness: 20,
       restDelta: 2,
     },
-  }),
+  },
   closed: {
     clipPath: "circle(20px at 89% 10%)",
     transition: {
@@ -56,15 +52,8 @@ const sidebar = {
 
 export default function MotionOptions() {
   const [isOpen, toggleOpen] = useCycle(false, true);
-  const containerRef = useRef(null);
-  const { height } = useDimensions(containerRef);
   return (
-    <OptionsLinksContainer
-      initial={false}
-      animate={isOpen ? "open" : "closed"}
-      custom={height}
-      ref={containerRef}
-    >
+    <OptionsLinksContainer initial={false} animate={isOpen ? "open" : "closed"}>
       <Background variants={sidebar} />
       <AnimatePresence>
         {isOpen && (
