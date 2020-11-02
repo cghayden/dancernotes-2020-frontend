@@ -1,19 +1,7 @@
 import styled from "styled-components";
 import { useRef } from "react";
-import { motion, useCycle } from "framer-motion";
+import { AnimatePresence, motion, useCycle } from "framer-motion";
 import { useDimensions } from "./useDimensions";
-
-// const OptionsButton = styled.button`
-//   font-size: 2rem;
-//   background: ${(props) => props.theme.gray0};
-//   color: ${(props) => props.theme.gray5};
-//   border-radius: 50%;
-//   height: 2rem;
-//   width: 2rem;
-//   display: flex;
-//   place-items: center;
-//   justify-content: center;
-// `;
 
 const OptionsLinksContainer = styled(motion.div)`
   position: absolute;
@@ -45,8 +33,8 @@ const MotionUl = styled(motion.ul)`
 `;
 
 const sidebar = {
-  open: (height = 1000) => ({
-    clipPath: `circle(${height * 2 + 200}px at 89% 10%)`,
+  open: (height = 400) => ({
+    clipPath: `circle(${height * 2}px at 89% 10%)`,
     transition: {
       type: "spring",
       stiffness: 20,
@@ -56,7 +44,7 @@ const sidebar = {
   closed: {
     clipPath: "circle(20px at 89% 10%)",
     transition: {
-      delay: 0.5,
+      delay: 0.2,
       type: "spring",
       stiffness: 400,
       damping: 40,
@@ -76,23 +64,27 @@ export default function MotionOptions() {
       ref={containerRef}
     >
       <Background variants={sidebar} />
-      <MotionUl variants={ulVariants}>
-        <motion.li variants={linkVariants}>
-          <a href="/studio/createClass">Add a Dance Class</a>
-        </motion.li>
-        <motion.li variants={linkVariants}>
-          <a href="/studio/createEvent">Add an Event</a>
-        </motion.li>
-        <motion.li variants={linkVariants}>
-          <a href="/studio/createHairstyle">Add a Hairstyle</a>
-        </motion.li>
-        <motion.li variants={linkVariants}>
-          <a href="/studio/createMakeup">Add a Makeup Set</a>
-        </motion.li>
-        <motion.li variants={linkVariants}>
-          <a href="/studio/#createDancer">Add a Dancer</a>
-        </motion.li>
-      </MotionUl>
+      <AnimatePresence>
+        {isOpen && (
+          <MotionUl variants={ulVariants}>
+            <motion.li variants={linkVariants}>
+              <a href="/studio/createClass">Add a Dance Class</a>
+            </motion.li>
+            <motion.li variants={linkVariants}>
+              <a href="/studio/createEvent">Add an Event</a>
+            </motion.li>
+            <motion.li variants={linkVariants}>
+              <a href="/studio/createHairstyle">Add a Hairstyle</a>
+            </motion.li>
+            <motion.li variants={linkVariants}>
+              <a href="/studio/createMakeup">Add a Makeup Set</a>
+            </motion.li>
+            <motion.li variants={linkVariants}>
+              <a href="/studio/#createDancer">Add a Dancer</a>
+            </motion.li>
+          </MotionUl>
+        )}
+      </AnimatePresence>
       <MenuToggle
         animate={isOpen ? "open" : "closed"}
         toggle={() => toggleOpen()}
@@ -100,16 +92,6 @@ export default function MotionOptions() {
     </OptionsLinksContainer>
   );
 }
-
-const Path = (props) => (
-  <motion.path
-    fill="transparent"
-    strokeWidth="3"
-    stroke="hsl(0, 0%, 18%)"
-    strokeLinecap="round"
-    {...props}
-  />
-);
 
 const SVGDiv = styled.div`
   svg {
@@ -185,6 +167,15 @@ const ulVariants = {
   },
 };
 
+// const Path = (props) => (
+//   <motion.path
+//     fill="transparent"
+//     strokeWidth="3"
+//     stroke="hsl(0, 0%, 18%)"
+//     strokeLinecap="round"
+//     {...props}
+//   />
+// );
 {
   /* <Path
         variants={{
