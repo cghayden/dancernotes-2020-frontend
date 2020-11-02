@@ -24,6 +24,8 @@ const Background = styled(motion.div)`
   width: 300px;
   height: 300px;
   background: #fff;
+  box-shadow: ${(props) => props.theme.dropShadow1};
+  border-radius: ${(props) => props.theme.borderRadius};
 `;
 
 const MotionUl = styled(motion.ul)`
