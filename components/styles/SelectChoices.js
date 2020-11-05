@@ -21,7 +21,7 @@ const SelectChoices = styled.ul`
   }
   button {
     padding: 0;
-    margin: 0;
+    margin: 0 0 0 10px;
     font-size: 14px;
     width: 18px;
     height: 18px;

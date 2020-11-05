@@ -11,6 +11,9 @@ const Card = styled.div`
   width: 94%;
   min-width: 310px;
   max-width: 600px;
+  &:last-child {
+    margin-bottom: 50vh;
+  }
 
   .card__header {
     display: flex;
@@ -29,7 +32,6 @@ const Card = styled.div`
     width: 300px;
     height: 300px;
   }
-  
 `;
 
 export default Card;

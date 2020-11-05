@@ -49,7 +49,7 @@ const CREATE_STUDIO_EVENT = gql`
 `;
 const appliesToOptions = [
   { value: "recreational", label: "Recreational", name: "appliesTo" },
-  { value: "company", label: " All Company", name: "appliesTo" },
+  { value: "company", label: "All Company", name: "appliesTo" },
   { value: "star", label: "All Star", name: "appliesTo" },
   { value: "all", label: "All Classes", name: "appliesTo" },
   { value: "mini star", label: "Mini Star", name: "appliesTo" },
