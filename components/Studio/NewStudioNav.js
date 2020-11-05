@@ -59,11 +59,19 @@ const NewNavSidebarContainer = styled.div`
   }
 `;
 
+const SubNav = styled(NewNavSidebarContainer)`
+  grid-column: 1/4;
+`;
+
 const NavSectionHeading = styled.div`
   display: flex;
+  padding: 1rem;
+  h2 {
+    padding: 0 0 0 0;
+  }
   button {
     padding: 0;
-    margin: 0 5px 0 auto;
+    margin: 0 0 0 auto;
   }
 `;
 
@@ -149,4 +157,4 @@ export default function NewStudioNav() {
   );
 }
 
-export { NavSection, NewNavSidebarContainer, NavSectionHeading };
+export { NavSection, NewNavSidebarContainer, SubNav, NavSectionHeading };

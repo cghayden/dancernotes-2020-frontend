@@ -17,6 +17,11 @@ const NewStudioMain = styled.div`
   grid-column: 3/-1;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
+  .selectionWindow {
+    padding: 2rem 1rem;
+    height: 100vh;
+    overflow-y: scroll;
+  }
 `;
 
 export default function NewStudioLayout({ children }) {

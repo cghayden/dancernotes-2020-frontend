@@ -1,22 +1,68 @@
-import React from "react";
-import Link from "next/link";
-import SubNavMainLayout from "../../components/Studio/SubNavMainLayout";
+import { useState } from "react";
+import styled from "styled-components";
+
+import { STUDIO_EVENTS_QUERY } from "../../components/Studio/Queries";
+import { useQuery } from "@apollo/react-hooks";
+import NewStudioLayout from "../../components/Studio/NewStudioLayout";
+import {
+  SubNav,
+  NavSection,
+  NavSectionHeading,
+} from "../../components/Studio/NewStudioNav";
+
+import PlusSvg from "../../components/PlusSvg";
+
 import Events from "../../components/Studio/Events";
-const AddEventLink = (
-  <Link href="createEvent">
-    <a>Add an Event</a>
-  </Link>
-);
+import CreateEventForm from "../../components/Studio/CreateEventForm";
+
+const EventSelectionWindow = styled.div`
+  grid-column: 4/-1;
+`;
 
 function EventsPage() {
+  const [choice, setChoice] = useState();
+  const [createNew, setCreateNew] = useState(false);
+  const { data, loading, error } = useQuery(STUDIO_EVENTS_QUERY);
+  const studioEvents = data ? data.myStudio.events : {};
+
   return (
-    <SubNavMainLayout
-      page={"Events"}
-      mobileHeader="Events"
-      pageAction={AddEventLink}
-    >
-      <Events />
-    </SubNavMainLayout>
+    <NewStudioLayout>
+      <SubNav>
+        <NavSection>
+          <NavSectionHeading>
+            <h2>Events</h2>
+            <button
+              onClick={() => {
+                setChoice(null);
+                setCreateNew(true);
+              }}
+            >
+              <PlusSvg />
+            </button>
+          </NavSectionHeading>
+          {data && (
+            <ul>
+              {studioEvents.map((event) => (
+                <button
+                  className={choice === event.id ? `activeStudioNav` : null}
+                  key={event.id}
+                  onClick={() => {
+                    setCreateNew(false);
+                    setChoice({ ...event });
+                  }}
+                >
+                  {event.name}
+                </button>
+              ))}
+            </ul>
+          )}
+        </NavSection>
+      </SubNav>
+      <EventSelectionWindow className="selectionWindow">
+        {choice && <div>event card</div>}
+        {createNew && <CreateEventForm />}
+      </EventSelectionWindow>
+    </NewStudioLayout>
   );
 }
 

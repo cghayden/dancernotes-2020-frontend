@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import DatePicker from "react-datepicker";
@@ -6,7 +6,7 @@ import Form from "../styles/Form";
 import Card from "../styles/Card";
 import Error from "../Error";
 import useForm from "../../lib/useForm";
-import { SelectChoices } from "../Parent/CreateCustomRoutineForm";
+import { SelectChoices } from "../styles/SelectChoices";
 import { STUDIO_EVENTS_QUERY, CATEGORIES_QUERY } from "./Queries";
 
 const CREATE_STUDIO_EVENT = gql`
@@ -104,11 +104,11 @@ function CreateEventForm() {
 
   const categories = data ? data.studioCategories : {};
 
-  const allCategories = [
-    ...categories.ageDivisions,
-    ...categories.styles,
-    ...categories.competitiveLevels,
-  ];
+  // const allCategories = [
+  //   ...categories.ageDivisions,
+  //   ...categories.styles,
+  //   ...categories.competitiveLevels,
+  // ];
 
   function handleAppliesToChange(e) {
     if (!e) return;
