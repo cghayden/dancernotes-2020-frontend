@@ -12,8 +12,9 @@ import {
 
 import PlusSvg from "../../components/PlusSvg";
 
-import Events from "../../components/Studio/Events";
+// import Events from "../../components/Studio/Events";
 import CreateEventForm from "../../components/Studio/CreateEventForm";
+import EventCard from "../../components/Studio/EventCard";
 
 const EventSelectionWindow = styled.div`
   grid-column: 4/-1;
@@ -59,7 +60,7 @@ function EventsPage() {
         </NavSection>
       </SubNav>
       <EventSelectionWindow className="selectionWindow">
-        {choice && <div>event card</div>}
+        {choice && <EventCard event={choice} />}
         {createNew && <CreateEventForm />}
       </EventSelectionWindow>
     </NewStudioLayout>
