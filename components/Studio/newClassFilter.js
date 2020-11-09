@@ -52,7 +52,7 @@ const FilterPanelStyles = styled.div`
     top: auto;
     margin-top: 0;
     z-index: unset;
-    grid-column: 10/-1;
+    grid-column: 11/-1;
     ul {
       font-size: 1rem;
       align-items: start;

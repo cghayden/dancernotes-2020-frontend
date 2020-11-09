@@ -32,6 +32,8 @@ const HairstyleSelectionWindow = styled.div`
   grid-column: 4/-1;
 `;
 
+// ~~~~~~~~~~~~~~~~~~~ CODE ~~~~~~~~~~~~~~~~~~~~~~;
+
 function HairStylesPage() {
   const { data, error, loading } = useQuery(HAIRSTYLES_QUERY);
   const [choice, setChoice] = useState();

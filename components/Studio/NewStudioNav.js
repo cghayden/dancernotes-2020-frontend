@@ -60,7 +60,7 @@ const NewNavSidebarContainer = styled.div`
 `;
 
 const SubNav = styled(NewNavSidebarContainer)`
-  grid-column: 1/4;
+  grid-column: 1/3;
 `;
 
 const NavSectionHeading = styled.div`
