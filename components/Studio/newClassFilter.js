@@ -21,6 +21,9 @@ const FilterPanelStyles = styled.div`
   ul {
     font-size: 1rem;
     align-items: start;
+    @media (max-width: ${(props) => props.theme.largeScreen}) {
+      font-size: 0.8rem;
+    }
   }
 `;
 

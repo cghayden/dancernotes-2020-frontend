@@ -4,20 +4,26 @@ import NewStudioNav from "./NewStudioNav";
 
 const BodyLayout = styled.div`
   display: grid;
-  grid-template-columns: repeat(15, 1fr);
-`;
-const Layout = styled.div`
-  height: 100vh;
+  grid-template-columns: minmax(150px, 200px) minmax(150px, 200px) minmax(
+      400px,
+      1fr
+    );
 `;
 
-const NewStudioMain = styled.div`
-  grid-column: 4/-1;
-  display: grid;
-  grid-template-columns: repeat(15, 1fr);
-  .selectionWindow {
-    padding: 2rem 1rem;
+const Layout = styled.div`
+  height: 100vh;
+  .scrollingWindow {
     height: 100vh;
     overflow-y: scroll;
+    display: grid;
+    grid-template-rows: minmax(4rem, auto) 1fr;
+    position: relative;
+  }
+  .selectionWindow {
+    height: 100vh;
+    overflow-y: scroll;
+    position: relative;
+    padding-top: 2rem;
   }
 `;
 
@@ -29,7 +35,7 @@ export default function NewStudioLayout({ children }) {
       <NewStudioHeader />
       <BodyLayout>
         <NewStudioNav />
-        <NewStudioMain>{children}</NewStudioMain>
+        {children}
       </BodyLayout>
     </Layout>
   );

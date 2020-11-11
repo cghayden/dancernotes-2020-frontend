@@ -7,7 +7,6 @@ import { useStudio } from "../../components/Studio/useStudio";
 import { useDisplayControls } from "../../components/Parent/ParentDisplayProvider";
 import DancesActiveFilterHeading from "./DancesActiveFilterHeading";
 import {
-  NewNavSidebarContainer,
   NavSection,
   NavSectionHeading,
   SubNav,
@@ -59,7 +58,7 @@ export default function newClassesPage() {
           )}
         </NavSection>
       </SubNav>
-      <DancesSelectionWindow>
+      <div className="scrollingWindow">
         <DancesActiveFilterHeading
           classFilter={classFilter}
           setFilter={setFilter}
@@ -68,7 +67,7 @@ export default function newClassesPage() {
           classFilter={classFilter}
           toggleControls={toggleControlPanel}
         />
-      </DancesSelectionWindow>
+      </div>
     </NewStudioLayout>
   );
 }

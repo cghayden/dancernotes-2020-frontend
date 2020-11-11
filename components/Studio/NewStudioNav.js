@@ -3,26 +3,9 @@ import StyledLink from "../StyledLink";
 
 const NavSection = styled.div`
   padding: 0 0.5rem;
-  /* not last child: */
-  /* &:after {
-    height: 2px;
-    width: 75%;
-    margin: 4px auto;
-    content: "";
-    display: block;
-    background-image: linear-gradient(
-      to right,
-      ${(props) => props.theme.gray0} 0%,
-      ${(props) => props.theme.indigo1} 10%,
-      ${(props) => props.theme.indigo5} 50%,
-      ${(props) => props.theme.indigo1} 90%,
-      ${(props) => props.theme.gray0} 100%
-    );
-  }
   &:last-child {
-    padding-bottom: 15vh;
+    padding-bottom: 40vh;
   }
-    */
 `;
 
 const NewNavSidebarContainer = styled.div`
@@ -32,7 +15,7 @@ const NewNavSidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   border-right: 1px solid ${(props) => props.theme.gray3};
-  grid-column: 1/4;
+  /* grid-column: 1/4; */
   overflow: scroll;
 
   ul {
@@ -58,10 +41,21 @@ const NewNavSidebarContainer = styled.div`
       background: ${(props) => props.theme.indigo5};
     }
   }
+  @media (max-width: ${(props) => props.theme.largeScreen}) {
+    h2 {
+      font-size: 1rem;
+    }
+    a,
+    button {
+      font-size: 0.8rem;
+    }
+  }
 `;
+
 const SubNav = styled(NewNavSidebarContainer)`
-  grid-column: 1/5;
+  /* grid-column: 1/5; */
 `;
+
 const NavSectionHeading = styled.div`
   display: flex;
   padding: 0.5rem 0;

@@ -5,12 +5,16 @@ import styled from "styled-components";
 
 const DancerInfoCard = styled(Card)`
   display: grid;
+  grid-gap: 0.5rem;
   max-width: 1000px;
   font-size: 18px;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 75px 1fr;
   text-align: left;
   justify-items: center;
+  section {
+    padding-right: 0.5rem;
+  }
   h4 {
     padding: 5px 0;
   }
