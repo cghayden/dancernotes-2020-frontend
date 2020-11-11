@@ -3,10 +3,10 @@ import Link from "next/link";
 import { useQuery } from "@apollo/react-hooks";
 import styled from "styled-components";
 
-import gql from "graphql-tag";
+import { HAIRSTYLES_QUERY } from "../../components/Studio/Queries";
 import NewStudioLayout from "../../components/Studio/NewStudioLayout";
 import {
-  NewNavSidebarContainer,
+  SubNav,
   NavSection,
   NavSectionHeading,
 } from "../../components/Studio/NewStudioNav";
@@ -16,22 +16,6 @@ import Error from "../../components/Error";
 import HairStyleCard from "../../components/Studio/HairStyleCard";
 import CreateHairStyleForm from "../../components/Studio/CreateHairStyleForm";
 
-const HAIRSTYLES_QUERY = gql`
-  query HAIRSTYLES_QUERY {
-    studioHairStyles {
-      id
-      name
-      description
-      image
-      link
-    }
-  }
-`;
-
-const HairstyleSelectionWindow = styled.div`
-  grid-column: 4/-1;
-`;
-
 // ~~~~~~~~~~~~~~~~~~~ CODE ~~~~~~~~~~~~~~~~~~~~~~;
 
 function HairStylesPage() {
@@ -40,7 +24,7 @@ function HairStylesPage() {
   const [createNew, setCreateNew] = useState(false);
   return (
     <NewStudioLayout>
-      <NewNavSidebarContainer>
+      <SubNav>
         <NavSection>
           <NavSectionHeading>
             <h2>Hairstyles</h2>
@@ -70,11 +54,11 @@ function HairStylesPage() {
             </ul>
           )}
         </NavSection>
-      </NewNavSidebarContainer>
-      <HairstyleSelectionWindow className="selectionWindow">
+      </SubNav>
+      <div className="selectionWindow">
         {choice && <HairStyleCard hairStyle={choice} />}
         {createNew && <CreateHairStyleForm />}
-      </HairstyleSelectionWindow>
+      </div>
     </NewStudioLayout>
   );
 }

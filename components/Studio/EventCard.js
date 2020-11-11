@@ -1,7 +1,10 @@
-import styled from "styled-components";
+import { useState, useEffect } from "react";
 import Card from "../styles/Card";
 
 export default function EventCard({ event }) {
+  const [showEdit, setShowEdit] = useState(false);
+  useEffect(() => setShowEdit(false), [event]);
+
   const eventBeginDate = event.beginDate
     ? new Date(event.beginDate).toLocaleString("en-US", {
         month: "long",

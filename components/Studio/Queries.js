@@ -167,6 +167,31 @@ const STUDIO_DANCER = gql`
     }
   }
 `;
+const STUDIO_MAKEUP_QUERY = gql`
+  query STUDIO_MAKEUP_QUERY {
+    myStudio {
+      id
+      makeupSets {
+        id
+        name
+        lipstick
+        eyeShadow
+        notes
+      }
+    }
+  }
+`;
+const HAIRSTYLES_QUERY = gql`
+  query HAIRSTYLES_QUERY {
+    studioHairStyles {
+      id
+      name
+      description
+      image
+      link
+    }
+  }
+`;
 
 export {
   CATEGORIES_QUERY,
@@ -177,4 +202,6 @@ export {
   ACCESS_REQUESTS_QUERY,
   STUDIO_EVENTS_QUERY,
   STUDIO_DANCER,
+  STUDIO_MAKEUP_QUERY,
+  HAIRSTYLES_QUERY,
 };

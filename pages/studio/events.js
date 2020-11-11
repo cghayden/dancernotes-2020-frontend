@@ -1,34 +1,28 @@
 import { useState } from "react";
-import styled from "styled-components";
+import { useQuery } from "@apollo/react-hooks";
 
 import { STUDIO_EVENTS_QUERY } from "../../components/Studio/Queries";
-import { useQuery } from "@apollo/react-hooks";
 import NewStudioLayout from "../../components/Studio/NewStudioLayout";
 import {
-  NewNavSidebarContainer,
+  SubNav,
   NavSection,
   NavSectionHeading,
 } from "../../components/Studio/NewStudioNav";
-
 import PlusSvg from "../../components/PlusSvg";
 
-// import Events from "../../components/Studio/Events";
 import CreateEventForm from "../../components/Studio/CreateEventForm";
 import EventCard from "../../components/Studio/EventCard";
-
-const EventSelectionWindow = styled.div`
-  grid-column: 4/-1;
-`;
 
 function EventsPage() {
   const [choice, setChoice] = useState();
   const [createNew, setCreateNew] = useState(false);
+
   const { data, loading, error } = useQuery(STUDIO_EVENTS_QUERY);
   const studioEvents = data ? data.myStudio.events : {};
 
   return (
     <NewStudioLayout>
-      <NewNavSidebarContainer>
+      <SubNav>
         <NavSection>
           <NavSectionHeading>
             <h2>Events</h2>
@@ -58,11 +52,11 @@ function EventsPage() {
             </ul>
           )}
         </NavSection>
-      </NewNavSidebarContainer>
-      <EventSelectionWindow className="selectionWindow">
+      </SubNav>
+      <div className="selectionWindow">
         {choice && <EventCard event={choice} />}
         {createNew && <CreateEventForm />}
-      </EventSelectionWindow>
+      </div>
     </NewStudioLayout>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Card from "../styles/Card";
 import Edit from "../Icons/Edit";
@@ -14,6 +14,7 @@ const HairImage = styled.div`
 
 function HairStyleCard({ hairStyle }) {
   const [showEdit, setShowEdit] = useState(false);
+  useEffect(() => setShowEdit(false), [hairStyle]);
   return !showEdit ? (
     <Card>
       <div className="card__header">
