@@ -6,7 +6,7 @@ import styled from "styled-components";
 import gql from "graphql-tag";
 import NewStudioLayout from "../../components/Studio/NewStudioLayout";
 import {
-  SubNav,
+  NewNavSidebarContainer,
   NavSection,
   NavSectionHeading,
 } from "../../components/Studio/NewStudioNav";
@@ -40,7 +40,7 @@ function HairStylesPage() {
   const [createNew, setCreateNew] = useState(false);
   return (
     <NewStudioLayout>
-      <SubNav>
+      <NewNavSidebarContainer>
         <NavSection>
           <NavSectionHeading>
             <h2>Hairstyles</h2>
@@ -70,7 +70,7 @@ function HairStylesPage() {
             </ul>
           )}
         </NavSection>
-      </SubNav>
+      </NewNavSidebarContainer>
       <HairstyleSelectionWindow className="selectionWindow">
         {choice && <HairStyleCard hairStyle={choice} />}
         {createNew && <CreateHairStyleForm />}

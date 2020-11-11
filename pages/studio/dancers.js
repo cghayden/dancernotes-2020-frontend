@@ -13,7 +13,7 @@ import { STUDIO_ALL_DANCERS_QUERY } from "../../components/Studio/Queries";
 import PlusSvg from "../../components/PlusSvg";
 
 const DancerSelectionWindow = styled.div`
-  grid-column: 4/-1;
+  grid-column: 5/-1;
 `;
 
 export default function newDancersPage() {

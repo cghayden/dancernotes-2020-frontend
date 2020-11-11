@@ -2,24 +2,6 @@ import styled from "styled-components";
 import CategoryFilter from "../Parent/CategoryFilter";
 
 const FilterPanelStyles = styled.div`
-  padding: 1rem 1rem 100px 1rem;
-  transform: ${(props) =>
-    props.showControlPanel ? "translateX(0%)" : "translateX(150%)"};
-  transition: all 0.4s;
-  position: fixed;
-  top: ${(props) => props.theme.mobileStatusBarHeight};
-  margin-top: 5px;
-  left: 3vw;
-  width: 94vw;
-  height: 75vh;
-  border-radius: ${(props) => props.theme.borderRadius};
-  box-shadow: ${(props) => props.theme.hoveringDropdownShadow},
-    ${(props) => props.theme.perimeterShadow};
-  background-color: ${(props) => props.theme.gray0};
-  z-index: 130;
-  overflow-y: scroll;
-
-  /* buttons on large screen to trigger dropdown of hidden checkboxes */
   a,
   button {
     border-radius: 0;
@@ -36,27 +18,9 @@ const FilterPanelStyles = styled.div`
     }
   }
 
-  @media (min-width: ${(props) => props.theme.largeScreen}) {
-    /* border-right: 1px solid ${(props) => props.theme.gray3}; */
-    position: static;
-    background-color: ${(props) => props.theme.background};
-    width: 20vw;
-    max-width: 200px;
-    min-width: 150px;
-    height: 100vh;
-    transform: translateX(0%);
-    border-radius: 0;
-    box-shadow: none;
-    display: block;
-    left: auto;
-    top: auto;
-    margin-top: 0;
-    z-index: unset;
-    grid-column: 11/-1;
-    ul {
-      font-size: 1rem;
-      align-items: start;
-    }
+  ul {
+    font-size: 1rem;
+    align-items: start;
   }
 `;
 
@@ -102,8 +66,8 @@ const ActiveFilters = styled.div`
   }
 `;
 
-const CheckboxArea = styled.div`
-  padding: 1rem 0;
+const Categories = styled.div`
+  padding: 0;
   display: grid;
   grid-row-gap: 0.5rem;
   grid-template-columns: repeat(auto-fit, minmax(100px, 150px));
@@ -148,28 +112,25 @@ const NewClassFilter = ({
   };
   return (
     <FilterPanelStyles showControlPanel={open}>
-      <h2>Filter By:</h2>
-      <FilterPanelHeader>
+      {/* <h2>Filter By:</h2> */}
+      {/* <FilterPanelHeader>
         <CloseFilterPanel onClick={closeControls}>Close</CloseFilterPanel>
-      </FilterPanelHeader>
-      <CheckboxAreaHeader>
-        <h3>Filter By:</h3>
-        {/* show clear button if there are active filters*/}
-        {Object.keys(classFilter).length > 0 && (
+      </FilterPanelHeader> */}
+      {/* show clear button if there are active filters*/}
+      {/* {Object.keys(classFilter).length > 0 && (
           <button onClick={clearFilter}>Clear All</button>
-        )}
-      </CheckboxAreaHeader>
-      <ActiveFilters>
+        )} */}
+      {/* <ActiveFilters>
         {/*display a list of the active filters */}
-        {Object.keys(classFilter).length > 0 && (
-          <ul>
-            {activeFilters.map((choice) => (
-              <li key={choice}>{choice}</li>
-            ))}
-          </ul>
-        )}
-      </ActiveFilters>
-      <CheckboxArea>
+      {/* {Object.keys(classFilter).length > 0 && (
+        <ul>
+          {activeFilters.map((choice) => (
+            <li key={choice}>{choice}</li>
+          ))}
+        </ul>
+      )} */}
+      {/* </ActiveFilters> */}
+      <Categories>
         {filterOptions.map((filterCategory) => {
           const pluralCategory = filterCategory.concat("s");
           return (
@@ -184,7 +145,7 @@ const NewClassFilter = ({
             />
           );
         })}
-      </CheckboxArea>
+      </Categories>
     </FilterPanelStyles>
   );
 };

@@ -5,7 +5,7 @@ import { STUDIO_EVENTS_QUERY } from "../../components/Studio/Queries";
 import { useQuery } from "@apollo/react-hooks";
 import NewStudioLayout from "../../components/Studio/NewStudioLayout";
 import {
-  SubNav,
+  NewNavSidebarContainer,
   NavSection,
   NavSectionHeading,
 } from "../../components/Studio/NewStudioNav";
@@ -28,7 +28,7 @@ function EventsPage() {
 
   return (
     <NewStudioLayout>
-      <SubNav>
+      <NewNavSidebarContainer>
         <NavSection>
           <NavSectionHeading>
             <h2>Events</h2>
@@ -58,7 +58,7 @@ function EventsPage() {
             </ul>
           )}
         </NavSection>
-      </SubNav>
+      </NewNavSidebarContainer>
       <EventSelectionWindow className="selectionWindow">
         {choice && <EventCard event={choice} />}
         {createNew && <CreateEventForm />}

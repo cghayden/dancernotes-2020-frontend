@@ -2,8 +2,9 @@ import styled from "styled-components";
 import StyledLink from "../StyledLink";
 
 const NavSection = styled.div`
+  padding: 0 0.5rem;
   /* not last child: */
-  &:after {
+  /* &:after {
     height: 2px;
     width: 75%;
     margin: 4px auto;
@@ -18,11 +19,10 @@ const NavSection = styled.div`
       ${(props) => props.theme.gray0} 100%
     );
   }
-
-  h2 {
-    color: ${(props) => props.theme.black};
-    padding: 1rem 0 1rem 1rem;
+  &:last-child {
+    padding-bottom: 15vh;
   }
+    */
 `;
 
 const NewNavSidebarContainer = styled.div`
@@ -32,7 +32,8 @@ const NewNavSidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   border-right: 1px solid ${(props) => props.theme.gray3};
-  grid-column: 1/3;
+  grid-column: 1/4;
+  overflow: scroll;
 
   ul {
     display: flex;
@@ -58,16 +59,15 @@ const NewNavSidebarContainer = styled.div`
     }
   }
 `;
-
 const SubNav = styled(NewNavSidebarContainer)`
-  grid-column: 1/3;
+  grid-column: 1/5;
 `;
-
 const NavSectionHeading = styled.div`
   display: flex;
-  padding: 1rem;
+  padding: 0.5rem 0;
+
   h2 {
-    padding: 0 0 0 0;
+    color: ${(props) => props.theme.black};
   }
   button {
     padding: 0;
@@ -79,7 +79,9 @@ export default function NewStudioNav() {
   return (
     <NewNavSidebarContainer>
       <NavSection>
-        <h2>Manage</h2>
+        <NavSectionHeading>
+          <h2>Manage</h2>
+        </NavSectionHeading>
         <ul>
           <li>
             <StyledLink

@@ -37,6 +37,15 @@ const ActiveFilters = styled(motion.div)`
       }
     }
   }
+  .clearButton {
+    position: absolute;
+    left: 10px;
+    top: 0;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    color: ${(props) => props.theme.red5};
+  }
   /* @media (min-width: ${(props) => props.theme.largeScreen}) {
     display: block;
   } */
@@ -56,6 +65,10 @@ export default function DancesActiveFilterHeading({ classFilter, setFilter }) {
     }
     setFilter(newClassFilter);
   }
+
+  const clearFilter = () => {
+    setFilter({});
+  };
   return (
     <DancesHeading>
       <AnimatePresence exitBeforeEnter>
@@ -76,6 +89,16 @@ export default function DancesActiveFilterHeading({ classFilter, setFilter }) {
             exit={{ opacity: 0 }}
           >
             <AnimateSharedLayout>
+              <motion.button
+                className="clearButton"
+                key={"clear"}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={clearFilter}
+              >
+                Clear All
+              </motion.button>
               <motion.ul layout>
                 <AnimatePresence>
                   {classFilter.competitiveLevel?.map((selection) => (

@@ -69,7 +69,7 @@ const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
+            exit={{ opacity: 0, height: 0, transition: { duration: 0.1 } }}
             ref={dropDownRef}
           >
             <ul>
