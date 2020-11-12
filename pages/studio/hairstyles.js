@@ -41,7 +41,9 @@ function HairStylesPage() {
             <ul>
               {data.studioHairStyles.map((hairstyle) => (
                 <button
-                  className={choice === hairstyle.id ? `activeStudioNav` : null}
+                  className={
+                    choice?.id === hairstyle.id ? `activeStudioNav` : null
+                  }
                   key={hairstyle.id}
                   onClick={() => {
                     setCreateNew(false);

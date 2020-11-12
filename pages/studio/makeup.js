@@ -56,7 +56,9 @@ function MakeupPage() {
           <ul>
             {makeupSets.map((makeupSet) => (
               <button
-                className={choice === makeupSet.id ? `activeStudioNav` : null}
+                className={
+                  choice?.id === makeupSet.id ? `activeStudioNav` : null
+                }
                 key={makeupSet.id}
                 onClick={() => {
                   setCreateNew(false);

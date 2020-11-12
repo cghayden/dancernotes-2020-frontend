@@ -9,7 +9,7 @@ const Card = styled.div`
   margin: 0 auto 1rem auto;
   padding: 1rem 3vmin;
   width: 94%;
-  min-width: 310px;
+  min-width: 200px;
   max-width: 600px;
   &:last-child {
     margin-bottom: 50vh;
@@ -17,10 +17,12 @@ const Card = styled.div`
 
   .card__header {
     display: flex;
+    align-items: center;
     padding-bottom: 1rem;
   }
   .card__header--editButton {
     margin-left: auto;
+    padding: 0;
   }
   .card__section {
     padding: 1rem 0;

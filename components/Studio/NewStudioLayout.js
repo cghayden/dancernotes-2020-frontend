@@ -4,8 +4,8 @@ import NewStudioNav from "./NewStudioNav";
 
 const BodyLayout = styled.div`
   display: grid;
-  grid-template-columns: minmax(150px, 200px) minmax(150px, 200px) minmax(
-      400px,
+  grid-template-columns: minmax(100px, 200px) minmax(100px, 200px) minmax(
+      200px,
       1fr
     );
 `;

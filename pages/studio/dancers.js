@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import styled from "styled-components";
 import NewStudioLayout from "../../components/Studio/NewStudioLayout";
 import {
   SubNav,

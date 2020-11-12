@@ -7,8 +7,10 @@ import EditHairStyleForm from "./EditHairStyleForm";
 const HairImage = styled.div`
   text-align: center;
   img {
-    width: 300px;
-    height: 300px;
+    width: 90%;
+    height: 90%;
+    max-width: 300px;
+    max-height: 300px;
   }
 `;
 

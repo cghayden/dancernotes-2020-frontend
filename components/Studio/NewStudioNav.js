@@ -41,7 +41,7 @@ const NewNavSidebarContainer = styled.div`
       background: ${(props) => props.theme.indigo5};
     }
   }
-  @media (max-width: ${(props) => props.theme.largeScreen}) {
+  /* @media (max-width: ${(props) => props.theme.largeScreen}) {
     h2 {
       font-size: 1rem;
     }
@@ -49,7 +49,7 @@ const NewNavSidebarContainer = styled.div`
     button {
       font-size: 0.8rem;
     }
-  }
+  } */
 `;
 
 const SubNav = styled(NewNavSidebarContainer)`
@@ -65,7 +65,7 @@ const NavSectionHeading = styled.div`
   }
   button {
     padding: 0;
-    margin: 0 0 0 auto;
+    margin: 0 0.5rem 0 auto;
   }
 `;
 
@@ -94,17 +94,20 @@ export default function NewStudioNav() {
             </StyledLink>
           </li>
           <li>
-            <StyledLink activeClassName="activeStudioNav" href="events">
+            <StyledLink activeClassName="activeStudioNav" href="/studio/events">
               <a>Events</a>
             </StyledLink>
           </li>
           <li>
-            <StyledLink activeClassName="active" href="hairstyles">
+            <StyledLink
+              activeClassName="activeStudioNav"
+              href="/studio/hairstyles"
+            >
               <a>Hairstyles</a>
             </StyledLink>
           </li>
           <li>
-            <StyledLink activeClassName="active" href="makeup">
+            <StyledLink activeClassName="activeStudioNav" href="/studio/makeup">
               <a>Makeup</a>
             </StyledLink>
           </li>
@@ -114,7 +117,7 @@ export default function NewStudioNav() {
         <h2>Accounts</h2>
         <ul>
           <li>
-            <StyledLink activeClassName="active" href="accounts">
+            <StyledLink activeClassName="activeStudioNav" href="accounts">
               <a>Accounts</a>
             </StyledLink>
           </li>

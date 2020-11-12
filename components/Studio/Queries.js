@@ -126,6 +126,7 @@ const STUDIO_EVENTS_QUERY = gql`
     myStudio {
       id
       events {
+        id
         name
         type
         appliesTo

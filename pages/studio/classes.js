@@ -1,5 +1,4 @@
 import { useState } from "react";
-import styled from "styled-components";
 import NewStudioLayout from "../../components/Studio/NewStudioLayout";
 import DanceClasses from "../../components/Studio/DanceClasses";
 import NewClassFilter from "../../components/Studio/NewClassFilter";
@@ -14,15 +13,6 @@ import {
 import PlusSvg from "../../components/PlusSvg";
 
 // --------------- Styles ------------------------------
-
-const DancesSelectionWindow = styled.div`
-  height: 100vh;
-  overflow-y: scroll;
-  display: grid;
-  grid-template-rows: minmax(4rem, auto) 1fr;
-  position: relative;
-  grid-column: 5/-1;
-`;
 
 // ~~~~~~~~~~~~~~~~~~~ CODE ~~~~~~~~~~~~~~~~~~~~~~
 

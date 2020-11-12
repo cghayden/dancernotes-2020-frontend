@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
-
 import { STUDIO_EVENTS_QUERY } from "../../components/Studio/Queries";
 import NewStudioLayout from "../../components/Studio/NewStudioLayout";
 import {
@@ -9,7 +8,6 @@ import {
   NavSectionHeading,
 } from "../../components/Studio/NewStudioNav";
 import PlusSvg from "../../components/PlusSvg";
-
 import CreateEventForm from "../../components/Studio/CreateEventForm";
 import EventCard from "../../components/Studio/EventCard";
 
@@ -39,7 +37,7 @@ function EventsPage() {
             <ul>
               {studioEvents.map((event) => (
                 <button
-                  className={choice === event.id ? `activeStudioNav` : null}
+                  className={choice?.id === event.id ? `activeStudioNav` : null}
                   key={event.id}
                   onClick={() => {
                     setCreateNew(false);
