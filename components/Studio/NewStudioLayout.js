@@ -1,14 +1,10 @@
-import styled from "styled-components";
-import NewStudioHeader from "./NewStudioHeader";
-import NewStudioNav from "./NewStudioNav";
+import styled from 'styled-components'
+import NewStudioHeader from './NewStudioHeader'
+import NewStudioNav from './NewStudioNav'
 
 const BodyLayout = styled.div`
-  display: grid;
-  grid-template-columns: minmax(100px, 200px) minmax(100px, 200px) minmax(
-      200px,
-      1fr
-    );
-`;
+  display: flex;
+`
 
 const Layout = styled.div`
   height: 100vh;
@@ -18,14 +14,16 @@ const Layout = styled.div`
     display: grid;
     grid-template-rows: minmax(4rem, auto) 1fr;
     position: relative;
+    flex-grow: 1;
   }
   .selectionWindow {
     height: 100vh;
     overflow-y: scroll;
     position: relative;
     padding-top: 2rem;
+    flex-grow: 1;
   }
-`;
+`
 
 export default function NewStudioLayout({ children }) {
   // const studio = useStudio();
@@ -38,5 +36,5 @@ export default function NewStudioLayout({ children }) {
         {children}
       </BodyLayout>
     </Layout>
-  );
+  )
 }
