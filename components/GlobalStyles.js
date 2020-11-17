@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import Meta from "./Meta";
-import { ThemeProvider, createGlobalStyle } from "styled-components";
-import { theme } from "./themeVariables";
+import React, { Component } from 'react'
+import Meta from './Meta'
+import { ThemeProvider, createGlobalStyle } from 'styled-components'
+import { theme } from './themeVariables'
 //adobe font = 1. lato, 2. source-sans-pro, 300,400,700, reg and italic
 
 const GlobalStyle = createGlobalStyle`
@@ -19,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.25;
     font-family: "Source Sans Pro", "Roboto", -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue;
     ${
-      "" /* font-family: "Source Sans Pro", -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue; */
+      '' /* font-family: "Source Sans Pro", -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue; */
     }
     font-weight: 400;
     color: ${theme.gray6};
@@ -195,7 +195,7 @@ const GlobalStyle = createGlobalStyle`
         box-shadow: 1px -1px 3px 2px ${theme.indigo2}, 1px 1px 3px 2px ${
   theme.indigo2
 };      
-        ${"" /* box-shadow: 1px 1px 3px 2px ${theme.indigo2};       */}
+        ${'' /* box-shadow: 1px 1px 3px 2px ${theme.indigo2};       */}
         color: hsl(200, 95%,95%);
 
       }
@@ -234,7 +234,7 @@ main {
 }
 .subHeading{
   font-size: 12px;
-  ${"" /* font-weight: normal; */}
+  ${'' /* font-weight: normal; */}
 }
 .left{
   text-align: left;
@@ -244,7 +244,20 @@ main {
   transform: translate3d(50%, 190%, 0px)
 }
 
-`;
+/* ~~~~~~~~~~~~~MEDIA QUERY CLASSES ~~~~~~~~~~~~~~~~~~ */
+
+.hide-ltMedium{
+  @media screen and (max-width: ${(props) => props.theme.mediumScreen}) {
+    display: none;
+  }
+}
+.hide-ltLarge{
+  @media screen and (max-width: ${(props) => props.theme.largeScreen}) {
+    display: none;
+  }
+}
+
+`
 
 export default class GlobalStyles extends Component {
   render() {
@@ -256,6 +269,6 @@ export default class GlobalStyles extends Component {
           {this.props.children}
         </>
       </ThemeProvider>
-    );
+    )
   }
 }

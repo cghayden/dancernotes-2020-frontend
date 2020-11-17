@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import StyledLink from "../StyledLink";
+import styled from 'styled-components'
+import StyledLink from '../StyledLink'
 
 const NavSection = styled.div`
   padding: 0 0.5rem;
   &:last-child {
     padding-bottom: 40vh;
   }
-`;
+`
 
 const NewNavSidebarContainer = styled.div`
   background: ${(props) => props.theme.gray0};
@@ -41,20 +41,9 @@ const NewNavSidebarContainer = styled.div`
       background: ${(props) => props.theme.indigo5};
     }
   }
-  /* @media (max-width: ${(props) => props.theme.largeScreen}) {
-    h2 {
-      font-size: 1rem;
-    }
-    a,
-    button {
-      font-size: 0.8rem;
-    }
-  } */
-`;
+`
 
-const SubNav = styled(NewNavSidebarContainer)`
-  /* grid-column: 1/5; */
-`;
+const SubNav = styled(NewNavSidebarContainer)``
 
 const NavSectionHeading = styled.div`
   display: flex;
@@ -67,11 +56,11 @@ const NavSectionHeading = styled.div`
     padding: 0;
     margin: 0 0.5rem 0 auto;
   }
-`;
+`
 
 export default function NewStudioNav() {
   return (
-    <NewNavSidebarContainer>
+    <NewNavSidebarContainer className='hide-ltLarge'>
       <NavSection>
         <NavSectionHeading>
           <h2>Manage</h2>
@@ -79,35 +68,35 @@ export default function NewStudioNav() {
         <ul>
           <li>
             <StyledLink
-              activeClassName="activeStudioNav"
-              href="/studio/classes"
+              activeClassName='activeStudioNav'
+              href='/studio/classes'
             >
               <a>Classes</a>
             </StyledLink>
           </li>
           <li>
             <StyledLink
-              activeClassName="activeStudioNav"
-              href="/studio/dancers"
+              activeClassName='activeStudioNav'
+              href='/studio/dancers'
             >
               <a>Dancers</a>
             </StyledLink>
           </li>
           <li>
-            <StyledLink activeClassName="activeStudioNav" href="/studio/events">
+            <StyledLink activeClassName='activeStudioNav' href='/studio/events'>
               <a>Events</a>
             </StyledLink>
           </li>
           <li>
             <StyledLink
-              activeClassName="activeStudioNav"
-              href="/studio/hairstyles"
+              activeClassName='activeStudioNav'
+              href='/studio/hairstyles'
             >
               <a>Hairstyles</a>
             </StyledLink>
           </li>
           <li>
-            <StyledLink activeClassName="activeStudioNav" href="/studio/makeup">
+            <StyledLink activeClassName='activeStudioNav' href='/studio/makeup'>
               <a>Makeup</a>
             </StyledLink>
           </li>
@@ -117,7 +106,7 @@ export default function NewStudioNav() {
         <h2>Accounts</h2>
         <ul>
           <li>
-            <StyledLink activeClassName="activeStudioNav" href="accounts">
+            <StyledLink activeClassName='activeStudioNav' href='accounts'>
               <a>Accounts</a>
             </StyledLink>
           </li>
@@ -128,24 +117,24 @@ export default function NewStudioNav() {
         <ul>
           <li>
             <StyledLink
-              activeClassName="activeStudioNav"
-              href="/studio/oldClasses"
+              activeClassName='activeStudioNav'
+              href='/studio/oldClasses'
             >
               <a>Old Classes View</a>
             </StyledLink>
           </li>
           <li>
             <StyledLink
-              activeClassName="activeStudioNav"
-              href="/studio/newClasses-Top-Filter"
+              activeClassName='activeStudioNav'
+              href='/studio/newClasses-Top-Filter'
             >
               <a>Classes v2 TopFilt</a>
             </StyledLink>
           </li>
           <li>
             <StyledLink
-              activeClassName="activeStudioNav"
-              href="/studio/oldDancers"
+              activeClassName='activeStudioNav'
+              href='/studio/oldDancers'
             >
               <a>Old Dancers View</a>
             </StyledLink>
@@ -153,7 +142,7 @@ export default function NewStudioNav() {
         </ul>
       </NavSection>
     </NewNavSidebarContainer>
-  );
+  )
 }
 
-export { NavSection, NewNavSidebarContainer, SubNav, NavSectionHeading };
+export { NavSection, NewNavSidebarContainer, SubNav, NavSectionHeading }
