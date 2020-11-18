@@ -9,9 +9,9 @@ import {
   SubNav,
   NavSection,
   NavSectionHeading,
-  Filler,
 } from '../../components/Studio/NewStudioNav'
 
+import NewStudioSubNav from '../../components/Studio/NewStudioSubNav'
 import PlusSvg from '../../components/PlusSvg'
 import Error from '../../components/Error'
 import HairStyleCard from '../../components/Studio/HairStyleCard'
@@ -21,45 +21,26 @@ import CreateHairStyleForm from '../../components/Studio/CreateHairStyleForm'
 
 function HairStylesPage() {
   const { data, error, loading } = useQuery(HAIRSTYLES_QUERY)
+  // console.log('data', data?.studioHairStyles)
   const [choice, setChoice] = useState()
   const [createNew, setCreateNew] = useState(false)
+
+  const subnavOptions = data?.studioHairStyles.map((hairStyle) => {
+    return { id: hairStyle.id, text: hairStyle.name, data: hairStyle }
+  })
+
+  // console.log('subnavOptions', subnavOptions)
+
   return (
     <NewStudioLayout>
-      <div className='hide-ltMedium'>
-        <SubNav>
-          <NavSection>
-            <NavSectionHeading>
-              <h2>Hairstyles</h2>
-              <button
-                onClick={() => {
-                  setChoice(null)
-                  setCreateNew(true)
-                }}
-              >
-                <PlusSvg />
-              </button>
-            </NavSectionHeading>
-            {data && (
-              <ul>
-                {data.studioHairStyles.map((hairstyle) => (
-                  <button
-                    className={
-                      choice?.id === hairstyle.id ? `activeStudioNav` : null
-                    }
-                    key={hairstyle.id}
-                    onClick={() => {
-                      setCreateNew(false)
-                      setChoice({ ...hairstyle })
-                    }}
-                  >
-                    {hairstyle.name}
-                  </button>
-                ))}
-              </ul>
-            )}
-          </NavSection>
-          {/* <Filler /> */}
-        </SubNav>
+      <div>
+        <NewStudioSubNav
+          page={'Hairstyles'}
+          choice={choice}
+          setChoice={setChoice}
+          setCreateNew={setCreateNew}
+          options={subnavOptions}
+        />
       </div>
       <div className='selectionWindow'>
         {choice && <HairStyleCard hairStyle={choice} />}

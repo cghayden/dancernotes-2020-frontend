@@ -22,6 +22,9 @@ const Layout = styled.div`
     position: relative;
     padding-top: 2rem;
     flex-grow: 1;
+    @media screen and (max-width: ${(props) => props.theme.mediumScreen}) {
+      translate-x: 100%;
+    }
   }
 `
 

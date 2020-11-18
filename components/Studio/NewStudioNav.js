@@ -41,7 +41,11 @@ const NewNavSidebarContainer = styled.div`
   } */
 `
 
-const SubNav = styled(NewNavSidebarContainer)``
+const SubNav = styled(NewNavSidebarContainer)`
+  @media screen and (max-width: ${(props) => props.theme.mediumScreen}) {
+    width: 100vw;
+  }
+`
 
 const NavSectionHeading = styled.div`
   display: flex;

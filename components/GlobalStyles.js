@@ -262,6 +262,11 @@ main {
     display: none;
   }
 }
+.hide-gtMedium {
+  @media screen and (min-width: ${(props) => props.theme.mediumScreen}) {
+    display: none;
+  }
+}
 
 `
 
