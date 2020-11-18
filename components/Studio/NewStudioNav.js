@@ -1,13 +1,6 @@
 import styled from 'styled-components'
 import StyledLink from '../StyledLink'
 
-const NavSection = styled.div`
-  padding: 0 0.5rem;
-  &:last-child {
-    padding-bottom: 40vh;
-  }
-`
-
 const NewNavSidebarContainer = styled.div`
   background: ${(props) => props.theme.gray0};
   min-width: 130px;
@@ -17,6 +10,7 @@ const NewNavSidebarContainer = styled.div`
   border-right: 1px solid ${(props) => props.theme.gray3};
   /* grid-column: 1/4; */
   overflow: scroll;
+  color: ${(props) => props.theme.gray6};
 
   ul {
     display: flex;
@@ -41,6 +35,10 @@ const NewNavSidebarContainer = styled.div`
       background: ${(props) => props.theme.indigo5};
     }
   }
+  /* 
+  @media screen and (max-width: ${(props) => props.theme.largeScreen}) {
+    height: auto;
+  } */
 `
 
 const SubNav = styled(NewNavSidebarContainer)``
@@ -58,9 +56,24 @@ const NavSectionHeading = styled.div`
   }
 `
 
+const NavSection = styled.div`
+  padding: 0 0.5rem;
+  &:last-child {
+    padding-bottom: 40vh;
+    @media screen and (max-width: ${(props) => props.theme.largeScreen}) {
+      padding-bottom: 0;
+    }
+  }
+`
+const Filler = styled.div`
+  height: 33vh;
+  width: inherit;
+  background: pink;
+`
+
 export default function NewStudioNav() {
   return (
-    <NewNavSidebarContainer className='hide-ltLarge'>
+    <NewNavSidebarContainer>
       <NavSection>
         <NavSectionHeading>
           <h2>Manage</h2>
@@ -145,4 +158,4 @@ export default function NewStudioNav() {
   )
 }
 
-export { NavSection, NewNavSidebarContainer, SubNav, NavSectionHeading }
+export { NavSection, NewNavSidebarContainer, SubNav, NavSectionHeading, Filler }

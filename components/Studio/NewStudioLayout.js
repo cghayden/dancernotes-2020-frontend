@@ -32,7 +32,9 @@ export default function NewStudioLayout({ children }) {
     <Layout>
       <NewStudioHeader />
       <BodyLayout>
-        <NewStudioNav />
+        <div className='hide-ltLarge'>
+          <NewStudioNav />
+        </div>
         {children}
       </BodyLayout>
     </Layout>

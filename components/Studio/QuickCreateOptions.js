@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { AnimatePresence, motion, useCycle } from "framer-motion";
+import styled from 'styled-components'
+import { AnimatePresence, motion, useCycle } from 'framer-motion'
 
 const OptionsLinksContainer = styled(motion.div)`
   position: absolute;
@@ -11,7 +11,7 @@ const OptionsLinksContainer = styled(motion.div)`
     width: max-content;
     color: ${(props) => props.theme.blackText};
   }
-`;
+`
 
 const Background = styled(motion.div)`
   position: absolute;
@@ -22,66 +22,70 @@ const Background = styled(motion.div)`
   background: #fff;
   box-shadow: ${(props) => props.theme.dropShadow1};
   border-radius: ${(props) => props.theme.borderRadius};
-`;
+`
 
 const MotionUl = styled(motion.ul)`
   padding: 25px;
   position: absolute;
   width: 230px;
-`;
+`
 
-const sidebar = {
+const sidebarVariants = {
   open: {
-    clipPath: "circle(800px at 89% 10%)",
+    clipPath: 'circle(800px at 89% 10%)',
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 20,
       restDelta: 2,
     },
   },
   closed: {
-    clipPath: "circle(20px at 89% 10%)",
+    clipPath: 'circle(20px at 89% 10%)',
     transition: {
       delay: 0.2,
-      type: "spring",
+      type: 'spring',
       stiffness: 400,
       damping: 40,
     },
   },
-};
+}
 
-export default function MotionOptions() {
-  const [isOpen, toggleOpen] = useCycle(false, true);
+export default function QuickCreateOptions() {
+  const [isOpen, toggleOpen] = useCycle(false, true)
   return (
-    <OptionsLinksContainer initial={false} animate={isOpen ? "open" : "closed"}>
-      <Background variants={sidebar} />
+    <OptionsLinksContainer
+      className='hide-ltLarge'
+      initial={false}
+      animate={isOpen ? 'open' : 'closed'}
+    >
+      <Background variants={sidebarVariants} />
       <AnimatePresence>
         {isOpen && (
           <MotionUl variants={ulVariants}>
             <motion.li variants={linkVariants}>
-              <a href="/studio/createClass">Add a Dance Class</a>
+              <a href='/studio/createClass'>Add a Dance Class</a>
             </motion.li>
             <motion.li variants={linkVariants}>
-              <a href="/studio/createEvent">Add an Event</a>
+              <a href='/studio/createEvent'>Add an Event</a>
             </motion.li>
             <motion.li variants={linkVariants}>
-              <a href="/studio/createHairstyle">Add a Hairstyle</a>
+              <a href='/studio/createHairstyle'>Add a Hairstyle</a>
             </motion.li>
             <motion.li variants={linkVariants}>
-              <a href="/studio/createMakeup">Add a Makeup Set</a>
+              <a href='/studio/createMakeup'>Add a Makeup Set</a>
             </motion.li>
             <motion.li variants={linkVariants}>
-              <a href="/studio/#createDancer">Add a Dancer</a>
+              <a href='/studio/#createDancer'>Add a Dancer</a>
             </motion.li>
           </MotionUl>
         )}
       </AnimatePresence>
       <MenuToggle
-        animate={isOpen ? "open" : "closed"}
+        animate={isOpen ? 'open' : 'closed'}
         toggle={() => toggleOpen()}
       />
     </OptionsLinksContainer>
-  );
+  )
 }
 
 const SVGDiv = styled.div`
@@ -91,54 +95,54 @@ const SVGDiv = styled.div`
   svg.open {
     transform: rotate(45deg);
   }
-`;
+`
 
 const MenuToggle = ({ toggle, animate }) => (
   <button
     style={{
-      outline: "none",
-      border: "none",
-      cursor: "pointer",
-      userSelect: "none",
-      position: "absolute",
-      top: "9px",
-      right: "8px",
-      width: "50px",
-      height: "50px",
-      borderRadius: "50%",
-      background: "transparent",
-      padding: "0",
-      margin: "0",
+      outline: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      userSelect: 'none',
+      position: 'absolute',
+      top: '9px',
+      right: '8px',
+      width: '50px',
+      height: '50px',
+      borderRadius: '50%',
+      background: 'transparent',
+      padding: '0',
+      margin: '0',
     }}
     onClick={toggle}
   >
     <SVGDiv>
       <svg
-        className={animate === "open" ? `open` : null}
-        width="23"
-        height="23"
-        viewBox="0 0 23 23"
+        className={animate === 'open' ? `open` : null}
+        width='23'
+        height='23'
+        viewBox='0 0 23 23'
       >
         <path
-          fill="transparent"
-          strokeWidth="3"
-          stroke="hsl(0, 0%, 18%)"
-          strokeLinecap="round"
-          opacity="1"
-          d="M 11 .5 L 11 18.346"
+          fill='transparent'
+          strokeWidth='3'
+          stroke='hsl(0, 0%, 18%)'
+          strokeLinecap='round'
+          opacity='1'
+          d='M 11 .5 L 11 18.346'
         ></path>
         <path
-          fill="transparent"
-          strokeWidth="3"
-          stroke="hsl(0, 0%, 18%)"
-          strokeLinecap="round"
-          opacity="1"
-          d="M 2 9.423 L 20 9.423"
+          fill='transparent'
+          strokeWidth='3'
+          stroke='hsl(0, 0%, 18%)'
+          strokeLinecap='round'
+          opacity='1'
+          d='M 2 9.423 L 20 9.423'
         ></path>
       </svg>
     </SVGDiv>
   </button>
-);
+)
 
 const linkVariants = {
   open: {
@@ -147,7 +151,7 @@ const linkVariants = {
   closed: {
     opacity: 0,
   },
-};
+}
 
 const ulVariants = {
   open: {
@@ -156,7 +160,7 @@ const ulVariants = {
   closed: {
     transition: { staggerChildren: 0.05, staggerDirection: -1 },
   },
-};
+}
 
 // const Path = (props) => (
 //   <motion.path

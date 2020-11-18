@@ -257,6 +257,12 @@ main {
   }
 }
 
+.hide-gtLarge {
+  @media screen and (min-width: ${(props) => props.theme.largeScreen}) {
+    display: none;
+  }
+}
+
 `
 
 export default class GlobalStyles extends Component {
