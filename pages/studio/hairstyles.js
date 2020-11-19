@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useQuery } from '@apollo/react-hooks'
-import styled from 'styled-components'
-
+import { AnimatePresence, motion } from 'framer-motion'
 import { HAIRSTYLES_QUERY } from '../../components/Studio/Queries'
 import NewStudioLayout from '../../components/Studio/NewStudioLayout'
 import {
@@ -42,10 +41,33 @@ function HairStylesPage() {
           options={subnavOptions}
         />
       </div>
-      <div className='selectionWindow'>
-        {choice && <HairStyleCard hairStyle={choice} />}
-        {createNew && <CreateHairStyleForm />}
-      </div>
+      <AnimatePresence exitBeforeEnter>
+        {choice && (
+          <div className='modalSelectionWindow'>
+            <motion.div
+              key={choice.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <HairStyleCard hairStyle={choice} />
+            </motion.div>
+          </div>
+        )}
+
+        {createNew && (
+          <div className='selectionWindow'>
+            <motion.div
+              key='create'
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <CreateHairStyleForm />
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </NewStudioLayout>
   )
 }

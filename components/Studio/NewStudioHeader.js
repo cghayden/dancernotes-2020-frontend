@@ -50,7 +50,7 @@ export default function NewStudioHeader() {
       </button>
       {mobileNav && (
         <MobileNavContainer>
-          <NewStudioSubNav />
+          {/* <NewStudioSubNav /> */}
           <NewStudioNav />
         </MobileNavContainer>
       )}

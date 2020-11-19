@@ -1,42 +1,29 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import Link from "next/link";
-import { STUDIO_MAKEUP_QUERY } from "../../components/Studio/Queries";
-import NewStudioLayout from "../../components/Studio/NewStudioLayout";
+import { useQuery } from '@apollo/react-hooks'
+
+import { AnimatePresence, motion } from 'framer-motion'
+
+import { STUDIO_MAKEUP_QUERY } from '../../components/Studio/Queries'
+import NewStudioLayout from '../../components/Studio/NewStudioLayout'
 import {
   SubNav,
   NavSection,
   NavSectionHeading,
-} from "../../components/Studio/NewStudioNav";
-import PlusSvg from "../../components/PlusSvg";
+} from '../../components/Studio/NewStudioNav'
+import PlusSvg from '../../components/PlusSvg'
 
-import Error from "../../components/Error";
-import Loading from "../../components/Loading";
-import MakeupSetCard from "../../components/Studio/MakeupSetCard";
-import CreateMakeupForm from "../../components/Studio/CreateMakeupForm";
+import Error from '../../components/Error'
+import Loading from '../../components/Loading'
+import MakeupSetCard from '../../components/Studio/MakeupSetCard'
+import CreateMakeupForm from '../../components/Studio/CreateMakeupForm'
 
 function MakeupPage() {
-  const [choice, setChoice] = useState();
-  const [createNew, setCreateNew] = useState(false);
+  const [choice, setChoice] = useState()
+  const [createNew, setCreateNew] = useState(false)
 
-  const { data, error, loading } = useQuery(STUDIO_MAKEUP_QUERY);
-  const makeupSets = data ? data.myStudio.makeupSets : [];
-
-  // const AddMakeupSet = (
-  //   <Link href="/studio/createMakeup">
-  //     <a>Create a Makeup Set</a>
-  //   </Link>
-  // );
-
-  // return (
-  //   <NoNavLayout mobileHeader="Makeup" page="Makeup" pageAction={AddMakeupSet}>
-  //     {data.myStudio.makeupSets.map(makeupSet => (
-  //       <MakeupSetCard makeupSet={makeupSet} key={makeupSet.id} />
-  //     ))}
-  //   </NoNavLayout>
-  // );
+  const { data, error, loading } = useQuery(STUDIO_MAKEUP_QUERY)
+  const makeupSets = data ? data.myStudio.makeupSets : []
 
   return (
     <NewStudioLayout>
@@ -46,8 +33,8 @@ function MakeupPage() {
             <h2>MakeupSets</h2>
             <button
               onClick={() => {
-                setChoice(null);
-                setCreateNew(true);
+                setChoice(null)
+                setCreateNew(true)
               }}
             >
               <PlusSvg />
@@ -61,8 +48,8 @@ function MakeupPage() {
                 }
                 key={makeupSet.id}
                 onClick={() => {
-                  setCreateNew(false);
-                  setChoice({ ...makeupSet });
+                  setCreateNew(false)
+                  setChoice({ ...makeupSet })
                 }}
               >
                 {makeupSet.name}
@@ -71,15 +58,38 @@ function MakeupPage() {
           </ul>
         </NavSection>
       </SubNav>
-      <div className="selectionWindow">
-        {choice && <MakeupSetCard makeupSet={choice} />}
-        {createNew && <CreateMakeupForm />}
-      </div>
+      <AnimatePresence exitBeforeEnter>
+        {choice && (
+          <div className='modalSelectionWindow'>
+            <motion.div
+              key={choice.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <MakeupSetCard makeupSet={choice} />
+            </motion.div>
+          </div>
+        )}
+
+        {createNew && (
+          <div className='selectionWindow'>
+            <motion.div
+              key='create'
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <CreateMakeupForm />{' '}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </NewStudioLayout>
-  );
+  )
 }
 
-export default MakeupPage;
+export default MakeupPage
 
 // if (loading || error)
 //   return (

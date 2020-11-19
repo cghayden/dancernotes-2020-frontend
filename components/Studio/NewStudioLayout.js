@@ -22,8 +22,27 @@ const Layout = styled.div`
     position: relative;
     padding-top: 2rem;
     flex-grow: 1;
+  }
+  .modalSelectionWindow {
+    height: 100vh;
+    overflow-y: scroll;
+    position: relative;
+    padding-top: 2rem;
+    flex-grow: 1;
     @media screen and (max-width: ${(props) => props.theme.mediumScreen}) {
-      translate-x: 100%;
+      position: fixed;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2;
+      top: ${(props) => props.theme.studioHeaderHeight};
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      /* pointer-events: none; */
+      /* opacity: ${(props) => (props.modalOpen ? 1 : 0)}; */
+      transition: opacity 0.5s;
     }
   }
 `
