@@ -44,6 +44,9 @@ const NewNavSidebarContainer = styled.div`
 const SubNav = styled(NewNavSidebarContainer)`
   @media screen and (max-width: ${(props) => props.theme.mediumScreen}) {
     width: 100vw;
+    li {
+      border-bottom: 1px solid lightgray;
+    }
   }
 `
 
@@ -63,6 +66,7 @@ const NavSectionHeading = styled.div`
 
 const NavSection = styled.div`
   padding: 0 0.5rem;
+
   &:last-child {
     padding-bottom: 40vh;
     @media screen and (max-width: ${(props) => props.theme.largeScreen}) {

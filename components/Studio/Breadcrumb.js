@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { useRouter } from 'next/router'
 import Link from 'next/link'
 import HomeSvg from '../Icons/HomeSvg'
+import PlusSvg from '../PlusSvg'
 
 const BreadcrumbStyles = styled.div`
   display: flex;
@@ -18,23 +18,41 @@ const BreadcrumbStyles = styled.div`
   }
 `
 
-function Breadcrumb({ page, selection }) {
-  const router = useRouter()
+const CreateLinkDiv = styled.div`
+  margin-left: auto;
+`
+
+function Breadcrumb({ page, selection, createLink }) {
   // home > page > selection
   return (
-    <BreadcrumbStyles>
-      <Link href={'/studio/home'}>
-        <a>
-          <HomeSvg />
-        </a>
-      </Link>
-      <p>{'>'}</p>
-      <Link href={`/studio/${page.toLowerCase()}`}>
-        <a>{page}</a>
-      </Link>
-      <p>{'>'}</p>
-      <p>{selection}</p>
-    </BreadcrumbStyles>
+    <div className='hide-gtMedium'>
+      <BreadcrumbStyles>
+        <Link href={'/studio/home'}>
+          <a>
+            <HomeSvg />
+          </a>
+        </Link>
+        <p>{'>'}</p>
+        <Link href={`/studio/${page.toLowerCase()}`}>
+          <a>{page}</a>
+        </Link>
+        {selection && (
+          <>
+            <p>{'>'}</p>
+            <p>{selection}</p>
+          </>
+        )}
+        {createLink && (
+          <CreateLinkDiv>
+            <Link href={`/studio/dancers/${createLink}`}>
+              <a>
+                <PlusSvg />
+              </a>
+            </Link>
+          </CreateLinkDiv>
+        )}
+      </BreadcrumbStyles>
+    </div>
   )
 }
 

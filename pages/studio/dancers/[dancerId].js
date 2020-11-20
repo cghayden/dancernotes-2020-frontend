@@ -30,7 +30,10 @@ function DancerPage() {
   const dancer = dancerQuery?.studioDancer
 
   return (
-    <NewStudioLayout>
+    <NewStudioLayout
+      page={'Dancers'}
+      selection={dancer ? `${dancer?.firstName} ${dancer?.lastName}` : ''}
+    >
       <div className='hide-ltMedium'>
         <SubNav>
           <NavSection>
@@ -55,12 +58,7 @@ function DancerPage() {
         </SubNav>
       </div>
       <div className='selectionWindow '>
-        <div className='hide-gtMedium'>
-          <Breadcrumb
-            page={'Dancers'}
-            selection={dancer ? `${dancer?.firstName} ${dancer?.lastName}` : ''}
-          />
-        </div>
+        <div className='hide-gtMedium'></div>
         <Dancer dancer={dancer} />
       </div>
     </NewStudioLayout>
