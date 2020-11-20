@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const Card = styled.div`
   text-align: center;
@@ -11,6 +11,9 @@ const Card = styled.div`
   width: 94%;
   min-width: 200px;
   max-width: 600px;
+  &:first-child {
+    margin-top: 1rem;
+  }
   &:last-child {
     margin-bottom: 50vh;
   }
@@ -34,6 +37,6 @@ const Card = styled.div`
     width: 300px;
     height: 300px;
   }
-`;
+`
 
-export default Card;
+export default Card

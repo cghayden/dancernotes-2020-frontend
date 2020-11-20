@@ -12,11 +12,23 @@ import PlusSvg from '../../../components/PlusSvg'
 import { useQuery } from '@apollo/react-hooks'
 
 import { STUDIO_ALL_DANCERS_QUERY } from '../../../components/Studio/Queries'
+import { STUDIO_DANCER } from '../../../components/Studio/Queries'
+
+import Breadcrumb from '../../../components/Studio/Breadcrumb'
 
 function DancerPage() {
-  const { data, error, loading } = useQuery(STUDIO_ALL_DANCERS_QUERY)
   const router = useRouter()
   const { dancerId } = router.query
+  const { data, error: allDancersError, loading: allDancersLoading } = useQuery(
+    STUDIO_ALL_DANCERS_QUERY
+  )
+
+  const { data: dancerQuery, error, loading } = useQuery(STUDIO_DANCER, {
+    variables: { id: dancerId },
+  })
+
+  const dancer = dancerQuery?.studioDancer
+
   return (
     <NewStudioLayout>
       <div className='hide-ltMedium'>
@@ -32,7 +44,7 @@ function DancerPage() {
             </NavSectionHeading>
             <ul>
               {data?.studioDancers.map((dancer) => (
-                <Link key={dancer.id} href={`/studio/newdancers/${dancer.id}`}>
+                <Link key={dancer.id} href={`/studio/dancers/${dancer.id}`}>
                   <a>
                     {dancer.firstName} {dancer.lastName}
                   </a>
@@ -43,8 +55,13 @@ function DancerPage() {
         </SubNav>
       </div>
       <div className='selectionWindow '>
-        {/* <h2>Dancer></h2> */}
-        <Dancer id={dancerId} />
+        <div className='hide-gtMedium'>
+          <Breadcrumb
+            page={'Dancers'}
+            selection={dancer ? `${dancer?.firstName} ${dancer?.lastName}` : ''}
+          />
+        </div>
+        <Dancer dancer={dancer} />
       </div>
     </NewStudioLayout>
   )

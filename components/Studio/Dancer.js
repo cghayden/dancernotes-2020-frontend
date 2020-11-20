@@ -1,7 +1,7 @@
-import { STUDIO_DANCER } from "./Queries";
-import { useQuery } from "@apollo/react-hooks";
-import Card from "../styles/Card";
-import styled from "styled-components";
+// import { STUDIO_DANCER } from "./Queries";
+// import { useQuery } from "@apollo/react-hooks";
+import Card from '../styles/Card'
+import styled from 'styled-components'
 
 const DancerInfoCard = styled(Card)`
   display: grid;
@@ -66,25 +66,25 @@ const DancerInfoCard = styled(Card)`
     grid-column: 2;
     grid-row: 2;
   }
-`;
+`
 
-export default function Dancer({ id }) {
-  const { data, error, loading } = useQuery(STUDIO_DANCER, {
-    variables: { id },
-  });
-  const dancer = data && data.studioDancer;
-  if (data) {
+export default function Dancer({ dancer }) {
+  // const { data, error, loading } = useQuery(STUDIO_DANCER, {
+  //   variables: { id },
+  // });
+  // const dancer = data && data.studioDancer;
+  if (dancer) {
     return (
       <DancerInfoCard>
-        <div className="card__header dancerName">
+        <div className='card__header dancerName'>
           {dancer.avatar && <img src={dancer.avatar} alt={dancer.firstName} />}
           <h3>
             {dancer.firstName} {dancer.lastName}
           </h3>
         </div>
 
-        <div className="profile">
-          <section className="dancerInfo">
+        <div className='profile'>
+          <section className='dancerInfo'>
             <h4>Personal Information</h4>
             <section>
               {/* <h5>Address</h5> */}
@@ -98,7 +98,7 @@ export default function Dancer({ id }) {
             </section>
           </section>
 
-          <section className="parentInfo">
+          <section className='parentInfo'>
             <h4>Parent/Account Owner</h4>
             <p>
               {dancer.parent.firstName} {dancer.parent.lastName}
@@ -107,7 +107,7 @@ export default function Dancer({ id }) {
             <section>
               <section>
                 <a
-                  className="btn-action-primary-textOnly"
+                  className='btn-action-primary-textOnly'
                   href={`mailto:${dancer.parent.email}`}
                 >
                   {dancer.parent.email}
@@ -116,7 +116,7 @@ export default function Dancer({ id }) {
 
               <section>
                 <a
-                  className="btn-action-primary-textOnly"
+                  className='btn-action-primary-textOnly'
                   href={`tel:+1(781)752-6489`}
                 >
                   781-752-6489 <span>(Mobile)</span>
@@ -134,7 +134,7 @@ export default function Dancer({ id }) {
             <h4>Notes</h4>
           </section>
         </div>
-        <div className="studioInfo">
+        <div className='studioInfo'>
           <section>
             <h4>Enrollment / Registrations</h4>
             <section>
@@ -148,7 +148,7 @@ export default function Dancer({ id }) {
           </section>
         </div>
       </DancerInfoCard>
-    );
+    )
   }
-  return null;
+  return null
 }

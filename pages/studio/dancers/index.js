@@ -14,7 +14,7 @@ import PlusSvg from '../../../components/PlusSvg'
 
 export default function dancersIndex() {
   const { data, error, loading } = useQuery(STUDIO_ALL_DANCERS_QUERY)
-  // const [choice, setChoice] = useState()
+  const [choice, setChoice] = useState()
   // const [createNew, setCreateNew] = useState(false)
 
   if (data) {
@@ -24,7 +24,7 @@ export default function dancersIndex() {
           <NavSection>
             <NavSectionHeading>
               <h2>Dancers</h2>
-              <Link href={`/studio/newdancers/#createDancer`}>
+              <Link href={`/studio/dancers/#createDancer`}>
                 <a>
                   <PlusSvg />
                 </a>
@@ -32,7 +32,7 @@ export default function dancersIndex() {
             </NavSectionHeading>
             <ul>
               {data.studioDancers.map((dancer) => (
-                <Link key={dancer.id} href={`/studio/newdancers/${dancer.id}`}>
+                <Link key={dancer.id} href={`/studio/dancers/${dancer.id}`}>
                   <a>
                     {dancer.firstName} {dancer.lastName}
                   </a>

@@ -20,7 +20,7 @@ const Layout = styled.div`
     height: 100vh;
     overflow-y: scroll;
     position: relative;
-    padding-top: 2rem;
+    /* padding-top: 2rem; */
     flex-grow: 1;
   }
   .modalSelectionWindow {

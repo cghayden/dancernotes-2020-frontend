@@ -49,6 +49,7 @@ const SubNav = styled(NewNavSidebarContainer)`
 
 const NavSectionHeading = styled.div`
   display: flex;
+  justify-content: space-between;
   padding: 0.5rem 0;
 
   h2 {
