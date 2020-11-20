@@ -22,7 +22,7 @@ const CreateLinkDiv = styled.div`
   margin-left: auto;
 `
 
-function Breadcrumb({ page, selection, createLink }) {
+function Breadcrumb({ page = '', selection, createLink }) {
   // home > page > selection
   return (
     <div className='hide-gtMedium'>

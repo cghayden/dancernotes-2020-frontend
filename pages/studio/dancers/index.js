@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import Link from 'next/link'
 
@@ -11,7 +10,6 @@ import {
 import Dancer from '../../../components/Studio/Dancer'
 import { STUDIO_ALL_DANCERS_QUERY } from '../../../components/Studio/Queries'
 import PlusSvg from '../../../components/PlusSvg'
-import Breadcrumb from '../../../components/Studio/Breadcrumb'
 
 export default function dancersIndex() {
   const { data, error, loading } = useQuery(STUDIO_ALL_DANCERS_QUERY)

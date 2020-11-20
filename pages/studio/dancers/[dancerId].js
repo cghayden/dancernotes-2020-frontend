@@ -39,7 +39,7 @@ function DancerPage() {
           <NavSection>
             <NavSectionHeading>
               <h2>Dancers</h2>
-              <Link href={`/studio/newdancers/#createDancer`}>
+              <Link href={`/studio/dancers/createDancer`}>
                 <a>
                   <PlusSvg />
                 </a>
