@@ -1,5 +1,7 @@
-import styled from "styled-components";
-import CategoryFilter from "../Parent/CategoryFilter";
+import { useState } from 'react'
+import styled from 'styled-components'
+import CategoryFilter from '../Parent/CategoryFilter'
+import { useStudio } from './useStudio'
 
 const FilterPanelStyles = styled.div`
   a,
@@ -25,7 +27,7 @@ const FilterPanelStyles = styled.div`
       font-size: 0.8rem;
     }
   }
-`;
+`
 
 const FilterPanelHeader = styled.div`
   grid-column: 1/-1;
@@ -37,7 +39,7 @@ const FilterPanelHeader = styled.div`
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     display: none;
   }
-`;
+`
 
 const CloseFilterPanel = styled.button`
   display: inline-block;
@@ -45,7 +47,7 @@ const CloseFilterPanel = styled.button`
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     display: none;
   }
-`;
+`
 
 const ActiveFilters = styled.div`
   grid-column: 1/-1;
@@ -67,7 +69,7 @@ const ActiveFilters = styled.div`
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     display: none;
   }
-`;
+`
 
 const Categories = styled.div`
   padding: 0;
@@ -78,7 +80,7 @@ const Categories = styled.div`
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     grid-template-columns: repeat(auto-fit, minmax(100px, 200px));
   }
-`;
+`
 
 const CheckboxAreaHeader = styled.div`
   grid-column: 1/-1;
@@ -98,60 +100,74 @@ const CheckboxAreaHeader = styled.div`
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     display: none;
   }
-`;
+`
 
-const NewClassFilter = ({
-  studio,
-  classFilter,
-  setFilter,
-  open,
-  closeControls,
-}) => {
-  const filterOptions = ["competitiveLevel", "ageDivision", "style", "day"];
-  const days = ["Mon.", "Tue.", "Wed.", "Thur.", "Fri", "Sat.", "Sun."];
-  const activeFilters = [].concat.apply([], Object.values(classFilter));
+const NewClassFilter = ({ open, closeControls, classFilter, setFilter }) => {
+  const filterOptions = ['competitiveLevel', 'ageDivision', 'style', 'day']
+  const days = ['Mon.', 'Tue.', 'Wed.', 'Thur.', 'Fri', 'Sat.', 'Sun.']
+  const activeFilters = [].concat.apply([], Object.values(classFilter))
   const clearFilter = () => {
-    setFilter({});
-  };
-  return (
-    <FilterPanelStyles showControlPanel={open}>
-      {/* <h2>Filter By:</h2> */}
-      {/* <FilterPanelHeader>
+    setFilter({})
+  }
+  const studio = useStudio()
+  console.log('studio', studio)
+  if (studio) {
+    return (
+      <FilterPanelStyles showControlPanel={open}>
+        <Categories>
+          {filterOptions.map((filterCategory) => {
+            const pluralCategory = filterCategory.concat('s')
+            return (
+              <CategoryFilter
+                key={filterCategory}
+                setFilter={setFilter}
+                classFilter={classFilter}
+                category={filterCategory}
+                selections={
+                  filterCategory === 'day' ? days : studio[pluralCategory]
+                }
+              />
+            )
+          })}
+        </Categories>
+      </FilterPanelStyles>
+    )
+  }
+  return null
+}
+
+export default NewClassFilter
+export { ActiveFilters }
+
+{
+  /* <h2>Filter By:</h2> */
+}
+{
+  /* <FilterPanelHeader>
         <CloseFilterPanel onClick={closeControls}>Close</CloseFilterPanel>
-      </FilterPanelHeader> */}
-      {/* show clear button if there are active filters*/}
-      {/* {Object.keys(classFilter).length > 0 && (
+      </FilterPanelHeader> */
+}
+{
+  /* show clear button if there are active filters*/
+}
+{
+  /* {Object.keys(classFilter).length > 0 && (
           <button onClick={clearFilter}>Clear All</button>
-        )} */}
-      {/* <ActiveFilters>
-        {/*display a list of the active filters */}
-      {/* {Object.keys(classFilter).length > 0 && (
+        )} */
+}
+{
+  /* <ActiveFilters>
+        {/*display a list of the active filters */
+}
+{
+  /* {Object.keys(classFilter).length > 0 && (
         <ul>
           {activeFilters.map((choice) => (
             <li key={choice}>{choice}</li>
           ))}
         </ul>
-      )} */}
-      {/* </ActiveFilters> */}
-      <Categories>
-        {filterOptions.map((filterCategory) => {
-          const pluralCategory = filterCategory.concat("s");
-          return (
-            <CategoryFilter
-              key={filterCategory}
-              setFilter={setFilter}
-              classFilter={classFilter}
-              category={filterCategory}
-              selections={
-                filterCategory === "day" ? days : studio[pluralCategory]
-              }
-            />
-          );
-        })}
-      </Categories>
-    </FilterPanelStyles>
-  );
-};
-
-export default NewClassFilter;
-export { ActiveFilters };
+      )} */
+}
+{
+  /* </ActiveFilters> */
+}
