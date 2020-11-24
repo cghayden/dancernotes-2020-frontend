@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import Breadcrumb from './Breadcrumb'
 import NewStudioHeader from './NewStudioHeader'
 import NewStudioNav from './NewStudioNav'
-
 const BodyLayout = styled.div`
   display: flex;
 `
@@ -48,18 +47,12 @@ const Layout = styled.div`
   }
 `
 
-export default function NewStudioLayout({
-  children,
-  page,
-  selection = null,
-  createLink = null,
-}) {
+export default function NewStudioLayout({ children }) {
   // const studio = useStudio();
 
   return (
     <Layout>
       <NewStudioHeader />
-      <Breadcrumb page={page} selection={selection} createLink={createLink} />
       <BodyLayout>
         <div className='hide-ltLarge'>
           <NewStudioNav />

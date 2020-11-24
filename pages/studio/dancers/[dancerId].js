@@ -1,15 +1,15 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { useQuery } from '@apollo/react-hooks'
 import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
 import {
   SubNav,
   NavSection,
   NavSectionHeading,
 } from '../../../components/Studio/NewStudioNav'
+import NewClassFilter from '../../../components/Studio/NewClassFilter'
 import Dancer from '../../../components/Studio/Dancer'
 import PlusSvg from '../../../components/PlusSvg'
-
-import { useQuery } from '@apollo/react-hooks'
 
 import { STUDIO_ALL_DANCERS_QUERY } from '../../../components/Studio/Queries'
 import { STUDIO_DANCER } from '../../../components/Studio/Queries'
@@ -28,12 +28,10 @@ function DancerPage() {
   })
 
   const dancer = dancerQuery?.studioDancer
+  console.log('dancer', dancer)
 
   return (
-    <NewStudioLayout
-      page={'Dancers'}
-      selection={dancer ? `${dancer?.firstName} ${dancer?.lastName}` : ''}
-    >
+    <NewStudioLayout>
       <div className='hide-ltMedium'>
         <SubNav>
           <NavSection>
@@ -45,21 +43,37 @@ function DancerPage() {
                 </a>
               </Link>
             </NavSectionHeading>
-            <ul>
-              {data?.studioDancers.map((dancer) => (
-                <Link key={dancer.id} href={`/studio/dancers/${dancer.id}`}>
-                  <a>
-                    {dancer.firstName} {dancer.lastName}
-                  </a>
-                </Link>
-              ))}
-            </ul>
+
+            <div className='hide-gtMedium'>
+              <ul>
+                {data?.studioDancers.map((dancer) => (
+                  <Link key={dancer.id} href={`/studio/dancers/${dancer.id}`}>
+                    <a>
+                      {dancer.firstName} {dancer.lastName}
+                    </a>
+                  </Link>
+                ))}
+              </ul>
+            </div>
+            <div className='hide-ltMedium'>
+              <NewClassFilter
+              // open={showControlPanel}
+              // closeControls={toggleControlPanel}
+              />
+            </div>
           </NavSection>
         </SubNav>
       </div>
       <div className='selectionWindow '>
-        <div className='hide-gtMedium'></div>
-        <Dancer dancer={dancer} />
+        {dancer && (
+          <>
+            <Breadcrumb
+              page={'Dancers'}
+              selection={dancer ? `${dancer.firstName} ${dancer.lastName}` : ''}
+            />
+            <Dancer dancer={dancer} />
+          </>
+        )}
       </div>
     </NewStudioLayout>
   )

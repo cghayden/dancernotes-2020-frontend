@@ -1,6 +1,5 @@
-import React from "react";
-import styled from "styled-components";
-import { AnimatePresence, motion, AnimateSharedLayout } from "framer-motion";
+import styled from 'styled-components'
+import { AnimatePresence, motion, AnimateSharedLayout } from 'framer-motion'
 
 const DancesHeading = styled.div`
   background-color: ${(props) => props.theme.gray1};
@@ -12,7 +11,7 @@ const DancesHeading = styled.div`
   h2 {
     font-size: 1.5rem;
   }
-`;
+`
 
 const ActiveFilters = styled(motion.div)`
   display: flex;
@@ -49,32 +48,33 @@ const ActiveFilters = styled(motion.div)`
   /* @media (min-width: ${(props) => props.theme.largeScreen}) {
     display: block;
   } */
-`;
+`
 
 export default function DancesActiveFilterHeading({ classFilter, setFilter }) {
   function removeChoiceFromFilter(category, selection) {
-    const newClassFilter = { ...classFilter };
+    const newClassFilter = { ...classFilter }
     function removeFromArray(array, item) {
-      const index = array.indexOf(item);
-      array.splice(index, 1);
-      return array;
+      const index = array.indexOf(item)
+      array.splice(index, 1)
+      return array
     }
-    removeFromArray(newClassFilter[category], selection);
+    removeFromArray(newClassFilter[category], selection)
     if (newClassFilter[category].length === 0) {
-      delete newClassFilter[category];
+      delete newClassFilter[category]
     }
-    setFilter(newClassFilter);
+    setFilter(newClassFilter)
   }
 
   const clearFilter = () => {
-    setFilter({});
-  };
+    setFilter({})
+  }
+
   return (
     <DancesHeading>
       <AnimatePresence exitBeforeEnter>
         {Object.keys(classFilter).length === 0 ? (
           <motion.div
-            key={"heading"}
+            key={'heading'}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -83,15 +83,15 @@ export default function DancesActiveFilterHeading({ classFilter, setFilter }) {
           </motion.div>
         ) : (
           <ActiveFilters
-            key={"lists"}
+            key={'lists'}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <AnimateSharedLayout>
               <motion.button
-                className="clearButton"
-                key={"clear"}
+                className='clearButton'
+                key={'clear'}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -112,7 +112,7 @@ export default function DancesActiveFilterHeading({ classFilter, setFilter }) {
                       <span>{selection}</span>
                       <button
                         onClick={() =>
-                          removeChoiceFromFilter("competitiveLevel", selection)
+                          removeChoiceFromFilter('competitiveLevel', selection)
                         }
                       >
                         X
@@ -133,7 +133,7 @@ export default function DancesActiveFilterHeading({ classFilter, setFilter }) {
                       <span>{selection}</span>
                       <button
                         onClick={() =>
-                          removeChoiceFromFilter("ageDivision", selection)
+                          removeChoiceFromFilter('ageDivision', selection)
                         }
                       >
                         X
@@ -154,7 +154,7 @@ export default function DancesActiveFilterHeading({ classFilter, setFilter }) {
                       <span>{selection}</span>
                       <button
                         onClick={() =>
-                          removeChoiceFromFilter("style", selection)
+                          removeChoiceFromFilter('style', selection)
                         }
                       >
                         X
@@ -174,7 +174,7 @@ export default function DancesActiveFilterHeading({ classFilter, setFilter }) {
                     >
                       <span>{selection}</span>
                       <button
-                        onClick={() => removeChoiceFromFilter("day", selection)}
+                        onClick={() => removeChoiceFromFilter('day', selection)}
                       >
                         X
                       </button>
@@ -187,5 +187,5 @@ export default function DancesActiveFilterHeading({ classFilter, setFilter }) {
         )}
       </AnimatePresence>
     </DancesHeading>
-  );
+  )
 }

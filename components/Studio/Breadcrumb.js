@@ -1,13 +1,21 @@
+import { useContext } from 'react'
+
 import styled from 'styled-components'
+import { AnimatePresence, motion, AnimateSharedLayout } from 'framer-motion'
 import Link from 'next/link'
 import HomeSvg from '../Icons/HomeSvg'
 import PlusSvg from '../PlusSvg'
+import { FilterContext } from './FilterContext'
+import FilterChoicesBreadcrumb from './FilterChoicesBreadcrumb'
 
-const BreadcrumbStyles = styled.div`
+const BreadcrumbStyles = styled(motion.div)`
   display: flex;
   padding: 1rem 0.5rem 0.5rem 0.5rem;
+  span {
+    margin: 0 0.5rem;
+  }
   p {
-    padding: 0 0.5rem;
+    padding: 0 0;
     margin: 0;
   }
   a {
@@ -23,36 +31,52 @@ const CreateLinkDiv = styled.div`
 `
 
 function Breadcrumb({ page = '', selection, createLink }) {
-  // home > page > selection
+  const { filter } = useContext(FilterContext)
+
+  // home > page > selection or filters
   return (
-    <div className='hide-gtMedium'>
-      <BreadcrumbStyles>
-        <Link href={'/studio/home'}>
-          <a>
-            <HomeSvg />
-          </a>
-        </Link>
-        <p>{'>'}</p>
+    <BreadcrumbStyles layout>
+      <Link href={'/studio/home'}>
+        <a>
+          <HomeSvg />
+        </a>
+      </Link>
+      <span>{'>'}</span>
+      <motion.div key='page'>
         <Link href={`/studio/${page.toLowerCase()}`}>
           <a>{page}</a>
         </Link>
-        {selection && (
-          <>
-            <p>{'>'}</p>
+      </motion.div>
+      <AnimatePresence>
+        {/* selection? render selection name */}
+
+        {selection ? (
+          <motion.div
+            layout
+            style={{ display: 'flex' }}
+            key={'caret'}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <span>{'>'}</span>
             <p>{selection}</p>
-          </>
+          </motion.div>
+        ) : (
+          // or
+          <FilterChoicesBreadcrumb filter={filter} />
         )}
-        {createLink && (
-          <CreateLinkDiv>
-            <Link href={`/studio/dancers/${createLink}`}>
-              <a>
-                <PlusSvg />
-              </a>
-            </Link>
-          </CreateLinkDiv>
-        )}
-      </BreadcrumbStyles>
-    </div>
+      </AnimatePresence>
+      {createLink && (
+        <CreateLinkDiv>
+          <Link href={`/studio/dancers/`}>
+            <a>
+              <PlusSvg />
+            </a>
+          </Link>
+        </CreateLinkDiv>
+      )}
+    </BreadcrumbStyles>
   )
 }
 

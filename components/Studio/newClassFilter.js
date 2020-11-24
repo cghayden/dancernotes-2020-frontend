@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useContext } from 'react'
 import styled from 'styled-components'
 import CategoryFilter from '../Parent/CategoryFilter'
 import { useStudio } from './useStudio'
+import { FilterContext } from './FilterContext'
 
 const FilterPanelStyles = styled.div`
   a,
@@ -102,15 +103,16 @@ const CheckboxAreaHeader = styled.div`
   }
 `
 
-const NewClassFilter = ({ open, closeControls, classFilter, setFilter }) => {
+const NewClassFilter = ({ open, closeControls }) => {
+  const { filter, setFilter } = useContext(FilterContext)
+
   const filterOptions = ['competitiveLevel', 'ageDivision', 'style', 'day']
   const days = ['Mon.', 'Tue.', 'Wed.', 'Thur.', 'Fri', 'Sat.', 'Sun.']
-  const activeFilters = [].concat.apply([], Object.values(classFilter))
+  const activeFilters = [].concat.apply([], Object.values(filter))
   const clearFilter = () => {
     setFilter({})
   }
   const studio = useStudio()
-  console.log('studio', studio)
   if (studio) {
     return (
       <FilterPanelStyles showControlPanel={open}>
@@ -121,7 +123,7 @@ const NewClassFilter = ({ open, closeControls, classFilter, setFilter }) => {
               <CategoryFilter
                 key={filterCategory}
                 setFilter={setFilter}
-                classFilter={classFilter}
+                classFilter={filter}
                 category={filterCategory}
                 selections={
                   filterCategory === 'day' ? days : studio[pluralCategory]

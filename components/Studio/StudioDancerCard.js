@@ -1,28 +1,26 @@
-import React from "react";
-import Card from "../styles/Card";
-import styled from "styled-components";
+import Card from '../styles/Card'
+import styled from 'styled-components'
 
 const DancerCard = styled(Card)`
   display: grid;
   grid-template-columns: 1fr 1fr;
-`;
-const DancerInfoDiv = styled.div``;
+`
+const DancerInfoDiv = styled.div``
 const Name = styled.h2`
   grid-column: 1/-1;
-`;
+`
 function StudioDancerCard({ dancer }) {
-  console.log("dancer:", dancer);
   return (
     <DancerCard>
       <Name>{dancer.firstName}</Name>
 
       <DancerInfoDiv>
         <p>
-          Parent:{"  "}
+          Parent:{'  '}
           <span>{dancer.parent.firstName}</span>
         </p>
         <p>
-          Parent email:{"  "}
+          Parent email:{'  '}
           <span>{dancer.parent.email}</span>
         </p>
       </DancerInfoDiv>
@@ -35,7 +33,7 @@ function StudioDancerCard({ dancer }) {
         </ul>
       </div>
     </DancerCard>
-  );
+  )
 }
 
-export default StudioDancerCard;
+export default StudioDancerCard

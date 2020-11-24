@@ -1,45 +1,42 @@
-import React from "react";
-import { AnimatePresence, motion, AnimateSharedLayout } from "framer-motion";
-import { ALL_DANCE_CLASSES_QUERY } from "./Queries";
-import { useQuery } from "@apollo/react-hooks";
-import StudioDanceCard from "./StudioDanceCard";
-import Error from "../Error";
-import Loading from "../Loading";
-import styled from "styled-components";
-// import { ActiveFilters } from "./ClassFilter";
+import { useContext } from 'react'
+import { FilterContext } from './FilterContext'
 
-const SelectedDances = styled.div`
-  padding-top: 1rem;
-`;
+import Link from 'next/link'
+import { SubNav, NavSection, NavSectionHeading } from './NewStudioNav'
 
-const DanceClasses = ({ classFilter }) => {
-  const { data, loading, error } = useQuery(ALL_DANCE_CLASSES_QUERY);
-  const allStudioDanceClasses = data ? data.allStudioDanceClasses : [];
+const DanceClasses = ({ allStudioDanceClasses }) => {
+  const { filter } = useContext(FilterContext)
+
   function compareDanceToFilter(danceClass, filter) {
-    let pass = true;
-    const filterCategories = Object.keys(filter);
+    let pass = true
+    const filterCategories = Object.keys(filter)
     filterCategories.forEach((category) => {
       if (!filter[category].includes(danceClass[category])) {
-        pass = false;
+        pass = false
       }
-    });
-    return pass;
+    })
+    return pass
   }
 
   const filteredClasses = allStudioDanceClasses.filter((danceClass) =>
-    compareDanceToFilter(danceClass, classFilter)
-  );
+    compareDanceToFilter(danceClass, filter)
+  )
   // const activeFilters = [].concat.apply([], Object.values(classFilter));
 
-  if (loading) return <Loading />;
-  if (error) return <Error error={error} />;
-
   return (
-    <SelectedDances>
-      {filteredClasses.map((dance) => (
-        <StudioDanceCard key={dance.id} dance={dance} />
-      ))}
-    </SelectedDances>
-  );
-};
-export default DanceClasses;
+    <SubNav>
+      <NavSection>
+        <ul>
+          {filteredClasses.map((danceClass) => (
+            <li key={danceClass.id}>
+              <Link href={`/studio/classes/${danceClass.id}`}>
+                <a>{danceClass.name}</a>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </NavSection>
+    </SubNav>
+  )
+}
+export default DanceClasses

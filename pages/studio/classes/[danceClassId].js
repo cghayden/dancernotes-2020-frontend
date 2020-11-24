@@ -1,27 +1,28 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { useQuery } from '@apollo/react-hooks'
 import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
 import {
   SubNav,
   NavSection,
   NavSectionHeading,
 } from '../../../components/Studio/NewStudioNav'
-import Dancer from '../../../components/Studio/Dancer'
+import NewClassFilter from '../../../components/Studio/NewClassFilter'
 import PlusSvg from '../../../components/PlusSvg'
-
-import { useQuery } from '@apollo/react-hooks'
-
 import { ALL_DANCE_CLASSES_QUERY } from '../../../components/Studio/Queries'
 import { SINGLE_DANCE_QUERY } from '../../../components/Studio/Queries'
 import StudioDanceCard from '../../../components/Studio/StudioDanceCard'
+import Breadcrumb from '../../../components/Studio/Breadcrumb'
 
 function DanceClassPage() {
   const router = useRouter()
   const { danceClassId } = router.query
-
-  const { data, error: allDancersError, loading: allDancersLoading } = useQuery(
-    ALL_DANCE_CLASSES_QUERY
-  )
+  const {
+    data: allClasses,
+    error: ErrorAllDances,
+    loading: loadingAllDances,
+  } = useQuery(ALL_DANCE_CLASSES_QUERY)
+  const danceClasses = allClasses ? allClasses.allStudioDanceClasses : []
 
   const { data: danceClassQuery, error, loading } = useQuery(
     SINGLE_DANCE_QUERY,
@@ -33,10 +34,7 @@ function DanceClassPage() {
   const danceClass = danceClassQuery?.danceClass
 
   return (
-    <NewStudioLayout
-      page={'Classes'}
-      selection={danceClass ? `${danceClass.name}` : ''}
-    >
+    <NewStudioLayout>
       <div className='hide-ltMedium'>
         <SubNav>
           <NavSection>
@@ -48,21 +46,39 @@ function DanceClassPage() {
                 </a>
               </Link>
             </NavSectionHeading>
-            <ul>
-              {data?.allStudioDanceClasses.map((danceClass) => (
-                <Link
-                  key={danceClass.id}
-                  href={`/studio/classes/${danceClass.id}`}
-                >
-                  <a>{danceClass.name}</a>
-                </Link>
-              ))}
-            </ul>
+            <div className='hide-gtMedium'>
+              <ul>
+                {danceClasses.map((danceClass) => (
+                  <li key={danceClass.id}>
+                    <Link
+                      key={danceClass.id}
+                      href={`/studio/classes/${danceClass.id}`}
+                    >
+                      <a>{danceClass.name}</a>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className='hide-ltMedium'>
+              <NewClassFilter
+              // open={showControlPanel}
+              // closeControls={toggleControlPanel}
+              />
+            </div>
           </NavSection>
         </SubNav>
       </div>
       <div className='selectionWindow '>
-        {danceClass && <StudioDanceCard dance={danceClass} />}
+        {danceClass && (
+          <>
+            <Breadcrumb
+              page={'Classes'}
+              selection={danceClass ? `${danceClass.name}` : ''}
+            />
+            <StudioDanceCard dance={danceClass} />
+          </>
+        )}
       </div>
     </NewStudioLayout>
   )

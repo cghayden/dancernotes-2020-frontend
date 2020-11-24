@@ -1,5 +1,6 @@
-import React from "react"
-import styled from "styled-components"
+import React from 'react'
+import styled from 'styled-components'
+import Link from 'next/link'
 
 const HeaderStyle = styled.div`
   display: grid;
@@ -58,9 +59,14 @@ const DanceCardHeader = ({ dance }) => {
           <p>{dance.entryTime}</p>
         </DanceCardEntryInfo>
         <DanceCardTitle>
-          <p>{dance.name}</p>
-          <p>{dance.performanceName}</p>
+          <Link href={`/studio/classes/${dance.id}`}>
+            <a>
+              <p>{dance.name}</p>
+              <p>{dance.performanceName}</p>
+            </a>
+          </Link>
         </DanceCardTitle>
+
         <DanceCardTime>
           <p>{dance.day}</p>
           <p>{dance.startTime}</p>

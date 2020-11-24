@@ -69,7 +69,7 @@ const NavSection = styled.div`
 
   &:last-child {
     padding-bottom: 40vh;
-    @media screen and (max-width: ${(props) => props.theme.largeScreen}) {
+    @media screen and (max-width: ${(props) => props.theme.mediumScreen}) {
       padding-bottom: 0;
     }
   }
