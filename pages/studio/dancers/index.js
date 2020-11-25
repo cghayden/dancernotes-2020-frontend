@@ -1,18 +1,34 @@
-import { useContext } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import Error from '../../../components/Error'
-import Loading from '../../../components/Loading'
 import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
-import Breadcrumb from '../../../components/Studio/Breadcrumb'
 import AllDancerCards from '../../../components/Studio/AllDancerCards'
 import { STUDIO_ALL_DANCERS_QUERY } from '../../../components/Studio/Queries'
-
+import { useStudio } from '../../../components/Studio/useStudio'
+import { useContext } from 'react'
 import { FilterContext } from '../../../components/Studio/FilterContext'
 
 export default function dancersIndex() {
+  const { filter: userFilter, setFilter } = useContext(FilterContext)
+  const activeFilterChoices = Object.values(userFilter).flat()
   const { data, error, loading } = useQuery(STUDIO_ALL_DANCERS_QUERY)
-  const { filter, setFilter } = useContext(FilterContext)
+  console.log('data', data)
 
+  const filteredDancers = data?.studioDancers.filter((dancer) => {
+    const dancerValues = []
+    dancer.danceClasses.forEach((danceClass) => {
+      const danceClassValues = Object.values(danceClass)
+      dancerValues.push(...danceClassValues)
+      // console.log('dancerValues', dancerValues)
+    })
+    // return true
+    return activeFilterChoices?.every((filterChoice) =>
+      dancerValues.includes(filterChoice)
+    )
+  })
+
+  console.log('filteredDancers', filteredDancers)
+
+  const studio = useStudio()
+  // console.log('studio', studio)
   return (
     <NewStudioLayout
       error={error}
@@ -20,7 +36,7 @@ export default function dancersIndex() {
       page={'Dancers'}
       createLink={`/studio/dancers/createDancer`}
     >
-      {data && <AllDancerCards dancers={data?.studioDancers} />}
+      {data && <AllDancerCards dancers={filteredDancers} />}
     </NewStudioLayout>
   )
 }

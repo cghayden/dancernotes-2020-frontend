@@ -25,6 +25,7 @@ function DancerPage() {
   })
 
   const dancer = dancerQuery?.studioDancer
+  console.log('dancer', dancer)
 
   return (
     <NewStudioLayout

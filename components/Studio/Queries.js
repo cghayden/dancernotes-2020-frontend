@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag'
 
 const SINGLE_DANCE_QUERY = gql`
   query SINGLE_DANCE_QUERY($id: ID!) {
@@ -23,7 +23,7 @@ const SINGLE_DANCE_QUERY = gql`
       }
     }
   }
-`;
+`
 
 const CATEGORIES_QUERY = gql`
   query CATEGORIES_QUERY {
@@ -37,7 +37,7 @@ const CATEGORIES_QUERY = gql`
       }
     }
   }
-`;
+`
 
 const ALL_DANCE_CLASSES_QUERY = gql`
   query ALL_DANCE_CLASSES_QUERY {
@@ -64,7 +64,7 @@ const ALL_DANCE_CLASSES_QUERY = gql`
       size
     }
   }
-`;
+`
 
 const STUDIO_ALL_DANCERS_QUERY = gql`
   query STUDIO_ALL_DANCERS_QUERY {
@@ -82,11 +82,19 @@ const STUDIO_ALL_DANCERS_QUERY = gql`
         studio {
           id
         }
+        id
         name
+        competitiveLevel
+        ageDivision
+        style
+        day
+        performanceName
+        tights
+        shoes
       }
     }
   }
-`;
+`
 
 const ENROLLMENT_REQUESTS_QUERY = gql`
   query ENROLLMENT_REQUESTS_QUERY {
@@ -107,7 +115,7 @@ const ENROLLMENT_REQUESTS_QUERY = gql`
       }
     }
   }
-`;
+`
 const ACCESS_REQUESTS_QUERY = gql`
   query ACCESS_REQUESTS_QUERY {
     accessRequests {
@@ -119,7 +127,7 @@ const ACCESS_REQUESTS_QUERY = gql`
       }
     }
   }
-`;
+`
 
 const STUDIO_EVENTS_QUERY = gql`
   query STUDIO_EVENTS_QUERY {
@@ -143,7 +151,7 @@ const STUDIO_EVENTS_QUERY = gql`
       }
     }
   }
-`;
+`
 
 const STUDIO_DANCER = gql`
   query($id: ID!) {
@@ -167,7 +175,7 @@ const STUDIO_DANCER = gql`
       }
     }
   }
-`;
+`
 const STUDIO_MAKEUP_QUERY = gql`
   query STUDIO_MAKEUP_QUERY {
     myStudio {
@@ -181,7 +189,7 @@ const STUDIO_MAKEUP_QUERY = gql`
       }
     }
   }
-`;
+`
 const HAIRSTYLES_QUERY = gql`
   query HAIRSTYLES_QUERY {
     studioHairStyles {
@@ -192,7 +200,7 @@ const HAIRSTYLES_QUERY = gql`
       link
     }
   }
-`;
+`
 
 export {
   CATEGORIES_QUERY,
@@ -205,4 +213,4 @@ export {
   STUDIO_DANCER,
   STUDIO_MAKEUP_QUERY,
   HAIRSTYLES_QUERY,
-};
+}
