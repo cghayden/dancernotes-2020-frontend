@@ -1,7 +1,9 @@
 import styled from 'styled-components'
-import Breadcrumb from './Breadcrumb'
+import Error from '../../components/Error'
+import Loading from '../../components/Loading'
 import NewStudioHeader from './NewStudioHeader'
 import NewStudioNav from './NewStudioNav'
+import SubNavFilter from './SubNavFilter'
 const BodyLayout = styled.div`
   display: flex;
 `
@@ -47,7 +49,13 @@ const Layout = styled.div`
   }
 `
 
-export default function NewStudioLayout({ children }) {
+export default function NewStudioLayout({
+  children,
+  page,
+  createLink = false,
+  loading = false,
+  error = false,
+}) {
   // const studio = useStudio();
 
   return (
@@ -57,6 +65,11 @@ export default function NewStudioLayout({ children }) {
         <div className='hide-ltLarge'>
           <NewStudioNav />
         </div>
+        <div className='hide-ltMedium'>
+          <SubNavFilter page={page} createLink={createLink} />
+        </div>
+        {loading && <Loading />}
+        {error && <Error error={error} />}
         {children}
       </BodyLayout>
     </Layout>

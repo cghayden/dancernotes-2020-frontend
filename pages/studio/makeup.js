@@ -11,7 +11,7 @@ import {
   NavSection,
   NavSectionHeading,
 } from '../../components/Studio/NewStudioNav'
-import PlusSvg from '../../components/PlusSvg'
+import PlusSvg from '../../components/Icons/PlusSvg'
 
 import Error from '../../components/Error'
 import Loading from '../../components/Loading'

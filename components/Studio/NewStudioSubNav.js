@@ -3,7 +3,7 @@ import {
   NavSection,
   NavSectionHeading,
 } from '../../components/Studio/NewStudioNav'
-import PlusSvg from '../../components/PlusSvg'
+import PlusSvg from '../Icons/PlusSvg'
 
 export default function NewStudioSubNav({
   page,

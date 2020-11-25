@@ -1,27 +1,27 @@
-import { useState } from "react";
-import NewStudioLayout from "../../components/Studio/NewStudioLayout";
-import DanceClasses from "../../components/Studio/DanceClasses";
-import NewClassFilter from "../../components/Studio/NewClassFilter";
-import { useStudio } from "../../components/Studio/useStudio";
-import { useDisplayControls } from "../../components/Parent/ParentDisplayProvider";
-import DancesActiveFilterHeading from "./DancesActiveFilterHeading";
+import { useState } from 'react'
+import NewStudioLayout from '../../components/Studio/NewStudioLayout'
+import DanceClasses from '../../components/Studio/DanceClasses'
+import NewClassFilter from '../../components/Studio/NewClassFilter'
+import { useStudio } from '../../components/Studio/useStudio'
+import { useDisplayControls } from '../../components/Parent/ParentDisplayProvider'
+import DancesActiveFilterHeading from './DancesActiveFilterHeading'
 import {
   NavSection,
   NavSectionHeading,
   SubNav,
-} from "../../components/Studio/NewStudioNav";
-import PlusSvg from "../../components/PlusSvg";
+} from '../../components/Studio/NewStudioNav'
+import PlusSvg from '../../components/Icons/PlusSvg'
 
 // --------------- Styles ------------------------------
 
 // ~~~~~~~~~~~~~~~~~~~ CODE ~~~~~~~~~~~~~~~~~~~~~~
 
 export default function newClassesPage() {
-  const [classFilter, setFilter] = useState({});
-  const [choice, setChoice] = useState("all");
-  const [createNew, setCreateNew] = useState(false);
-  const { showControlPanel, toggleControlPanel } = useDisplayControls();
-  const studio = useStudio();
+  const [classFilter, setFilter] = useState({})
+  const [choice, setChoice] = useState('all')
+  const [createNew, setCreateNew] = useState(false)
+  const { showControlPanel, toggleControlPanel } = useDisplayControls()
+  const studio = useStudio()
   return (
     <NewStudioLayout>
       <SubNav>
@@ -30,8 +30,8 @@ export default function newClassesPage() {
             <h2>Dance Classes</h2>
             <button
               onClick={() => {
-                setChoice(null);
-                setCreateNew(true);
+                setChoice(null)
+                setCreateNew(true)
               }}
             >
               <PlusSvg />
@@ -48,7 +48,7 @@ export default function newClassesPage() {
           )}
         </NavSection>
       </SubNav>
-      <div className="scrollingWindow">
+      <div className='scrollingWindow'>
         <DancesActiveFilterHeading
           classFilter={classFilter}
           setFilter={setFilter}
@@ -59,5 +59,5 @@ export default function newClassesPage() {
         />
       </div>
     </NewStudioLayout>
-  );
+  )
 }

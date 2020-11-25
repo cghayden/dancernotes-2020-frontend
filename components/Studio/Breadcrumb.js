@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { AnimatePresence, motion, AnimateSharedLayout } from 'framer-motion'
 import Link from 'next/link'
 import HomeSvg from '../Icons/HomeSvg'
-import PlusSvg from '../PlusSvg'
+import PlusSvg from '../Icons/PlusSvg'
 import { FilterContext } from './FilterContext'
 import FilterChoicesBreadcrumb from './FilterChoicesBreadcrumb'
 

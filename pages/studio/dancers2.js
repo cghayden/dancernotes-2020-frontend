@@ -1,19 +1,19 @@
-import { useState } from "react";
-import { useQuery } from "@apollo/react-hooks";
-import NewStudioLayout from "../../components/Studio/NewStudioLayout";
+import { useState } from 'react'
+import { useQuery } from '@apollo/react-hooks'
+import NewStudioLayout from '../../components/Studio/NewStudioLayout'
 import {
   SubNav,
   NavSection,
   NavSectionHeading,
-} from "../../components/Studio/NewStudioNav";
-import Dancer from "../../components/Studio/Dancer";
-import { STUDIO_ALL_DANCERS_QUERY } from "../../components/Studio/Queries";
-import PlusSvg from "../../components/PlusSvg";
+} from '../../components/Studio/NewStudioNav'
+import Dancer from '../../components/Studio/Dancer'
+import { STUDIO_ALL_DANCERS_QUERY } from '../../components/Studio/Queries'
+import PlusSvg from '../../components/Icons/PlusSvg'
 
 export default function newDancersPage() {
-  const { data, error, loading } = useQuery(STUDIO_ALL_DANCERS_QUERY);
-  const [choice, setChoice] = useState();
-  const [createNew, setCreateNew] = useState(false);
+  const { data, error, loading } = useQuery(STUDIO_ALL_DANCERS_QUERY)
+  const [choice, setChoice] = useState()
+  const [createNew, setCreateNew] = useState(false)
 
   if (data) {
     return (
@@ -24,8 +24,8 @@ export default function newDancersPage() {
               <h2>Dancers</h2>
               <button
                 onClick={() => {
-                  setChoice(null);
-                  setCreateNew(true);
+                  setChoice(null)
+                  setCreateNew(true)
                 }}
               >
                 <PlusSvg />
@@ -37,8 +37,8 @@ export default function newDancersPage() {
                   className={choice === dancer.id ? `activeStudioNav` : null}
                   key={dancer.id}
                   onClick={() => {
-                    setCreateNew(false);
-                    setChoice(dancer.id);
+                    setCreateNew(false)
+                    setChoice(dancer.id)
                   }}
                 >
                   {dancer.lastName}, {dancer.firstName}
@@ -47,12 +47,12 @@ export default function newDancersPage() {
             </ul>
           </NavSection>
         </SubNav>
-        <div className="selectionWindow">
+        <div className='selectionWindow'>
           {choice && <Dancer id={choice} />}
           {createNew && <div>Add a new Dancer form</div>}
         </div>
       </NewStudioLayout>
-    );
+    )
   }
-  return null;
+  return null
 }

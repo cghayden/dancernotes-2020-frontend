@@ -11,7 +11,7 @@ import {
 } from '../../components/Studio/NewStudioNav'
 
 import NewStudioSubNav from '../../components/Studio/NewStudioSubNav'
-import PlusSvg from '../../components/PlusSvg'
+import PlusSvg from '../../components/Icons/PlusSvg'
 import Error from '../../components/Error'
 import HairStyleCard from '../../components/Studio/HairStyleCard'
 import CreateHairStyleForm from '../../components/Studio/CreateHairStyleForm'

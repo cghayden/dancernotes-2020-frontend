@@ -54,7 +54,7 @@ export default function NewStudioHeader() {
           <NewStudioNav />
         </MobileNavContainer>
       )}
-      <QuickCreateOptions />
+      {/* <QuickCreateOptions /> */}
     </Header>
   )
 }
