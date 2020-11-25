@@ -1,16 +1,5 @@
 import { useQuery } from '@apollo/react-hooks'
-import Link from 'next/link'
-
 import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
-import {
-  NavSection,
-  NavSectionHeading,
-  SubNav,
-} from '../../../components/Studio/NewStudioNav'
-import NewClassFilter from '../../../components/Studio/NewClassFilter'
-import Breadcrumb from '../../../components/Studio/Breadcrumb'
-import PlusSvg from '../../../components/Icons/PlusSvg'
-
 import DanceClasses from '../../../components/Studio/DanceClasses'
 import { ALL_DANCE_CLASSES_QUERY } from '../../../components/Studio/Queries'
 import { useDisplayControls } from '../../../components/Parent/ParentDisplayProvider'

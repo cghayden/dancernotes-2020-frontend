@@ -5,6 +5,8 @@ import NewStudioHeader from './NewStudioHeader'
 import NewStudioNav from './NewStudioNav'
 import SubNavFilter from './SubNavFilter'
 import Breadcrumb from './Breadcrumb'
+import ActiveFilterChoices from './ActiveFilterChoices'
+
 const BodyLayout = styled.div`
   display: flex;
 `
@@ -58,8 +60,6 @@ export default function NewStudioLayout({
   loading = false,
   error = false,
 }) {
-  // const studio = useStudio();
-
   return (
     <Layout>
       <NewStudioHeader />
@@ -68,9 +68,13 @@ export default function NewStudioLayout({
           <NewStudioNav />
         </div>
         <div className='hide-ltMedium'>
-          <SubNavFilter page={page} createLink={createLink} />
+          {selection ? (
+            <ActiveFilterChoices />
+          ) : (
+            <SubNavFilter page={page} createLink={createLink} />
+          )}
         </div>
-        <div class='selectionWindow'>
+        <div className='selectionWindow'>
           <Breadcrumb page={page} selection={selection} />
           {loading && <Loading />}
           {error && <Error error={error} />}
