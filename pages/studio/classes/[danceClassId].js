@@ -28,18 +28,13 @@ function DanceClassPage() {
   const danceClass = danceClassQuery?.danceClass
 
   return (
-    <NewStudioLayout page={'CLasses'} error={error} loading={loading}>
-      <div className='selectionWindow '>
-        {danceClass && (
-          <>
-            <Breadcrumb
-              page={'Classes'}
-              selection={danceClass ? `${danceClass.name}` : ''}
-            />
-            <StudioDanceCard dance={danceClass} />
-          </>
-        )}
-      </div>
+    <NewStudioLayout
+      page={'Classes'}
+      error={error}
+      loading={loading}
+      selection={`${danceClass?.name}`}
+    >
+      {danceClass && <StudioDanceCard dance={danceClass} />}
     </NewStudioLayout>
   )
 }

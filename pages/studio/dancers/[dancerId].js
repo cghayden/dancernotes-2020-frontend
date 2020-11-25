@@ -27,18 +27,13 @@ function DancerPage() {
   const dancer = dancerQuery?.studioDancer
 
   return (
-    <NewStudioLayout page={'Dancers'} error={error} loading={loading}>
-      <div className='selectionWindow '>
-        {dancer && (
-          <>
-            <Breadcrumb
-              page={'Dancers'}
-              selection={dancer ? `${dancer.firstName} ${dancer.lastName}` : ''}
-            />
-            <Dancer dancer={dancer} />
-          </>
-        )}
-      </div>
+    <NewStudioLayout
+      page={'Dancers'}
+      error={error}
+      loading={loading}
+      selection={`${dancer?.firstName} ${dancer?.lastName}`}
+    >
+      <Dancer dancer={dancer} />
     </NewStudioLayout>
   )
 }

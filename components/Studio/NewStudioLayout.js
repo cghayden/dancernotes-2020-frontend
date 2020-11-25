@@ -4,6 +4,7 @@ import Loading from '../../components/Loading'
 import NewStudioHeader from './NewStudioHeader'
 import NewStudioNav from './NewStudioNav'
 import SubNavFilter from './SubNavFilter'
+import Breadcrumb from './Breadcrumb'
 const BodyLayout = styled.div`
   display: flex;
 `
@@ -52,6 +53,7 @@ const Layout = styled.div`
 export default function NewStudioLayout({
   children,
   page,
+  selection = false,
   createLink = false,
   loading = false,
   error = false,
@@ -68,9 +70,12 @@ export default function NewStudioLayout({
         <div className='hide-ltMedium'>
           <SubNavFilter page={page} createLink={createLink} />
         </div>
-        {loading && <Loading />}
-        {error && <Error error={error} />}
-        {children}
+        <div class='selectionWindow'>
+          <Breadcrumb page={page} selection={selection} />
+          {loading && <Loading />}
+          {error && <Error error={error} />}
+          {children}
+        </div>
       </BodyLayout>
     </Layout>
   )

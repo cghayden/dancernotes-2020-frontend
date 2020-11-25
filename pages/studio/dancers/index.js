@@ -16,12 +16,7 @@ export default function dancersIndex(props) {
       page={'Dancers'}
       createLink={`/studio/dancers/createDancer`}
     >
-      <div className='selectionWindow'>
-        <Breadcrumb page={'Dancers'} />
-        {loading && <Loading />}
-        {error && <Error error={error} />}
-        {data && <AllDancerCards dancers={data.studioDancers} />}
-      </div>
+      {data && <AllDancerCards dancers={data?.studioDancers} />}
     </NewStudioLayout>
   )
 }

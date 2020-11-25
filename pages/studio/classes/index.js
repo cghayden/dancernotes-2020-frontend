@@ -21,18 +21,14 @@ export default function classesIndex() {
 
   return (
     <NewStudioLayout
-      page={'Classes'}
-      createLink={`/studio/dancers/createDancer`}
       error={error}
       loading={loading}
+      page={'Classes'}
+      createLink={`/studio/dancers/createDancer`}
     >
-      <div className='selectionWindow'>
-        <Breadcrumb page={'Classes'} />
-
-        {data && (
-          <DanceClasses allStudioDanceClasses={data.allStudioDanceClasses} />
-        )}
-      </div>
+      {data && (
+        <DanceClasses allStudioDanceClasses={data.allStudioDanceClasses} />
+      )}
     </NewStudioLayout>
   )
 }
