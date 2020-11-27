@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import CategoryFilter from '../Parent/CategoryFilter'
 import { useStudio } from './useStudio'
 import { FilterContext } from './FilterContext'
+import LockedSvg from '../Icons/LockedSvg'
+import XSvg from '../Icons/XSvg'
 
 const FilterPanelStyles = styled.div`
   a,
@@ -30,15 +32,12 @@ const FilterPanelStyles = styled.div`
   }
 `
 
-const FilterPanelHeader = styled.div`
-  grid-column: 1/-1;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  align-items: center;
-  justify-content: space-evenly;
-  padding: 0 1rem;
-  @media (min-width: ${(props) => props.theme.largeScreen}) {
-    display: none;
+const FilterHeaderStyles = styled.div`
+  display: flex;
+  justify-content: space-between;
+  button {
+    padding: 0;
+    margin: 0;
   }
 `
 
@@ -116,6 +115,22 @@ const NewClassFilter = ({ open, closeControls }) => {
   if (studio) {
     return (
       <FilterPanelStyles showControlPanel={open}>
+        <FilterHeaderStyles>
+          <button
+            title='Unlock Filter'
+            onClick={() => console.log('toggle filter lock')}
+          >
+            <LockedSvg w={16} h={16} />
+          </button>
+          <h3>Filter By:</h3>
+          <button
+            title='Clear all filters'
+            onClick={() => setFilter({})}
+            title='Clear Filter'
+          >
+            <XSvg />
+          </button>
+        </FilterHeaderStyles>
         <Categories>
           {filterOptions.map((filterCategory) => {
             const pluralCategory = filterCategory.concat('s')
