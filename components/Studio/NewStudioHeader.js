@@ -2,8 +2,6 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import MenuSvg from '../Icons/menu'
 import NewStudioNav from './NewStudioNav'
-import NewStudioSubNav from './NewStudioSubNav'
-import QuickCreateOptions from './QuickCreateOptions'
 
 const Header = styled.header`
   background: ${(props) => props.theme.gray5};
@@ -25,18 +23,26 @@ const Header = styled.header`
 `
 
 const MobileNavContainer = styled.div`
+  background: ${(props) => props.theme.gray2};
+  color: ${(props) => props.theme.blackText};
+  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+  width: 90vw;
+  max-width: 350px;
   position: fixed;
   top: 60px;
   right: 0;
   height: auto;
   overflow: hidden;
-  z-index: 100;
+  z-index: 101;
   @media screen and (min-width: ${(props) => props.theme.largeScreen}) {
     display: none;
   }
 `
 
-export default function NewStudioHeader() {
+export default function NewStudioHeader({ showFilter, toggleFilter }) {
   const [mobileNav, toggleMobileNav] = useState(false)
   return (
     <Header>
@@ -44,14 +50,17 @@ export default function NewStudioHeader() {
       {/* <OptionsDropdown /> */}
       <button
         className='hide-gtLarge'
-        onClick={() => toggleMobileNav(!mobileNav)}
+        onClick={() => {
+          // toggleFilter(false)
+          toggleMobileNav(!mobileNav)
+        }}
       >
         <MenuSvg />
       </button>
       {mobileNav && (
         <MobileNavContainer>
-          {/* <NewStudioSubNav /> */}
           <NewStudioNav />
+          {/* <MobileFilter page={page} createLink={createLink} /> */}
         </MobileNavContainer>
       )}
       {/* <QuickCreateOptions /> */}

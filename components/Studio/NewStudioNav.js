@@ -3,7 +3,9 @@ import StyledLink from '../StyledLink'
 
 const NewNavSidebarContainer = styled.div`
   background: ${(props) => props.theme.gray0};
+  /* width: 95%; */
   min-width: 130px;
+  max-width: 230px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -41,14 +43,7 @@ const NewNavSidebarContainer = styled.div`
   } */
 `
 
-const SubNav = styled(NewNavSidebarContainer)`
-  @media screen and (max-width: ${(props) => props.theme.mediumScreen}) {
-    width: 100vw;
-    li {
-      border-bottom: 1px solid lightgray;
-    }
-  }
-`
+const SubNav = styled(NewNavSidebarContainer)``
 
 const NavSectionHeading = styled.div`
   display: flex;

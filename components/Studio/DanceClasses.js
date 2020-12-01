@@ -1,8 +1,6 @@
 import { useContext } from 'react'
 import { FilterContext } from './FilterContext'
-
 import Link from 'next/link'
-import { SubNav, NavSection, NavSectionHeading } from './NewStudioNav'
 
 const DanceClasses = ({ allStudioDanceClasses }) => {
   const { filter } = useContext(FilterContext)
@@ -21,22 +19,17 @@ const DanceClasses = ({ allStudioDanceClasses }) => {
   const filteredClasses = allStudioDanceClasses.filter((danceClass) =>
     compareDanceToFilter(danceClass, filter)
   )
-  // const activeFilters = [].concat.apply([], Object.values(classFilter));
 
   return (
-    <SubNav>
-      <NavSection>
-        <ul>
-          {filteredClasses.map((danceClass) => (
-            <li key={danceClass.id}>
-              <Link href={`/studio/classes/${danceClass.id}`}>
-                <a>{danceClass.name}</a>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </NavSection>
-    </SubNav>
+    <ul>
+      {filteredClasses.map((danceClass) => (
+        <li key={danceClass.id}>
+          <Link href={`/studio/classes/${danceClass.id}`}>
+            <a>{danceClass.name}</a>
+          </Link>
+        </li>
+      ))}
+    </ul>
   )
 }
 export default DanceClasses

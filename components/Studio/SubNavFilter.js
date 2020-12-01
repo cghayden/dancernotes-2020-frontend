@@ -18,10 +18,7 @@ function SubNavFilter({ page, createLink }) {
             </Link>
           )}
         </NavSectionHeading>
-        <NewClassFilter
-        // open={showControlPanel}
-        // closeControls={toggleControlPanel}
-        />
+        <NewClassFilter />
       </NavSection>
     </SubNav>
   )

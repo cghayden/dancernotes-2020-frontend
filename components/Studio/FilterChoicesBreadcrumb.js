@@ -25,7 +25,7 @@ function FilterChoicesBreadcrumb({ filter }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <span>{selection}</span>
+          <motion.span>{selection}</motion.span>
         </motion.div>
       ))}
       {filter?.ageDivision?.map((selection) => (

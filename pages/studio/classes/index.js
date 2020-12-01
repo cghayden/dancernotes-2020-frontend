@@ -1,4 +1,6 @@
 import { useQuery } from '@apollo/react-hooks'
+import { useRouter } from 'next/router'
+
 import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
 import DanceClasses from '../../../components/Studio/DanceClasses'
 import { ALL_DANCE_CLASSES_QUERY } from '../../../components/Studio/Queries'

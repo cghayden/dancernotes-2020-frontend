@@ -1,17 +1,24 @@
 import { useContext } from 'react'
-
 import styled from 'styled-components'
-import CategoryFilter from '../Parent/CategoryFilter'
+import StaticCategoryFilter from '../Parent/StaticCategoryFilter'
 import { useStudio } from './useStudio'
 import { FilterContext } from './FilterContext'
 import LockedSvg from '../Icons/LockedSvg'
+import XSvg from '../Icons/XSvg'
 import TrashIcon from '../Icons/TrashIcon'
 
 const FilterPanelStyles = styled.div`
+  display: grid;
+  grid-template-columns: minmax(120px, 250px) minmax(120px, 250px);
+  grid-gap: 0.5rem;
+
+  h2 {
+    flex-grow: 1;
+  }
   a,
   button {
     border-radius: 0;
-    margin: 0;
+    margin: 0 0.5rem;
     padding: 10px 0.5rem 0.5rem 0.5rem;
     display: flex;
     align-items: center;
@@ -34,15 +41,17 @@ const FilterPanelStyles = styled.div`
 `
 
 const FilterHeaderStyles = styled.div`
+  grid-column: 1/-1;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 0;
-  h3 {
-    flex-grow: 1;
-  }
-  button {
-    padding: 0;
-    margin: 0 0.5rem;
+`
+
+const CloseFilterPanel = styled.button`
+  display: inline-block;
+  margin-left: auto;
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
+    display: none;
   }
 `
 
@@ -99,23 +108,8 @@ const CheckboxAreaHeader = styled.div`
   }
 `
 
-const NewClassFilter = ({ open }) => {
+const MobileFilter = ({ toggleFilter }) => {
   const { filter, setFilter } = useContext(FilterContext)
-  // const router = useRouter()
-
-  // useEffect(() => {
-  //   const resetFilter = () => {
-  //     setFilter({})
-  //   }
-
-  //   router.events.on('routeChangeStart', resetFilter)
-
-  //   // If the component is unmounted, unsubscribe
-  //   // from the event with the `off` method:
-  //   return () => {
-  //     router.events.off('routeChangeStart', resetFilter)
-  //   }
-  // }, [])
 
   const filterOptions = ['competitiveLevel', 'ageDivision', 'style', 'day']
   const days = ['Mon.', 'Tue.', 'Wed.', 'Thur.', 'Fri', 'Sat.', 'Sun.']
@@ -125,44 +119,47 @@ const NewClassFilter = ({ open }) => {
     return (
       <FilterPanelStyles>
         <FilterHeaderStyles>
-          <h3>Filter By:</h3>
+          <h2>Filter By:</h2>
           <button
             title='Unlock Filter'
             onClick={() => console.log('toggle filter lock')}
           >
-            <LockedSvg w={'18'} h={'18'} />
+            <LockedSvg w={'16'} h={'16'} />
           </button>
           <button
             title='Clear all filters'
             onClick={() => setFilter({})}
             title='Clear Filter'
           >
-            <TrashIcon w={'18'} h={'18'} />
+            <TrashIcon w={'16'} h={'16'} />
+          </button>
+          <button onClick={() => toggleFilter(false)}>
+            <XSvg w={'16'} h={'16'} />
           </button>
         </FilterHeaderStyles>
-        <Categories>
-          {filterOptions.map((filterCategory) => {
-            const pluralCategory = filterCategory.concat('s')
-            return (
-              <CategoryFilter
-                key={filterCategory}
-                setFilter={setFilter}
-                classFilter={filter}
-                category={filterCategory}
-                selections={
-                  filterCategory === 'day' ? days : studio[pluralCategory]
-                }
-              />
-            )
-          })}
-        </Categories>
+        {/* <Categories> */}
+        {filterOptions.map((filterCategory) => {
+          const pluralCategory = filterCategory.concat('s')
+          return (
+            <StaticCategoryFilter
+              key={filterCategory}
+              setFilter={setFilter}
+              classFilter={filter}
+              category={filterCategory}
+              selections={
+                filterCategory === 'day' ? days : studio[pluralCategory]
+              }
+            />
+          )
+        })}
+        {/* </Categories> */}
       </FilterPanelStyles>
     )
   }
   return null
 }
 
-export default NewClassFilter
+export default MobileFilter
 export { ActiveFilters }
 
 {

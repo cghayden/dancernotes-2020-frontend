@@ -117,6 +117,7 @@ const theme = {
   black: '#393939',
   bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
   dropShadow1: '1px 4px 7px 5px rgba(0, 0, 0, 0.1)',
+  dropShadow3: '1px 4px 7px 5px rgba(0, 0, 0, 0.3)',
   dropShadowPizzazz: '0 0 5px 3px rgba(0, 170, 170, 0.9)',
   perimeterShadow: '1px 1px 5px 3px rgba(0, 0, 0, 0.15)',
   hoveringDropdownShadow: '5px 5px 6px 5px rgba(0, 0, 0, 0.10)',

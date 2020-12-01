@@ -10,7 +10,6 @@ import FilterChoicesBreadcrumb from './FilterChoicesBreadcrumb'
 
 const BreadcrumbStyles = styled(motion.div)`
   display: flex;
-  padding: 1rem 0.5rem 0.5rem 0.5rem;
   span {
     margin: 0 0.5rem;
   }
@@ -37,12 +36,12 @@ function Breadcrumb({ page = '', selection, createLink }) {
   return (
     <BreadcrumbStyles layout>
       <Link href={'/studio/home'}>
-        <a>
+        <motion.a layout>
           <HomeSvg />
-        </a>
+        </motion.a>
       </Link>
-      <span>{'>'}</span>
-      <motion.div key='page'>
+      <motion.span layout>{'>'}</motion.span>
+      <motion.div key='page' layout>
         <Link href={`/studio/${page.toLowerCase()}`}>
           <a>{page}</a>
         </Link>
@@ -59,15 +58,15 @@ function Breadcrumb({ page = '', selection, createLink }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <span>{'>'}</span>
-            <p>{selection}</p>
+            <motion.span layout>{'>'}</motion.span>
+            <motion.p layout>{selection}</motion.p>
           </motion.div>
         ) : (
           // or
           <FilterChoicesBreadcrumb filter={filter} />
         )}
       </AnimatePresence>
-      {createLink && (
+      {/* {createLink && (
         <CreateLinkDiv>
           <Link href={`/studio/dancers/`}>
             <a>
@@ -75,7 +74,7 @@ function Breadcrumb({ page = '', selection, createLink }) {
             </a>
           </Link>
         </CreateLinkDiv>
-      )}
+      )} */}
     </BreadcrumbStyles>
   )
 }
