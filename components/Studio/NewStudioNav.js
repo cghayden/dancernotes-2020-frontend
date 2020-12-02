@@ -24,10 +24,10 @@ const NewNavSidebarContainer = styled.div`
   button {
     border-radius: 0;
     margin: 0;
-    padding: 10px 0.5rem 0.5rem 0.5rem;
+    padding: 10px 0.5rem 0.5rem 1rem;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
     text-transform: uppercase;
 
     &:hover {
