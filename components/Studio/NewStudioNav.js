@@ -3,14 +3,12 @@ import StyledLink from '../StyledLink'
 
 const NewNavSidebarContainer = styled.div`
   background: ${(props) => props.theme.gray0};
-  /* width: 95%; */
   min-width: 130px;
   max-width: 230px;
   height: 100vh;
   display: flex;
   flex-direction: column;
   border-right: 1px solid ${(props) => props.theme.gray3};
-  /* grid-column: 1/4; */
   overflow: scroll;
   color: ${(props) => props.theme.gray6};
 
@@ -37,10 +35,6 @@ const NewNavSidebarContainer = styled.div`
       background: ${(props) => props.theme.indigo5};
     }
   }
-  /* 
-  @media screen and (max-width: ${(props) => props.theme.largeScreen}) {
-    height: auto;
-  } */
 `
 
 const SubNav = styled(NewNavSidebarContainer)``
@@ -68,11 +62,6 @@ const NavSection = styled.div`
       padding-bottom: 0;
     }
   }
-`
-const Filler = styled.div`
-  height: 33vh;
-  width: inherit;
-  background: pink;
 `
 
 export default function NewStudioNav() {
@@ -162,4 +151,4 @@ export default function NewStudioNav() {
   )
 }
 
-export { NavSection, NewNavSidebarContainer, SubNav, NavSectionHeading, Filler }
+export { NavSection, NewNavSidebarContainer, SubNav, NavSectionHeading }

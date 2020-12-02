@@ -20,6 +20,12 @@ const Form = styled.form`
   background: ${(props) => props.theme.gray0};
   width: 100%;
   max-width: 550px;
+  a,
+  button {
+    /* display: unset; */
+    background: none;
+    color: ${(props) => props.theme.indigo5};
+  }
 
   .datePicker {
     margin-bottom: 0.5rem;

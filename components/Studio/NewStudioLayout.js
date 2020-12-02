@@ -25,8 +25,6 @@ const Layout = styled.div`
     position: relative;
     flex-grow: 1;
   }
-  .selectionWindow {
-  }
   .modalSelectionWindow {
     height: 100vh;
     overflow-y: scroll;
@@ -69,9 +67,36 @@ const SelectionWindowHeader = styled.div`
   }
 `
 
-const SelectionWindowNav = styled(SubNav)`
+const SelectionWindowMain = styled.div`
   width: 100%;
-  max-width: 100%;
+
+  background: ${(props) => props.theme.gray0};
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  color: ${(props) => props.theme.gray6};
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1rem;
+    letter-spacing: 0.02rem;
+  }
+
+  a,
+  button {
+    border-radius: 0;
+    margin: 0;
+    padding: 10px 0.5rem 0.5rem 0.5rem;
+    text-transform: uppercase;
+
+    &:hover {
+      color: hsl(200, 95%, 95%);
+      background: ${(props) => props.theme.indigo5};
+    }
+  }
 `
 
 const MobileFilterContainer = styled.div`
@@ -122,6 +147,13 @@ export default function NewStudioLayout({
             <SubNavFilter page={page} createLink={createLink} />
           )}
         </div>
+        <MobileFilterContainer showFilter={showFilter}>
+          <MobileFilter
+            page={page}
+            createLink={createLink}
+            toggleFilter={toggleFilter}
+          />
+        </MobileFilterContainer>
         <SelectionWindow>
           <SelectionWindowHeader>
             <Breadcrumb page={page} selection={selection} />
@@ -132,16 +164,9 @@ export default function NewStudioLayout({
               <FilterSvg w='20' h='20' />
             </button>
           </SelectionWindowHeader>
-          <MobileFilterContainer showFilter={showFilter}>
-            <MobileFilter
-              page={page}
-              createLink={createLink}
-              toggleFilter={toggleFilter}
-            />
-          </MobileFilterContainer>
           {loading && <Loading />}
           {error && <Error error={error} />}
-          <SelectionWindowNav>{children}</SelectionWindowNav>
+          <SelectionWindowMain>{children}</SelectionWindowMain>
         </SelectionWindow>
       </BodyLayout>
     </Layout>
