@@ -19,22 +19,6 @@ const NewNavSidebarContainer = styled.div`
     font-size: 16px;
     letter-spacing: 0.02rem;
   }
-
-  a,
-  button {
-    border-radius: 0;
-    margin: 0;
-    padding: 10px 0.5rem 0.5rem 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    text-transform: uppercase;
-
-    &:hover {
-      color: hsl(200, 95%, 95%);
-      background: ${(props) => props.theme.indigo5};
-    }
-  }
 `
 
 const SubNav = styled(NewNavSidebarContainer)``
@@ -42,11 +26,13 @@ const SubNav = styled(NewNavSidebarContainer)``
 const NavSectionHeading = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   padding: 0.5rem 0;
 
   h2 {
     color: ${(props) => props.theme.black};
   }
+  a,
   button {
     padding: 0;
     margin: 0 0.5rem 0 auto;
@@ -77,7 +63,7 @@ export default function NewStudioNav() {
               activeClassName='activeStudioNav'
               href='/studio/classes'
             >
-              <a>Classes</a>
+              <a className='btn-nav'>Classes</a>
             </StyledLink>
           </li>
           <li>
@@ -85,12 +71,12 @@ export default function NewStudioNav() {
               activeClassName='activeStudioNav'
               href='/studio/dancers'
             >
-              <a>Dancers</a>
+              <a className='btn-nav'>Dancers</a>
             </StyledLink>
           </li>
           <li>
             <StyledLink activeClassName='activeStudioNav' href='/studio/events'>
-              <a>Events</a>
+              <a className='btn-nav'>Events</a>
             </StyledLink>
           </li>
           <li>
@@ -98,7 +84,7 @@ export default function NewStudioNav() {
               activeClassName='activeStudioNav'
               href='/studio/hairstyles'
             >
-              <a>Hairstyles</a>
+              <a className='btn-nav'>Hairstyles</a>
             </StyledLink>
           </li>
           <li>
@@ -113,7 +99,7 @@ export default function NewStudioNav() {
         <ul>
           <li>
             <StyledLink activeClassName='activeStudioNav' href='accounts'>
-              <a>Accounts</a>
+              <a className='btn-nav'>Accounts</a>
             </StyledLink>
           </li>
         </ul>

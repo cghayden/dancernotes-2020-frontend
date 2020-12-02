@@ -25,7 +25,7 @@ const DanceClasses = ({ allStudioDanceClasses }) => {
       {filteredClasses.map((danceClass) => (
         <li key={danceClass.id}>
           <Link href={`/studio/classes/${danceClass.id}`}>
-            <a>{danceClass.name}</a>
+            <a className='btn-selectionOption'>{danceClass.name}</a>
           </Link>
         </li>
       ))}

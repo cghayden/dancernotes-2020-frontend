@@ -319,24 +319,25 @@ function CreateDanceClass({ studio }) {
                       ))}
                   </select>
                 </div>
-                <div className='input-item'></div>
-                <label htmlFor='ageDivision'>Age Division:</label>
-                <select
-                  id='ageDivision'
-                  name='ageDivision'
-                  value={inputs.ageDivision}
-                  onChange={handleChange}
-                >
-                  <option default disabled value={''}>
-                    Age Division...
-                  </option>
-                  {studio &&
-                    studio.ageDivisions?.map((ageDivision) => (
-                      <option key={ageDivision} value={ageDivision}>
-                        {ageDivision}
-                      </option>
-                    ))}
-                </select>
+                <div className='input-item'>
+                  <label htmlFor='ageDivision'>Age Division:</label>
+                  <select
+                    id='ageDivision'
+                    name='ageDivision'
+                    value={inputs.ageDivision}
+                    onChange={handleChange}
+                  >
+                    <option default disabled value={''}>
+                      Age Division...
+                    </option>
+                    {studio &&
+                      studio.ageDivisions?.map((ageDivision) => (
+                        <option key={ageDivision} value={ageDivision}>
+                          {ageDivision}
+                        </option>
+                      ))}
+                  </select>
+                </div>
               </div>
             </section>
             <section>

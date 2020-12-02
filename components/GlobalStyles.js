@@ -60,9 +60,6 @@ const GlobalStyle = createGlobalStyle`
   margin-right: .5rem;
 }
   a, button {
-  display:inline-block;
-  padding: .5rem 1rem;
-  margin: .5rem;
   border: none;
   font: inherit;
   color: inherit;
@@ -158,6 +155,34 @@ const GlobalStyle = createGlobalStyle`
     :hover{
       color: ${theme.indigo6};
       background: none;
+    }
+  }
+  &.btn-nav{
+    border-radius: 0;
+    margin: 0;
+    padding: 10px 0.5rem 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    text-transform: uppercase;
+
+    &:hover {
+      color: hsl(200, 95%, 95%);
+      background: ${(props) => props.theme.indigo5};
+    }
+  }
+  &.btn-selectionOption{
+    border-radius: 0;
+    margin: 0;
+    padding: 10px 0.5rem 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+
+    &:hover {
+      color: hsl(200, 95%, 95%);
+      background: ${(props) => props.theme.indigo5};
     }
   }
   }

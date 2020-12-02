@@ -37,6 +37,7 @@ const FilterHeaderStyles = styled.div`
   h3 {
     flex-grow: 1;
   }
+  a,
   button {
     padding: 0;
     margin: 0 0.5rem;
