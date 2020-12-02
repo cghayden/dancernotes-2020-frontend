@@ -1,10 +1,7 @@
 import { useQuery } from '@apollo/react-hooks'
-import { useRouter } from 'next/router'
-
 import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
 import DanceClasses from '../../../components/Studio/DanceClasses'
 import { ALL_DANCE_CLASSES_QUERY } from '../../../components/Studio/Queries'
-import { useDisplayControls } from '../../../components/Parent/ParentDisplayProvider'
 
 export default function classesIndex() {
   //   const { showControlPanel, toggleControlPanel } = useDisplayControls()
@@ -15,7 +12,7 @@ export default function classesIndex() {
       error={error}
       loading={loading}
       page={'Classes'}
-      createLink={`/studio/dancers/createDancer`}
+      createLink={`/studio/classes/createClass`}
     >
       {data && (
         <DanceClasses allStudioDanceClasses={data.allStudioDanceClasses} />

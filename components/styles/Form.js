@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components"
+import styled, { keyframes } from 'styled-components'
 
 const loading = keyframes`
   from {
@@ -30,9 +30,17 @@ const Form = styled.form`
   }
   legend,
   h2 {
-    font-size: 1.25em;
-    padding: 0.25rem 0;
-    margin-bottom: 1rem;
+    font-size: 1.1em;
+  }
+  legend,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    padding: 0.5rem 0;
+    /* margin-bottom: .75rem; */
   }
 
   label {
@@ -56,7 +64,7 @@ const Form = styled.form`
     color: ${(props) => props.theme.indigo9};
     border-radius: 10px;
     font: inherit;
-    padding: 0.5rem 1rem;
+    padding: 0.25rem 0.5rem;
     margin: 0;
     font-size: 1rem;
     border: 1px solid ${(props) => props.theme.gray2};
@@ -65,16 +73,12 @@ const Form = styled.form`
     }
   }
 
-  select {
-    height: 38px;
-  }
-
-  button[type="submit"],
-  input[type="submit"] {
+  button[type='submit'],
+  input[type='submit'] {
     width: 50%;
     max-width: 300px;
     padding: 0.5rem;
-    &[aria-busy="true"]::after {
+    &[aria-busy='true']::after {
       background-size: 50% auto;
       animation: ${loading} 1s linear infinite;
     }
@@ -91,10 +95,10 @@ const Form = styled.form`
     &[disabled] {
       opacity: 0.7;
     }
-    &[aria-busy="true"]::after {
+    &[aria-busy='true']::after {
       height: 2px;
       margin: 4px 0;
-      content: "";
+      content: '';
       display: block;
       background-image: linear-gradient(
         to right,
@@ -189,6 +193,7 @@ const Form = styled.form`
   .zip {
     width: 100px;
   }
+
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     input,
     textarea,
@@ -213,7 +218,7 @@ const LandingPageForm = styled(Form)`
     display: block;
     margin: 0 auto 1.25rem auto;
   }
-  button[type="submit"] {
+  button[type='submit'] {
     width: 80%;
     background-color: ${(props) => props.theme.newBlue[70].hsl};
     color: ${(props) => props.theme.newBlue[0].hsl};
