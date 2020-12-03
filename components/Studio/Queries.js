@@ -219,11 +219,56 @@ const STUDIO_MAKEUP_QUERY = gql`
         name
         lipstick
         eyeShadow
+        eyeLids
+        eyeCrease
+        eyeLiner
+        eyelashes
+        foundation
+        powder
+        blush
+        bronzer
+        applyToCategories
         notes
+        danceClasses {
+          id
+          name
+        }
+        studio {
+          id
+        }
       }
     }
   }
 `
+
+const STUDIO_MAKEUPSET_QUERY = gql`
+  query($id: ID!) {
+    studioMakeupSet(id: $id) {
+      id
+      name
+      lipstick
+      eyeShadow
+      eyeLids
+      eyeCrease
+      eyeLiner
+      eyelashes
+      foundation
+      powder
+      blush
+      bronzer
+      applyToCategories
+      notes
+      danceClasses {
+        id
+        name
+      }
+      studio {
+        id
+      }
+    }
+  }
+`
+
 const HAIRSTYLES_QUERY = gql`
   query HAIRSTYLES_QUERY {
     studioHairStyles {
@@ -247,6 +292,7 @@ export {
   STUDIO_EVENT_QUERY,
   STUDIO_DANCER,
   STUDIO_MAKEUP_QUERY,
+  STUDIO_MAKEUPSET_QUERY,
   HAIRSTYLES_QUERY,
   STUDIO_HAIRSTYLE_QUERY,
 }
