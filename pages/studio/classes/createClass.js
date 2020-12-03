@@ -4,7 +4,7 @@ import { useStudio } from '../../../components/Studio/useStudio'
 
 // query studio for categories, makeupsets and dancers and pass to createclassform
 
-const DanceClassesPage = () => {
+const CreateDanceClassPage = () => {
   const studio = useStudio()
 
   return (
@@ -14,4 +14,4 @@ const DanceClassesPage = () => {
   )
 }
 
-export default DanceClassesPage
+export default CreateDanceClassPage

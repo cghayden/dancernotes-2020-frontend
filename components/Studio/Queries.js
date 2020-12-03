@@ -152,6 +152,26 @@ const STUDIO_EVENTS_QUERY = gql`
     }
   }
 `
+const STUDIO_EVENT_QUERY = gql`
+  query($id: ID!) {
+    studioEvent(id: $id) {
+      id
+      name
+      type
+      appliesTo
+      beginDate
+      endDate
+      location
+      address1
+      address2
+      city
+      state
+      zip
+      url
+      notes
+    }
+  }
+`
 
 const STUDIO_DANCER = gql`
   query($id: ID!) {
@@ -210,6 +230,7 @@ export {
   ENROLLMENT_REQUESTS_QUERY,
   ACCESS_REQUESTS_QUERY,
   STUDIO_EVENTS_QUERY,
+  STUDIO_EVENT_QUERY,
   STUDIO_DANCER,
   STUDIO_MAKEUP_QUERY,
   HAIRSTYLES_QUERY,
