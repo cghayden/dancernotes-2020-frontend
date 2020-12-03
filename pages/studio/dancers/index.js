@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/react-hooks'
 import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
-import AllDancerCards from '../../../components/Studio/AllDancerCards'
+import Dancers from '../../../components/Studio/Dancers'
 import { STUDIO_ALL_DANCERS_QUERY } from '../../../components/Studio/Queries'
 import { useContext } from 'react'
 import { FilterContext } from '../../../components/Studio/FilterContext'
@@ -28,7 +28,7 @@ export default function dancersIndex() {
       page={'Dancers'}
       createLink={`/studio/dancers/createDancer`}
     >
-      {data && <AllDancerCards dancers={filteredDancers} />}
+      {data && <Dancers dancers={filteredDancers} />}
     </NewStudioLayout>
   )
 }

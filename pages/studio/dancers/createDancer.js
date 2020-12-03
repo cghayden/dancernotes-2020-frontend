@@ -1,7 +1,10 @@
-import React from 'react'
-
+import NoFilterLayout from '../../../components/Studio/NoFilterLayout'
 function createDancerPage() {
-  return <div>Create a New Dancer Page</div>
+  return (
+    <NoFilterLayout page={'Classes'} selection={'Create a Class'}>
+      <div>register new dancer form</div>
+    </NoFilterLayout>
+  )
 }
 
 export default createDancerPage

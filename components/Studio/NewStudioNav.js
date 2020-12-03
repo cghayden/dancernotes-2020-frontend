@@ -3,7 +3,8 @@ import StyledLink from '../StyledLink'
 
 const NewNavSidebarContainer = styled.div`
   background: ${(props) => props.theme.gray0};
-  min-width: 130px;
+  width: 18vw;
+  min-width: 160px;
   max-width: 230px;
   height: 100vh;
   display: flex;

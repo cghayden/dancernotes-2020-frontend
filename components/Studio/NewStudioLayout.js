@@ -135,7 +135,7 @@ export default function NewStudioLayout({
 
   return (
     <Layout>
-      <NewStudioHeader showFilter={showFilter} toggleFilter={toggleFilter} />
+      <NewStudioHeader />
       <BodyLayout>
         <div className='hide-ltLarge'>
           <NewStudioNav />

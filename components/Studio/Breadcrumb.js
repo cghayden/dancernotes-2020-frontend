@@ -29,7 +29,7 @@ const CreateLinkDiv = styled.div`
   margin-left: auto;
 `
 
-function Breadcrumb({ page = '', selection, createLink }) {
+function Breadcrumb({ page = '', selection }) {
   const { filter } = useContext(FilterContext)
 
   // home > page > selection or filters
@@ -66,15 +66,6 @@ function Breadcrumb({ page = '', selection, createLink }) {
           <FilterChoicesBreadcrumb filter={filter} />
         )}
       </AnimatePresence>
-      {/* {createLink && (
-        <CreateLinkDiv>
-          <Link href={`/studio/dancers/`}>
-            <a>
-              <PlusSvg />
-            </a>
-          </Link>
-        </CreateLinkDiv>
-      )} */}
     </BreadcrumbStyles>
   )
 }

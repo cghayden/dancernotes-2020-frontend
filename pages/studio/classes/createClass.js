@@ -1,4 +1,4 @@
-import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
+import NoFilterLayout from '../../../components/Studio/NoFilterLayout'
 import CreateDanceClassForm from '../../../components/Studio/CreateDanceClassForm'
 import { useStudio } from '../../../components/Studio/useStudio'
 
@@ -8,9 +8,9 @@ const DanceClassesPage = () => {
   const studio = useStudio()
 
   return (
-    <NewStudioLayout page={'Create a Class'}>
+    <NoFilterLayout page={'Classes'} selection={'Create a Class'}>
       {studio && <CreateDanceClassForm studio={studio} />}
-    </NewStudioLayout>
+    </NoFilterLayout>
   )
 }
 

@@ -42,7 +42,7 @@ const MobileNavContainer = styled.div`
   }
 `
 
-export default function NewStudioHeader({ showFilter, toggleFilter }) {
+export default function NewStudioHeader() {
   const [mobileNav, toggleMobileNav] = useState(false)
   return (
     <Header>
@@ -51,7 +51,6 @@ export default function NewStudioHeader({ showFilter, toggleFilter }) {
       <button
         className='hide-gtLarge'
         onClick={() => {
-          // toggleFilter(false)
           toggleMobileNav(!mobileNav)
         }}
       >
@@ -59,8 +58,7 @@ export default function NewStudioHeader({ showFilter, toggleFilter }) {
       </button>
       {mobileNav && (
         <MobileNavContainer>
-          <NewStudioNav />
-          {/* <MobileFilter page={page} createLink={createLink} /> */}
+          <NewStudioNav />={' '}
         </MobileNavContainer>
       )}
       {/* <QuickCreateOptions /> */}
