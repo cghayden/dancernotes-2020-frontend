@@ -85,12 +85,12 @@ export default function NewStudioNav() {
               activeClassName='activeStudioNav'
               href='/studio/hairstyles'
             >
-              <a className='btn-nav'>Hairstyles</a>
+              <a className='btn-nav'>Hair Styles</a>
             </StyledLink>
           </li>
           <li>
             <StyledLink activeClassName='activeStudioNav' href='/studio/makeup'>
-              <a>Makeup</a>
+              <a className='btn-nav'>Makeup</a>
             </StyledLink>
           </li>
         </ul>

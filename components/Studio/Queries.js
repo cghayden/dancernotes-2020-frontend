@@ -172,6 +172,20 @@ const STUDIO_EVENT_QUERY = gql`
     }
   }
 `
+const STUDIO_HAIRSTYLE_QUERY = gql`
+  query($id: ID!) {
+    studioHairStyle(id: $id) {
+      id
+      name
+      description
+      image
+      link
+      studio {
+        id
+      }
+    }
+  }
+`
 
 const STUDIO_DANCER = gql`
   query($id: ID!) {
@@ -234,4 +248,5 @@ export {
   STUDIO_DANCER,
   STUDIO_MAKEUP_QUERY,
   HAIRSTYLES_QUERY,
+  STUDIO_HAIRSTYLE_QUERY,
 }
