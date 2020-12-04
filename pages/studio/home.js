@@ -32,7 +32,7 @@ function StudioHome() {
     <NewStudioLayout page='Home'>
       {loading && <Loading />}
       {error && <Error error={error} />}
-      {data && <Home studio={data.studio} />}
+      {data && <Home studio={data.myStudio} />}
     </NewStudioLayout>
   )
 }

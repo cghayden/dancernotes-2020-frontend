@@ -1,5 +1,5 @@
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import gql from 'graphql-tag'
+import { useQuery } from '@apollo/react-hooks'
 
 const STUDIO_USER_QUERY = gql`
   query STUDIO_USER_QUERY {
@@ -18,16 +18,25 @@ const STUDIO_USER_QUERY = gql`
         id
         firstName
       }
+      hairStyles {
+        id
+      }
+      makeupSets {
+        id
+      }
+      events {
+        id
+      }
     }
   }
-`;
+`
 
 function useStudio() {
-  const { data, error, loading } = useQuery(STUDIO_USER_QUERY);
-  if (loading) return;
-  if (error) return { status: "error", error };
-  if (data) return data.myStudio;
-  return null;
+  const { data, error, loading } = useQuery(STUDIO_USER_QUERY)
+  if (loading) return
+  if (error) return { status: 'error', error }
+  if (data) return data.myStudio
+  return null
 }
 
-export { useStudio, STUDIO_USER_QUERY };
+export { useStudio, STUDIO_USER_QUERY }

@@ -13,30 +13,49 @@ const PageTile = styled.div`
   height: 200px;
   background: #19216c;
   color: white;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   border-radius: 10px;
+
   h2 {
     color: inherit;
+    font-size: 1.3rem;
   }
   a {
     color: white;
   }
+  p {
+    font-size: 1.5rem;
+  }
 `
 function Home({ studio }) {
-  const pages = ['classes', 'dancers', 'events', 'hairstyles', 'makeup']
+  console.log('studio', studio)
+  const pages = [
+    { text: 'dance classes', key: 'danceClasses', link: 'classes' },
+    { text: 'dancers', key: 'dancers', link: 'dancers' },
+    { text: 'events', key: 'events', link: 'events' },
+    { text: 'hairstyles', key: 'hairStyles', link: 'hairstyles' },
+    { text: 'makeup', key: 'makeupSets', link: 'makeup' },
+  ]
 
   return (
     <HomeStyles>
-      {pages.map((page) => (
-        <Link href={`/studio/${page}`}>
-          <a>
-            <PageTile>
-              <h2>{page.toUpperCase()}</h2>
-            </PageTile>
-          </a>
-        </Link>
-      ))}
+      {pages.map((page) => {
+        const key = page.key
+        const length = studio[key].length
+        return (
+          <Link key={page.key} href={`/studio/${page.link}`}>
+            <a>
+              <PageTile>
+                <h2>{page.text.toUpperCase()}</h2>
+                <p>{length}</p>
+              </PageTile>
+            </a>
+          </Link>
+        )
+      })}
     </HomeStyles>
   )
 }
