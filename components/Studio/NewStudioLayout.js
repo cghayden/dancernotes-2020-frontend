@@ -72,6 +72,7 @@ const SelectionWindowMain = styled.div`
   background: ${(props) => props.theme.gray0};
   height: 100vh;
   padding-bottom: 50vh;
+  padding-top: 1rem;
   display: flex;
   flex-direction: column;
   overflow: scroll;
