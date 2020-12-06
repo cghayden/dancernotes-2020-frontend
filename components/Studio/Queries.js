@@ -1,5 +1,34 @@
 import gql from 'graphql-tag'
 
+const STUDIO_USER_QUERY = gql`
+  query STUDIO_USER_QUERY {
+    myStudio {
+      id
+      email
+      studioName
+      styles
+      competitiveLevels
+      ageDivisions
+      danceClasses {
+        id
+        name
+      }
+      dancers {
+        id
+        firstName
+      }
+      hairStyles {
+        id
+      }
+      makeupSets {
+        id
+      }
+      events {
+        id
+      }
+    }
+  }
+`
 const SINGLE_DANCE_QUERY = gql`
   query SINGLE_DANCE_QUERY($id: ID!) {
     danceClass(where: { id: $id }) {
@@ -282,6 +311,7 @@ const HAIRSTYLES_QUERY = gql`
 `
 
 export {
+  STUDIO_USER_QUERY,
   CATEGORIES_QUERY,
   ALL_DANCE_CLASSES_QUERY,
   STUDIO_ALL_DANCERS_QUERY,

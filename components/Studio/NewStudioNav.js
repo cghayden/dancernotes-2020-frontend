@@ -99,37 +99,27 @@ export default function NewStudioNav() {
         <h2>Accounts</h2>
         <ul>
           <li>
-            <StyledLink activeClassName='activeStudioNav' href='accounts'>
+            <StyledLink
+              activeClassName='activeStudioNav'
+              href='/studio/account'
+            >
               <a className='btn-nav'>Accounts</a>
             </StyledLink>
           </li>
-        </ul>
-      </NavSection>
-      <NavSection>
-        <h2>Manage</h2>
-        <ul>
           <li>
             <StyledLink
               activeClassName='activeStudioNav'
-              href='/studio/oldClasses'
+              href='/studio/retailers'
             >
-              <a>Old Classes View</a>
+              <a className='btn-nav'>Retailers</a>
             </StyledLink>
           </li>
           <li>
             <StyledLink
               activeClassName='activeStudioNav'
-              href='/studio/newClasses-Top-Filter'
+              href='/studio/myStudio'
             >
-              <a>Classes v2 TopFilt</a>
-            </StyledLink>
-          </li>
-          <li>
-            <StyledLink
-              activeClassName='activeStudioNav'
-              href='/studio/oldDancers'
-            >
-              <a>Old Dancers View</a>
+              <a className='btn-nav'>My Studio</a>
             </StyledLink>
           </li>
         </ul>
