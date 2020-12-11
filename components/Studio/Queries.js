@@ -29,6 +29,22 @@ const STUDIO_USER_QUERY = gql`
     }
   }
 `
+const STUDIO_LINKED_PARENTS = gql`
+  query STUDIO_LINKED_PARENTS {
+    studioLinkedParents {
+      id
+      firstName
+      lastName
+      email
+      dancers {
+        firstName
+        lastName
+        id
+      }
+    }
+  }
+`
+
 const SINGLE_DANCE_QUERY = gql`
   query SINGLE_DANCE_QUERY($id: ID!) {
     danceClass(where: { id: $id }) {
@@ -325,4 +341,5 @@ export {
   STUDIO_MAKEUPSET_QUERY,
   HAIRSTYLES_QUERY,
   STUDIO_HAIRSTYLE_QUERY,
+  STUDIO_LINKED_PARENTS,
 }

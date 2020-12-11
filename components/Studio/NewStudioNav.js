@@ -101,7 +101,7 @@ export default function NewStudioNav() {
           <li>
             <StyledLink
               activeClassName='activeStudioNav'
-              href='/studio/account'
+              href='/studio/accounts'
             >
               <a className='btn-nav'>Accounts</a>
             </StyledLink>
