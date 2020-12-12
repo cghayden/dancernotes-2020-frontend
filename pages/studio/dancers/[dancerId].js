@@ -12,16 +12,15 @@ function DancerPage() {
     variables: { id: dancerId },
   })
 
-  const dancer = data?.studioDancer ? data.studioDancer : {}
-
   return (
     <NewStudioLayout
       page={'Dancers'}
       error={error}
       loading={loading}
-      selection={`${dancer?.firstName} ${dancer?.lastName}`}
+      selection={`${data?.studioDancer.firstName} ${data?.studioDancer.lastName}`}
     >
-      <Dancer dancer={dancer} />
+      {/* {dancer && <div>Dancer Here</div>} */}
+      {data && <Dancer dancer={data.studioDancer} />}
     </NewStudioLayout>
   )
 }

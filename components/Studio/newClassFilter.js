@@ -97,7 +97,7 @@ const CheckboxAreaHeader = styled.div`
   }
 `
 
-const NewClassFilter = ({ open }) => {
+const NewClassFilter = () => {
   const { filter, setFilter } = useContext(FilterContext)
   // const router = useRouter()
 
@@ -162,36 +162,3 @@ const NewClassFilter = ({ open }) => {
 
 export default NewClassFilter
 export { ActiveFilters }
-
-{
-  /* <h2>Filter By:</h2> */
-}
-{
-  /* <FilterPanelHeader>
-        <CloseFilterPanel onClick={closeControls}>Close</CloseFilterPanel>
-      </FilterPanelHeader> */
-}
-{
-  /* show clear button if there are active filters*/
-}
-{
-  /* {Object.keys(classFilter).length > 0 && (
-          <button onClick={clearFilter}>Clear All</button>
-        )} */
-}
-{
-  /* <ActiveFilters>
-        {/*display a list of the active filters */
-}
-{
-  /* {Object.keys(classFilter).length > 0 && (
-        <ul>
-          {activeFilters.map((choice) => (
-            <li key={choice}>{choice}</li>
-          ))}
-        </ul>
-      )} */
-}
-{
-  /* </ActiveFilters> */
-}

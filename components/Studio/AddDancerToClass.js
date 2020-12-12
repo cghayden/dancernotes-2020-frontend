@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Query, Mutation } from "react-apollo";
-import Link from "next/link";
-import gql from "graphql-tag";
-import { STUDIO_ALL_DANCERS_QUERY, SINGLE_DANCE_QUERY } from "./Queries";
-import Card from "../styles/Card";
-import RemoveDancerFromDanceButton from "./RemoveDancerFromDanceButton";
+import React, { Component } from 'react'
+import { Query, Mutation } from 'react-apollo'
+import Link from 'next/link'
+import gql from 'graphql-tag'
+import { STUDIO_ALL_DANCERS_QUERY, SINGLE_DANCE_QUERY } from './Queries'
+import Card from '../styles/Card'
+import RemoveDancerFromDanceButton from './RemoveDancerFromDanceButton'
 
 const REGISTER_DANCER_MUTATION = gql`
   mutation REGISTER_DANCER_MUTATION($dancerId: ID!, $danceId: ID!) {
@@ -12,17 +12,17 @@ const REGISTER_DANCER_MUTATION = gql`
       message
     }
   }
-`;
+`
 
-class AddDancers extends Component {
+class AddDancerToClass extends Component {
   state = {
-    dancer: "",
-  };
+    dancer: '',
+  }
 
-  handleChange = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  };
+  handleChange = (e) => {
+    const { name, value } = e.target
+    this.setState({ [name]: value })
+  }
 
   render() {
     return (
@@ -42,26 +42,26 @@ class AddDancers extends Component {
         {(addDancer, { error, loading }) => {
           return (
             <Query query={STUDIO_ALL_DANCERS_QUERY}>
-              {({ data: { studioDancers }={} }, error, loading) => {
+              {({ data: { studioDancers } = {} }, error, loading) => {
                 return (
                   <Query
                     query={SINGLE_DANCE_QUERY}
                     variables={{ id: this.props.id }}
                   >
-                    {({ data: { danceClass }={}, loading, error }) => {
-                      if (loading) return <p>Loading...</p>;
+                    {({ data: { danceClass } = {}, loading, error }) => {
+                      if (loading) return <p>Loading...</p>
                       if (!danceClass)
                         return (
                           <p>
                             Error: No DanceClass found for ID {this.props.id}
                           </p>
-                        );
+                        )
                       return (
                         <Card>
-                          <div className="card__header">
+                          <div className='card__header'>
                             <h2>{danceClass.name}</h2>
                           </div>
-                          <div className="card__section">
+                          <div className='card__section'>
                             <h2>Dancers in {danceClass.name}:</h2>
                             <ul>
                               {danceClass.dancers.map((dancer, index) => (
@@ -72,25 +72,25 @@ class AddDancers extends Component {
                                       dancerId={dancer.id}
                                       danceId={this.props.id}
                                     />
-                                  </span>{" "}
+                                  </span>{' '}
                                 </li>
                               ))}
                             </ul>
                           </div>
-                          <div className="card__section">
+                          <div className='card__section'>
                             <h2>Select a Dancer to add:</h2>
-                            <label htmlFor="dancer">
+                            <label htmlFor='dancer'>
                               <select
                                 required
-                                id="dancer"
-                                name="dancer"
+                                id='dancer'
+                                name='dancer'
                                 value={this.state.dancer}
                                 onChange={this.handleChange}
                               >
-                                <option default value={""} disabled>
+                                <option default value={''} disabled>
                                   Dancer...
                                 </option>
-                                {studioDancers.map(dancer => (
+                                {studioDancers.map((dancer) => (
                                   <option key={dancer.id} value={dancer.id}>
                                     {dancer.firstName}
                                   </option>
@@ -98,32 +98,32 @@ class AddDancers extends Component {
                               </select>
                             </label>
                           </div>
-                          <div className="card__section">
+                          <div className='card__section'>
                             <button
-                              type="button"
+                              type='button'
                               onClick={async () => {
-                                await addDancer();
-                                this.setState({ dancer: "" });
+                                await addDancer()
+                                this.setState({ dancer: '' })
                               }}
                             >
                               Add
                             </button>
-                            <Link href="/studio/classes">
+                            <Link href='/studio/classes'>
                               <a>Return to Classes</a>
                             </Link>
                           </div>
                         </Card>
-                      );
+                      )
                     }}
                   </Query>
-                );
+                )
               }}
             </Query>
-          );
+          )
         }}
       </Mutation>
-    );
+    )
   }
 }
 
-export default AddDancers;
+export default AddDancerToClass
