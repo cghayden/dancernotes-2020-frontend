@@ -2,15 +2,25 @@ import styled from 'styled-components'
 import Link from 'next/link'
 
 const HomeStyles = styled.div`
-  place-content: center;
-  place-items: center;
+  /* place-content: center; */
+  /* place-items: stretch; */
   display: grid;
-  grid-gap: 20px;
-  grid-template-columns: repeat(auto-fit, 200px);
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0.5rem;
+  padding: 0 1.25rem;
+  a {
+    display: flex;
+    justify-content: center;
+  }
+  @media screen and (max-width: ${(props) => props.theme.mediumScreen}) {
+    /* grid-template-columns: 1fr; */
+  }
 `
-const PageTile = styled.div`
-  width: 200px;
-  height: 200px;
+const PageTileLink = styled.div`
+  font-size: 1rem;
+  width: 100%;
+  max-width: 350px;
+  height: 100px;
   background: #19216c;
   color: white;
   display: flex;
@@ -21,13 +31,17 @@ const PageTile = styled.div`
 
   h2 {
     color: inherit;
-    font-size: 1.3rem;
+    font-size: 1.2em;
   }
-  a {
-    color: white;
-  }
+
   p {
-    font-size: 1.5rem;
+    font-size: 1.4em;
+  }
+
+  @media screen and (max-width: ${(props) => props.theme.mediumScreen}) {
+    /* width: 300px; */
+    font-size: 0.85rem;
+    height: 80px;
   }
 `
 function Home({ studio }) {
@@ -48,10 +62,10 @@ function Home({ studio }) {
         return (
           <Link key={page.key} href={`/studio/${page.link}`}>
             <a>
-              <PageTile>
+              <PageTileLink>
                 <h2>{page.text.toUpperCase()}</h2>
                 <p>{length}</p>
-              </PageTile>
+              </PageTileLink>
             </a>
           </Link>
         )
