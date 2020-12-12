@@ -1,7 +1,7 @@
 import Card from '../styles/Card'
 import styled from 'styled-components'
 
-const Dancer = styled(Card)`
+const DancerCard = styled(Card)`
   display: grid;
   grid-gap: 0.5rem;
   max-width: 1000px;
@@ -68,7 +68,7 @@ const Dancer = styled(Card)`
 
 export default function Dancer({ dancer }) {
   return (
-    <Dancer>
+    <DancerCard>
       <div className='card__header dancerName'>
         {dancer.avatar && <img src={dancer.avatar} alt={dancer.firstName} />}
         <h3>
@@ -140,6 +140,6 @@ export default function Dancer({ dancer }) {
           </section>
         </section>
       </div>
-    </Dancer>
+    </DancerCard>
   )
 }
