@@ -1,18 +1,18 @@
-import React from "react";
-import Card from "../../components/styles/Card";
-import DancerCard from "../../components/Parent/DancerCard";
-import CreateDancerForm from "./CreateDancerForm";
+import React from 'react'
+import Card from '../../components/styles/Card'
+import DancerCard from './DancerCard'
+import CreateDancerForm from './CreateDancerForm'
 
 const Dancers = ({ hasDancers, dancers }) => {
   // if has dancers, show dancers cards
   if (hasDancers) {
     return (
       <>
-        {dancers.map(dancer => (
+        {dancers.map((dancer) => (
           <DancerCard key={dancer.id} dancer={dancer} />
         ))}
       </>
-    );
+    )
   }
 
   // if no dancers, show welcome and add dancer/browse studios
@@ -27,8 +27,8 @@ const Dancers = ({ hasDancers, dancers }) => {
         </Card>
         <CreateDancerForm />
       </>
-    );
+    )
   }
-};
+}
 
-export default Dancers;
+export default Dancers

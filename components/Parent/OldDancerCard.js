@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
 import Link from 'next/link'
-import { AnimatePresence, motion } from 'framer-motion'
 
 import styled from 'styled-components'
 import SearchForStudio from '../SearchForStudio'
@@ -92,7 +91,6 @@ const ImageDiv = styled.div`
 `
 
 function DancerCard({ dancer }) {
-  const [showDetails, toggleDetails] = useState(false)
   const BrowsingContext = useContext(RegistrationContext)
   const setBrowsingDancer = BrowsingContext.setBrowsingDancer
 
@@ -117,11 +115,7 @@ function DancerCard({ dancer }) {
 
   return (
     <DancerCardContainer>
-      <DancerCardHeaderStyles
-        id={dancer.id}
-        role='button'
-        onClick={() => toggleDetails((showDetails) => !showDetails)}
-      >
+      <DancerCardHeaderStyles id={dancer.id}>
         <ImageDiv>
           {newAvatar ? (
             <img src={newAvatar} alt={`preview of new avatar image`} />
@@ -135,84 +129,80 @@ function DancerCard({ dancer }) {
           <Edit />
         </FlipButton>
       </DancerCardHeaderStyles>
-      <AnimatePresence>
-        {showDetails && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.5 }}
-            style={{ overflow: 'hidden' }}
-          >
+
+      {view === 'update' ? (
+        <UpdateDancerForm
+          dancer={dancer}
+          closeFunc={() => switchView()}
+          hasAvatar={hasAvatar}
+          showAvatarPreview={showAvatarPreview}
+        />
+      ) : (
+        <>
+          <div>
             <h2>{dancer.firstName}</h2>
-            <div>
-              <h3>Classes</h3>
-              {dancer.studios.map((studio) => (
-                <div key={studio.id}>
-                  <h4>Classes at {studio.studioName}</h4>
-                  <ul>
-                    {dancer.danceClasses.map((dance) => {
-                      if (dance.studio.id === studio.id) {
-                        return <li key={dance.id}>{dance.name}</li>
-                      }
-                    })}
-                  </ul>
-                </div>
-              ))}
-            </div>
-            <DancerCardFooter>
-              {dancer.studios.map((studio) => (
-                <Link
-                  key={studio.id}
-                  href={`/parent/account/browseStudio?studioId=${studio.id}`}
-                >
-                  <button
-                    className='btn-action-secondary'
-                    onClick={() => setBrowsingDancer(dancer.id)}
-                  >
-                    Manage Classes at {studio.studioName}
-                  </button>
-                </Link>
-              ))}
-
-              <button
-                className='btn-action-primary'
-                onClick={() => setShowStudioSearch(!showStudioSearch)}
+            {hasDanceClasses ? (
+              <div>
+                <h3>Classes</h3>
+                {dancer.studios.map((studio) => (
+                  <div key={studio.id}>
+                    <h4>Classes at {studio.studioName}</h4>
+                    <ul>
+                      {dancer.danceClasses.map((dance) => {
+                        if (dance.studio.id === studio.id) {
+                          return <li key={dance.id}>{dance.name}</li>
+                        }
+                      })}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <>
+                <p>{dancer.firstName} is not registered in any classes.</p>
+                <p>You can create your own routines,</p>
+                <p>OR</p>
+                <p>
+                  Search for a studio to request notes, signup for classes, or
+                  browse the studio's class offerings...
+                </p>
+              </>
+            )}
+          </div>
+          <DancerCardFooter>
+            {dancer.studios.map((studio) => (
+              <Link
+                key={studio.id}
+                href={`/parent/account/browseStudio?studioId=${studio.id}`}
               >
-                Search for a Studio
-              </button>
-              {showStudioSearch && <SearchForStudio dancerId={dancer.id} />}
-
-              <Link href='/parent/createCustomRoutine'>
-                <a className='btn-action-primary'>
-                  Create Your Own Routine for {dancer.firstName}
-                </a>
+                <button
+                  className='btn-action-secondary'
+                  onClick={() => setBrowsingDancer(dancer.id)}
+                >
+                  Manage Classes at {studio.studioName}
+                </button>
               </Link>
-            </DancerCardFooter>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            ))}
+
+            <button
+              className='btn-action-primary'
+              onClick={() => setShowStudioSearch(!showStudioSearch)}
+            >
+              Search for a Studio
+            </button>
+            {showStudioSearch && <SearchForStudio dancerId={dancer.id} />}
+
+            <Link href='/parent/createCustomRoutine'>
+              <a className='btn-action-primary'>
+                Create Your Own Routine for {dancer.firstName}
+              </a>
+            </Link>
+          </DancerCardFooter>
+        </>
+      )}
     </DancerCardContainer>
   )
 }
 
 export default DancerCard
-export { DancerCardHeaderStyles, DancerCardContainer }
-
-// {view === 'update' ? (
-//   <UpdateDancerForm
-//     dancer={dancer}
-//     closeFunc={() => switchView()}
-//     hasAvatar={hasAvatar}
-//     showAvatarPreview={showAvatarPreview}
-//   />
-// )
-{
-  /* <p>{dancer.firstName} is not registered in any classes.</p>
-<p>You can create your own routines,</p>
-<p>OR</p>
-<p>
-  Search for a studio to request notes, signup for classes, or
-  browse the studio's class offerings...
-</p> */
-}
+export { DancerCardHeaderStyles, CardFlipAnimation, DancerCardContainer }
