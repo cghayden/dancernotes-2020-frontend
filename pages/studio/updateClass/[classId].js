@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
+import NoFilterLayout from '../../../components/Studio/NoFilterLayout'
+
 import UpdateDanceClass from '../../../components/Studio/UpdateDanceClass'
-import Loading from '../../../components/Loading'
-import Error from '../../../components/Error'
 import { useStudio } from '../../../components/Studio/useStudio'
 import { SINGLE_DANCE_QUERY } from '../../../components/Studio/Queries'
 
@@ -16,7 +15,11 @@ const updateStudioClassDancePage = () => {
   })
   const studio = useStudio()
 
-  return <UpdateDanceClass studio={studio} danceClass={data.danceClass} />
+  return (
+    <NoFilterLayout page='Classes' selection='Edit Class'>
+      <UpdateDanceClass studio={studio} danceClass={data.danceClass} />
+    </NoFilterLayout>
+  )
 }
 
 export default updateStudioClassDancePage
