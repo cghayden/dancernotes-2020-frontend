@@ -47,7 +47,7 @@ const STUDIO_LINKED_PARENTS = gql`
 
 const SINGLE_DANCE_QUERY = gql`
   query SINGLE_DANCE_QUERY($id: ID!) {
-    danceClass(where: { id: $id }) {
+    danceClass(id: $id) {
       id
       name
       style

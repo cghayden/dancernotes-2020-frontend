@@ -2,25 +2,12 @@ import { useQuery } from '@apollo/react-hooks'
 import NewStudioLayout from '../../components/Studio/NewStudioLayout'
 import Link from 'next/link'
 import styled from 'styled-components'
-
 import Loading from '../../components/Loading'
 import Error from '../../components/Error'
-import Card from '../../components/styles/Card'
 import { STUDIO_USER_QUERY } from '../../components/Studio/useStudio'
 import Home from '../../components/Studio/Home'
 import RequestsNavLink from '../../components/Studio/RequestsNavLink'
 
-const MobileDashboardLinks = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  max-width: 400px;
-  a {
-    padding: 1rem 1rem;
-    display: grid;
-    place-items: center;
-  }
-`
 function StudioHome() {
   const { data, error, loading } = useQuery(STUDIO_USER_QUERY)
 

@@ -9,7 +9,6 @@ import Breadcrumb from './Breadcrumb'
 import ActiveFilterChoices from './ActiveFilterChoices'
 import FilterSvg from '../Icons/FilterSvg'
 import MobileFilter from './MobileFilter'
-import { SubNav, NavSection } from './NewStudioNav'
 
 const BodyLayout = styled.div`
   display: flex;
