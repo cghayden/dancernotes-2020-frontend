@@ -1,10 +1,9 @@
-import Requests from "../../components/Studio/Requests";
-import SubNavMainLayout from "../../components/Studio/SubNavMainLayout";
+import Requests from '../../components/Studio/Requests'
 
 const RequestsPage = () => (
-  <SubNavMainLayout mobileHeader="Requests" page="requests">
+  <div>
     <Requests />
-  </SubNavMainLayout>
-);
+  </div>
+)
 
-export default RequestsPage;
+export default RequestsPage
