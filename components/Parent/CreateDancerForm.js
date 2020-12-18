@@ -7,7 +7,7 @@ import Form from '../styles/Form'
 import Card from '../styles/Card'
 import Link from 'next/link'
 import Modal from '../Modal'
-import BackButton from '../BackButton'
+import CancelButton from '../CancelButton'
 import { PARENT_USER_QUERY } from './Queries'
 import { DELETE_CLOUDINARY_ASSET } from '../Mutations'
 
@@ -285,7 +285,7 @@ function CreateDancerForm() {
               <button className='btn-action-primary' type='submit'>
                 Save Dancer
               </button>
-              <BackButton text='Cancel' classNames='btn-danger' />
+              <CancelButton />
             </div>
           </fieldset>
         </Form>

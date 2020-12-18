@@ -33,14 +33,10 @@ const FilterPanelStyles = styled.div`
 const FilterHeaderStyles = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0.5rem 0;
   h3 {
     flex-grow: 1;
-  }
-  a,
-  button {
-    padding: 0;
-    margin: 0 0.5rem;
   }
 `
 
@@ -125,17 +121,23 @@ const NewClassFilter = () => {
         <FilterHeaderStyles>
           <h3>Filter By:</h3>
           <button
-            title='Unlock Filter'
+            title='lock Filter'
+            className='btn-icon'
             onClick={() => console.log('toggle filter lock')}
           >
             <LockedSvg w={'18'} h={'18'} />
+            <span className='sr-only'>
+              Lock Filter to keep this filter across page changes
+            </span>
           </button>
           <button
+            className='btn-icon'
             title='Clear all filters'
             onClick={() => setFilter({})}
             title='Clear Filter'
           >
             <TrashIcon w={'18'} h={'18'} />
+            <span className='sr-only'>Clear all Filters</span>
           </button>
         </FilterHeaderStyles>
         <Categories>

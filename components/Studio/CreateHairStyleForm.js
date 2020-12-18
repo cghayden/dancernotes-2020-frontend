@@ -131,16 +131,18 @@ export default class CreateHairStyleForm extends Component {
                   />
                 </div>
 
-                <button className='btn-action-primary' type='submit'>
-                  Save
-                </button>
-                <button
-                  type='button'
-                  className='btn-danger'
-                  onClick={() => Router.push('hairstyles')}
-                >
-                  Cancel
-                </button>
+                <div className='form-footer'>
+                  <button className='btn-action-primary' type='submit'>
+                    Save
+                  </button>
+                  <button
+                    type='button'
+                    className='btn-danger'
+                    onClick={() => Router.push('hairstyles')}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </fieldset>
             </Form>
           </Card>

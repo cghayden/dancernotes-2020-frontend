@@ -1,17 +1,17 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const SubNavStyles = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: ${props => props.theme.blackText};
-  background: ${props => props.theme.background};
+  color: ${(props) => props.theme.blackText};
+  background: ${(props) => props.theme.background};
   padding: 0.5rem;
-  /* box-shadow: ${props => props.theme.dropShadow1}; */
-  border-bottom: 1px solid ${props => props.theme.gray2};
-  height: ${props => props.theme.mobileSubNavHeight};
+  /* box-shadow: ${(props) => props.theme.dropShadow1}; */
+  border-bottom: 1px solid ${(props) => props.theme.gray2};
+  height: ${(props) => props.theme.mobileSubNavHeight};
   position: fixed;
-  top: ${props => props.theme.mobileStatusBarHeight};
+  top: ${(props) => props.theme.mobileStatusBarHeight};
   left: 0;
   right: 0;
   z-index: 120;
@@ -45,30 +45,33 @@ const SubNavStyles = styled.nav`
 
     &:hover,
     &:focus {
-      color: ${props => props.theme.indigo8};
+      color: ${(props) => props.theme.indigo8};
       background: none;
       outline: none;
-      border-bottom: 2px solid ${props => props.theme.indigo8};
-      margin-bottom: -2px;
+      border-bottom: 2px solid ${(props) => props.theme.indigo8};
+      /* margin-bottom: -2px; */
     }
-    .active{
-        border-bottom: 2px solid ${props => props.theme.indigo8};
-      }
+    .active {
+      border-bottom: 2px solid ${(props) => props.theme.indigo8};
+    }
   }
-  @media (min-width: ${props => props.theme.largeScreen}) {
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
     a,
     button {
+      border-bottom: 2px solid transparent;
       &:hover,
       &:focus {
-        border-bottom: none;
+        /* border-bottom: none; */
         margin-bottom: 0;
-        border-left: 2px solid ${props => props.theme.indigo8};
-        margin-left: -2px;
+        border-bottom: 2px solid transparent;
+
+        border-left: 2px solid ${(props) => props.theme.indigo8};
+        /* margin-left: -2px; */
       }
     }
     /* align-items: unset; */
     padding-top: 1rem;
-    top: ${props => props.theme.navHeight};
+    top: ${(props) => props.theme.navHeight};
     padding-left: 4vw;
     box-shadow: none;
     height: 100vw;
@@ -95,6 +98,6 @@ const SubNavStyles = styled.nav`
       font-size: 1rem;
     }
   }
-`;
+`
 
-export default SubNavStyles;
+export default SubNavStyles

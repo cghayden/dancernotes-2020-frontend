@@ -4,7 +4,6 @@ import Card from '../styles/Card'
 import Signout from '../Signout'
 
 const SignoutDiv = styled.div`
-  background: ${(props) => props.theme.indigo2};
   margin-top: 2rem;
   border-radius: 5px;
 `

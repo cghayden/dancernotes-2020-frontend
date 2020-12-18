@@ -10,6 +10,7 @@ import FilterChoicesBreadcrumb from './FilterChoicesBreadcrumb'
 
 const BreadcrumbStyles = styled(motion.div)`
   display: flex;
+  align-items: center;
   span {
     margin: 0 0.5rem;
   }
@@ -20,6 +21,7 @@ const BreadcrumbStyles = styled(motion.div)`
   a {
     padding: 0;
     margin: 0;
+    min-width: initial;
     text-decoration: underline;
     color: ${(props) => props.theme.indigo6};
   }
@@ -36,16 +38,22 @@ function Breadcrumb({ page = '', selection }) {
   return (
     <BreadcrumbStyles layout>
       <Link href={'/studio/home'}>
-        <motion.a layout>
+        <motion.a
+          layout
+          className='btn-icon'
+          alt='Home'
+          style={{ marginBottom: '-4px' }}
+        >
           <HomeSvg />
+          <span className='sr-only'>Home</span>
         </motion.a>
       </Link>
       <motion.span layout>{'>'}</motion.span>
-      <motion.div key='page' layout>
-        <Link href={`/studio/${page.toLowerCase()}`}>
-          <a>{page}</a>
-        </Link>
-      </motion.div>
+      {/* <motion.div key='page' layout> */}
+      <Link href={`/studio/${page.toLowerCase()}`}>
+        <a>{page}</a>
+      </Link>
+      {/* </motion.div> */}
       <AnimatePresence>
         {/* selection? render selection name */}
 

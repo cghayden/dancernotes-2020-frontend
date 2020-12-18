@@ -1,8 +1,8 @@
-import { useState } from "react"
-import { useMutation } from "@apollo/react-hooks"
-import gql from "graphql-tag"
-import styled from "styled-components"
-import { PARENT_USER_QUERY } from "./Parent/Queries"
+import { useState } from 'react'
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import styled from 'styled-components'
+import { PARENT_USER_QUERY } from './Parent/Queries'
 
 const SET_TERMS_AND_PRIVACY = gql`
   mutation SET_TERMS_AND_PRIVACY($agreedToTermsAndPrivacy: DateTime!) {
@@ -39,6 +39,7 @@ const TermsContainer = styled.div`
     margin: 0;
     text-decoration: underline;
     text-transform: uppercase;
+    min-width: initial;
   }
   button {
     color: ${(props) => props.theme.indigo0};
@@ -67,24 +68,24 @@ function TermsAndPrivacy() {
         </div>
         <div>
           <a
-            rel="noreferrer noopener"
-            target="_blank"
-            href="https://www.websitepolicies.com/policies/view/Xd9syaYo"
+            rel='noreferrer noopener'
+            target='_blank'
+            href='https://www.websitepolicies.com/policies/view/Xd9syaYo'
           >
             Terms
           </a>
           and
           <a
-            rel="noreferrer noopener"
-            target="_blank"
-            href="https://www.websitepolicies.com/policies/view/Xd9syaYo"
+            rel='noreferrer noopener'
+            target='_blank'
+            href='https://www.websitepolicies.com/policies/view/Xd9syaYo'
           >
             Privacy Policy
           </a>
         </div>
         <div>
           <button
-            type="button"
+            type='button'
             onClick={async () => {
               setHideOverlay(true)
               await setTermsAndPrivacy()

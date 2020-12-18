@@ -1,18 +1,18 @@
-import { useState, Fragment } from "react";
-import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import styled from "styled-components";
+import { useState, Fragment } from 'react'
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import styled from 'styled-components'
 
-import Link from "next/link";
-import { ALL_Rs, PARENT_USER_QUERY } from "./Queries";
-import { UPDATE_CUSTOM_ROUTINE } from "./UpdateCustomRoutine";
-import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
+import Link from 'next/link'
+import { ALL_Rs, PARENT_USER_QUERY } from './Queries'
+import { UPDATE_CUSTOM_ROUTINE } from './UpdateCustomRoutine'
+import { DELETE_CLOUDINARY_ASSET } from '../Mutations'
 
-import { SelectChoices } from "../styles/SelectChoices";
-import Form from "../styles/Form";
-import Card from "../styles/Card";
-import useForm from "../../lib/useForm";
-import BackButton from "../BackButton";
+import { SelectChoices } from '../styles/SelectChoices'
+import Form from '../styles/Form'
+import Card from '../styles/Card'
+import useForm from '../../lib/useForm'
+import CancelButton from '../CancelButton'
 
 const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
   mutation CREATE_CUSTOM_ROUTINE_MUTATION(
@@ -49,7 +49,7 @@ const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
       id
     }
   }
-`;
+`
 
 const Alert = styled.div`
   position: fixed;
@@ -58,39 +58,39 @@ const Alert = styled.div`
   right: 10px;
   height: 300px;
   background: white;
-`;
+`
 
 const initialInputState = {
-  name: "",
-  performanceName: "",
-  dancer: "",
-  day: "",
-  startTime: "",
-  endTime: "",
-  shoes: "",
-  tights: "",
-  notes: "",
-  studio: "",
-  entryNumber: "",
-  entryDay: "",
-  entryTime: "",
-};
+  name: '',
+  performanceName: '',
+  dancer: '',
+  day: '',
+  startTime: '',
+  endTime: '',
+  shoes: '',
+  tights: '',
+  notes: '',
+  studio: '',
+  entryNumber: '',
+  entryDay: '',
+  entryTime: '',
+}
 
 function CreateCustomRoutineForm({ parent }) {
-  const { inputs, updateInputs, handleChange } = useForm(initialInputState);
-  const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState();
-  const [loadingSong, setLoadingSong] = useState(false);
-  const [showModal, toggleModal] = useState(false);
-  const [status, setStatus] = useState();
-  const [showFileInput, toggleFileInput] = useState(false);
-  const [showCompInput, toggleCompInput] = useState(false);
-  const [musicForUpload, setMusicForUpload] = useState();
-  const [musicId, setMusicId] = useState({});
+  const { inputs, updateInputs, handleChange } = useForm(initialInputState)
+  const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState()
+  const [loadingSong, setLoadingSong] = useState(false)
+  const [showModal, toggleModal] = useState(false)
+  const [status, setStatus] = useState()
+  const [showFileInput, toggleFileInput] = useState(false)
+  const [showCompInput, toggleCompInput] = useState(false)
+  const [musicForUpload, setMusicForUpload] = useState()
+  const [musicId, setMusicId] = useState({})
   const [dancerChoice, setDancerChoice] = useState(() =>
     parent.dancers.length > 1
       ? {}
       : { [parent.dancers[0].firstName]: parent.dancers[0].id }
-  );
+  )
 
   const [
     createCustomRoutine,
@@ -106,7 +106,7 @@ function CreateCustomRoutineForm({ parent }) {
     // },
     refetchQueries: [{ query: ALL_Rs }, { query: PARENT_USER_QUERY }],
     awaitRefetchQueries: true,
-  });
+  })
 
   const [
     updateCustomRoutine,
@@ -114,125 +114,124 @@ function CreateCustomRoutineForm({ parent }) {
   ] = useMutation(UPDATE_CUSTOM_ROUTINE, {
     onError: () => cloudinaryCleanup(),
     refetchQueries: [{ query: ALL_Rs }],
-  });
+  })
 
   const [
     deleteCloudinaryAsset,
     { error: errorDeletingAsset, loading: deletingAsset },
-  ] = useMutation(DELETE_CLOUDINARY_ASSET);
+  ] = useMutation(DELETE_CLOUDINARY_ASSET)
 
-  const newDanceClass =
-    newCustomRoutine && newCustomRoutine.createCustomRoutine;
+  const newDanceClass = newCustomRoutine && newCustomRoutine.createCustomRoutine
 
-  const loading = loadingSong || creatingCustomRoutine || updatingDanceClass;
+  const loading = loadingSong || creatingCustomRoutine || updatingDanceClass
   const errorUploadingSong =
-    errorUpdatingDanceClass || errorUploadingToCloudinary;
+    errorUpdatingDanceClass || errorUploadingToCloudinary
 
   const cloudinaryCleanup = () => {
     if (musicId) {
       deleteCloudinaryAsset({
-        variables: { publicId: musicId, resourceType: "video" },
-      });
+        variables: { publicId: musicId, resourceType: 'video' },
+      })
     }
-  };
+  }
 
   function resetForm() {
-    updateInputs({ ...initialInputState });
-    setMusicId();
-    toggleFileInput(false);
-    setStatus();
+    updateInputs({ ...initialInputState })
+    setMusicId()
+    toggleFileInput(false)
+    setStatus()
   }
 
   function setSongtoState(e) {
-    const audioFile = e.target.files[0];
-    updateInputs({ ...inputs, audioFile });
+    const audioFile = e.target.files[0]
+    updateInputs({ ...inputs, audioFile })
   }
 
   async function saveNewCustomRoutine(e) {
-    e.preventDefault();
-    setStatus("Creating Class...");
-    const newCustomRoutine = await createCustomRoutine();
+    e.preventDefault()
+    setStatus('Creating Class...')
+    const newCustomRoutine = await createCustomRoutine()
     //A. if music file is queued in state, create dance, upload music with tag of routineId, then update routine with the music url and musicId
     if (inputs.audioFile) {
-      setStatus("Uploading Music...");
-      const newCustomRoutineId = newCustomRoutine.data.createCustomRoutine.id;
+      setStatus('Uploading Music...')
+      const newCustomRoutineId = newCustomRoutine.data.createCustomRoutine.id
       await uploadSongAndUpdateRoutine(
         newCustomRoutineId,
         inputs.audioFile,
         parent.id
       ).catch((err) => {
-        setStatus();
-        toggleModal(true);
-        setCloudinaryUploadError(err);
-      });
+        setStatus()
+        toggleModal(true)
+        setCloudinaryUploadError(err)
+      })
     }
-    resetForm();
-    toggleModal(true);
+    resetForm()
+    toggleModal(true)
   }
 
   async function uploadSongAndUpdateRoutine(danceClassId, asset, assetOwnerId) {
-    setLoadingSong(true);
-    const data = new FormData();
-    data.append("file", asset);
-    data.append("upload_preset", "dancernotes-music");
-    data.append("tags", [danceClassId, assetOwnerId]);
+    setLoadingSong(true)
+    const data = new FormData()
+    data.append('file', asset)
+    data.append('upload_preset', 'dancernotes-music')
+    data.append('tags', [danceClassId, assetOwnerId])
     const res = await fetch(
-      "https://api.cloudinary.com/v1_1/coreytesting/video/upload",
+      'https://api.cloudinary.com/v1_1/coreytesting/video/upload',
       {
-        method: "POST",
+        method: 'POST',
         body: data,
       }
     ).catch((error) => {
-      setCloudinaryUploadError(error);
-    });
-    const file = await res.json();
+      setCloudinaryUploadError(error)
+    })
+    const file = await res.json()
     if (file.error) {
-      setCloudinaryUploadError(file.error);
-      setLoadingSong(false);
+      setCloudinaryUploadError(file.error)
+      setLoadingSong(false)
     } else {
       //set info to state in case there is an error updating the class, we can delete this music from cloudinary
-      setStatus("Updating class...");
-      setMusicId(file.public_id);
+      setStatus('Updating class...')
+      setMusicId(file.public_id)
       await updateCustomRoutine({
         variables: {
           id: danceClassId,
           music: file.secure_url,
           musicId: file.public_id,
         },
-      });
+      })
     }
-    setStatus();
+    setStatus()
   }
 
   function handleSelectChange(e) {
-    const chosenDancerName = e.target.selectedOptions[0].label;
-    const chosenDancerId = e.target.selectedOptions[0].value;
-    setDancerChoice({ ...dancerChoice, [chosenDancerName]: chosenDancerId });
+    const chosenDancerName = e.target.selectedOptions[0].label
+    const chosenDancerId = e.target.selectedOptions[0].value
+    setDancerChoice({ ...dancerChoice, [chosenDancerName]: chosenDancerId })
   }
 
   function removeChosenDancer(selection) {
-    const dancers = { ...dancerChoice };
-    delete dancers[selection];
-    setDancerChoice(dancers);
+    const dancers = { ...dancerChoice }
+    delete dancers[selection]
+    setDancerChoice(dancers)
   }
 
   return (
     <Fragment>
       <Card>
         <Form
-          method="post"
+          method='post'
           onSubmit={async (e) => await saveNewCustomRoutine(e)}
         >
           <fieldset disabled={loading} aria-busy={loading}>
             <h2>Create Your Own Routine</h2>
-            <div className="input-item">
+            <div className='input-item'>
               <SelectChoices>
-                <label htmlFor="dancer">Dancer(s):*</label>
+                <label htmlFor='dancer'>Dancer(s):*</label>
                 {Object.entries(dancerChoice).map((dancer) => (
                   <li key={dancer[0]}>
                     <p>{dancer[0]}</p>
                     <button
-                      type="button"
+                      type='button'
                       onClick={() => removeChosenDancer(dancer[0])}
                     >
                       X
@@ -243,14 +242,14 @@ function CreateCustomRoutineForm({ parent }) {
 
               {parent.dancers.length > 1 && (
                 <select
-                  id="dancer"
-                  name="dancer"
-                  value={""}
+                  id='dancer'
+                  name='dancer'
+                  value={''}
                   onChange={(e) => {
-                    handleSelectChange(e);
+                    handleSelectChange(e)
                   }}
                 >
-                  <option default value={""} disabled>
+                  <option default value={''} disabled>
                     Dancer(s)...
                   </option>
                   {parent &&
@@ -266,38 +265,38 @@ function CreateCustomRoutineForm({ parent }) {
                 </select>
               )}
             </div>
-            <div className="input-item">
-              <label htmlFor="name">Name of Routine* </label>
+            <div className='input-item'>
+              <label htmlFor='name'>Name of Routine* </label>
               <input
                 required
-                pattern="(?!^ +$)^.+$"
-                type="text"
-                name="name"
-                placeholder="name"
+                pattern='(?!^ +$)^.+$'
+                type='text'
+                name='name'
+                placeholder='name'
                 value={inputs.name}
                 onChange={handleChange}
               />
             </div>
-            <div className="input-item">
-              <label htmlFor="performanceName">Performance Name</label>
+            <div className='input-item'>
+              <label htmlFor='performanceName'>Performance Name</label>
               <input
-                type="text"
-                name="performanceName"
-                placeholder="Performance Name, or Name of Song"
+                type='text'
+                name='performanceName'
+                placeholder='Performance Name, or Name of Song'
                 value={inputs.performanceName}
                 onChange={handleChange}
               />
             </div>
-            <div className="input-item">
-              <label htmlFor="studio">Studio:*</label>
+            <div className='input-item'>
+              <label htmlFor='studio'>Studio:*</label>
               <select
                 required
-                id="studio"
-                name="studio"
+                id='studio'
+                name='studio'
                 value={inputs.studio}
                 onChange={handleChange}
               >
-                <option default value={""} disabled>
+                <option default value={''} disabled>
                   Studio...
                 </option>
                 {parent &&
@@ -306,112 +305,112 @@ function CreateCustomRoutineForm({ parent }) {
                       {studio.studioName}
                     </option>
                   ))}
-                <option value={"none"}>None / Other</option>
+                <option value={'none'}>None / Other</option>
               </select>
             </div>
-            <div className="day">
-              <label htmlFor="day">Day:</label>
+            <div className='day'>
+              <label htmlFor='day'>Day:</label>
               <select
-                className="day"
-                id="day"
-                name="day"
+                className='day'
+                id='day'
+                name='day'
                 value={inputs.day}
                 onChange={handleChange}
               >
-                <option default value={""} disabled>
+                <option default value={''} disabled>
                   Day...
                 </option>
-                <option value="Mon.">Mon.</option>
-                <option value="Tue.">Tue.</option>
-                <option value="Wed.">Wed.</option>
-                <option value="Thur.">Thur.</option>
-                <option value="Fri.">Fri.</option>
-                <option value="Sat.">Sat.</option>
-                <option value="Sun.">Sun.</option>
+                <option value='Mon.'>Mon.</option>
+                <option value='Tue.'>Tue.</option>
+                <option value='Wed.'>Wed.</option>
+                <option value='Thur.'>Thur.</option>
+                <option value='Fri.'>Fri.</option>
+                <option value='Sat.'>Sat.</option>
+                <option value='Sun.'>Sun.</option>
               </select>
             </div>
-            <div className="time">
+            <div className='time'>
               <div>
-                <label htmlFor="startTime">Start Time:</label>
+                <label htmlFor='startTime'>Start Time:</label>
                 <input
-                  type="time"
-                  id="startTime"
-                  name="startTime"
-                  min="0:00"
-                  max="23:59"
+                  type='time'
+                  id='startTime'
+                  name='startTime'
+                  min='0:00'
+                  max='23:59'
                   value={inputs.startTime}
                   onChange={handleChange}
                 />
               </div>
               <div>
-                <label htmlFor="endTime">End Time:</label>
+                <label htmlFor='endTime'>End Time:</label>
                 <input
-                  type="time"
-                  id="endTime"
-                  name="endTime"
-                  min="0:00"
-                  max="23:59"
+                  type='time'
+                  id='endTime'
+                  name='endTime'
+                  min='0:00'
+                  max='23:59'
                   value={inputs.endTime}
                   onChange={handleChange}
                 />
               </div>
             </div>
-            <div className="input-item">
-              <label htmlFor="tights">Tights</label>
+            <div className='input-item'>
+              <label htmlFor='tights'>Tights</label>
               <input
-                type="text"
-                name="tights"
-                placeholder="The style of tights required..."
+                type='text'
+                name='tights'
+                placeholder='The style of tights required...'
                 value={inputs.tights}
                 onChange={handleChange}
               />
             </div>
 
-            <div className="input-item">
-              <label htmlFor="shoes">Shoes</label>
+            <div className='input-item'>
+              <label htmlFor='shoes'>Shoes</label>
               <input
-                type="text"
-                name="shoes"
-                placeholder="The style of shoes required..."
+                type='text'
+                name='shoes'
+                placeholder='The style of shoes required...'
                 value={inputs.shoes}
                 onChange={handleChange}
               />
             </div>
-            <div className="input-item">
-              <label htmlFor="notes">Notes</label>
+            <div className='input-item'>
+              <label htmlFor='notes'>Notes</label>
               <textarea
-                id="notes"
-                type="text"
-                name="notes"
-                rows="5"
+                id='notes'
+                type='text'
+                name='notes'
+                rows='5'
                 value={inputs.notes}
                 onChange={handleChange}
               />
             </div>
             <button
-              type="button"
-              className="btn-action-primary-outline"
+              type='button'
+              className='btn-action-primary-outline'
               onClick={() => toggleFileInput(!showFileInput)}
             >
               Add Music
             </button>
             <button
-              type="button"
-              className="btn-comp-outline"
+              type='button'
+              className='btn-comp-outline'
               onClick={() => toggleFileInput(!showCompInput)}
             >
               Add Entry
             </button>
             {showFileInput && (
-              <div className="input-item">
-                <label htmlFor="music">
+              <div className='input-item'>
+                <label htmlFor='music'>
                   Upload the music for this dance...
                 </label>
                 <input
-                  type="file"
-                  id="audioFile"
-                  name="audioFile"
-                  placeholder="Upload the music for this dance"
+                  type='file'
+                  id='audioFile'
+                  name='audioFile'
+                  placeholder='Upload the music for this dance'
                   onChange={setSongtoState}
                 />
               </div>
@@ -419,43 +418,43 @@ function CreateCustomRoutineForm({ parent }) {
             {showCompInput && (
               <section>
                 <h3>Competition Entry Information</h3>
-                <div className="form-row">
-                  <div className="form-row-item">
-                    <label htmlFor="entryNumber">Entry Number:</label>
+                <div className='form-row'>
+                  <div className='form-row-item'>
+                    <label htmlFor='entryNumber'>Entry Number:</label>
                     <input
-                      type="text"
-                      id="entryNumber"
-                      name="entryNumber"
+                      type='text'
+                      id='entryNumber'
+                      name='entryNumber'
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="day form-row-item">
-                    <label htmlFor="entryDay">Day:</label>
+                  <div className='day form-row-item'>
+                    <label htmlFor='entryDay'>Day:</label>
                     <select
-                      id="entryDay"
-                      name="entryDay"
+                      id='entryDay'
+                      name='entryDay'
                       onChange={handleChange}
                     >
-                      <option value="" disabled>
+                      <option value='' disabled>
                         Day...
                       </option>
-                      <option value="Sat.">Sat.</option>
-                      <option value="Sun.">Sun.</option>
-                      <option value="Mon.">Mon.</option>
-                      <option value="Tue.">Tue.</option>
-                      <option value="Wed.">Wed.</option>
-                      <option value="Thur.">Thur.</option>
-                      <option value="Fri.">Fri.</option>
+                      <option value='Sat.'>Sat.</option>
+                      <option value='Sun.'>Sun.</option>
+                      <option value='Mon.'>Mon.</option>
+                      <option value='Tue.'>Tue.</option>
+                      <option value='Wed.'>Wed.</option>
+                      <option value='Thur.'>Thur.</option>
+                      <option value='Fri.'>Fri.</option>
                     </select>
                   </div>
-                  <div className="form-row-item">
-                    <label htmlFor="entryTime">Entry Time: </label>
+                  <div className='form-row-item'>
+                    <label htmlFor='entryTime'>Entry Time: </label>
                     <input
-                      type="time"
-                      id="entryTime"
-                      name="entryTime"
-                      min="0:00"
-                      max="23:59"
+                      type='time'
+                      id='entryTime'
+                      name='entryTime'
+                      min='0:00'
+                      max='23:59'
                       onChange={handleChange}
                     />
                   </div>
@@ -472,7 +471,7 @@ function CreateCustomRoutineForm({ parent }) {
                       Warning: there was a problem saving your class. Please try
                       again:
                     </p>
-                    <button role="button" onClick={() => toggleModal(false)}>
+                    <button role='button' onClick={() => toggleModal(false)}>
                       Try Again
                     </button>
                   </>
@@ -483,7 +482,7 @@ function CreateCustomRoutineForm({ parent }) {
                 )}
                 {newDanceClass && errorUploadingSong && (
                   <p>
-                    Warning: there was a problem uploading the music for{" "}
+                    Warning: there was a problem uploading the music for{' '}
                     {newDanceClass.name}. You can try to add music now or later
                     by updating the dance class:
                     <Link href={`/parent/updateDance/${newDanceClass.id}`}>
@@ -493,39 +492,39 @@ function CreateCustomRoutineForm({ parent }) {
                 )}
 
                 <button
-                  role="button"
-                  className="btn-action-primary"
+                  role='button'
+                  className='btn-action-primary'
                   onClick={() => {
-                    resetForm();
-                    toggleModal(false);
+                    resetForm()
+                    toggleModal(false)
                   }}
                 >
                   Create Another Routine
                 </button>
-                <Link href="/parent/notes/routines">
-                  <a className="btn-action-secondary">
+                <Link href='/parent/notes/routines'>
+                  <a className='btn-action-secondary'>
                     I'm finished creating classes
                   </a>
                 </Link>
               </Alert>
             )}
-            <div className="form-footer">
+            <div className='form-footer'>
               <button
-                className="btn-action-primary"
-                type="submit"
+                className='btn-action-primary'
+                type='submit'
                 disabled={loading}
               >
                 Creat
-                {loading ? "ing " : "e "} Class
+                {loading ? 'ing ' : 'e '} Class
               </button>
-              <BackButton text="Cancel" classNames="btn-danger" />
+              <CancelButton />
             </div>
           </fieldset>
         </Form>
       </Card>
     </Fragment>
-  );
+  )
 }
 
-export default CreateCustomRoutineForm;
-export { SelectChoices };
+export default CreateCustomRoutineForm
+export { SelectChoices }

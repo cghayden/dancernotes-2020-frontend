@@ -24,28 +24,6 @@ const Layout = styled.div`
     position: relative;
     flex-grow: 1;
   }
-  .modalSelectionWindow {
-    height: 100vh;
-    overflow-y: scroll;
-    position: relative;
-    padding-top: 2rem;
-    flex-grow: 1;
-    @media screen and (max-width: ${(props) => props.theme.mediumScreen}) {
-      position: fixed;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 2;
-      top: ${(props) => props.theme.studioHeaderHeight};
-      right: 0;
-      bottom: 0;
-      left: 0;
-      display: grid;
-      align-items: center;
-      justify-items: center;
-      /* pointer-events: none; */
-      /* opacity: ${(props) => (props.modalOpen ? 1 : 0)}; */
-      transition: opacity 0.5s;
-    }
-  }
 `
 
 const SelectionWindow = styled.div`
@@ -83,19 +61,6 @@ const SelectionWindowMain = styled.div`
     justify-content: center;
     font-size: 1rem;
     letter-spacing: 0.02rem;
-  }
-
-  a,
-  button {
-    border-radius: 0;
-    margin: 0;
-    padding: 10px 0.5rem 0.5rem 0.5rem;
-    text-transform: uppercase;
-
-    &:hover {
-      color: hsl(200, 95%, 95%);
-      background: ${(props) => props.theme.indigo5};
-    }
   }
 `
 
@@ -158,7 +123,7 @@ export default function NewStudioLayout({
           <SelectionWindowHeader>
             <Breadcrumb page={page} selection={selection} />
             <button
-              className='hide-gtMedium'
+              className='hide-gtMedium btn-icon'
               onClick={() => toggleFilter(!showFilter)}
             >
               <FilterSvg w='20' h='20' />

@@ -12,8 +12,9 @@ function SubNavFilter({ page, createLink }) {
           <h2>{page}</h2>
           {createLink && (
             <Link href={createLink}>
-              <a>
+              <a className='btn-icon'>
                 <PlusSvg />
+                <span className='sr-only'>{`create a new item for ${page}`}</span>
               </a>
             </Link>
           )}

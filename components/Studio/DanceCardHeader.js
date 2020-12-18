@@ -66,7 +66,6 @@ const DanceCardHeader = ({ dance }) => {
             </a>
           </Link>
         </DanceCardTitle>
-
         <DanceCardTime>
           <p>{dance.day}</p>
           <p>{dance.startTime}</p>

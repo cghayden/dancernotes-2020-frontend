@@ -54,19 +54,6 @@ const SelectionWindowMain = styled.div`
     font-size: 1rem;
     letter-spacing: 0.02rem;
   }
-
-  a,
-  button {
-    border-radius: 0;
-    margin: 0;
-    padding: 10px 0.5rem 0.5rem 0.5rem;
-    text-transform: uppercase;
-
-    &:hover {
-      color: hsl(200, 95%, 95%);
-      background: ${(props) => props.theme.indigo5};
-    }
-  }
 `
 
 export default function NoFilterLayout({

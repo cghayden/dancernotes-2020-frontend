@@ -52,29 +52,79 @@ const GlobalStyle = createGlobalStyle`
   }
   h6{
     font-size: 1rem
-  }
+  } 
 
 
   input[type='checkbox']{
   width: auto;
   margin-right: .5rem;
 }
+
+.sr-only {
+  border: 0; 
+  clip: rect(0 0 0 0); 
+  -webkit-clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
+  clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
+  height: 1px; 
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+//-------BUTTON AND ANCHOR STYLES ----------------//
+
+// --- Default ---
   a, button {
-  border: none;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  text-decoration: none;
-  border-radius: 5px;
-  background: transparent;
+    appearance: none;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: inherit;
+    min-width:100px;
+    font: inherit;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    margin: 0;
+    //anchors only:
+    text-decoration: none;
+    text-align:center;
+    //if using a span inside button or a, this will keep it centered:
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    // for tansitions to outlined:
+    border: 2px solid transparent;
+
+  :disabled {
+      cursor: not-allowed;
+  }
+&.btn-icon{
+  min-width:initial;
+  text-align:center;
+  /* padding: .25rem .5rem 0; */
+}
+&.link-item{
+    border-radius: 0;
+    margin: 0;
+    padding: 10px 0.5rem 0.5rem 0.5rem;
+    text-transform: uppercase;
+
+    &:hover {
+      color: hsl(200, 95%, 95%);
+      background: ${(props) => props.theme.indigo5};
+    }
+  }
+
   :hover {
     background-color: inherit;
     color: inherit;
     transition: background-color .25s ease-out;
   }
-  :disabled {
-      cursor: not-allowed;
-  }
+
+
   &.btn-danger {
     background-color: ${theme.red6};
     color: ${theme.red0};
@@ -92,11 +142,20 @@ const GlobalStyle = createGlobalStyle`
       color: ${theme.red0};
     }
   }
+  &.btn-action-danger-textOnly{
+    color: ${theme.red7};
+    border: none;
+    outline: none;
+    :hover{
+      color: ${theme.red6};
+      background: none;
+    }
+  }
   &.btn-action-secondary{
     background-color: ${theme.indigo1};
     color: ${theme.indigo9};
     :hover {
-        background-color: ${theme.indigo9};
+        background-color: ${theme.indigo2};
     } 
   }
   &.btn-action-secondary-outline{
@@ -140,15 +199,11 @@ const GlobalStyle = createGlobalStyle`
     }
     &.btn-small{
       font-size: 14px;
-      padding: .25rem .75rem;
+      padding: .25rem .5rem;
+      min-width:80px;
     }
-  &.landingPage{
-    font-size: 1.5rem;
-    width: 200px;
-    height: 50px;
-  }
+ 
   &.btn-action-primary-textOnly{
-    border-radius: 0;
     color: ${theme.indigo8};
     border: none;
     outline: none;
@@ -157,6 +212,7 @@ const GlobalStyle = createGlobalStyle`
       background: none;
     }
   }
+  
   &.btn-nav{
     border-radius: 0;
     margin: 0;

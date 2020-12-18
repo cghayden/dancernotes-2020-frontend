@@ -1,8 +1,4 @@
-import {
-  SubNav,
-  NavSection,
-  NavSectionHeading,
-} from '../../components/Studio/NewStudioNav'
+import { SubNav, NavSection, NavSectionHeading } from '../Studio/NewStudioNav'
 import PlusSvg from '../Icons/PlusSvg'
 
 export default function NewStudioSubNav({
@@ -18,6 +14,7 @@ export default function NewStudioSubNav({
         <NavSectionHeading>
           <h2>{page}</h2>
           <button
+            className='btn-icon'
             onClick={() => {
               setChoice(null)
               setCreateNew(true)

@@ -20,12 +20,6 @@ const Form = styled.form`
   background: ${(props) => props.theme.gray0};
   width: 100%;
   max-width: 550px;
-  a,
-  button {
-    /* display: unset; */
-    background: none;
-    color: ${(props) => props.theme.indigo5};
-  }
 
   .datePicker {
     margin-bottom: 0.5rem;
@@ -81,7 +75,8 @@ const Form = styled.form`
 
   button[type='submit'],
   input[type='submit'] {
-    width: 50%;
+    /* width: 50%; */
+    flex-grow: 1;
     max-width: 300px;
     padding: 0.5rem;
     &[aria-busy='true']::after {
@@ -198,6 +193,15 @@ const Form = styled.form`
 
   .zip {
     width: 100px;
+  }
+  .form-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    a,
+    button {
+      margin: 0.5rem;
+    }
   }
 
   @media (min-width: ${(props) => props.theme.largeScreen}) {
