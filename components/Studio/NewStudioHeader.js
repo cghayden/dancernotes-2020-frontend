@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import MenuSvg from '../Icons/menu'
+import MenuSvg from '../Icons/MenuSvg'
 import NewStudioNav from './NewStudioNav'
 
 const Header = styled.header`
