@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Mutation } from 'react-apollo';
-import Router from 'next/router';
-import gql from 'graphql-tag';
-import { HAIRSTYLES_QUERY } from '../../pages/studio/hairstyles';
-import Form from '../styles/Form';
-import Error from '../Error';
-import Card from '../styles/Card';
+import { Component } from 'react'
+import { Mutation } from 'react-apollo'
+import Router from 'next/router'
+import gql from 'graphql-tag'
+import { HAIRSTYLES_QUERY } from '../../components/Studio/Queries'
+import Form from '../styles/Form'
+import Error from '../Error'
+import Card from '../styles/Card'
 
 const CREATE_HAIRSTYLE_MUTATION = gql`
   mutation CREATE_HAIRSTYLE_MUTATION(
@@ -23,7 +23,7 @@ const CREATE_HAIRSTYLE_MUTATION = gql`
       message
     }
   }
-`;
+`
 
 export default class CreateHairStyleForm extends Component {
   state = {
@@ -31,29 +31,29 @@ export default class CreateHairStyleForm extends Component {
     image: '',
     link: '',
     description: '',
-  };
+  }
   handleChange = (e) => {
-    const { name, type, value } = e.target;
-    const val = type === 'number' ? parseFloat(value) : value;
-    this.setState({ [name]: val });
-  };
+    const { name, type, value } = e.target
+    const val = type === 'number' ? parseFloat(value) : value
+    this.setState({ [name]: val })
+  }
 
   uploadImage = async (e) => {
-    const files = e.target.files;
-    const data = new FormData();
-    data.append('file', files[0]);
-    data.append('upload_preset', 'images-default');
-    data.append('folder', 'dancernotes-hairstyles');
+    const files = e.target.files
+    const data = new FormData()
+    data.append('file', files[0])
+    data.append('upload_preset', 'images-default')
+    data.append('folder', 'dancernotes-hairstyles')
 
     const res = await fetch(
       'https://api.cloudinary.com/v1_1/coreytesting/image/upload',
       { method: 'POST', body: data }
-    );
-    const file = await res.json();
+    )
+    const file = await res.json()
     this.setState({
       image: file.secure_url,
-    });
-  };
+    })
+  }
 
   render() {
     return (
@@ -63,7 +63,7 @@ export default class CreateHairStyleForm extends Component {
         refetchQueries={[{ query: HAIRSTYLES_QUERY }]}
         awaitRefetchQueries={true}
         onCompleted={() => {
-          Router.push('/studio/hairstyles');
+          Router.push('/studio/hairstyles')
         }}
       >
         {(createHairStyle, { error, loading }) => (
@@ -71,14 +71,14 @@ export default class CreateHairStyleForm extends Component {
             <Form
               method='post'
               onSubmit={async (e) => {
-                e.preventDefault();
-                await createHairStyle();
+                e.preventDefault()
+                await createHairStyle()
                 this.setState({
                   name: '',
                   image: '',
                   link: '',
                   description: '',
-                });
+                })
               }}
             >
               <h2>Create a Hairstyle</h2>
@@ -131,21 +131,23 @@ export default class CreateHairStyleForm extends Component {
                   />
                 </div>
 
-                <button className='btn-action-primary' type='submit'>
-                  Save
-                </button>
-                <button
-                  type='button'
-                  className='btn-danger'
-                  onClick={() => Router.push('hairstyles')}
-                >
-                  Cancel
-                </button>
+                <div className='form-footer'>
+                  <button className='btn-action-primary' type='submit'>
+                    Save
+                  </button>
+                  <button
+                    type='button'
+                    className='btn-danger'
+                    onClick={() => Router.push('hairstyles')}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </fieldset>
             </Form>
           </Card>
         )}
       </Mutation>
-    );
+    )
   }
 }

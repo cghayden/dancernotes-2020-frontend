@@ -1,11 +1,10 @@
-import React, { Component } from "react"
-import { Mutation } from "react-apollo"
-import gql from "graphql-tag"
-import styled from "styled-components"
-
-import { LandingPageForm } from "./styles/Form"
-import Error from "./Error"
-import Router from "next/router"
+import { Component } from 'react'
+import { Mutation } from 'react-apollo'
+import gql from 'graphql-tag'
+import styled from 'styled-components'
+import { LandingPageForm } from './styles/Form'
+import Error from './Error'
+import Router from 'next/router'
 
 const SIGNUP_STUDIO_MUTATION = gql`
   mutation SIGNUP_STUDIO_MUTATION(
@@ -31,10 +30,10 @@ const SIGNUP_STUDIO_MUTATION = gql`
 
 class StudioSignup extends Component {
   state = {
-    studioName: "",
-    password: "",
-    email: "",
-    userType: "studio",
+    studioName: '',
+    password: '',
+    email: '',
+    userType: 'studio',
   }
   saveToState = (e) => {
     this.setState({ [e.target.name]: e.target.value })
@@ -60,46 +59,46 @@ class StudioSignup extends Component {
       >
         {(signupStudio, { error, loading }) => (
           <LandingPageForm
-            method="post"
+            method='post'
             onSubmit={async (e) => {
               e.preventDefault()
               await signupStudio()
-              this.setState({ studioName: "", email: "", password: "" })
+              this.setState({ studioName: '', email: '', password: '' })
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
-              <div className="form-header">
+              <div className='form-header'>
                 <h2>Sign Up for A Studio Account</h2>
               </div>
-              <div className="form-content">
+              <div className='form-content'>
                 <Error error={error} />
-                <label htmlFor="email" className="visuallyHidden">
+                <label htmlFor='email' className='visuallyHidden'>
                   Email
                 </label>
                 <input
-                  type="email"
-                  name="email"
-                  placeholder="email"
+                  type='email'
+                  name='email'
+                  placeholder='email'
                   value={this.state.email}
                   onChange={this.saveToState}
                 />
-                <label htmlFor="studioName" className="visuallyHidden">
+                <label htmlFor='studioName' className='visuallyHidden'>
                   Studio Name
                 </label>
                 <input
-                  type="text"
-                  name="studioName"
-                  placeholder="Studio Name"
+                  type='text'
+                  name='studioName'
+                  placeholder='Studio Name'
                   value={this.state.studioName}
                   onChange={this.saveToState}
                 />
-                <label htmlFor="password" className="visuallyHidden">
+                <label htmlFor='password' className='visuallyHidden'>
                   Password
                 </label>
                 <input
-                  type="password"
-                  name="password"
-                  placeholder="password"
+                  type='password'
+                  name='password'
+                  placeholder='password'
                   value={this.state.password}
                   onChange={this.saveToState}
                 />
@@ -108,23 +107,23 @@ class StudioSignup extends Component {
                 <p>
                   By signing up, you agree to our
                   <a
-                    rel="noreferrer noopener"
-                    target="_blank"
-                    href="https://www.websitepolicies.com/policies/view/Xd9syaYo"
+                    rel='noreferrer noopener'
+                    target='_blank'
+                    href='https://www.websitepolicies.com/policies/view/Xd9syaYo'
                   >
                     Terms
                   </a>
                   and
                   <a
-                    rel="noreferrer noopener"
-                    target="_blank"
-                    href="https://www.websitepolicies.com/policies/view/Xd9syaYo"
+                    rel='noreferrer noopener'
+                    target='_blank'
+                    href='https://www.websitepolicies.com/policies/view/Xd9syaYo'
                   >
                     Privacy Policy
                   </a>
                 </p>
               </Terms>
-              <button type="submit">Sign Up</button>
+              <button type='submit'>Sign Up</button>
             </fieldset>
           </LandingPageForm>
         )}
@@ -143,6 +142,7 @@ const Terms = styled.div`
     margin: 0;
     text-decoration: underline;
     text-transform: uppercase;
+    min-width: initial;
   }
 `
 

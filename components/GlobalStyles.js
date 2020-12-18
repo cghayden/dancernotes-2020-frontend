@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import Meta from "./Meta";
-import { ThemeProvider, createGlobalStyle } from "styled-components";
-import { theme } from "./themeVariables";
+import React, { Component } from 'react'
+import Meta from './Meta'
+import { ThemeProvider, createGlobalStyle } from 'styled-components'
+import { theme } from './themeVariables'
 //adobe font = 1. lato, 2. source-sans-pro, 300,400,700, reg and italic
 
 const GlobalStyle = createGlobalStyle`
@@ -13,12 +13,13 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: inherit;
   }
   body {
+    height:100vh; overflow: hidden;
     background-color: ${theme.background};
     margin: 0;
     line-height: 1.25;
     font-family: "Source Sans Pro", "Roboto", -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue;
     ${
-      "" /* font-family: "Source Sans Pro", -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue; */
+      '' /* font-family: "Source Sans Pro", -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue; */
     }
     font-weight: 400;
     color: ${theme.gray6};
@@ -51,32 +52,79 @@ const GlobalStyle = createGlobalStyle`
   }
   h6{
     font-size: 1rem
-  }
+  } 
 
 
   input[type='checkbox']{
   width: auto;
   margin-right: .5rem;
 }
+
+.sr-only {
+  border: 0; 
+  clip: rect(0 0 0 0); 
+  -webkit-clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
+  clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
+  height: 1px; 
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+//-------BUTTON AND ANCHOR STYLES ----------------//
+
+// --- Default ---
   a, button {
-  display:inline-block;
-  padding: .5rem 1rem;
-  margin: .5rem;
-  border: none;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  text-decoration: none;
-  border-radius: 5px;
-  background: transparent;
+    appearance: none;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: inherit;
+    min-width:100px;
+    font: inherit;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    margin: 0;
+    //anchors only:
+    text-decoration: none;
+    text-align:center;
+    //if using a span inside button or a, this will keep it centered:
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    // for tansitions to outlined:
+    border: 2px solid transparent;
+
+  :disabled {
+      cursor: not-allowed;
+  }
+&.btn-icon{
+  min-width:initial;
+  text-align:center;
+  /* padding: .25rem .5rem 0; */
+}
+&.link-item{
+    border-radius: 0;
+    margin: 0;
+    padding: 10px 0.5rem 0.5rem 0.5rem;
+    text-transform: uppercase;
+
+    &:hover {
+      color: hsl(200, 95%, 95%);
+      background: ${(props) => props.theme.indigo5};
+    }
+  }
+
   :hover {
     background-color: inherit;
     color: inherit;
     transition: background-color .25s ease-out;
   }
-  :disabled {
-      cursor: not-allowed;
-  }
+
+
   &.btn-danger {
     background-color: ${theme.red6};
     color: ${theme.red0};
@@ -94,11 +142,20 @@ const GlobalStyle = createGlobalStyle`
       color: ${theme.red0};
     }
   }
+  &.btn-action-danger-textOnly{
+    color: ${theme.red7};
+    border: none;
+    outline: none;
+    :hover{
+      color: ${theme.red6};
+      background: none;
+    }
+  }
   &.btn-action-secondary{
     background-color: ${theme.indigo1};
     color: ${theme.indigo9};
     :hover {
-        background-color: ${theme.indigo9};
+        background-color: ${theme.indigo2};
     } 
   }
   &.btn-action-secondary-outline{
@@ -142,21 +199,46 @@ const GlobalStyle = createGlobalStyle`
     }
     &.btn-small{
       font-size: 14px;
-      padding: .25rem .75rem;
+      padding: .25rem .5rem;
+      min-width:80px;
     }
-  &.landingPage{
-    font-size: 1.5rem;
-    width: 200px;
-    height: 50px;
-  }
+ 
   &.btn-action-primary-textOnly{
-    border-radius: 0;
     color: ${theme.indigo8};
     border: none;
     outline: none;
     :hover{
       color: ${theme.indigo6};
       background: none;
+    }
+  }
+  
+  &.btn-nav{
+    border-radius: 0;
+    margin: 0;
+    padding: 10px 0.5rem 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    text-transform: uppercase;
+
+    &:hover {
+      color: hsl(200, 95%, 95%);
+      background: ${(props) => props.theme.indigo5};
+    }
+  }
+  &.btn-selectionOption{
+    border-radius: 0;
+    margin: 0;
+    padding: 10px 0.5rem 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+
+    &:hover {
+      color: hsl(200, 95%, 95%);
+      background: ${(props) => props.theme.indigo5};
     }
   }
   }
@@ -194,7 +276,7 @@ const GlobalStyle = createGlobalStyle`
         box-shadow: 1px -1px 3px 2px ${theme.indigo2}, 1px 1px 3px 2px ${
   theme.indigo2
 };      
-        ${"" /* box-shadow: 1px 1px 3px 2px ${theme.indigo2};       */}
+        ${'' /* box-shadow: 1px 1px 3px 2px ${theme.indigo2};       */}
         color: hsl(200, 95%,95%);
 
       }
@@ -233,7 +315,7 @@ main {
 }
 .subHeading{
   font-size: 12px;
-  ${"" /* font-weight: normal; */}
+  ${'' /* font-weight: normal; */}
 }
 .left{
   text-align: left;
@@ -243,7 +325,31 @@ main {
   transform: translate3d(50%, 190%, 0px)
 }
 
-`;
+/* ~~~~~~~~~~~~~MEDIA QUERY CLASSES ~~~~~~~~~~~~~~~~~~ */
+
+.hide-ltMedium{
+  @media screen and (max-width: ${(props) => props.theme.mediumScreen}) {
+    display: none;
+  }
+}
+.hide-ltLarge{
+  @media screen and (max-width: ${(props) => props.theme.largeScreen}) {
+    display: none;
+  }
+}
+
+.hide-gtLarge {
+  @media screen and (min-width: ${(props) => props.theme.largeScreen}) {
+    display: none;
+  }
+}
+.hide-gtMedium {
+  @media screen and (min-width: ${(props) => props.theme.mediumScreen}) {
+    display: none;
+  }
+}
+
+`
 
 export default class GlobalStyles extends Component {
   render() {
@@ -255,6 +361,6 @@ export default class GlobalStyles extends Component {
           {this.props.children}
         </>
       </ThemeProvider>
-    );
+    )
   }
 }

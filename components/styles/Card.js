@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const Card = styled.div`
   text-align: center;
@@ -9,15 +9,23 @@ const Card = styled.div`
   margin: 0 auto 1rem auto;
   padding: 1rem 3vmin;
   width: 94%;
-  min-width: 310px;
+  min-width: 200px;
   max-width: 600px;
+  &:first-child {
+    margin-top: 1rem;
+  }
+  &:last-child {
+    margin-bottom: 50vh;
+  }
 
   .card__header {
     display: flex;
+    align-items: center;
     padding-bottom: 1rem;
   }
   .card__header--editButton {
     margin-left: auto;
+    padding: 0;
   }
   .card__section {
     padding: 1rem 0;
@@ -29,7 +37,6 @@ const Card = styled.div`
     width: 300px;
     height: 300px;
   }
-  
-`;
+`
 
-export default Card;
+export default Card

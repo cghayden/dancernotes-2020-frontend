@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Card from "../styles/Card";
 import Edit from "../Icons/Edit";
@@ -7,19 +7,20 @@ import EditHairStyleForm from "./EditHairStyleForm";
 const HairImage = styled.div`
   text-align: center;
   img {
-    width: 300px;
-    height: 300px;
+    width: 90%;
+    height: 90%;
+    max-width: 300px;
+    max-height: 300px;
   }
 `;
 
-function HairStyleCard(props) {
+function HairStyleCard({ hairStyle }) {
   const [showEdit, setShowEdit] = useState(false);
-  const { hairStyle } = props;
+  useEffect(() => setShowEdit(false), [hairStyle]);
   return !showEdit ? (
     <Card>
       <div className="card__header">
         <h3>{hairStyle.name}</h3>
-
         <button
           onClick={() => setShowEdit(true)}
           className="card__header--editButton"

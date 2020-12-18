@@ -1,16 +1,18 @@
-import { STUDIO_DANCER } from "./Queries";
-import { useQuery } from "@apollo/react-hooks";
-import Card from "../styles/Card";
-import styled from "styled-components";
+import Card from '../styles/Card'
+import styled from 'styled-components'
 
-const DancerInfoCard = styled(Card)`
+const DancerCard = styled(Card)`
   display: grid;
+  grid-gap: 0.5rem;
   max-width: 1000px;
   font-size: 18px;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 75px 1fr;
   text-align: left;
   justify-items: center;
+  section {
+    padding-right: 0.5rem;
+  }
   h4 {
     padding: 5px 0;
   }
@@ -62,89 +64,82 @@ const DancerInfoCard = styled(Card)`
     grid-column: 2;
     grid-row: 2;
   }
-`;
+`
 
-export default function Dancer({ id }) {
-  const { data, error, loading } = useQuery(STUDIO_DANCER, {
-    variables: { id },
-  });
-  const dancer = data && data.studioDancer;
-  if (data) {
-    return (
-      <DancerInfoCard>
-        <div className="card__header dancerName">
-          {dancer.avatar && <img src={dancer.avatar} alt={dancer.firstName} />}
-          <h3>
-            {dancer.firstName} {dancer.lastName}
-          </h3>
-        </div>
+export default function Dancer({ dancer }) {
+  return (
+    <DancerCard>
+      <div className='card__header dancerName'>
+        {dancer.avatar && <img src={dancer.avatar} alt={dancer.firstName} />}
+        <h3>
+          {dancer.firstName} {dancer.lastName}
+        </h3>
+      </div>
 
-        <div className="profile">
-          <section className="dancerInfo">
-            <h4>Personal Information</h4>
+      <div className='profile'>
+        <section className='dancerInfo'>
+          <h4>Personal Information</h4>
+          <section>
+            {/* <h5>Address</h5> */}
+            <p>123 Scarlet Way</p>
+            <p>Begonia, MA 50877</p>
+          </section>
+          <section>
+            <p>
+              781-223-4567 <span>(Personal)</span>
+            </p>
+          </section>
+        </section>
+
+        <section className='parentInfo'>
+          <h4>Parent/Account Owner</h4>
+          <p>
+            {dancer.parent.firstName} {dancer.parent.lastName}
+          </p>
+
+          <section>
             <section>
-              {/* <h5>Address</h5> */}
-              <p>123 Scarlet Way</p>
-              <p>Begonia, MA 50877</p>
+              <a
+                className='btn-action-primary-textOnly'
+                href={`mailto:${dancer.parent.email}`}
+              >
+                {dancer.parent.email}
+              </a>
             </section>
+
             <section>
+              <a
+                className='btn-action-primary-textOnly'
+                href={`tel:+1(781)752-6489`}
+              >
+                781-752-6489 <span>(Mobile)</span>
+              </a>
               <p>
-                781-223-4567 <span>(Personal)</span>
+                781-508-1368<span>(Home)</span>
+              </p>
+              <p>
+                781-508-1368<span>(Work)</span>
               </p>
             </section>
           </section>
-
-          <section className="parentInfo">
-            <h4>Parent/Account Owner</h4>
-            <p>
-              {dancer.parent.firstName} {dancer.parent.lastName}
-            </p>
-
-            <section>
-              <section>
-                <a
-                  className="btn-action-primary-textOnly"
-                  href={`mailto:${dancer.parent.email}`}
-                >
-                  {dancer.parent.email}
-                </a>
-              </section>
-
-              <section>
-                <a
-                  className="btn-action-primary-textOnly"
-                  href={`tel:+1(781)752-6489`}
-                >
-                  781-752-6489 <span>(Mobile)</span>
-                </a>
-                <p>
-                  781-508-1368<span>(Home)</span>
-                </p>
-                <p>
-                  781-508-1368<span>(Work)</span>
-                </p>
-              </section>
-            </section>
-          </section>
+        </section>
+        <section>
+          <h4>Notes</h4>
+        </section>
+      </div>
+      <div className='studioInfo'>
+        <section>
+          <h4>Enrollment / Registrations</h4>
           <section>
-            <h4>Notes</h4>
+            <h5>Classes</h5>
+            <ul>
+              {dancer.danceClasses?.map((danceClass) => (
+                <li key={danceClass.id}>{danceClass.name}</li>
+              ))}
+            </ul>
           </section>
-        </div>
-        <div className="studioInfo">
-          <section>
-            <h4>Enrollment / Registrations</h4>
-            <section>
-              <h5>Classes</h5>
-              <ul>
-                {dancer.danceClasses.map((danceClass) => (
-                  <li key={danceClass.id}>{danceClass.name}</li>
-                ))}
-              </ul>
-            </section>
-          </section>
-        </div>
-      </DancerInfoCard>
-    );
-  }
-  return null;
+        </section>
+      </div>
+    </DancerCard>
+  )
 }

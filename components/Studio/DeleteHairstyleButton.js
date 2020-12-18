@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
+import { Component } from 'react'
+import { Mutation } from 'react-apollo'
+import gql from 'graphql-tag'
 
-import { HAIRSTYLES_QUERY } from "../../pages/studio/hairstyles";
+import { HAIRSTYLES_QUERY } from './Queries'
 
 const DELETE_HAIRSTYLE_MUTATION = gql`
   mutation DELETE_HAIRSTYLE_MUTATION($id: ID!) {
@@ -10,7 +10,7 @@ const DELETE_HAIRSTYLE_MUTATION = gql`
       message
     }
   }
-`;
+`
 
 class DeleteHairStyleButton extends Component {
   render() {
@@ -21,12 +21,12 @@ class DeleteHairStyleButton extends Component {
         refetchQueries={[{ query: HAIRSTYLES_QUERY }]}
         awaitRefetchQueries={true}
       >
-        {deleteHairStyle => (
+        {(deleteHairStyle) => (
           <button
-            className="btn-danger"
+            className='btn-danger'
             onClick={() => {
-              if (confirm("Are you sure you want to delete this Hair Style?")) {
-                deleteHairStyle().catch(err => alert(err.message));
+              if (confirm('Are you sure you want to delete this Hair Style?')) {
+                deleteHairStyle().catch((err) => alert(err.message))
               }
             }}
           >
@@ -34,8 +34,8 @@ class DeleteHairStyleButton extends Component {
           </button>
         )}
       </Mutation>
-    );
+    )
   }
 }
 
-export default DeleteHairStyleButton;
+export default DeleteHairStyleButton

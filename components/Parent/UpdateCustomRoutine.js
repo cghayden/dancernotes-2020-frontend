@@ -1,15 +1,15 @@
-import { Fragment, useState } from "react"
-import { useMutation } from "@apollo/react-hooks"
-import gql from "graphql-tag"
-import Link from "next/link"
-import Form from "../styles/Form"
-import useForm from "../../lib/useForm"
-import Modal from "../Modal"
-import BackButton from "../BackButton"
-import Card from "../styles/Card"
-import DeleteCustomRoutineButton from "./DeleteCustomRoutineButton"
-import { DELETE_CLOUDINARY_ASSET } from "../Mutations"
-import { ALL_Rs } from "./Queries"
+import { Fragment, useState } from 'react'
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import Link from 'next/link'
+import Form from '../styles/Form'
+import useForm from '../../lib/useForm'
+import Modal from '../Modal'
+import CancelButton from '../CancelButton'
+import Card from '../styles/Card'
+import DeleteCustomRoutineButton from './DeleteCustomRoutineButton'
+import { DELETE_CLOUDINARY_ASSET } from '../Mutations'
+import { ALL_Rs } from './Queries'
 
 const UPDATE_CUSTOM_ROUTINE = gql`
   mutation UPDATE_CUSTOM_ROUTINE(
@@ -89,7 +89,7 @@ function UpdateCustomRoutine({ dance, parent }) {
   const cloudinaryCleanup = () => {
     if (inputs.musicId) {
       deleteCloudinaryAsset({
-        variables: { publicId: inputs.musicId, resourceType: "video" },
+        variables: { publicId: inputs.musicId, resourceType: 'video' },
       })
     }
   }
@@ -112,12 +112,12 @@ function UpdateCustomRoutine({ dance, parent }) {
       // if dance already has a song, delete it
       setLoadingSong(true)
       if (dance.musicId) {
-        setStatus("Deleting Old Music")
+        setStatus('Deleting Old Music')
         await deleteCloudinaryAsset({
-          variables: { publicId: dance.musicId, resourceType: "video" },
+          variables: { publicId: dance.musicId, resourceType: 'video' },
         })
       }
-      setStatus("Uploading Music...")
+      setStatus('Uploading Music...')
       //upload song to cloudinary and set id and url to state
       await uploadSong(dance.id, inputs.audioFile, parent.id).catch((err) => {
         //if error uploading to cloudinary, delete from inputs.  Why? because if there are no other updates besides the music, the update does not need to be run, because the music upload to cloudinary has failed.
@@ -127,13 +127,13 @@ function UpdateCustomRoutine({ dance, parent }) {
       setLoadingSong(false)
       //if upload song errored out, and there are other inputs to update, update them
       if (Object.keys(inputs).length > 0) {
-        setStatus("Updating Class")
+        setStatus('Updating Class')
         await updateCustomRoutine()
       }
     }
     // B. update class without audiofile
     else {
-      setStatus("Updating Class")
+      setStatus('Updating Class')
       await updateCustomRoutine()
     }
     //c. clean up
@@ -144,14 +144,14 @@ function UpdateCustomRoutine({ dance, parent }) {
 
   async function uploadSong(danceClassId, asset, assetOwnerId) {
     const data = new FormData()
-    data.append("file", asset)
-    data.append("upload_preset", "dancernotes-music")
-    data.append("tags", [danceClassId, assetOwnerId])
+    data.append('file', asset)
+    data.append('upload_preset', 'dancernotes-music')
+    data.append('tags', [danceClassId, assetOwnerId])
 
     const res = await fetch(
-      "https://api.cloudinary.com/v1_1/coreytesting/video/upload",
+      'https://api.cloudinary.com/v1_1/coreytesting/video/upload',
       {
-        method: "POST",
+        method: 'POST',
         body: data,
       }
     ).catch((error) => {
@@ -182,14 +182,14 @@ function UpdateCustomRoutine({ dance, parent }) {
                 again:
               </p>
               <button
-                className="btn-action-primary"
-                role="button"
+                className='btn-action-primary'
+                role='button'
                 onClick={() => toggleModal(false)}
               >
                 Try Again
               </button>
               <Link href={`/parent/notes/routines`}>
-                <a className="btn-action-secondary">Never Mind!</a>
+                <a className='btn-action-secondary'>Never Mind!</a>
               </Link>
             </>
           )}
@@ -208,77 +208,77 @@ function UpdateCustomRoutine({ dance, parent }) {
                 {updatedDanceClass.name}. You can try to add music now or later
                 by updating the dance class:
                 <Link href={`/parent/updateDance/${updatedDanceClass.id}`}>
-                  <a className="btn-action-primary">Update Class</a>
+                  <a className='btn-action-primary'>Update Class</a>
                 </Link>
               </p>
             </>
           )}
-          <Link href="/parent/notes/routines">
-            <a className="btn-action-primary">Return to Routines</a>
+          <Link href='/parent/notes/routines'>
+            <a className='btn-action-primary'>Return to Routines</a>
           </Link>
         </div>
       </Modal>
       <Card>
         <Form
-          method="post"
+          method='post'
           onSubmit={async (e) => await saveChanges(e, updateCustomRoutine)}
         >
           <fieldset disabled={loading} aria-busy={loading}>
             <h2>Update {dance.name}</h2>
-            <div className="input-item">
-              <label htmlFor="name">Name</label>
+            <div className='input-item'>
+              <label htmlFor='name'>Name</label>
               <input
-                pattern="(?!^ +$)^.+$"
-                type="text"
-                name="name"
+                pattern='(?!^ +$)^.+$'
+                type='text'
+                name='name'
                 defaultValue={dance.name}
                 onChange={handleChange}
               />
             </div>
-            <div className="form-row-day-time">
-              <div className="day">
-                <label htmlFor="day">Day:</label>
+            <div className='form-row-day-time'>
+              <div className='day'>
+                <label htmlFor='day'>Day:</label>
                 <select
-                  className="day"
-                  id="day"
-                  name="day"
+                  className='day'
+                  id='day'
+                  name='day'
                   defaultValue={dance.day}
                   onChange={handleChange}
                 >
-                  <option default defaultValue={""} disabled>
+                  <option default defaultValue={''} disabled>
                     Day...
                   </option>
-                  <option defaultValue="Mon.">Mon.</option>
-                  <option defaultValue="Tue.">Tue.</option>
-                  <option defaultValue="Wed.">Wed.</option>
-                  <option defaultValue="Thur.">Thur.</option>
-                  <option defaultValue="Fri.">Fri.</option>
-                  <option defaultValue="Sat.">Sat.</option>
-                  <option defaultValue="Sun.">Sun.</option>
+                  <option defaultValue='Mon.'>Mon.</option>
+                  <option defaultValue='Tue.'>Tue.</option>
+                  <option defaultValue='Wed.'>Wed.</option>
+                  <option defaultValue='Thur.'>Thur.</option>
+                  <option defaultValue='Fri.'>Fri.</option>
+                  <option defaultValue='Sat.'>Sat.</option>
+                  <option defaultValue='Sun.'>Sun.</option>
                 </select>
               </div>
-              <div className="time">
+              <div className='time'>
                 <div>
-                  <label htmlFor="startTime">Start Time:</label>
+                  <label htmlFor='startTime'>Start Time:</label>
                   <input
-                    type="time"
-                    id="startTime"
-                    name="startTime"
-                    min="0:00"
-                    max="23:59"
+                    type='time'
+                    id='startTime'
+                    name='startTime'
+                    min='0:00'
+                    max='23:59'
                     defaultValue={dance.startTime}
                     onChange={handleChange}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="endTime">End Time:</label>
+                  <label htmlFor='endTime'>End Time:</label>
                   <input
-                    type="time"
-                    id="endTime"
-                    name="endTime"
-                    min="0:00"
-                    max="23:59"
+                    type='time'
+                    id='endTime'
+                    name='endTime'
+                    min='0:00'
+                    max='23:59'
                     defaultValue={dance.endTime}
                     onChange={handleChange}
                   />
@@ -286,111 +286,111 @@ function UpdateCustomRoutine({ dance, parent }) {
               </div>
             </div>
 
-            <div className="input-item">
-              <label htmlFor="performanceName">Performance Name</label>
+            <div className='input-item'>
+              <label htmlFor='performanceName'>Performance Name</label>
               <input
-                type="text"
-                name="performanceName"
-                placeholder="Performance Name, or Name of Song"
+                type='text'
+                name='performanceName'
+                placeholder='Performance Name, or Name of Song'
                 defaultValue={dance.performanceName}
                 onChange={handleChange}
               />
             </div>
 
-            <div className="input-item">
-              <label htmlFor="tights">Tights</label>
+            <div className='input-item'>
+              <label htmlFor='tights'>Tights</label>
               <input
-                type="text"
-                name="tights"
-                placeholder="The style of tights required..."
+                type='text'
+                name='tights'
+                placeholder='The style of tights required...'
                 defaultValue={dance.tights}
                 onChange={handleChange}
               />
             </div>
 
-            <div className="input-item">
-              <label htmlFor="shoes">Shoes</label>
+            <div className='input-item'>
+              <label htmlFor='shoes'>Shoes</label>
               <input
-                type="text"
-                name="shoes"
-                placeholder="The style of shoes required..."
+                type='text'
+                name='shoes'
+                placeholder='The style of shoes required...'
                 defaultValue={dance.shoes}
                 onChange={handleChange}
               />
             </div>
-            <div className="input-item">
-              <label htmlFor="notes">Notes</label>
+            <div className='input-item'>
+              <label htmlFor='notes'>Notes</label>
               <textarea
-                id="notes"
-                type="text"
-                name="notes"
-                rows="5"
+                id='notes'
+                type='text'
+                name='notes'
+                rows='5'
                 defaultValue={dance.notes}
                 onChange={handleChange}
               />
             </div>
             <button
-              type="button"
-              className="btn-action-primary-outline"
+              type='button'
+              className='btn-action-primary-outline'
               onClick={() => toggleFileInput(!showFileInput)}
             >
               Add/Change Music
             </button>
             {showFileInput && (
-              <div className="input-item">
-                <label htmlFor="audioFile">
+              <div className='input-item'>
+                <label htmlFor='audioFile'>
                   Upload music for this dance...
                 </label>
                 <input
-                  type="file"
-                  id="audioFile"
-                  name="audioFile"
-                  placeholder="Upload music for this dance"
+                  type='file'
+                  id='audioFile'
+                  name='audioFile'
+                  placeholder='Upload music for this dance'
                   onChange={setSongtoState}
                 />
               </div>
             )}
             <section>
               <h3>Competition Entry Information</h3>
-              <div className="form-row">
-                <div className="form-row-item">
-                  <label htmlFor="entryNumber">Entry Number:</label>
+              <div className='form-row'>
+                <div className='form-row-item'>
+                  <label htmlFor='entryNumber'>Entry Number:</label>
                   <input
-                    type="text"
-                    id="entryNumber"
-                    name="entryNumber"
+                    type='text'
+                    id='entryNumber'
+                    name='entryNumber'
                     defaultValue={dance.entryNumber}
                     onChange={handleChange}
                   />
                 </div>
-                <div className="day form-row-item">
-                  <label htmlFor="entryDay">Day:</label>
+                <div className='day form-row-item'>
+                  <label htmlFor='entryDay'>Day:</label>
                   <select
-                    id="entryDay"
-                    name="entryDay"
-                    defaultValue={dance.entryDay ? dance.entryDay : "Day..."}
+                    id='entryDay'
+                    name='entryDay'
+                    defaultValue={dance.entryDay ? dance.entryDay : 'Day...'}
                     onChange={handleChange}
                   >
-                    <option value="" disabled>
+                    <option value='' disabled>
                       Day...
                     </option>
-                    <option value="Sat.">Sat.</option>
-                    <option value="Sun.">Sun.</option>
-                    <option value="Mon.">Mon.</option>
-                    <option value="Tue.">Tue.</option>
-                    <option value="Wed.">Wed.</option>
-                    <option value="Thur.">Thur.</option>
-                    <option value="Fri.">Fri.</option>
+                    <option value='Sat.'>Sat.</option>
+                    <option value='Sun.'>Sun.</option>
+                    <option value='Mon.'>Mon.</option>
+                    <option value='Tue.'>Tue.</option>
+                    <option value='Wed.'>Wed.</option>
+                    <option value='Thur.'>Thur.</option>
+                    <option value='Fri.'>Fri.</option>
                   </select>
                 </div>
-                <div className="form-row-item">
-                  <label htmlFor="entryTime">Entry Time: </label>
+                <div className='form-row-item'>
+                  <label htmlFor='entryTime'>Entry Time: </label>
                   <input
-                    type="time"
-                    id="entryTime"
-                    name="entryTime"
-                    min="0:00"
-                    max="23:59"
+                    type='time'
+                    id='entryTime'
+                    name='entryTime'
+                    min='0:00'
+                    max='23:59'
                     defaultValue={dance.entryTime}
                     onChange={handleChange}
                   />
@@ -398,16 +398,16 @@ function UpdateCustomRoutine({ dance, parent }) {
               </div>
             </section>
             <p>{status}</p>
-            <div className="form-footer">
+            <div className='form-footer'>
               <button
-                className="btn-action-primary"
-                type="submit"
+                className='btn-action-primary'
+                type='submit'
                 disabled={disableButton || updatingRoutine || loadingSong}
               >
                 Sav
-                {updatingRoutine ? "ing " : "e "} Changes
+                {updatingRoutine ? 'ing ' : 'e '} Changes
               </button>
-              <BackButton text="Cancel" classNames="btn-danger-outline" />{" "}
+              <CancelButton />
               <DeleteCustomRoutineButton
                 id={dance.id}
                 musicId={dance.musicId}

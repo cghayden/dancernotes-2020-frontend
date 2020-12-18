@@ -1,13 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
-import useForm from '../../lib/useForm';
-import Card from '../styles/Card';
-import Form from '../styles/Form';
-import Error from '../Error';
-import DeleteAccount from './DeleteAccount';
-
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import useForm from '../../lib/useForm'
+import Card from '../styles/Card'
+import Form from '../styles/Form'
+import Error from '../Error'
+import DeleteAccount from './DeleteAccount'
+import CancelButton from '../CancelButton'
 const UPDATE_PARENT = gql`
   mutation UPDATE_PARENT($firstName: String) {
     updateParent(firstName: $firstName) {
@@ -16,22 +14,22 @@ const UPDATE_PARENT = gql`
       email
     }
   }
-`;
+`
 
-const initialInputState = {};
+const initialInputState = {}
 
 export default function UpdateProfileForm({ parentUser }) {
-  const { inputs, updateInputs, handleChange } = useForm(initialInputState);
+  const { inputs, updateInputs, handleChange } = useForm(initialInputState)
   const [updateParent, { loading, error }] = useMutation(UPDATE_PARENT, {
     variables: { ...inputs },
-  });
+  })
 
-  const disableButton = Object.keys(inputs).length < 1;
+  const disableButton = Object.keys(inputs).length < 1
 
   async function saveChanges(e) {
-    e.preventDefault();
-    console.log('save');
-    await updateParent();
+    e.preventDefault()
+    console.log('save')
+    await updateParent()
   }
 
   return (
@@ -59,19 +57,11 @@ export default function UpdateProfileForm({ parentUser }) {
               Sav
               {loading ? 'ing ' : 'e '} Changes
             </button>
-            <button
-              className='btn-danger'
-              type='button'
-              onClick={async () => {
-                console.log('cancel');
-              }}
-            >
-              Cancel
-            </button>
+            <CancelButton />
             <DeleteAccount />
           </div>
         </fieldset>
       </Form>
     </Card>
-  );
+  )
 }

@@ -1,15 +1,15 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
 const AboutParent = ({ setActive }) => {
-  return <AboutParentContent setActive={setActive} />;
-};
+  return <AboutParentContent setActive={setActive} />
+}
 
 const AboutParentContent = ({ setActive }) => {
   return (
     <div>
       <h1>Dancernotes for Parents</h1>
-      <div className="aboutBody">
+      <div className='aboutBody'>
         <ul>
           <li>
             <p>
@@ -22,14 +22,14 @@ const AboutParentContent = ({ setActive }) => {
 
       <div>
         <button
-          className="btn-action-primary landingPage"
-          onClick={() => setActive("signupParent")}
+          className='btn-action-secondary'
+          onClick={() => setActive('signupParent')}
         >
           Try dancernotes
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AboutParent;
+export default AboutParent

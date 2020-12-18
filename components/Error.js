@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import React from "react";
+import styled from 'styled-components'
+import React from 'react'
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types'
 
 const ErrorStyles = styled.div`
   color: inherit;
@@ -16,10 +16,11 @@ const ErrorStyles = styled.div`
   strong {
     margin-right: 1rem;
   }
-`;
+`
 
 const Error = ({ error }) => {
-  if (!error || !error.message) return null;
+  console.log('error', error)
+  if (!error || !error.message) return null
   if (
     error.networkError &&
     error.networkError.result &&
@@ -27,50 +28,50 @@ const Error = ({ error }) => {
   ) {
     return error.networkError.result.errors.map((error, i) => (
       <ErrorStyles key={i}>
-        <p data-test="graphql-error">
+        <p data-test='graphql-error'>
           <strong>Shoot! An Error has occurred</strong>
-          {error.message.replace("GraphQL error: ", "")}
+          {error.message.replace('GraphQL error: ', '')}
         </p>
       </ErrorStyles>
-    ));
+    ))
   }
-  if (error.message.includes("unique constraint would be violated")) {
+  if (error.message.includes('unique constraint would be violated')) {
     return (
       <ErrorStyles>
-        <p data-test="graphql-error">
+        <p data-test='graphql-error'>
           <strong>Shoot!</strong>
           An account using this email already exists
         </p>
         <p>
           Visit the Sign in link above to sign in or reset your password,
-        </p>{" "}
+        </p>{' '}
         <p>
-          Or email{" "}
-          <a href="mailto:admin@coreyhayden.tech for assistance">
+          Or email{' '}
+          <a href='mailto:admin@coreyhayden.tech for assistance'>
             admin@coreyhayden.tech
-          </a>{" "}
+          </a>{' '}
           for assistance
         </p>
       </ErrorStyles>
-    );
+    )
   }
   return (
     <ErrorStyles>
-      <p data-test="graphql-error">
+      <p data-test='graphql-error'>
         <strong>Shoot!</strong>
         {error.message}
-        {error.message.replace("GraphQL error: ", "")}
+        {error.message.replace('GraphQL error: ', '')}
       </p>
     </ErrorStyles>
-  );
-};
+  )
+}
 
 Error.defaultProps = {
-  error: {}
-};
+  error: {},
+}
 
 Error.propTypes = {
-  error: PropTypes.object
-};
+  error: PropTypes.object,
+}
 
-export default Error;
+export default Error

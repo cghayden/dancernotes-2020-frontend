@@ -1,4 +1,3 @@
-import React from "react";
 import { STUDIO_EVENTS_QUERY } from "./Queries";
 import { useQuery } from "@apollo/react-hooks";
 import Card from "../styles/Card";
@@ -17,19 +16,19 @@ const Events = () => {
   return (
     <>
       {studioEvents.length < 1 && <p>There are no events to display</p>}
-      {studioEvents.map(event => {
+      {studioEvents.map((event) => {
         const eventBeginDate = event.beginDate
           ? new Date(event.beginDate).toLocaleString("en-US", {
               month: "long",
               day: "numeric",
-              year: "numeric"
+              year: "numeric",
             })
           : "";
         const eventEndDate = event.endDate
           ? new Date(event.endDate).toLocaleString("en-US", {
               month: "long",
               day: "numeric",
-              year: "numeric"
+              year: "numeric",
             })
           : "";
         return (

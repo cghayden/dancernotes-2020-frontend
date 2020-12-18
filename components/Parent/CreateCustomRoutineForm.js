@@ -1,16 +1,18 @@
-import { useState, Fragment } from 'react';
-import { useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
-import styled from 'styled-components';
+import { useState, Fragment } from 'react'
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import styled from 'styled-components'
 
-import Link from 'next/link';
-import { ALL_Rs, PARENT_USER_QUERY } from './Queries';
-import { UPDATE_CUSTOM_ROUTINE } from './UpdateCustomRoutine';
-import { DELETE_CLOUDINARY_ASSET } from '../Mutations';
-import Form from '../styles/Form';
-import Card from '../styles/Card';
-import useForm from '../../lib/useForm';
-import BackButton from '../BackButton';
+import Link from 'next/link'
+import { ALL_Rs, PARENT_USER_QUERY } from './Queries'
+import { UPDATE_CUSTOM_ROUTINE } from './UpdateCustomRoutine'
+import { DELETE_CLOUDINARY_ASSET } from '../Mutations'
+
+import { SelectChoices } from '../styles/SelectChoices'
+import Form from '../styles/Form'
+import Card from '../styles/Card'
+import useForm from '../../lib/useForm'
+import CancelButton from '../CancelButton'
 
 const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
   mutation CREATE_CUSTOM_ROUTINE_MUTATION(
@@ -47,7 +49,7 @@ const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
       id
     }
   }
-`;
+`
 
 const Alert = styled.div`
   position: fixed;
@@ -56,38 +58,7 @@ const Alert = styled.div`
   right: 10px;
   height: 300px;
   background: white;
-`;
-
-const SelectChoices = styled.ul`
-  margin-bottom: 0.5rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-
-  li {
-    border-radius: ${(props) => props.theme.borderRadius};
-    margin-left: 1rem;
-    margin-bottom: 2px;
-    background-color: ${(props) => props.theme.teal6};
-    color: white;
-    display: flex;
-    align-items: center;
-    padding: 5px 10px;
-    > p {
-      margin-right: 16px;
-    }
-  }
-  button {
-    padding: 0;
-    margin: 0;
-    font-size: 14px;
-    width: 18px;
-    height: 18px;
-    background: white;
-    color: ${(props) => props.theme.red7};
-    border-radius: 50%;
-  }
-`;
+`
 
 const initialInputState = {
   name: '',
@@ -103,23 +74,23 @@ const initialInputState = {
   entryNumber: '',
   entryDay: '',
   entryTime: '',
-};
+}
 
 function CreateCustomRoutineForm({ parent }) {
-  const { inputs, updateInputs, handleChange } = useForm(initialInputState);
-  const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState();
-  const [loadingSong, setLoadingSong] = useState(false);
-  const [showModal, toggleModal] = useState(false);
-  const [status, setStatus] = useState();
-  const [showFileInput, toggleFileInput] = useState(false);
-  const [showCompInput, toggleCompInput] = useState(false);
-  const [musicForUpload, setMusicForUpload] = useState();
-  const [musicId, setMusicId] = useState({});
+  const { inputs, updateInputs, handleChange } = useForm(initialInputState)
+  const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState()
+  const [loadingSong, setLoadingSong] = useState(false)
+  const [showModal, toggleModal] = useState(false)
+  const [status, setStatus] = useState()
+  const [showFileInput, toggleFileInput] = useState(false)
+  const [showCompInput, toggleCompInput] = useState(false)
+  const [musicForUpload, setMusicForUpload] = useState()
+  const [musicId, setMusicId] = useState({})
   const [dancerChoice, setDancerChoice] = useState(() =>
     parent.dancers.length > 1
       ? {}
       : { [parent.dancers[0].firstName]: parent.dancers[0].id }
-  );
+  )
 
   const [
     createCustomRoutine,
@@ -135,7 +106,7 @@ function CreateCustomRoutineForm({ parent }) {
     // },
     refetchQueries: [{ query: ALL_Rs }, { query: PARENT_USER_QUERY }],
     awaitRefetchQueries: true,
-  });
+  })
 
   const [
     updateCustomRoutine,
@@ -143,68 +114,67 @@ function CreateCustomRoutineForm({ parent }) {
   ] = useMutation(UPDATE_CUSTOM_ROUTINE, {
     onError: () => cloudinaryCleanup(),
     refetchQueries: [{ query: ALL_Rs }],
-  });
+  })
 
   const [
     deleteCloudinaryAsset,
     { error: errorDeletingAsset, loading: deletingAsset },
-  ] = useMutation(DELETE_CLOUDINARY_ASSET);
+  ] = useMutation(DELETE_CLOUDINARY_ASSET)
 
-  const newDanceClass =
-    newCustomRoutine && newCustomRoutine.createCustomRoutine;
+  const newDanceClass = newCustomRoutine && newCustomRoutine.createCustomRoutine
 
-  const loading = loadingSong || creatingCustomRoutine || updatingDanceClass;
+  const loading = loadingSong || creatingCustomRoutine || updatingDanceClass
   const errorUploadingSong =
-    errorUpdatingDanceClass || errorUploadingToCloudinary;
+    errorUpdatingDanceClass || errorUploadingToCloudinary
 
   const cloudinaryCleanup = () => {
     if (musicId) {
       deleteCloudinaryAsset({
         variables: { publicId: musicId, resourceType: 'video' },
-      });
+      })
     }
-  };
+  }
 
   function resetForm() {
-    updateInputs({ ...initialInputState });
-    setMusicId();
-    toggleFileInput(false);
-    setStatus();
+    updateInputs({ ...initialInputState })
+    setMusicId()
+    toggleFileInput(false)
+    setStatus()
   }
 
   function setSongtoState(e) {
-    const audioFile = e.target.files[0];
-    updateInputs({ ...inputs, audioFile });
+    const audioFile = e.target.files[0]
+    updateInputs({ ...inputs, audioFile })
   }
 
   async function saveNewCustomRoutine(e) {
-    e.preventDefault();
-    setStatus('Creating Class...');
-    const newCustomRoutine = await createCustomRoutine();
+    e.preventDefault()
+    setStatus('Creating Class...')
+    const newCustomRoutine = await createCustomRoutine()
     //A. if music file is queued in state, create dance, upload music with tag of routineId, then update routine with the music url and musicId
     if (inputs.audioFile) {
-      setStatus('Uploading Music...');
-      const newCustomRoutineId = newCustomRoutine.data.createCustomRoutine.id;
+      setStatus('Uploading Music...')
+      const newCustomRoutineId = newCustomRoutine.data.createCustomRoutine.id
       await uploadSongAndUpdateRoutine(
         newCustomRoutineId,
         inputs.audioFile,
         parent.id
       ).catch((err) => {
-        setStatus();
-        toggleModal(true);
-        setCloudinaryUploadError(err);
-      });
+        setStatus()
+        toggleModal(true)
+        setCloudinaryUploadError(err)
+      })
     }
-    resetForm();
-    toggleModal(true);
+    resetForm()
+    toggleModal(true)
   }
 
   async function uploadSongAndUpdateRoutine(danceClassId, asset, assetOwnerId) {
-    setLoadingSong(true);
-    const data = new FormData();
-    data.append('file', asset);
-    data.append('upload_preset', 'dancernotes-music');
-    data.append('tags', [danceClassId, assetOwnerId]);
+    setLoadingSong(true)
+    const data = new FormData()
+    data.append('file', asset)
+    data.append('upload_preset', 'dancernotes-music')
+    data.append('tags', [danceClassId, assetOwnerId])
     const res = await fetch(
       'https://api.cloudinary.com/v1_1/coreytesting/video/upload',
       {
@@ -212,37 +182,37 @@ function CreateCustomRoutineForm({ parent }) {
         body: data,
       }
     ).catch((error) => {
-      setCloudinaryUploadError(error);
-    });
-    const file = await res.json();
+      setCloudinaryUploadError(error)
+    })
+    const file = await res.json()
     if (file.error) {
-      setCloudinaryUploadError(file.error);
-      setLoadingSong(false);
+      setCloudinaryUploadError(file.error)
+      setLoadingSong(false)
     } else {
       //set info to state in case there is an error updating the class, we can delete this music from cloudinary
-      setStatus('Updating class...');
-      setMusicId(file.public_id);
+      setStatus('Updating class...')
+      setMusicId(file.public_id)
       await updateCustomRoutine({
         variables: {
           id: danceClassId,
           music: file.secure_url,
           musicId: file.public_id,
         },
-      });
+      })
     }
-    setStatus();
+    setStatus()
   }
 
   function handleSelectChange(e) {
-    const chosenDancerName = e.target.selectedOptions[0].label;
-    const chosenDancerId = e.target.selectedOptions[0].value;
-    setDancerChoice({ ...dancerChoice, [chosenDancerName]: chosenDancerId });
+    const chosenDancerName = e.target.selectedOptions[0].label
+    const chosenDancerId = e.target.selectedOptions[0].value
+    setDancerChoice({ ...dancerChoice, [chosenDancerName]: chosenDancerId })
   }
 
   function removeChosenDancer(selection) {
-    const dancers = { ...dancerChoice };
-    delete dancers[selection];
-    setDancerChoice(dancers);
+    const dancers = { ...dancerChoice }
+    delete dancers[selection]
+    setDancerChoice(dancers)
   }
 
   return (
@@ -276,7 +246,7 @@ function CreateCustomRoutineForm({ parent }) {
                   name='dancer'
                   value={''}
                   onChange={(e) => {
-                    handleSelectChange(e);
+                    handleSelectChange(e)
                   }}
                 >
                   <option default value={''} disabled>
@@ -525,8 +495,8 @@ function CreateCustomRoutineForm({ parent }) {
                   role='button'
                   className='btn-action-primary'
                   onClick={() => {
-                    resetForm();
-                    toggleModal(false);
+                    resetForm()
+                    toggleModal(false)
                   }}
                 >
                   Create Another Routine
@@ -547,14 +517,14 @@ function CreateCustomRoutineForm({ parent }) {
                 Creat
                 {loading ? 'ing ' : 'e '} Class
               </button>
-              <BackButton text='Cancel' classNames='btn-danger' />
+              <CancelButton />
             </div>
           </fieldset>
         </Form>
       </Card>
     </Fragment>
-  );
+  )
 }
 
-export default CreateCustomRoutineForm;
-export { SelectChoices };
+export default CreateCustomRoutineForm
+export { SelectChoices }

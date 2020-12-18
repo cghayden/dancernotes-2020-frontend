@@ -1,20 +1,20 @@
-import React, { useState, Fragment } from "react"
-import { useRouter } from "next/router"
-import { useMutation } from "@apollo/react-hooks"
-import gql from "graphql-tag"
-import styled from "styled-components"
-import Form from "../styles/Form"
-import Card from "../styles/Card"
-import Link from "next/link"
-import Modal from "../Modal"
-import BackButton from "../BackButton"
-import { PARENT_USER_QUERY } from "./Queries"
-import { DELETE_CLOUDINARY_ASSET } from "../Mutations"
+import React, { useState, Fragment } from 'react'
+import { useRouter } from 'next/router'
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import styled from 'styled-components'
+import Form from '../styles/Form'
+import Card from '../styles/Card'
+import Link from 'next/link'
+import Modal from '../Modal'
+import CancelButton from '../CancelButton'
+import { PARENT_USER_QUERY } from './Queries'
+import { DELETE_CLOUDINARY_ASSET } from '../Mutations'
 
-import { UPDATE_DANCER_MUTATION } from "./UpdateDancerForm"
-import { DancerCardContainer } from "./DancerCard"
-import { DancerCardHeaderStyles } from "./DancerCard"
-import useForm from "../../lib/useForm"
+import { UPDATE_DANCER_MUTATION } from './UpdateDancerForm'
+import { DancerCardContainer } from './OldDancerCard'
+import { DancerCardHeaderStyles } from './OldDancerCard'
+import useForm from '../../lib/useForm'
 
 const ModalCard = styled(Card)`
   box-shadow: none;
@@ -59,8 +59,8 @@ const CREATE_DANCER = gql`
 `
 
 const initialInputState = {
-  firstName: "",
-  avatar: "",
+  firstName: '',
+  avatar: '',
 }
 
 function CreateDancerForm() {
@@ -124,17 +124,17 @@ function CreateDancerForm() {
 
   //ONLY UPLOAD TO CLOUDINARY ON SAVE
   async function uploadAvatarAndUpdate(dancerId, assetOwnerId) {
-    setStatus("Uploading Avatar...")
+    setStatus('Uploading Avatar...')
     setUploadingAvatar(true)
     const data = new FormData()
-    data.append("file", avatarForUpload)
-    data.append("upload_preset", "dancernotes-avatars")
-    data.append("tags", [dancerId, assetOwnerId])
+    data.append('file', avatarForUpload)
+    data.append('upload_preset', 'dancernotes-avatars')
+    data.append('tags', [dancerId, assetOwnerId])
 
     const res = await fetch(
-      "https://api.cloudinary.com/v1_1/coreytesting/image/upload",
+      'https://api.cloudinary.com/v1_1/coreytesting/image/upload',
       {
-        method: "POST",
+        method: 'POST',
         body: data,
       }
     ).catch((error) => {
@@ -146,7 +146,7 @@ function CreateDancerForm() {
       setStatus()
       throw `Image Upload failed: ${file.error}`
     }
-    setStatus("Saving Avatar...")
+    setStatus('Saving Avatar...')
     setUploadingAvatar(false)
     await updateDancer({
       variables: {
@@ -159,7 +159,7 @@ function CreateDancerForm() {
       deleteCloudinaryAsset({
         variables: {
           publicId: file.public_id,
-          resourceType: "image",
+          resourceType: 'image',
         },
       })
     })
@@ -168,7 +168,7 @@ function CreateDancerForm() {
   async function saveNewDancer(e) {
     e.preventDefault()
     //1 .save dancer
-    setStatus("Saving Dancer...")
+    setStatus('Saving Dancer...')
     const newDancer = await createDancer()
     //2 get dancerId and parentId for tags on cloudinary avatar
     const newDancerId = newDancer.data.createDancer.id
@@ -185,7 +185,7 @@ function CreateDancerForm() {
   return (
     <Fragment>
       {hasDancers && (
-        <Card className="message">
+        <Card className='message'>
           <p>Welcome to Dancernotes! To begin, add a Dancer to your account.</p>
         </Card>
       )}
@@ -198,8 +198,8 @@ function CreateDancerForm() {
                 again:
               </p>
               <button
-                className="btn-action-primary"
-                role="button"
+                className='btn-action-primary'
+                role='button'
                 onClick={() => toggleModal(false)}
               >
                 Try Again
@@ -222,14 +222,14 @@ function CreateDancerForm() {
           )}
 
           <button
-            className="btn-action-primary-outline"
-            role="button"
+            className='btn-action-primary-outline'
+            role='button'
             onClick={() => toggleModal(false)}
           >
             Create Another Dancer
           </button>
-          <Link href="/parent/account/dancers">
-            <a className="btn-action-secondary-outline">I'm finished</a>
+          <Link href='/parent/account/dancers'>
+            <a className='btn-action-secondary-outline'>I'm finished</a>
           </Link>
         </ModalCard>
       </Modal>
@@ -244,48 +244,48 @@ function CreateDancerForm() {
             )}
           </ImageDiv>
         </DancerCardHeaderStyles>
-        <Form method="post" onSubmit={(e) => saveNewDancer(e)}>
+        <Form method='post' onSubmit={(e) => saveNewDancer(e)}>
           <fieldset disabled={loading} aria-busy={loading}>
             {/* <Error error={error || errorLoadingAvatar} /> */}
-            <div className="input-item">
-              <label htmlFor="firstName">Name</label>
+            <div className='input-item'>
+              <label htmlFor='firstName'>Name</label>
               <input
                 required
-                type="text"
-                name="firstName"
-                placeholder="firstName"
+                type='text'
+                name='firstName'
+                placeholder='firstName'
                 value={inputs.firstName}
                 onChange={handleChange}
               />
             </div>
             <button
-              type="button"
-              className="btn-action-secondary-outline"
+              type='button'
+              className='btn-action-secondary-outline'
               onClick={() => toggleFileInput(!showFileInput)}
             >
               Add Image
             </button>
             {showFileInput && (
-              <div className="input-item">
-                <label htmlFor="image">
+              <div className='input-item'>
+                <label htmlFor='image'>
                   Add a picture of your dancer to easily identify the activities
                   he/she is involved in. (Optional)
                 </label>
                 <input
-                  type="file"
-                  id="image"
-                  name="image"
-                  placeholder="Upload a picture of your dancer"
+                  type='file'
+                  id='image'
+                  name='image'
+                  placeholder='Upload a picture of your dancer'
                   onChange={handleFileInput}
                 />
               </div>
             )}
             <p>{status}</p>
-            <div className="form-footer">
-              <button className="btn-action-primary" type="submit">
+            <div className='form-footer'>
+              <button className='btn-action-primary' type='submit'>
                 Save Dancer
               </button>
-              <BackButton text="Cancel" classNames="btn-danger" />
+              <CancelButton />
             </div>
           </fieldset>
         </Form>

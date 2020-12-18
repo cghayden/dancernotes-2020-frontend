@@ -1,14 +1,14 @@
-import React, { useState, Fragment } from "react"
-import { useMutation } from "@apollo/react-hooks"
-import gql from "graphql-tag"
-import Link from "next/link"
-import { ALL_DANCE_CLASSES_QUERY } from "./Queries"
-import { UPDATE_DANCECLASS_MUTATION } from "./UpdateDanceClass"
-import { DELETE_CLOUDINARY_ASSET } from "../Mutations"
-import Form from "../styles/Form"
-import Card from "../styles/Card"
-import useForm from "../../lib/useForm"
-import Modal from "../Modal"
+import React, { useState, Fragment } from 'react'
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import Link from 'next/link'
+import { ALL_DANCE_CLASSES_QUERY } from './Queries'
+import { UPDATE_DANCECLASS_MUTATION } from './UpdateDanceClass'
+import { DELETE_CLOUDINARY_ASSET } from '../Mutations'
+import Form from '../styles/Form'
+import Card from '../styles/Card'
+import useForm from '../../lib/useForm'
+import Modal from '../Modal'
 
 const CREATE_DANCE_CLASS_MUTATION = gql`
   mutation CREATE_DANCE_CLASS_MUTATION(
@@ -47,20 +47,20 @@ const CREATE_DANCE_CLASS_MUTATION = gql`
 `
 
 const initialInputState = {
-  name: "",
-  day: "",
-  startTime: "",
-  endTime: "",
-  style: "",
-  competitiveLevel: "",
-  ageDivision: "",
-  performanceName: "",
-  shoes: "",
-  tights: "",
-  notes: "",
+  name: '',
+  day: '',
+  startTime: '',
+  endTime: '',
+  style: '',
+  competitiveLevel: '',
+  ageDivision: '',
+  performanceName: '',
+  shoes: '',
+  tights: '',
+  notes: '',
   showSuccessMessage: false,
-  size: "",
-  audioFile: "",
+  size: '',
+  audioFile: '',
 }
 
 function CreateDanceClass({ studio }) {
@@ -115,7 +115,7 @@ function CreateDanceClass({ studio }) {
   const cloudinaryCleanup = () => {
     if (musicId) {
       deleteCloudinaryAsset({
-        variables: { publicId: musicId, resourceType: "video" },
+        variables: { publicId: musicId, resourceType: 'video' },
       })
     }
   }
@@ -134,11 +134,11 @@ function CreateDanceClass({ studio }) {
 
   async function saveNewDanceClass(e) {
     e.preventDefault()
-    setStatus("Creating Class...")
+    setStatus('Creating Class...')
     const newDanceClass = await createDanceClass()
     //A. if music file is queued in state, create dance, upload music with tag of routineId, then update routine with the music url and musicId
     if (inputs.audioFile) {
-      setStatus("Uploading Music...")
+      setStatus('Uploading Music...')
       const newDanceClassId = newDanceClass.data.createDanceClass.id
       await uploadSongAndUpdateClass(
         newDanceClassId,
@@ -157,13 +157,13 @@ function CreateDanceClass({ studio }) {
   async function uploadSongAndUpdateClass(danceClassId, asset, assetOwnerId) {
     setLoadingSong(true)
     const data = new FormData()
-    data.append("file", asset)
-    data.append("upload_preset", "dancernotes-music")
-    data.append("tags", [danceClassId, assetOwnerId])
+    data.append('file', asset)
+    data.append('upload_preset', 'dancernotes-music')
+    data.append('tags', [danceClassId, assetOwnerId])
     const res = await fetch(
-      "https://api.cloudinary.com/v1_1/coreytesting/video/upload",
+      'https://api.cloudinary.com/v1_1/coreytesting/video/upload',
       {
-        method: "POST",
+        method: 'POST',
         body: data,
       }
     ).catch((error) => {
@@ -176,7 +176,7 @@ function CreateDanceClass({ studio }) {
       setCloudinaryUploadError(file.error)
       setLoadingSong(false)
     } else {
-      setStatus("Updating class...")
+      setStatus('Updating class...')
       setMusicId(file.public_id)
       await updateDanceClass({
         variables: {
@@ -199,7 +199,7 @@ function CreateDanceClass({ studio }) {
                 Warning: there was a problem saving your class. Please try
                 again:
               </p>
-              <button role="button" onClick={() => toggleModal(false)}>
+              <button role='button' onClick={() => toggleModal(false)}>
                 Try Again
               </button>
             </>
@@ -208,7 +208,7 @@ function CreateDanceClass({ studio }) {
           {newDanceClass && <p>Success - you created {newDanceClass.name}</p>}
           {newDanceClass && errorUploadingSong && (
             <p>
-              Warning: there was a problem uploading the music for{" "}
+              Warning: there was a problem uploading the music for{' '}
               {newDanceClass.name}. You can try to add music now or later by
               editing the class:
               <Link href={`/studio/updateClass/${newDanceClass.id}`}>
@@ -217,171 +217,175 @@ function CreateDanceClass({ studio }) {
             </p>
           )}
 
-          <button role="button" onClick={() => toggleModal(false)}>
+          <button role='button' onClick={() => toggleModal(false)}>
             Create Another Class
           </button>
-          <Link href="/studio/classes">
+          <Link href='/studio/classes'>
             <a>I'm finished creating classes</a>
           </Link>
         </div>
       </Modal>
       <Card>
-        <Form method="post" onSubmit={async (e) => await saveNewDanceClass(e)}>
+        <Form method='post' onSubmit={async (e) => await saveNewDanceClass(e)}>
           <fieldset disabled={loading} aria-busy={loading}>
             <legend>Add A New Dance Class To Your Schedule</legend>
 
-            <div className="input-item">
-              <label htmlFor="name">Class Name *</label>
+            <div className='input-item'>
+              <label htmlFor='name'>Class Name *</label>
               <input
                 required
-                type="text"
-                name="name"
+                type='text'
+                name='name'
                 value={inputs.name}
                 onChange={handleChange}
               />
             </div>
-            <div className="input-item">
-              <label htmlFor="performanceName">Performance Name</label>
+            <div className='input-item'>
+              <label htmlFor='performanceName'>Performance Name</label>
               <input
-                type="text"
-                name="performanceName"
-                placeholder="Performance Name, or Name of Song"
+                type='text'
+                name='performanceName'
+                placeholder='Performance Name, or Name of Song'
                 value={inputs.performanceName}
                 onChange={handleChange}
               />
             </div>
-            <div className="input-item">
-              <label htmlFor="size">Size: *</label>
+            <div className='input-item'>
+              <label htmlFor='size'>Size: *</label>
               <select
                 required
-                id="size"
-                name="size"
+                id='size'
+                name='size'
                 value={inputs.size}
                 onChange={handleChange}
               >
-                <option default value={""} disabled>
+                <option default value={''} disabled>
                   (Group/Solo/Duo/Trio)?
                 </option>
-                <option value="Group">Group</option>
-                <option value="Solo">Solo</option>
-                <option value="Duo">Duo</option>
-                <option value="Trio">Trio</option>
+                <option value='Group'>Group</option>
+                <option value='Solo'>Solo</option>
+                <option value='Duo'>Duo</option>
+                <option value='Trio'>Trio</option>
               </select>
             </div>
 
             <section>
-              <h3>Class Categories</h3>
-              <Link href="configureClassCategories">
-                <a className="btn-action-primary btn-small">
-                  Edit Class Categories
-                </a>
-              </Link>
-              <div className="input-item">
-                <label htmlFor="style">Style: *</label>
-                <select
-                  required
-                  id="style"
-                  name="style"
-                  value={inputs.style}
-                  onChange={handleChange}
-                >
-                  <option default value={""} disabled>
-                    Style...
-                  </option>
-                  {studio &&
-                    studio.styles.map((style) => (
-                      <option key={style} value={style}>
-                        {style}
-                      </option>
-                    ))}
-                </select>
+              <div>
+                <h3>Class Categories</h3>
+                <Link href='configureClassCategories'>
+                  <a className='btn-action-primary btn-small'>
+                    Edit Class Categories
+                  </a>
+                </Link>
               </div>
-              <div className="input-item">
-                <label htmlFor="competitiveLevel">Competitive Team ?: *</label>
-                <select
-                  required
-                  id="competitiveLevel"
-                  name="competitiveLevel"
-                  value={inputs.competitiveLevel}
-                  onChange={handleChange}
-                >
-                  <option default disabled value={""}>
-                    Competitive Level...
-                  </option>
-                  {studio &&
-                    studio.competitiveLevels.map((competitiveLevel) => (
-                      <option key={competitiveLevel} value={competitiveLevel}>
-                        {competitiveLevel}
-                      </option>
-                    ))}
-                </select>
-              </div>
-              <div className="input-item">
-                <label htmlFor="ageDivision">Age Division:</label>
-                <select
-                  id="ageDivision"
-                  name="ageDivision"
-                  value={inputs.ageDivision}
-                  onChange={handleChange}
-                >
-                  <option default disabled value={""}>
-                    Age Division...
-                  </option>
-                  {studio &&
-                    studio.ageDivisions.map((ageDivision) => (
-                      <option key={ageDivision} value={ageDivision}>
-                        {ageDivision}
-                      </option>
-                    ))}
-                </select>
+              <div>
+                <div className='input-item'>
+                  <label htmlFor='style'>Style: *</label>
+                  <select
+                    required
+                    id='style'
+                    name='style'
+                    value={inputs.style}
+                    onChange={handleChange}
+                  >
+                    <option default value={''} disabled>
+                      Style...
+                    </option>
+                    {studio &&
+                      studio.styles?.map((style) => (
+                        <option key={style} value={style}>
+                          {style}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+                <div className='input-item'>
+                  <label htmlFor='competitiveLevel'>Competitive Level: *</label>
+                  <select
+                    required
+                    id='competitiveLevel'
+                    name='competitiveLevel'
+                    value={inputs.competitiveLevel}
+                    onChange={handleChange}
+                  >
+                    <option default disabled value={''}>
+                      Competitive Level...
+                    </option>
+                    {studio &&
+                      studio.competitiveLevels?.map((competitiveLevel) => (
+                        <option key={competitiveLevel} value={competitiveLevel}>
+                          {competitiveLevel}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+                <div className='input-item'>
+                  <label htmlFor='ageDivision'>Age Division:</label>
+                  <select
+                    id='ageDivision'
+                    name='ageDivision'
+                    value={inputs.ageDivision}
+                    onChange={handleChange}
+                  >
+                    <option default disabled value={''}>
+                      Age Division...
+                    </option>
+                    {studio &&
+                      studio.ageDivisions?.map((ageDivision) => (
+                        <option key={ageDivision} value={ageDivision}>
+                          {ageDivision}
+                        </option>
+                      ))}
+                  </select>
+                </div>
               </div>
             </section>
             <section>
               <h3>Day & Time</h3>
-              <div className="form-row">
-                <div className="form-row-item day">
-                  <label htmlFor="day">Day: </label>
+              <div className='form-row'>
+                <div className='form-row-item day'>
+                  <label htmlFor='day'>Day: </label>
                   <select
-                    id="day"
-                    name="day"
+                    id='day'
+                    name='day'
                     value={inputs.day}
                     onChange={handleChange}
                   >
-                    <option default value={""} disabled>
+                    <option default value={''} disabled>
                       Day...
                     </option>
                     {/* <option value="TBD">TBD</option> */}
-                    <option value="Mon.">Mon.</option>
-                    <option value="Tue.">Tue.</option>
-                    <option value="Wed.">Wed.</option>
-                    <option value="Thur.">Thur.</option>
-                    <option value="Fri.">Fri.</option>
-                    <option value="Sat.">Sat.</option>
-                    <option value="Sun.">Sun.</option>
+                    <option value='Mon.'>Mon.</option>
+                    <option value='Tue.'>Tue.</option>
+                    <option value='Wed.'>Wed.</option>
+                    <option value='Thur.'>Thur.</option>
+                    <option value='Fri.'>Fri.</option>
+                    <option value='Sat.'>Sat.</option>
+                    <option value='Sun.'>Sun.</option>
                   </select>
                 </div>
 
-                <div className="form-row-item">
-                  <label htmlFor="startTime">Start Time:</label>
+                <div className='form-row-item'>
+                  <label htmlFor='startTime'>Start Time:</label>
                   <input
-                    type="time"
-                    id="startTime"
-                    name="startTime"
-                    min="0:00"
-                    max="23:59"
+                    type='time'
+                    id='startTime'
+                    name='startTime'
+                    min='0:00'
+                    max='23:59'
                     value={inputs.startTime}
                     onChange={handleChange}
                   />
                 </div>
 
-                <div className="form-row-item">
-                  <label htmlFor="endTime">End Time: </label>
+                <div className='form-row-item'>
+                  <label htmlFor='endTime'>End Time: </label>
                   <input
-                    type="time"
-                    id="endTime"
-                    name="endTime"
-                    min="0:00"
-                    max="23:59"
+                    type='time'
+                    id='endTime'
+                    name='endTime'
+                    min='0:00'
+                    max='23:59'
                     value={inputs.endTime}
                     onChange={handleChange}
                   />
@@ -390,70 +394,70 @@ function CreateDanceClass({ studio }) {
             </section>
 
             <section>
-              <div className="input-item">
-                <label htmlFor="tights">Tights:</label>
+              <div className='input-item'>
+                <label htmlFor='tights'>Tights:</label>
                 <input
-                  type="text"
-                  name="tights"
-                  placeholder="The style of tights required..."
+                  type='text'
+                  name='tights'
+                  placeholder='The style of tights required...'
                   value={inputs.tights}
                   onChange={handleChange}
                 />
               </div>
-              <div className="input-item">
-                <label htmlFor="shoes">Shoes</label>
+              <div className='input-item'>
+                <label htmlFor='shoes'>Shoes</label>
                 <input
-                  type="text"
-                  name="shoes"
-                  placeholder="The style of shoes required..."
+                  type='text'
+                  name='shoes'
+                  placeholder='The style of shoes required...'
                   value={inputs.shoes}
                   onChange={handleChange}
                 />
               </div>
             </section>
-            <div className="input-item">
-              <label htmlFor="notes">Notes</label>
+            <div className='input-item'>
+              <label htmlFor='notes'>Notes</label>
               <textarea
-                id="notes"
-                type="text"
-                name="notes"
-                rows="5"
+                id='notes'
+                type='text'
+                name='notes'
+                rows='5'
                 value={inputs.notes}
                 onChange={handleChange}
               />
             </div>
 
             <button
-              type="button"
-              className="btn-action-primary-outline"
+              type='button'
+              className='btn-action-primary-outline'
               onClick={() => toggleFileInput(true)}
             >
               Add Music
             </button>
             {showFileInput && (
-              <div className="input-item">
-                <label htmlFor="audioFile">
+              <div className='input-item'>
+                <label htmlFor='audioFile'>
                   Upload the music for this dance...
                 </label>
                 <input
-                  type="file"
-                  id="audioFile"
-                  name="audioFile"
-                  placeholder="Upload music for this dance"
+                  type='file'
+                  id='audioFile'
+                  name='audioFile'
+                  placeholder='Upload music for this dance'
                   onChange={setSongtoState}
                 />
               </div>
             )}
 
             <p>{status}</p>
-            <div className="form-footer">
+            <div className='form-footer'>
               <button
-                className="btn-action-primary"
-                type="submit"
+                className='btn-action-primary'
+                type='submit'
                 disabled={loading}
               >
                 Sav
-                {loading ? "ing " : "e "} Class
+                {loading ? 'ing ' : 'e '} Class
               </button>
             </div>
           </fieldset>

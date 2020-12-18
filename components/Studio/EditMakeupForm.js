@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Mutation, Query } from "react-apollo";
 import gql from "graphql-tag";
 import Form from "../styles/Form";
+import Card from "../styles/Card";
 import Error from "../Error";
-import { STUDIO_MAKEUP_QUERY } from "../../pages/studio/makeup";
+import { STUDIO_MAKEUP_QUERY } from "./Queries";
 
 const UPDATE_MAKEUP_SET_MUTATION = gql`
   mutation UPDATE_MAKEUP_SET_MUTATION(
@@ -26,7 +27,7 @@ const UPDATE_MAKEUP_SET_MUTATION = gql`
 export default class EditMakeupForm extends Component {
   state = {};
 
-  handleChange = e => {
+  handleChange = (e) => {
     const { name, type, value } = e.target;
     const val = type === "number" ? parseFloat(value) : value;
     this.setState({ [name]: val });
@@ -46,56 +47,58 @@ export default class EditMakeupForm extends Component {
       >
         {(updateMakeupSet, { loading, error }) => {
           return (
-            <Form
-              onSubmit={async e => {
-                e.preventDefault();
-                await updateMakeupSet();
-                this.setState({});
-                setShowEdit(false);
-              }}
-            >
-              <h3>Edit Makeup Set {makeupSet.name}</h3>
-              <fieldset disabled={loading} aria-busy={loading}>
-                <Error error={error} />
-                <div className="input-item">
-                  <label htmlFor="name">Name</label>
-                  <input
-                    required
-                    type="text"
-                    name="name"
-                    defaultValue={makeupSet.name}
-                    onChange={this.handleChange}
-                  />
-                </div>
+            <Card>
+              <Form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  await updateMakeupSet();
+                  this.setState({});
+                  setShowEdit(false);
+                }}
+              >
+                <h3>Edit {makeupSet.name}</h3>
+                <fieldset disabled={loading} aria-busy={loading}>
+                  <Error error={error} />
+                  <div className="input-item">
+                    <label htmlFor="name">Name</label>
+                    <input
+                      required
+                      type="text"
+                      name="name"
+                      defaultValue={makeupSet.name}
+                      onChange={this.handleChange}
+                    />
+                  </div>
 
-                <div className="input-item">
-                  <label htmlFor="lipstick">Lip Stick</label>
-                  <input
-                    type="text"
-                    name="lipstick"
-                    defaultValue={makeupSet.lipstick}
-                    onChange={this.handleChange}
-                  />
-                </div>
+                  <div className="input-item">
+                    <label htmlFor="lipstick">Lip Stick</label>
+                    <input
+                      type="text"
+                      name="lipstick"
+                      defaultValue={makeupSet.lipstick}
+                      onChange={this.handleChange}
+                    />
+                  </div>
 
-                <div className="input-item">
-                  <label htmlFor="eyeShadow">Eye Shadow</label>
-                  <input
-                    type="text"
-                    name="eyeShadow"
-                    defaultValue={makeupSet.eyeShadow}
-                    onChange={this.handleChange}
-                  />
-                </div>
+                  <div className="input-item">
+                    <label htmlFor="eyeShadow">Eye Shadow</label>
+                    <input
+                      type="text"
+                      name="eyeShadow"
+                      defaultValue={makeupSet.eyeShadow}
+                      onChange={this.handleChange}
+                    />
+                  </div>
 
-                <button disabled={disableButton} type="submit">
-                  Save Makeup Set
-                </button>
-                <button type="button" onClick={() => setShowEdit(false)}>
-                  Cancel
-                </button>
-              </fieldset>
-            </Form>
+                  <button disabled={disableButton} type="submit">
+                    Save Makeup Set
+                  </button>
+                  <button type="button" onClick={() => setShowEdit(false)}>
+                    Cancel
+                  </button>
+                </fieldset>
+              </Form>
+            </Card>
           );
         }}
       </Mutation>
