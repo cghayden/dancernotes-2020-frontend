@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import { SubNav, NavSection, NavSectionHeading } from './NewStudioNav'
-import NewClassFilter from './NewClassFilter'
+import Filter from './Filter'
 import PlusSvg from '../Icons/PlusSvg'
 
 function SubNavFilter({ page, createLink }) {
@@ -19,7 +19,7 @@ function SubNavFilter({ page, createLink }) {
             </Link>
           )}
         </NavSectionHeading>
-        <NewClassFilter />
+        <Filter />
       </NavSection>
     </SubNav>
   )
