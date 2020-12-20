@@ -159,7 +159,25 @@ const STUDIOS_AND_DANCERS = gql`
 const PARENTS_DANCERS = gql`
   query PARENTS_DANCERS {
     parentsDancers {
+      id
       firstName
+      studios {
+        id
+        studioName
+        email
+        #link
+        #phone
+      }
+      danceClasses {
+        id
+        name
+        performanceName
+      }
+      customRoutines {
+        id
+        name
+        performanceName
+      }
     }
   }
 `

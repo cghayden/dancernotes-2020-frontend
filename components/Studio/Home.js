@@ -2,8 +2,6 @@ import styled from 'styled-components'
 import Link from 'next/link'
 
 const HomeStyles = styled.div`
-  /* place-content: center; */
-  /* place-items: stretch; */
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 0.5rem;
@@ -13,7 +11,6 @@ const HomeStyles = styled.div`
     justify-content: center;
   }
   @media screen and (max-width: ${(props) => props.theme.mediumScreen}) {
-    /* grid-template-columns: 1fr; */
   }
 `
 const PageTileLink = styled.div`
@@ -39,13 +36,11 @@ const PageTileLink = styled.div`
   }
 
   @media screen and (max-width: ${(props) => props.theme.mediumScreen}) {
-    /* width: 300px; */
     font-size: 0.85rem;
     height: 80px;
   }
 `
 function Home({ studio }) {
-  console.log('studio', studio)
   const pages = [
     { text: 'dance classes', key: 'danceClasses', link: 'classes' },
     { text: 'dancers', key: 'dancers', link: 'dancers' },

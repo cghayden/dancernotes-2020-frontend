@@ -1,9 +1,10 @@
 import styled from 'styled-components'
 import Error from '../../components/Error'
 import Loading from '../../components/Loading'
-import NewStudioHeader from './NewStudioHeader'
-import NewStudioNav from './NewStudioNav'
-import Breadcrumb from './Breadcrumb'
+import NewStudioHeader from '../Studio/NewStudioHeader'
+import NewParentNav from './NewParentNav'
+
+import ParentBreadcrumb from './ParentBreadcrumb'
 
 const BodyLayout = styled.div`
   display: flex;
@@ -62,11 +63,11 @@ export default function NoFilterLayout({
       <NewStudioHeader />
       <BodyLayout>
         <div className='hide-ltLarge'>
-          <NewStudioNav />
+          <NewParentNav />
         </div>
         <SelectionWindow>
           <SelectionWindowHeader>
-            <Breadcrumb page={page} selection={selection} />
+            <ParentBreadcrumb page={page} selection={selection} />
           </SelectionWindowHeader>
           {loading && <Loading />}
           {error && <Error error={error} />}
