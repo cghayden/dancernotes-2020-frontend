@@ -11,9 +11,17 @@ function DancerPage() {
   const { data, error, loading } = useQuery(DANCER_QUERY, {
     variables: { id: dancerId },
   })
-  console.log('dancer page data', data)
 
-  return <div>dancer page</div>
+  return (
+    <NewStudioLayout
+      page={'Dancers'}
+      error={error}
+      loading={loading}
+      selection={`${data?.dancer.firstName}`}
+    >
+      {data && <Dancer dancer={data.dancer} />}
+    </NewStudioLayout>
+  )
 }
 
 export default DancerPage

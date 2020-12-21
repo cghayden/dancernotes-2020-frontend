@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/react-hooks'
 import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
-import DancersNav from '../../../components/Parent/DancersNav'
+// import DancersNav from '../../../components/Parent/DancersNav'
+import DancerListing from '../../../components/Parent/DancerListing'
 import { PARENTS_DANCERS } from '../../../components/Parent/Queries'
 // import { useContext } from 'react'
 // import { FilterContext } from '../../../components/Studio/FilterContext'
@@ -29,7 +30,10 @@ export default function dancersIndex() {
       userType='parent'
       createLink={`/parent/dancers/createDancer`}
     >
-      {data && <DancersNav dancers={data.parentsDancers} />}
+      {data &&
+        data.parentsDancers.map((dancer) => (
+          <DancerListing dancer={dancer} key={dancer.id} />
+        ))}
     </ParentNoFilterLayout>
   )
 }

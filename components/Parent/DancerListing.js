@@ -1,0 +1,55 @@
+import Link from 'next/link'
+import styled from 'styled-components'
+import Card from '../styles/Card'
+
+const ListingCard = styled(Card)`
+  position: relative;
+  font-size: 1rem;
+  display: flex;
+  margin: 1rem 0;
+  box-shadow: ${(props) => props.theme.dropShadow1};
+  background: ${(props) => props.theme.gray0};
+  padding: 0.5rem;
+  a {
+    width: 100%;
+  }
+`
+
+const AvatarInitials = styled.div`
+  position: absolute;
+  background: ${(props) => props.theme.gray4};
+  border-radius: 50%;
+  left: 0;
+  font-size: 2em;
+  width: 2.5em;
+  height: 2.5em;
+  display: grid;
+  place-items: center;
+  color: white;
+`
+
+function DancerListing({ dancer }) {
+  console.log('dancer', dancer)
+  const initials = dancer.firstName.slice(0, 2)
+
+  return (
+    <ListingCard>
+      <Link href={`/parent/dancers/${dancer.id}`}>
+        <a>
+          <AvatarInitials>
+            {dancer.avatar ? (
+              <img src={dancer.avatar} alt={`image of ${dancer.firstName}`} />
+            ) : (
+              <span>{initials}</span>
+            )}
+          </AvatarInitials>
+          <div>
+            <h2>{dancer.firstName}</h2>
+          </div>
+        </a>
+      </Link>
+    </ListingCard>
+  )
+}
+
+export default DancerListing

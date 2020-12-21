@@ -39,6 +39,7 @@ const SelectionWindowMain = styled.div`
   padding-bottom: 50vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
   overflow: scroll;
   color: ${(props) => props.theme.gray6};
 
