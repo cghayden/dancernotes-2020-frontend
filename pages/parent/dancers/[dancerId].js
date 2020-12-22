@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/react-hooks'
-import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
-import Dancer from '../../../components/Parent/Dancer'
+import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
+import NewDancerCard from '../../../components/Parent/NewDancerCard'
 import { DANCER_QUERY } from '../../../components/Parent/Queries'
 
 function DancerPage() {
@@ -13,7 +13,16 @@ function DancerPage() {
   })
   console.log('dancer page data', data)
 
-  return <div>dancer page</div>
+  return (
+    <ParentNoFilterLayout
+      error={error}
+      loading={loading}
+      page='Dancers'
+      selection={`${data?.dancer.firstName}`}
+    >
+      {data && <NewDancerCard dancer={data.dancer} />}
+    </ParentNoFilterLayout>
+  )
 }
 
 export default DancerPage

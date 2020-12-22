@@ -1,5 +1,8 @@
 import styled from 'styled-components'
+import { useQuery } from '@apollo/react-hooks'
 import StyledLink from '../StyledLink'
+import { STUDIO_REQUESTS_QUERY } from './Queries'
+import RequestsCount from './RequestsCount'
 
 const NewNavSidebarContainer = styled.div`
   background: ${(props) => props.theme.gray0};
@@ -52,6 +55,19 @@ const NavSection = styled.div`
 `
 
 export default function NewStudioNav() {
+  const { data: requestsQuery, loading, error } = useQuery(
+    STUDIO_REQUESTS_QUERY
+  )
+  console.log('requestsQuery', requestsQuery)
+
+  const requests = requestsQuery
+    ? [
+        ...requestsQuery?.myStudio?.accessRequests,
+        ...requestsQuery?.myStudio?.enrollmentRequests,
+      ]
+    : []
+  console.log('requests combined', requests)
+
   return (
     <NewNavSidebarContainer>
       <NavSection>
@@ -98,6 +114,17 @@ export default function NewStudioNav() {
       <NavSection>
         <h2>Accounts</h2>
         <ul>
+          {requests.length > 0 && (
+            <li style={{ position: 'relative' }}>
+              <StyledLink
+                activeClassName='activeStudioNav'
+                href='/studio/requests'
+              >
+                <a className='btn-nav'>Requests</a>
+              </StyledLink>
+              <RequestsCount count={requests.length} />
+            </li>
+          )}
           <li>
             <StyledLink
               activeClassName='activeStudioNav'

@@ -216,6 +216,7 @@ const DANCER_QUERY = gql`
         name
         studio {
           id
+          studioName
         }
         custom
       }
@@ -230,6 +231,7 @@ const DANCER_QUERY = gql`
       studios {
         id
         studioName
+        email
       }
       requests {
         id

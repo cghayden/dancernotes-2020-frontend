@@ -326,6 +326,40 @@ const HAIRSTYLES_QUERY = gql`
   }
 `
 
+const STUDIO_REQUESTS_QUERY = gql`
+  query STUDIO_REQUESTS_QUERY {
+    myStudio {
+      enrollmentRequests {
+        id
+        parent {
+          id
+          firstName
+          lastName
+          email
+        }
+        dancer {
+          id
+          firstName
+          lastName
+        }
+        classesRequested {
+          id
+          name
+        }
+      }
+      accessRequests {
+        id
+        parent {
+          id
+          firstName
+          lastName
+          email
+        }
+      }
+    }
+  }
+`
+
 export {
   STUDIO_USER_QUERY,
   CATEGORIES_QUERY,
@@ -342,4 +376,5 @@ export {
   HAIRSTYLES_QUERY,
   STUDIO_HAIRSTYLE_QUERY,
   STUDIO_LINKED_PARENTS,
+  STUDIO_REQUESTS_QUERY,
 }

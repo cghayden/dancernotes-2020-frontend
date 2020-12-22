@@ -1,9 +1,11 @@
+// import { useQuery } from '@apollo/react-hooks'
+import NoFilterLayout from '../../components/Studio/NoFilterLayout'
 import Requests from '../../components/Studio/Requests'
 
 const RequestsPage = () => (
-  <div>
+  <NoFilterLayout page='Requests'>
     <Requests />
-  </div>
+  </NoFilterLayout>
 )
 
 export default RequestsPage

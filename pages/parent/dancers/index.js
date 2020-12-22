@@ -27,7 +27,6 @@ export default function dancersIndex() {
       error={error}
       loading={loading}
       page='Dancers'
-      userType='parent'
       createLink={`/parent/dancers/createDancer`}
     >
       {data &&

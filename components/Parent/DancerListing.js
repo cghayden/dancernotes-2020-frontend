@@ -26,10 +26,16 @@ const AvatarInitials = styled.div`
   display: grid;
   place-items: center;
   color: white;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0;
+  }
 `
 
 function DancerListing({ dancer }) {
-  console.log('dancer', dancer)
   const initials = dancer.firstName.slice(0, 2)
 
   return (

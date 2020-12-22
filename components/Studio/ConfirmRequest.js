@@ -1,20 +1,20 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
-import Error from "../../components/Error";
-import { ENROLLMENT_REQUESTS_QUERY } from "./Queries";
-import styled from "styled-components";
+import React, { Component } from 'react'
+import { Mutation } from 'react-apollo'
+import gql from 'graphql-tag'
+import Error from '../../components/Error'
+import { ENROLLMENT_REQUESTS_QUERY, STUDIO_REQUESTS_QUERY } from './Queries'
+import styled from 'styled-components'
 
 const ConfirmButton = styled.button`
-  background: ${props => props.theme.teal5};
-  transition: background-color .5s linear infinite;
+  background: ${(props) => props.theme.teal5};
+  transition: background-color 0.5s linear infinite;
   color: white;
 
   :disabled {
-    background: ${props => props.theme.red2};
+    background: ${(props) => props.theme.red2};
     /* animation: ${this.state.loading} 0.5s linear infinite; */
   }
-`;
+`
 
 const CONFIRM_ENROLLMENT_REQUEST = gql`
   mutation CONFIRM_ENROLLMENT_REQUEST(
@@ -32,11 +32,11 @@ const CONFIRM_ENROLLMENT_REQUEST = gql`
       message
     }
   }
-`;
+`
 
 export default class ConfirmRequest extends Component {
   render() {
-    const { danceClassId, request } = this.props;
+    const { danceClassId, request } = this.props
     return (
       <Mutation
         mutation={CONFIRM_ENROLLMENT_REQUEST}
@@ -46,23 +46,26 @@ export default class ConfirmRequest extends Component {
           requestId: request.id,
           parentId: request.parent.id,
         }}
-        refetchQueries={[{ query: ENROLLMENT_REQUESTS_QUERY }]}
+        refetchQueries={[
+          { query: ENROLLMENT_REQUESTS_QUERY },
+          { query: STUDIO_REQUESTS_QUERY },
+        ]}
       >
         {(confirmEnrollmentRequest, { error, loading }) => (
           <>
             {error && <Error error={error} />}
             <ConfirmButton
               disabled={loading}
-              onClick={async e => {
-                await confirmEnrollmentRequest();
+              onClick={async (e) => {
+                await confirmEnrollmentRequest()
               }}
             >
-              {" "}
-              {loading ? `Enrolling...` : "Confirm: Enroll Student"}
+              {' '}
+              {loading ? `Enrolling...` : 'Confirm: Enroll Student'}
             </ConfirmButton>
           </>
         )}
       </Mutation>
-    );
+    )
   }
 }
