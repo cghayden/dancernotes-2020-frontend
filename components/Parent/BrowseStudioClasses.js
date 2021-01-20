@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
-import { useQuery } from "@apollo/react-hooks";
-import Cookies from "js-cookie";
-import styled from "styled-components";
-import DanceClassInquiryCard from "./DanceClassInquiryCard";
-import { ActiveFilters } from "./BrowseClassFilter";
-import { PARENT_USER_QUERY } from "./Queries";
-import { DANCER_QUERY } from "./Queries";
-import { RegistrationContext } from "./RegistrationContext";
-import Card from "../styles/Card";
-import RequestAccessButton from "./RequestAccessButton";
+import React, { useContext } from 'react'
+import { useQuery } from '@apollo/react-hooks'
+import Cookies from 'js-cookie'
+import styled from 'styled-components'
+import DanceClassInquiryCard from './DanceClassInquiryCard'
+import { ActiveFilters } from './BrowseClassFilter'
+import { PARENT_USER_QUERY } from './Queries'
+import { DANCER_QUERY } from './Queries'
+import { RegistrationContext } from './RegistrationContext'
+import Card from '../styles/Card'
+import RequestAccessButton from './RequestAccessButton'
 // import LinkDancerToStudioButton from "./LinkDancerToStudioButton";
 // import SoloDuoTrioSubscribe from "./SoloDuoTrioSubscribe";
 
@@ -17,12 +17,12 @@ import RequestAccessButton from "./RequestAccessButton";
 //3. filter classes array
 //4. render classes
 const ClassListCard = styled(Card)`
-  background: ${props => props.theme.gray0};
+  background: ${(props) => props.theme.gray0};
   max-width: 900px;
   box-shadow: none;
   margin-top: -2px;
   /* border-radius:  5px 5px 5px; */
-`;
+`
 const DancerTabs = styled(Card)`
   display: flex;
   align-items: center;
@@ -30,16 +30,16 @@ const DancerTabs = styled(Card)`
   margin-bottom: 0;
   padding: 0;
   background: transparent;
-`;
+`
 const Tab = styled.div`
   width: auto;
   max-width: 150px;
   min-width: 50px;
   border-radius: 5px 5px 0 0;
   margin: 0 1px 0 0;
-  color: ${props =>
+  color: ${(props) =>
     props.active ? props.theme.highlightedText : props.theme.blackText};
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.active ? props.theme.gray0 : props.theme.gray1};
   button {
     background: inherit;
@@ -48,92 +48,95 @@ const Tab = styled.div`
     white-space: nowrap;
     width: 100%;
     :hover {
-      color: ${props => props.theme.indigo9};
+      color: ${(props) => props.theme.indigo9};
     }
     :focus {
-      outline: ${props => (props.active ? "none" : "auto")};
-      background-color: ${props => props.theme.gray0};
+      outline: ${(props) => (props.active ? 'none' : 'auto')};
+      background-color: ${(props) => props.theme.gray0};
     }
   }
-`;
+`
 
 const BrowsingHeader = styled.div`
   width: 90%;
   margin: 0 auto;
   padding: 1rem;
-`;
+`
 const LargeScreenActiveFilters = styled(ActiveFilters)`
   h2 {
     font-size: 1rem;
   }
   margin-bottom: 0.5rem;
-  @media (min-width: ${props => props.theme.largeScreen}) {
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
     h2 {
       font-size: 1.25rem;
     }
     display: block;
   }
-`;
+`
 
 const RequestNotice = styled.p`
-  color: ${props => props.theme.red7};
+  color: ${(props) => props.theme.red7};
   font-size: 1.1rem;
-`;
+`
 const FiltersDisplay = styled.div`
   text-align: left;
   display: flex;
-`;
+`
 function BrowseStudioClasses({ classFilter, studio }) {
-  const BrowsingContext = useContext(RegistrationContext);
-  const setBrowsingDancer = BrowsingContext.setBrowsingDancer;
+  const BrowsingContext = useContext(RegistrationContext)
+  const setBrowsingDancer = BrowsingContext.setBrowsingDancer
 
   //get browsing dancer from cookies so it will still be available if page is refreshed
-  const activeDancerId = Cookies.get("browsingDancerId");
+  const activeDancerId = Cookies.get('browsingDancerId')
 
-  const { data: parentData, loading, error } = useQuery(PARENT_USER_QUERY);
-  const parentUser = parentData ? parentData.parentUser : {};
+  const { data: parentData, loading, error } = useQuery(PARENT_USER_QUERY)
+  const parentUser = parentData ? parentData.parentUser : {}
 
   const {
     data: dancerData,
     loading: loadingDancer,
-    error: errorLoadingDancer
+    error: errorLoadingDancer,
   } = useQuery(DANCER_QUERY, {
-    variables: { id: activeDancerId }
-  });
-  const dancer = dancerData ? dancerData.dancer : {};
+    variables: { id: activeDancerId },
+  })
+  const dancer = dancerData ? dancerData.dancer : {}
+  console.log('browsing dancer', dancer)
 
   const isParentLinkedToStudio =
     parentUser.studios &&
-    parentUser.studios.some(parentStudio => parentStudio.id === studio.id);
+    parentUser.studios.some((parentStudio) => parentStudio.id === studio.id)
 
   function compareDanceToFilter(danceClass, filter) {
-    let pass = true;
-    const filterCategories = Object.keys(filter);
-    filterCategories.forEach(category => {
+    let pass = true
+    const filterCategories = Object.keys(filter)
+    filterCategories.forEach((category) => {
       if (!filter[category].includes(danceClass[category])) {
-        pass = false;
+        pass = false
       }
-    });
-    return pass;
+    })
+    return pass
   }
 
   const filteredClasses = studio.danceClasses
-    ? studio.danceClasses.filter(danceClass =>
+    ? studio.danceClasses.filter((danceClass) =>
         compareDanceToFilter(danceClass, classFilter)
       )
-    : [];
+    : []
 
-  if (loading) return "5, 6, 7, 8...";
-  if (error || errorLoadingDancer)
-    return "There was an error loading the page.";
+  if (loading) return '5, 6, 7, 8...'
+  if (error || errorLoadingDancer) return 'There was an error loading the page.'
 
-  const activeFilters = [].concat.apply([], Object.values(classFilter));
-
+  const activeFilters = [].concat.apply([], Object.values(classFilter))
+  const requestIds = dancer.requests
+    ? dancer.requests.map((request) => request.classRequested.id)
+    : []
+  console.log('requestIds', requestIds)
   return (
     <>
       <DancerTabs>
         {parentUser.dancers &&
-          parentUser.dancers.map(dancer => (
+          parentUser.dancers.map((dancer) => (
             <Tab
               key={dancer.firstName}
               active={dancer.id === activeDancerId ? true : false}
@@ -174,7 +177,7 @@ function BrowseStudioClasses({ classFilter, studio }) {
               <FiltersDisplay>
                 <h2>Active Filters:</h2>
                 <ul>
-                  {activeFilters.map(choice => (
+                  {activeFilters.map((choice) => (
                     <li key={choice}>{choice}</li>
                   ))}
                 </ul>
@@ -183,8 +186,8 @@ function BrowseStudioClasses({ classFilter, studio }) {
           )}
         </LargeScreenActiveFilters>
 
-        {filteredClasses.map(dance => {
-          if (dance.size === "Group") {
+        {filteredClasses.map((dance) => {
+          if (dance.size === 'Group') {
             return (
               <DanceClassInquiryCard
                 parentEmail={parentUser.email}
@@ -193,22 +196,20 @@ function BrowseStudioClasses({ classFilter, studio }) {
                 dancerId={activeDancerId}
                 studioId={studio.id}
                 key={dance.id}
-                requested={
-                  dancer.requests &&
-                  dancer.requests.classesRequested
-                    .map(classRequested => classRequested.id)
-                    .includes(dance.id)
-                }
-                dancersRequestsId={dancer.requests && dancer.requests.id}
+                requested={requestIds.includes(dance.id)}
+                request={dancer.requests?.filter(
+                  (request) => request.classRequested.id === dance.id
+                )}
+                // dancersRequestsId={dancer.requests && dancer.requests.id}
               />
-            );
+            )
           }
         })}
       </ClassListCard>
     </>
-  );
+  )
 }
-export default BrowseStudioClasses;
+export default BrowseStudioClasses
 
 // todo - 1. where and how to include options below .. when a studio has a dancer registered in a solo/duo/trio and the parent has not subscribed,
 // todo -2. when the studio has the dancers information and contact but the dancer is not registered for any classes

@@ -11,17 +11,19 @@ const ClassListing = styled.div`
   border-radius: ${(props) => props.theme.borderRadius};
   box-shadow: ${(props) => props.theme.dropShadowPizzazz};
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  justify-items: center;
+  grid-template-columns: 50% 50%;
+  /* grid-template-rows:  */
+  place-items: center;
   margin-bottom: 2rem;
-  padding: 1rem 0;
+  /* padding: 1rem 0; */
+  min-height: 100px;
 `
 
 const DanceClassInfo = styled.div`
-  color: ${(props) => props.theme.gray7};
-  display: grid;
+  /* color: ${(props) => props.theme.gray7}; */
+  /* display: grid;
   grid-template-columns: 1fr;
-  justify-items: center;
+  justify-items: center; */
 `
 
 const DanceClassName = styled.p`
@@ -31,7 +33,6 @@ const DanceClassName = styled.p`
 
 const DanceClassTime = styled.div`
   display: flex;
-
   flex-wrap: nowrap;
 `
 
@@ -40,35 +41,38 @@ const Day = styled.p`
 `
 
 const DanceClassOptions = styled.div`
-  padding-top: 0.5rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  button {
-    font-size: 0.875rem;
-    /* background-color: ${(props) => props.theme.vividBlue1}; */
-    :disabled {
-      background: none;
-      color: ${(props) => props.theme.gray5};
-    }
+`
+
+const RequestedStyle = styled.div`
+  background: ${(props) => props.theme.secondary};
+  color: ${(props) => props.theme.primary};
+  border-radius: 5px;
+  margin-bottom: 5px;
+  p {
+    padding: 0.5rem 0.75rem;
+  }
+`
+const EnrolledStyle = styled.div`
+  background: ${(props) => props.theme.green7};
+  color: white;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  p {
+    padding: 0.5rem 0.75rem;
   }
 `
 
-const ADD_DANCE_TO_REQUESTS = gql`
-  mutation ADD_DANCE_TO_REQUESTS(
-    $requestId: ID!
+const CREATE_DANCECLASS_REQUEST = gql`
+  mutation CREATE_DANCECLASS_REQUEST(
     $danceId: ID!
     $dancerId: ID!
     $studioId: ID!
-    $parentEmail: String!
   ) {
-    requestDance(
-      requestId: $requestId
-      danceId: $danceId
-      dancerId: $dancerId
-      studioId: $studioId
-      parentEmail: $parentEmail
-    ) {
+    requestDance(danceId: $danceId, dancerId: $dancerId, studioId: $studioId) {
       message
     }
   }
@@ -91,7 +95,6 @@ function DanceClassInquiryCard({
   requested,
   studioId,
   dancerName,
-  parentEmail,
 }) {
   const [
     removeClassFromRequest,
@@ -107,13 +110,11 @@ function DanceClassInquiryCard({
   const [
     requestDance,
     { error: errorRequestingDance, loading: requestingDance },
-  ] = useMutation(ADD_DANCE_TO_REQUESTS, {
+  ] = useMutation(CREATE_DANCECLASS_REQUEST, {
     variables: {
-      requestId: dancersRequestsId || 'new',
       danceId: dance.id,
       dancerId: dancerId,
       studioId: studioId,
-      parentEmail,
     },
     refetchQueries: [
       { query: DANCER_QUERY, variables: { id: dancerId } },
@@ -152,9 +153,9 @@ function DanceClassInquiryCard({
       <DanceClassInfo>
         <DanceClassName>{dance.name}</DanceClassName>
         <p>
-          <span>{dance.ageDivision}</span>
-          {'  '}
           <span>{dance.competitiveLevel}</span>
+          {'  '}
+          <span>{dance.ageDivision}</span>
           {'  '}
           <span>{dance.style}</span>
         </p>
@@ -183,20 +184,24 @@ function DanceClassInquiryCard({
           </button>
         )}
         {status === 'requested' && (
-          <div>
-            <p>Requested for {dancerName}</p>
+          <>
+            <RequestedStyle>
+              <p>Requested for {dancerName}</p>
+            </RequestedStyle>
             <button
               type='button'
-              className='btn-danger'
+              className='btn-danger-textOnly btn-small '
               onClick={async () => await removeClassFromRequest()}
             >
-              Cancel
+              Cancel Request
             </button>
-          </div>
+          </>
         )}
         {status === 'enrolled' && (
           <div>
-            <p>{dancerName} is enrolled</p>
+            <EnrolledStyle>
+              <p>{dancerName} is enrolled</p>
+            </EnrolledStyle>
             <WithdrawButton
               danceClassId={dance.id}
               dancerId={dancerId}

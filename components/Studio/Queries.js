@@ -329,6 +329,7 @@ const HAIRSTYLES_QUERY = gql`
 const STUDIO_REQUESTS_QUERY = gql`
   query STUDIO_REQUESTS_QUERY {
     myStudio {
+      id
       enrollmentRequests {
         id
         parent {
@@ -342,7 +343,7 @@ const STUDIO_REQUESTS_QUERY = gql`
           firstName
           lastName
         }
-        classesRequested {
+        classRequested {
           id
           name
         }

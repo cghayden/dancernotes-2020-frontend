@@ -235,7 +235,10 @@ const DANCER_QUERY = gql`
       }
       requests {
         id
-        classesRequested {
+        studio {
+          id
+        }
+        classRequested {
           id
         }
       }

@@ -1,32 +1,17 @@
-import { useQuery } from '@apollo/react-hooks'
-import { ENROLLMENT_REQUESTS_QUERY } from './Queries'
-import { ACCESS_REQUESTS_QUERY } from './Queries'
 import RequestCard from './RequestCard'
 import AccessRequestCard from './AccessRequestCard'
+import Card from '../styles/Card'
 
-const Requests = () => {
-  const { data: enrollmentRequestsQuery, loading, error } = useQuery(
-    ENROLLMENT_REQUESTS_QUERY
-  )
-  const {
-    data: accessRequestQuery,
-    loading: loadingAccessRequests,
-    error: errorLoadingAccessRequests,
-  } = useQuery(ACCESS_REQUESTS_QUERY)
+const Requests = ({ enrollmentRequests, accessRequests }) => {
+  const totalRequests = [...enrollmentRequests, ...accessRequests]
 
-  const enrollmentRequests = enrollmentRequestsQuery
-    ? enrollmentRequestsQuery.enrollmentRequests
-    : []
-  const accessRequests = accessRequestQuery
-    ? accessRequestQuery.accessRequests
-    : []
-  const totalRequests = enrollmentRequests.length + accessRequests.length
-  console.log('accessRequests:', accessRequests)
-
-  if (totalRequests === 0) {
-    return <p>You have no requests at this time</p>
+  if (totalRequests.length === 0) {
+    return (
+      <Card>
+        <h2>You have no requests at this time.</h2>
+      </Card>
+    )
   }
-
   return (
     <div>
       {enrollmentRequests.map((request) => (

@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
-import { Mutation } from 'react-apollo'
+import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Error from '../../components/Error'
-import { ENROLLMENT_REQUESTS_QUERY, STUDIO_REQUESTS_QUERY } from './Queries'
+import { STUDIO_REQUESTS_QUERY } from './Queries'
 import styled from 'styled-components'
 
 const ConfirmButton = styled.button`
@@ -34,38 +33,30 @@ const CONFIRM_ENROLLMENT_REQUEST = gql`
   }
 `
 
-export default class ConfirmRequest extends Component {
-  render() {
-    const { danceClassId, request } = this.props
-    return (
-      <Mutation
-        mutation={CONFIRM_ENROLLMENT_REQUEST}
-        variables={{
-          danceClassId,
-          dancerId: request.dancer.id,
-          requestId: request.id,
-          parentId: request.parent.id,
-        }}
-        refetchQueries={[
-          { query: ENROLLMENT_REQUESTS_QUERY },
-          { query: STUDIO_REQUESTS_QUERY },
-        ]}
+export default function ConfirmRequest({ request }) {
+  const [confirmEnrollmentRequest, { error, loading }] = useMutation(
+    CONFIRM_ENROLLMENT_REQUEST,
+    {
+      variables: {
+        requestId: request.id,
+        danceClassId: request.classRequested.id,
+        dancerId: request.dancer.id,
+        parentId: request.parent.id,
+      },
+      refetchQueries: [{ query: STUDIO_REQUESTS_QUERY }],
+    }
+  )
+
+  return (
+    <>
+      {error && <Error error={error} />}
+
+      <ConfirmButton
+        disabled={loading}
+        onClick={() => confirmEnrollmentRequest()}
       >
-        {(confirmEnrollmentRequest, { error, loading }) => (
-          <>
-            {error && <Error error={error} />}
-            <ConfirmButton
-              disabled={loading}
-              onClick={async (e) => {
-                await confirmEnrollmentRequest()
-              }}
-            >
-              {' '}
-              {loading ? `Enrolling...` : 'Confirm: Enroll Student'}
-            </ConfirmButton>
-          </>
-        )}
-      </Mutation>
-    )
-  }
+        {loading ? `Enrolling...` : 'Confirm: Enroll Student'}
+      </ConfirmButton>
+    </>
+  )
 }

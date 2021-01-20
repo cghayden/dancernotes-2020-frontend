@@ -15,7 +15,7 @@ const NoFiltLayout = styled.div`
 
 const SelectionWindow = styled.div`
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: relative;
   flex-grow: 1;
 `
@@ -34,11 +34,11 @@ const SelectionWindowHeader = styled.div`
 const SelectionWindowMain = styled.div`
   width: 100%;
   background: ${(props) => props.theme.gray0};
-  height: 100vh;
+  /* height: 200vh; */
   padding-bottom: 50vh;
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  /* overflow: auto; */
   color: ${(props) => props.theme.gray6};
 
   ul {

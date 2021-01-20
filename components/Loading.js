@@ -1,11 +1,11 @@
-import React from "react";
+import Card from './styles/Card'
 
 const Loading = () => {
   return (
-    <div>
+    <Card>
       <h2>5, 6, 7, 8...</h2>
-    </div>
-  );
-};
+    </Card>
+  )
+}
 
-export default Loading;
+export default Loading

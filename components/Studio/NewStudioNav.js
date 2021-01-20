@@ -55,18 +55,12 @@ const NavSection = styled.div`
 `
 
 export default function NewStudioNav() {
-  const { data: requestsQuery, loading, error } = useQuery(
-    STUDIO_REQUESTS_QUERY
-  )
-  console.log('requestsQuery', requestsQuery)
+  const { data, loading, error } = useQuery(STUDIO_REQUESTS_QUERY)
+  console.log('data', data)
 
-  const requests = requestsQuery
-    ? [
-        ...requestsQuery?.myStudio?.accessRequests,
-        ...requestsQuery?.myStudio?.enrollmentRequests,
-      ]
+  const requests = data
+    ? [...data.myStudio.accessRequests, ...data.myStudio.enrollmentRequests]
     : []
-  console.log('requests combined', requests)
 
   return (
     <NewNavSidebarContainer>
