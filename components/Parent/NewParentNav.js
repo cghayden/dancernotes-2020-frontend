@@ -56,7 +56,7 @@ export default function NewStudioNav() {
     <NewNavSidebarContainer>
       <NavSection>
         <NavSectionHeading>
-          <h2>Manage</h2>
+          <h2>Notes</h2>
         </NavSectionHeading>
         <ul>
           <li>
@@ -89,7 +89,7 @@ export default function NewStudioNav() {
         </ul>
       </NavSection>
       <NavSection>
-        <h2>Accounts</h2>
+        <h2>My Account</h2>
         <ul>
           <li>
             <StyledLink
@@ -126,6 +126,43 @@ export default function NewStudioNav() {
               href='/parent/retailers'
             >
               <a className='btn-nav'>Shop</a>
+            </StyledLink>
+          </li>
+          <li>
+            <StyledLink
+              activeClassName='activeStudioNav'
+              href='/parent/conventions'
+            >
+              <a className='btn-nav'>Conventions</a>
+            </StyledLink>
+          </li>
+          <li>
+            <StyledLink
+              activeClassName='activeStudioNav'
+              href='/parent/intensives'
+            >
+              <a className='btn-nav'>Intensives</a>
+            </StyledLink>
+          </li>
+          <li>
+            <StyledLink activeClassName='activeStudioNav' href='/parent/camps'>
+              <a className='btn-nav'>Camps</a>
+            </StyledLink>
+          </li>
+          <li>
+            <StyledLink
+              activeClassName='activeStudioNav'
+              href='/parent/auditions'
+            >
+              <a className='btn-nav'>Auditions</a>
+            </StyledLink>
+          </li>
+          <li>
+            <StyledLink
+              activeClassName='activeStudioNav'
+              href='/parent/performances'
+            >
+              <a className='btn-nav'>Performances</a>
             </StyledLink>
           </li>
         </ul>
