@@ -42,6 +42,7 @@ const SubNavStyles = styled.nav`
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
+    min-width: auto;
 
     &:hover,
     &:focus {
@@ -77,6 +78,7 @@ const SubNavStyles = styled.nav`
     height: 100vw;
     overflow-y: scroll;
     width: 18vw;
+    /* min-width: auto; */
     h1,
     h2,
     h3,
