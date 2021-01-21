@@ -4,11 +4,12 @@ import Error from '../../components/Error'
 import Loading from '../../components/Loading'
 import NewStudioHeader from '../Studio/NewStudioHeader'
 import NewParentNav from './NewParentNav'
-import SubNavFilter from '../Studio/SubNavFilter'
 import ParentBreadcrumb from './ParentBreadcrumb'
 import ActiveFilterChoices from '../Studio/ActiveFilterChoices'
 import FilterSvg from '../Icons/FilterSvg'
-import MobileFilter from './MobileFilter'
+// import MobileFilter from './MobileFilter'
+
+import ParentSubNavFilter from './ParentSubNavFilter'
 
 const BodyLayout = styled.div`
   display: flex;
@@ -109,16 +110,16 @@ export default function NewStudioLayout({
           {selection ? (
             <ActiveFilterChoices />
           ) : (
-            <SubNavFilter page={page} createLink={createLink} />
+            <ParentSubNavFilter page={page} createLink={createLink} />
           )}
         </div>
-        <MobileFilterContainer showFilter={showFilter}>
+        {/* <MobileFilterContainer showFilter={showFilter}>
           <MobileFilter
             page={page}
             createLink={createLink}
             toggleFilter={toggleFilter}
           />
-        </MobileFilterContainer>
+        </MobileFilterContainer> */}
         <SelectionWindow>
           <SelectionWindowHeader>
             <ParentBreadcrumb page={page} selection={selection} />

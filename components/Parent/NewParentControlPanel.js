@@ -7,10 +7,17 @@ import DisplayController from './DisplayController'
 import SliderToggler from '../styles/SliderToggler'
 import { useDisplayControls } from './ParentDisplayProvider'
 import OffScreenControlsToggler from './OffscreenControlsToggler'
-import {
-  ControlPanelStyles,
-  ControlPanelHeading,
-} from '../styles/ControlPanelStyles'
+import { ControlPanelHeading } from '../styles/ControlPanelStyles'
+
+const ControlPanelStyles = styled.div`
+  background-color: ${(props) => props.theme.gray0};
+  /* z-index: 130; */
+  overflow-y: auto;
+
+  @media (max-width: ${(props) => props.theme.largeScreen}) {
+    display: none;
+  }
+`
 
 const AllStudioCheckboxes = styled.div`
   padding-bottom: 1.2rem;
