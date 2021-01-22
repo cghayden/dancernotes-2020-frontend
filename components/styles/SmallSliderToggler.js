@@ -8,8 +8,8 @@ const SliderInput = styled.input`
 const SliderLabel = styled.label`
   position: relative;
   display: inline-block;
-  width: 48px;
-  height: 28px;
+  width: 28px;
+  height: 16px;
   p {
     border: 0;
     clip: rect(0 0 0 0);
@@ -38,15 +38,15 @@ const Slider = styled.span`
     position: absolute;
     border-radius: 50%;
     content: '';
-    height: 20px;
-    width: 20px;
-    left: 4px;
-    bottom: 4px;
+    height: 14px;
+    width: 14px;
+    left: 1px;
+    bottom: 1px;
     background-color: ${(props) =>
       props.checked ? props.theme.gray0 : props.theme.gray0};
     transition: 0.2s;
     transform: ${(props) =>
-      props.checked ? `translateX(20px)` : `translateX(0px)`};
+      props.checked ? `translateX(12px)` : `translateX(0px)`};
   }
 `
 

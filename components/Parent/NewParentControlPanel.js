@@ -8,6 +8,7 @@ import SliderToggler from '../styles/SliderToggler'
 import { useDisplayControls } from './ParentDisplayProvider'
 import OffScreenControlsToggler from './OffscreenControlsToggler'
 import { ControlPanelHeading } from '../styles/ControlPanelStyles'
+import SmallSliderToggler from '../styles/SmallSliderToggler'
 
 const ControlPanelStyles = styled.div`
   background-color: ${(props) => props.theme.gray0};
@@ -159,10 +160,14 @@ const ControlPanel = () => {
       )}
       <CompModeToggler>
         <p>Competiton View:</p>
-        <SliderToggler
+        <SmallSliderToggler
           competitionMode={competitionMode}
           toggleCompetitionMode={toggleCompetitionMode}
         />
+        {/* <SliderToggler
+          competitionMode={competitionMode}
+          toggleCompetitionMode={toggleCompetitionMode}
+        /> */}
         <button
           type='button'
           className='btn-danger-outline btn-icon'
