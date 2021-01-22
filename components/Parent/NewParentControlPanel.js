@@ -20,17 +20,29 @@ const ControlPanelStyles = styled.div`
 `
 
 const AllStudioCheckboxes = styled.div`
-  padding-bottom: 1.2rem;
+  /* padding-bottom: 1.2rem; */
   padding-top: 1rem;
   display: flex;
   justify-content: space-around;
-  div {
+  /* div {
     display: flex;
     align-content: center;
     margin-bottom: 0.5rem;
-  }
+  } */
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     flex-direction: column;
+  }
+`
+
+const CheckboxAndLabelContainer = styled.div`
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  align-items: start;
+  /* margin-left: 0.75em; */
+  input {
+    color: ${(props) =>
+      props.disabled ? props.theme.disabledText : 'inherit'};
+    margin-top: 4px;
   }
 `
 
@@ -163,7 +175,7 @@ const ControlPanel = () => {
       {showAllStudioFilter && (
         <AllStudioCheckboxes>
           {studios.map((studio) => (
-            <div key={studio.id}>
+            <CheckboxAndLabelContainer key={studio.id}>
               <input
                 checked={!hiddenIds.includes(studio.id)}
                 onChange={() => toggleId(studio.id)}
@@ -175,7 +187,7 @@ const ControlPanel = () => {
               <StudioLabel htmlFor={studio.studioName}>
                 {studio.studioName}
               </StudioLabel>
-            </div>
+            </CheckboxAndLabelContainer>
           ))}
           {independents.length > 0 && (
             <div>

@@ -50,7 +50,7 @@ const Slider = styled.span`
   }
 `
 
-function SliderToggler({ competitionMode, toggleCompetitionMode }) {
+function SmallSliderToggler({ competitionMode, toggleCompetitionMode }) {
   return (
     <SliderLabel id='compModeTogglerLabel' htmlFor='compModeToggler'>
       <SliderInput
@@ -66,4 +66,4 @@ function SliderToggler({ competitionMode, toggleCompetitionMode }) {
   )
 }
 
-export default SliderToggler
+export default SmallSliderToggler

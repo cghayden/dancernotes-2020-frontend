@@ -1,46 +1,52 @@
-import React from "react";
-import styled from "styled-components";
-import { useDisplayControls } from "./ParentDisplayProvider";
+import React from 'react'
+import styled from 'styled-components'
+import { useDisplayControls } from './ParentDisplayProvider'
 
 // styles for checkbox and label of each dance for the studio
-const Checkboxes = styled.div`
-  padding-left: 1rem;
-  input {
-    color: ${props => (props.disabled ? props.theme.disabledText : "inherit")};
-    margin-bottom: 0.5rem;
-  }
-`;
+const Checkboxes = styled.div``
 const StudioHeading = styled.h4`
-  color: ${props => (props.disabled ? props.theme.disabledText : "inherit")};
-`;
+  color: ${(props) => (props.disabled ? props.theme.disabledText : 'inherit')};
+  padding: 0.5rem 0;
+`
 const CheckboxLabel = styled.label`
-  color: ${props => (props.disabled ? props.theme.disabledText : "inherit")};
+  color: ${(props) => (props.disabled ? props.theme.disabledText : 'inherit')};
   margin-bottom: 0.5rem;
-`;
+`
+const CheckboxAndLabelContainer = styled.div`
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  align-items: start;
+  margin-left: 0.75em;
+  input {
+    color: ${(props) =>
+      props.disabled ? props.theme.disabledText : 'inherit'};
+    margin-top: 4px;
+  }
+`
 function StudioRoutinesCheckboxes({
   allRoutines,
   studioName,
   studioId,
-  dancerId
+  dancerId,
 }) {
-  const { hiddenIds, toggleId } = useDisplayControls();
+  const { hiddenIds, toggleId } = useDisplayControls()
 
   const studioRoutines = allRoutines.filter(
-    routine => routine.studio && routine.studio.id === studioId
-  );
+    (routine) => routine.studio && routine.studio.id === studioId
+  )
 
-  const disabled = hiddenIds.includes(studioId) || hiddenIds.includes(dancerId);
+  const disabled = hiddenIds.includes(studioId) || hiddenIds.includes(dancerId)
 
   return (
-    <div>
+    <>
       <StudioHeading disabled={disabled}>{studioName}</StudioHeading>
       <Checkboxes>
-        {studioRoutines.map(routine => (
-          <div key={routine.id}>
+        {studioRoutines.map((routine) => (
+          <CheckboxAndLabelContainer key={routine.id}>
             <input
               disabled={disabled}
               checked={!hiddenIds.includes(routine.id)}
-              type="checkbox"
+              type='checkbox'
               id={routine.name}
               name={routine.name}
               value={routine.name}
@@ -49,12 +55,12 @@ function StudioRoutinesCheckboxes({
             <CheckboxLabel disabled={disabled} htmlFor={routine.name}>
               {routine.name}
             </CheckboxLabel>
-          </div>
+          </CheckboxAndLabelContainer>
         ))}
       </Checkboxes>
-    </div>
-  );
+    </>
+  )
 }
 
-export default StudioRoutinesCheckboxes;
-export { CheckboxLabel, Checkboxes, StudioHeading };
+export default StudioRoutinesCheckboxes
+export { CheckboxLabel, Checkboxes, StudioHeading }

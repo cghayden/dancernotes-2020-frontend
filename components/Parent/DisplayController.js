@@ -13,20 +13,20 @@ import IndependentRoutinesCheckboxes from './IndependentRoutinesCheckboxes'
 }
 
 const DancerControlsStyle = styled.div`
-  background-color: ${(props) => props.theme.gray1};
+  /* background-color: ${(props) => props.theme.gray1}; */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  border-radius: 5px;
-  padding-bottom: 1rem;
-  padding-right: 1rem;
-  padding-left: 1rem;
+  align-items: baseline;
+  /* border-radius: 5px; */
   padding-top: 0.5rem;
-  margin-bottom: 1rem;
-  box-shadow: ${(props) => props.theme.dropShadow1};
-  input[type='checkbox'] {
+  /* padding-bottom: 1rem; */
+  /* padding-right: 1rem; */
+  /* padding-left: 1rem; */
+  /* margin-bottom: 1rem; */
+  /* box-shadow: ${(props) => props.theme.dropShadow1}; */
+  /* input[type='checkbox'] {
     margin-right: 0.5rem;
-  }
+  } */
 `
 
 function DisplayController({ dancer }) {
