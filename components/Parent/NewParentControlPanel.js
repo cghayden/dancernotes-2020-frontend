@@ -78,7 +78,7 @@ const CompModeToggler = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 5px;
+  margin-bottom: 1rem;
   p {
     display: inline-block;
     padding-right: 10px;
@@ -173,38 +173,43 @@ const ControlPanel = () => {
       </CompModeToggler>
       {/* checkbox for each parent studio */}
       {showAllStudioFilter && (
-        <AllStudioCheckboxes>
-          {studios.map((studio) => (
-            <CheckboxAndLabelContainer key={studio.id}>
-              <input
-                checked={!hiddenIds.includes(studio.id)}
-                onChange={() => toggleId(studio.id)}
-                type='checkbox'
-                id={studio.studioName}
-                name={studio.studioName}
-                value={studio.studioName}
-              />
-              <StudioLabel htmlFor={studio.studioName}>
-                {studio.studioName}
-              </StudioLabel>
-            </CheckboxAndLabelContainer>
-          ))}
-          {independents.length > 0 && (
-            <div>
-              <input
-                checked={!hiddenIds.includes('all')}
-                onChange={() => {
-                  toggleId('all')
-                }}
-                type='checkbox'
-                id={'allIndependent'}
-                name={'allIndependent'}
-                value={'allIndependent'}
-              />
-              <StudioLabel htmlFor={'allIndependent'}>Independents</StudioLabel>
-            </div>
-          )}
-        </AllStudioCheckboxes>
+        <>
+          <h2>My Studios</h2>
+          <AllStudioCheckboxes>
+            {studios.map((studio) => (
+              <CheckboxAndLabelContainer key={studio.id}>
+                <input
+                  checked={!hiddenIds.includes(studio.id)}
+                  onChange={() => toggleId(studio.id)}
+                  type='checkbox'
+                  id={studio.studioName}
+                  name={studio.studioName}
+                  value={studio.studioName}
+                />
+                <StudioLabel htmlFor={studio.studioName}>
+                  {studio.studioName}
+                </StudioLabel>
+              </CheckboxAndLabelContainer>
+            ))}
+            {independents.length > 0 && (
+              <div>
+                <input
+                  checked={!hiddenIds.includes('all')}
+                  onChange={() => {
+                    toggleId('all')
+                  }}
+                  type='checkbox'
+                  id={'allIndependent'}
+                  name={'allIndependent'}
+                  value={'allIndependent'}
+                />
+                <StudioLabel htmlFor={'allIndependent'}>
+                  Independents
+                </StudioLabel>
+              </div>
+            )}
+          </AllStudioCheckboxes>
+        </>
       )}
 
       <DancerCheckboxes>
