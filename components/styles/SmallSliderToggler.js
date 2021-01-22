@@ -10,7 +10,8 @@ const SliderLabel = styled.label`
   display: inline-block;
   width: 28px;
   height: 16px;
-  p {
+  margin-top: 4px;
+  /* p {
     border: 0;
     clip: rect(0 0 0 0);
     height: 1px;
@@ -19,7 +20,7 @@ const SliderLabel = styled.label`
     padding: 0;
     position: absolute;
     width: 1px;
-  }
+  } */
 `
 const Slider = styled.span`
   position: absolute;
@@ -50,20 +51,18 @@ const Slider = styled.span`
   }
 `
 
-function SmallSliderToggler({ competitionMode, toggleCompetitionMode }) {
+function SmallSliderToggler() {
   return (
-    <SliderLabel id='compModeTogglerLabel' htmlFor='compModeToggler'>
+    <SliderLabel id='compModeToggler-label' htmlFor='compModeToggler'>
       <SliderInput
-        aria-labelledby='compModeTogglerLabel'
-        name='compModeToggler'
-        id='compModeToggler'
+        aria-labelledby='compModeToggler-label'
+        name='compMode-toggler'
+        id='compMode-toggler'
         type='checkbox'
-        checked={competitionMode}
-        onChange={toggleCompetitionMode}
       />
       <Slider checked={competitionMode}></Slider>
     </SliderLabel>
   )
 }
 
-export default SmallSliderToggler
+export { SliderLabel, SliderInput, Slider }

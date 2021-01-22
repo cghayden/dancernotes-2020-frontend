@@ -5,10 +5,10 @@ import { PARENT_USER_QUERY } from './Queries'
 import styled from 'styled-components'
 import DisplayController from './DisplayController'
 import SliderToggler from '../styles/SliderToggler'
+import { SliderLabel, SliderInput, Slider } from '../styles/SmallSliderToggler'
 import { useDisplayControls } from './ParentDisplayProvider'
 import OffScreenControlsToggler from './OffscreenControlsToggler'
 import { ControlPanelHeading } from '../styles/ControlPanelStyles'
-import SmallSliderToggler from '../styles/SmallSliderToggler'
 
 const ControlPanelStyles = styled.div`
   background-color: ${(props) => props.theme.gray0};
@@ -37,9 +37,9 @@ const AllStudioCheckboxes = styled.div`
 
 const CheckboxAndLabelContainer = styled.div`
   display: grid;
-  grid-template-columns: 20px 1fr;
+  grid-template-columns: auto 1fr;
   align-items: start;
-  /* margin-left: 0.75em; */
+  margin: 0.25em 0;
   input {
     color: ${(props) =>
       props.disabled ? props.theme.disabledText : 'inherit'};
@@ -48,7 +48,7 @@ const CheckboxAndLabelContainer = styled.div`
 `
 
 const StudioLabel = styled.label`
-  font-size: 1.1rem;
+  padding-left: 0.5rem;
   font-weight: 600;
   color: ${(props) => (props.disabled ? props.theme.disabledText : 'inherit')};
 `
@@ -125,7 +125,7 @@ const ControlPanel = () => {
     toggleCompetitionMode,
     showControlPanel,
   } = useDisplayControls()
-
+  console.log('hiddenIds', hiddenIds)
   const independents = customRoutines.filter((routine) => !routine.studio)
   const hasStudioAndIndependents = studios.length > 0 && independents.length > 0
   const showAllStudioFilter = studios.length > 1 || hasStudioAndIndependents
@@ -160,14 +160,11 @@ const ControlPanel = () => {
       )}
       <CompModeToggler>
         <p>Competiton View:</p>
-        <SmallSliderToggler
+
+        <SliderToggler
           competitionMode={competitionMode}
           toggleCompetitionMode={toggleCompetitionMode}
         />
-        {/* <SliderToggler
-          competitionMode={competitionMode}
-          toggleCompetitionMode={toggleCompetitionMode}
-        /> */}
         <button
           type='button'
           className='btn-danger-outline btn-icon'
@@ -183,17 +180,30 @@ const ControlPanel = () => {
           <AllStudioCheckboxes>
             {studios.map((studio) => (
               <CheckboxAndLabelContainer key={studio.id}>
-                <input
+                <SliderLabel
+                  id={`${studio.studioName}-label`}
+                  htmlFor={`${studio.studioName}-toggler`}
+                >
+                  <SliderInput
+                    aria-labelledby={`${studio.studioName}-label`}
+                    name={`${studio.studioName}-toggler`}
+                    id={`${studio.studioName}-toggler`}
+                    type='checkbox'
+                    checked={!hiddenIds.includes(studio.id)}
+                    onChange={() => toggleId(studio.id)}
+                  />
+                  <Slider checked={!hiddenIds.includes(studio.id)}></Slider>
+                </SliderLabel>
+
+                <StudioLabel>{studio.studioName}</StudioLabel>
+                {/* <input
                   checked={!hiddenIds.includes(studio.id)}
                   onChange={() => toggleId(studio.id)}
                   type='checkbox'
                   id={studio.studioName}
                   name={studio.studioName}
                   value={studio.studioName}
-                />
-                <StudioLabel htmlFor={studio.studioName}>
-                  {studio.studioName}
-                </StudioLabel>
+                /> */}
               </CheckboxAndLabelContainer>
             ))}
             {independents.length > 0 && (

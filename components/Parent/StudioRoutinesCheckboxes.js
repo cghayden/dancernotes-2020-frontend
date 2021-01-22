@@ -14,7 +14,7 @@ const CheckboxLabel = styled.label`
 `
 const CheckboxAndLabelContainer = styled.div`
   display: grid;
-  grid-template-columns: 20px 1fr;
+  grid-template-columns: auto 1fr;
   align-items: start;
   margin-left: 0.75em;
   input {
