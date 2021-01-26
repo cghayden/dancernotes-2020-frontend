@@ -10,6 +10,8 @@ import { useDisplayControls } from './ParentDisplayProvider'
 import OffScreenControlsToggler from './OffscreenControlsToggler'
 import { ControlPanelHeading } from '../styles/ControlPanelStyles'
 
+import DancerRoutineTogglers from './DancerRoutineTogglers'
+
 const ControlPanelStyles = styled.div`
   background-color: ${(props) => props.theme.gray0};
   /* z-index: 130; */
@@ -17,62 +19,6 @@ const ControlPanelStyles = styled.div`
 
   @media (max-width: ${(props) => props.theme.largeScreen}) {
     display: none;
-  }
-`
-
-const AllStudioCheckboxes = styled.div`
-  /* padding-bottom: 1.2rem; */
-  padding-top: 1rem;
-  display: flex;
-  justify-content: space-around;
-  /* div {
-    display: flex;
-    align-content: center;
-    margin-bottom: 0.5rem;
-  } */
-  @media (min-width: ${(props) => props.theme.largeScreen}) {
-    flex-direction: column;
-  }
-`
-
-const CheckboxAndLabelContainer = styled.div`
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: start;
-  margin: 0.25em 0;
-  input {
-    color: ${(props) =>
-      props.disabled ? props.theme.disabledText : 'inherit'};
-    margin-top: 4px;
-  }
-`
-
-const StudioLabel = styled.label`
-  padding-left: 0.5rem;
-  font-weight: 600;
-  color: ${(props) => (props.disabled ? props.theme.disabledText : 'inherit')};
-`
-
-const DancerCheckboxes = styled.div`
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  margin-bottom: 100px;
-  ul {
-    display: flex;
-    flex-direction: column;
-    font-size: 0.825rem;
-    li {
-      padding: 0.25rem 0;
-    }
-  }
-
-  @media (min-width: ${(props) => props.theme.largeScreen}) {
-    margin-bottom: 0;
-    ul {
-      font-size: 1rem;
-      align-items: start;
-    }
   }
 `
 const CompModeToggler = styled.div`
@@ -102,6 +48,69 @@ const HelpDiv = styled.div`
   button {
     font-size: 14px;
     padding: 5px 10px;
+  }
+`
+const CheckboxAndLabelContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  margin: 0.25em 0 0.25em 0.5em;
+  input {
+    color: ${(props) =>
+      props.disabled ? props.theme.disabledText : 'inherit'};
+    margin-top: 4px;
+  }
+`
+const TogglersContainer = styled.div`
+  /* border-bottom: 1px solid ${(props) => props.theme.gray3}; */
+`
+const GroupOfCheckboxes = styled.div`
+  /* padding-bottom: 1.2rem; */
+  /* padding-top: 1rem; */
+  display: flex;
+  justify-content: space-around;
+  /* div {
+    display: flex;
+    align-content: center;
+    margin-bottom: 0.5rem;
+  } */
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
+    flex-direction: column;
+  }
+`
+
+const TogglerLabel = styled.label`
+  font-size: 18px;
+  padding-left: 0.5rem;
+  font-weight: 600;
+  color: ${(props) => (props.disabled ? props.theme.disabledText : 'inherit')};
+`
+const DancerTogglerLabel = styled.label`
+  padding-left: 0.5rem;
+  font-weight: 600;
+  color: ${(props) => (props.disabled ? props.theme.disabledText : 'inherit')};
+`
+
+const DancerTogglerAndCheckboxes = styled.div`
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin-bottom: 100px;
+  ul {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.825rem;
+    li {
+      padding: 0.25rem 0;
+    }
+  }
+
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
+    margin-bottom: 0;
+    ul {
+      font-size: 1rem;
+      align-items: start;
+    }
   }
 `
 
@@ -175,66 +184,96 @@ const ControlPanel = () => {
       </CompModeToggler>
       {/* checkbox for each parent studio */}
       {showAllStudioFilter && (
-        <>
-          <h2>My Studios</h2>
-          <AllStudioCheckboxes>
-            {studios.map((studio) => (
-              <CheckboxAndLabelContainer key={studio.id}>
-                <SliderLabel
-                  id={`${studio.studioName}-label`}
-                  htmlFor={`${studio.studioName}-toggler`}
-                >
-                  <SliderInput
-                    aria-labelledby={`${studio.studioName}-label`}
-                    name={`${studio.studioName}-toggler`}
-                    id={`${studio.studioName}-toggler`}
+        <div>
+          <TogglersContainer>
+            <h2>My Studios</h2>
+            <GroupOfCheckboxes>
+              {studios.map((studio) => (
+                <CheckboxAndLabelContainer key={studio.id}>
+                  <SliderLabel
+                    id={`${studio.studioName}-label`}
+                    htmlFor={`${studio.studioName}-toggler`}
+                  >
+                    <SliderInput
+                      aria-labelledby={`${studio.studioName}-label`}
+                      name={`${studio.studioName}-toggler`}
+                      id={`${studio.studioName}-toggler`}
+                      type='checkbox'
+                      checked={!hiddenIds.includes(studio.id)}
+                      onChange={() => toggleId(studio.id)}
+                    />
+                    <Slider checked={!hiddenIds.includes(studio.id)}></Slider>
+                  </SliderLabel>
+
+                  <TogglerLabel>{studio.studioName}</TogglerLabel>
+                  {/* <input
+        checked={!hiddenIds.includes(studio.id)}
+        onChange={() => toggleId(studio.id)}
+        type='checkbox'
+        id={studio.studioName}
+        name={studio.studioName}
+        value={studio.studioName}
+        /> */}
+                </CheckboxAndLabelContainer>
+              ))}
+              {independents.length > 0 && (
+                <div>
+                  <input
+                    checked={!hiddenIds.includes('all')}
+                    onChange={() => {
+                      toggleId('all')
+                    }}
                     type='checkbox'
-                    checked={!hiddenIds.includes(studio.id)}
-                    onChange={() => toggleId(studio.id)}
+                    id={'allIndependent'}
+                    name={'allIndependent'}
+                    value={'allIndependent'}
                   />
-                  <Slider checked={!hiddenIds.includes(studio.id)}></Slider>
-                </SliderLabel>
-
-                <StudioLabel>{studio.studioName}</StudioLabel>
-                {/* <input
-                  checked={!hiddenIds.includes(studio.id)}
-                  onChange={() => toggleId(studio.id)}
-                  type='checkbox'
-                  id={studio.studioName}
-                  name={studio.studioName}
-                  value={studio.studioName}
-                /> */}
-              </CheckboxAndLabelContainer>
-            ))}
-            {independents.length > 0 && (
-              <div>
-                <input
-                  checked={!hiddenIds.includes('all')}
-                  onChange={() => {
-                    toggleId('all')
-                  }}
-                  type='checkbox'
-                  id={'allIndependent'}
-                  name={'allIndependent'}
-                  value={'allIndependent'}
-                />
-                <StudioLabel htmlFor={'allIndependent'}>
-                  Independents
-                </StudioLabel>
-              </div>
-            )}
-          </AllStudioCheckboxes>
-        </>
+                  <TogglerLabel htmlFor={'allIndependent'}>
+                    Independents
+                  </TogglerLabel>
+                </div>
+              )}
+            </GroupOfCheckboxes>
+          </TogglersContainer>
+        </div>
       )}
+      <div>
+        <h2>My Dancers</h2>
+        {/* <DancerTogglerAndCheckboxes> */}
+        {dancers.map(
+          (dancer) => (
+            <>
+              <TogglersContainer>
+                <CheckboxAndLabelContainer key={dancer.id}>
+                  <SliderLabel
+                    id={`${dancer.firstName}-label`}
+                    htmlFor={`${dancer.firstName}-toggler`}
+                  >
+                    <SliderInput
+                      aria-labelledby={`${dancer.firstName}-label`}
+                      name={`${dancer.firstName}-toggler`}
+                      id={`${dancer.firstName}-toggler`}
+                      type='checkbox'
+                      checked={!hiddenIds.includes(dancer.id)}
+                      onChange={() => toggleId(dancer.id)}
+                    />
+                    <Slider checked={!hiddenIds.includes(dancer.id)}></Slider>
+                  </SliderLabel>
 
-      <DancerCheckboxes>
-        {dancers.map((dancer) => {
-          return <DisplayController key={dancer.id} dancer={dancer} />
-        })}
-      </DancerCheckboxes>
+                  <TogglerLabel>{dancer.firstName}</TogglerLabel>
+                </CheckboxAndLabelContainer>
+                <DancerRoutineTogglers key={dancer.id} dancer={dancer} />
+              </TogglersContainer>
+            </>
+          )
+
+          // <DisplayController key={dancer.id} dancer={dancer} />
+        )}
+      </div>
+      {/* </DancerTogglerAndCheckboxes> */}
     </ControlPanelStyles>
   )
 }
 
 export default ControlPanel
-export { ControlPanelStyles }
+export { ControlPanelStyles, GroupOfCheckboxes }

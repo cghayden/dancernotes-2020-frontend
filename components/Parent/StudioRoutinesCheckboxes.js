@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useDisplayControls } from './ParentDisplayProvider'
-
+import { GroupOfCheckboxes } from './NewParentControlPanel'
 // styles for checkbox and label of each dance for the studio
 const Checkboxes = styled.div``
 const StudioHeading = styled.h4`
@@ -40,7 +40,7 @@ function StudioRoutinesCheckboxes({
   return (
     <>
       <StudioHeading disabled={disabled}>{studioName}</StudioHeading>
-      <Checkboxes>
+      <GroupOfCheckboxes>
         {studioRoutines.map((routine) => (
           <CheckboxAndLabelContainer key={routine.id}>
             <input
@@ -57,7 +57,7 @@ function StudioRoutinesCheckboxes({
             </CheckboxLabel>
           </CheckboxAndLabelContainer>
         ))}
-      </Checkboxes>
+      </GroupOfCheckboxes>
     </>
   )
 }
