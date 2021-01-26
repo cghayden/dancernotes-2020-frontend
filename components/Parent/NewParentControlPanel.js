@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
+
 import { PARENT_USER_QUERY } from './Queries'
 
 import styled from 'styled-components'
-import MenuSvg from '../Icons/MenuSvg'
 import SliderToggler from '../styles/SliderToggler'
 import { SliderLabel, SliderInput, Slider } from '../styles/SmallSliderToggler'
 import { useDisplayControls } from './ParentDisplayProvider'
@@ -61,21 +61,7 @@ const CheckboxAndLabelContainer = styled.div`
     margin-top: 4px;
   }
 `
-const DancerTogglerAndLabel = styled(CheckboxAndLabelContainer)`
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  margin: 0.25em 0 0.25em 0.5em;
-  input {
-    color: ${(props) =>
-      props.disabled ? props.theme.disabledText : 'inherit'};
-    margin-top: 4px;
-  }
-  button {
-    padding: 0;
-    justify-self: right;
-  }
-`
+
 const TogglersContainer = styled.div`
   /* border-bottom: 1px solid ${(props) => props.theme.gray3}; */
 `
@@ -149,7 +135,6 @@ const ControlPanel = () => {
     toggleCompetitionMode,
     showControlPanel,
   } = useDisplayControls()
-  console.log('hiddenIds', hiddenIds)
   const independents = customRoutines.filter((routine) => !routine.studio)
   const hasStudioAndIndependents = studios.length > 0 && independents.length > 0
   const showAllStudioFilter = studios.length > 1 || hasStudioAndIndependents
@@ -257,33 +242,12 @@ const ControlPanel = () => {
         {/* <DancerTogglerAndCheckboxes> */}
         {dancers.map(
           (dancer) => (
-            <>
-              <TogglersContainer>
-                <DancerTogglerAndLabel key={dancer.id}>
-                  <SliderLabel
-                    id={`${dancer.firstName}-label`}
-                    htmlFor={`${dancer.firstName}-toggler`}
-                  >
-                    <SliderInput
-                      aria-labelledby={`${dancer.firstName}-label`}
-                      name={`${dancer.firstName}-toggler`}
-                      id={`${dancer.firstName}-toggler`}
-                      type='checkbox'
-                      checked={!hiddenIds.includes(dancer.id)}
-                      onChange={() => toggleId(dancer.id)}
-                    />
-                    <Slider checked={!hiddenIds.includes(dancer.id)}></Slider>
-                  </SliderLabel>
-
-                  <TogglerLabel>{dancer.firstName}</TogglerLabel>
-                  <button className='btn-icon'>
-                    <MenuSvg />
-                  </button>
-                </DancerTogglerAndLabel>
-
-                <DancerRoutineTogglers key={dancer.id} dancer={dancer} />
-              </TogglersContainer>
-            </>
+            <DancerRoutineTogglers
+              key={dancer.id}
+              dancer={dancer}
+              hiddenIds={hiddenIds}
+              toggleId={toggleId}
+            />
           )
 
           // <DisplayController key={dancer.id} dancer={dancer} />
@@ -295,4 +259,4 @@ const ControlPanel = () => {
 }
 
 export default ControlPanel
-export { ControlPanelStyles, GroupOfCheckboxes }
+export { ControlPanelStyles, GroupOfCheckboxes, CheckboxAndLabelContainer }

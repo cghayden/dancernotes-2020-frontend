@@ -19,7 +19,7 @@ const FilterDropDownButton = styled.button`
 
 const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
   const [isOpen, toggleIsOpen] = useState(false)
-  const dropDownRef = useRef()
+  // const dropDownRef = useRef()
 
   function removeFromArray(array, item) {
     const index = array.indexOf(item)
@@ -73,7 +73,7 @@ const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0, transition: { duration: 0.1 } }}
-            ref={dropDownRef}
+            // ref={dropDownRef}
           >
             <ul>
               {selections &&
