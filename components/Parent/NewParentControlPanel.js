@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { PARENT_USER_QUERY } from './Queries'
 
 import styled from 'styled-components'
-import DisplayController from './DisplayController'
+import MenuSvg from '../Icons/MenuSvg'
 import SliderToggler from '../styles/SliderToggler'
 import { SliderLabel, SliderInput, Slider } from '../styles/SmallSliderToggler'
 import { useDisplayControls } from './ParentDisplayProvider'
@@ -59,6 +59,21 @@ const CheckboxAndLabelContainer = styled.div`
     color: ${(props) =>
       props.disabled ? props.theme.disabledText : 'inherit'};
     margin-top: 4px;
+  }
+`
+const DancerTogglerAndLabel = styled(CheckboxAndLabelContainer)`
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  margin: 0.25em 0 0.25em 0.5em;
+  input {
+    color: ${(props) =>
+      props.disabled ? props.theme.disabledText : 'inherit'};
+    margin-top: 4px;
+  }
+  button {
+    padding: 0;
+    justify-self: right;
   }
 `
 const TogglersContainer = styled.div`
@@ -244,7 +259,7 @@ const ControlPanel = () => {
           (dancer) => (
             <>
               <TogglersContainer>
-                <CheckboxAndLabelContainer key={dancer.id}>
+                <DancerTogglerAndLabel key={dancer.id}>
                   <SliderLabel
                     id={`${dancer.firstName}-label`}
                     htmlFor={`${dancer.firstName}-toggler`}
@@ -261,7 +276,11 @@ const ControlPanel = () => {
                   </SliderLabel>
 
                   <TogglerLabel>{dancer.firstName}</TogglerLabel>
-                </CheckboxAndLabelContainer>
+                  <button className='btn-icon'>
+                    <MenuSvg />
+                  </button>
+                </DancerTogglerAndLabel>
+
                 <DancerRoutineTogglers key={dancer.id} dancer={dancer} />
               </TogglersContainer>
             </>
