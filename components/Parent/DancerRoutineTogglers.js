@@ -13,7 +13,7 @@ const DancerControlsStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: baseline;
-  padding-top: 0.5rem;
+  /* padding-top: 0.5rem; */
   /* background-color: ${(props) => props.theme.gray1}; */
   /* border-radius: 5px; */
   /* padding-bottom: 1rem; */
@@ -46,6 +46,14 @@ const TogglerLabel = styled.label`
   font-weight: 600;
   color: ${(props) => (props.disabled ? props.theme.disabledText : 'inherit')};
 `
+const DancerTogglersContainer = styled.div`
+  padding: 5px;
+  margin-bottom: 8px;
+  background: ${(props) =>
+    props.isOpen ? props.theme.gray1 : props.theme.gray0};
+  transition: all 0.2s;
+  border-radius: ${(props) => props.theme.borderRadius};
+`
 function DisplayController({ dancer, hiddenIds, toggleId }) {
   const [isOpen, toggleIsOpen] = useState(false)
 
@@ -55,7 +63,7 @@ function DisplayController({ dancer, hiddenIds, toggleId }) {
   )
 
   return (
-    <div>
+    <DancerTogglersContainer isOpen={isOpen}>
       <DancerTogglerAndLabel key={dancer.id}>
         <SliderLabel
           id={`${dancer.firstName}-label`}
@@ -118,7 +126,7 @@ function DisplayController({ dancer, hiddenIds, toggleId }) {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </DancerTogglersContainer>
   )
 }
 

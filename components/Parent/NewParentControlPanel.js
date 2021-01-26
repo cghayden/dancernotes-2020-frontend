@@ -80,7 +80,7 @@ const GroupOfCheckboxes = styled.div`
   }
 `
 
-const TogglerLabel = styled.label`
+const StudioTogglerLabel = styled.label`
   font-size: 18px;
   padding-left: 0.5rem;
   font-weight: 600;
@@ -167,7 +167,7 @@ const ControlPanel = () => {
           </button>
         </HelpDiv>
       )}
-      <CompModeToggler>
+      {/* <CompModeToggler>
         <p>Competiton View:</p>
 
         <SliderToggler
@@ -181,8 +181,24 @@ const ControlPanel = () => {
         >
           <span>?</span>
         </button>
-      </CompModeToggler>
+      </CompModeToggler> */}
       {/* checkbox for each parent studio */}
+      <div>
+        {/* <h2>My Dancers</h2> */}
+        {/* <DancerTogglerAndCheckboxes> */}
+        {dancers.map(
+          (dancer) => (
+            <DancerRoutineTogglers
+              key={dancer.id}
+              dancer={dancer}
+              hiddenIds={hiddenIds}
+              toggleId={toggleId}
+            />
+          )
+
+          // <DisplayController key={dancer.id} dancer={dancer} />
+        )}
+      </div>
       {showAllStudioFilter && (
         <div>
           <TogglersContainer>
@@ -205,7 +221,9 @@ const ControlPanel = () => {
                     <Slider checked={!hiddenIds.includes(studio.id)}></Slider>
                   </SliderLabel>
 
-                  <TogglerLabel>{studio.studioName}</TogglerLabel>
+                  <StudioTogglerLabel disabled={hiddenIds.includes(studio.id)}>
+                    {studio.studioName}
+                  </StudioTogglerLabel>
                   {/* <input
         checked={!hiddenIds.includes(studio.id)}
         onChange={() => toggleId(studio.id)}
@@ -228,31 +246,15 @@ const ControlPanel = () => {
                     name={'allIndependent'}
                     value={'allIndependent'}
                   />
-                  <TogglerLabel htmlFor={'allIndependent'}>
+                  <StudioTogglerLabel htmlFor={'allIndependent'}>
                     Independents
-                  </TogglerLabel>
+                  </StudioTogglerLabel>
                 </div>
               )}
             </GroupOfCheckboxes>
           </TogglersContainer>
         </div>
       )}
-      <div>
-        <h2>My Dancers</h2>
-        {/* <DancerTogglerAndCheckboxes> */}
-        {dancers.map(
-          (dancer) => (
-            <DancerRoutineTogglers
-              key={dancer.id}
-              dancer={dancer}
-              hiddenIds={hiddenIds}
-              toggleId={toggleId}
-            />
-          )
-
-          // <DisplayController key={dancer.id} dancer={dancer} />
-        )}
-      </div>
       {/* </DancerTogglerAndCheckboxes> */}
     </ControlPanelStyles>
   )

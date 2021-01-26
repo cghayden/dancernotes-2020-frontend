@@ -5,10 +5,12 @@ import { GroupOfCheckboxes } from './NewParentControlPanel'
 // styles for checkbox and label of each dance for the studio
 const Checkboxes = styled.div``
 const StudioHeading = styled.h4`
+  font-size: 1rem;
   color: ${(props) => (props.disabled ? props.theme.disabledText : 'inherit')};
   padding: 0.5rem 0;
 `
 const CheckboxLabel = styled.label`
+  font-size: 14px;
   color: ${(props) => (props.disabled ? props.theme.disabledText : 'inherit')};
   margin-bottom: 0.5rem;
 `
