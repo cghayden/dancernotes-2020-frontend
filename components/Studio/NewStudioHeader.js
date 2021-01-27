@@ -49,7 +49,7 @@ export default function NewStudioHeader() {
       <input type='text' placeholder='Search...' className='search' />
       {/* <OptionsDropdown /> */}
       <button
-        className='hide-gtLarge'
+        className='hide-gtLarge btn-icon'
         onClick={() => {
           toggleMobileNav(!mobileNav)
         }}
