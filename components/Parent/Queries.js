@@ -37,6 +37,46 @@ const ALL_Rs = gql`
   }
 `
 
+const SINGLE_ROUTINE_QUERY = gql`
+  query SINGLE_ROUTINE_QUERY($id: ID!) {
+    singleRoutine(id: $id) {
+      id
+      style
+      competitiveLevel
+      ageDivision
+      name
+      performanceName
+      day
+      startTime
+      endTime
+      shoes
+      tights
+      notes
+      music
+      custom
+      parentsNotes {
+        note
+        id
+      }
+      dancers {
+        id
+        firstName
+        avatar
+        parent {
+          id
+        }
+      }
+      studio {
+        id
+      }
+      entryNumber
+      entryDay
+      entryTime
+      videoUrl
+    }
+  }
+`
+
 const PARENT_EVENTS_QUERY = gql`
   query {
     parentEvents {
@@ -306,6 +346,7 @@ export {
   PARENT_USER_QUERY,
   DANCER_QUERY,
   ALL_Rs,
+  SINGLE_ROUTINE_QUERY,
   PARENT_EVENTS_QUERY,
   PARENTS_DANCERS,
   CUSTOM_ROUTINE_QUERY,
