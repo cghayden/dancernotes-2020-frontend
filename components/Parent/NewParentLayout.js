@@ -2,7 +2,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import Error from '../../components/Error'
 import Loading from '../../components/Loading'
-import NewStudioHeader from '../Studio/NewStudioHeader'
+import NewParentHeader from '../Parent/NewParentHeader'
 import NewParentNav from './NewParentNav'
 import ParentBreadcrumb from './ParentBreadcrumb'
 import ActiveFilterChoices from '../Studio/ActiveFilterChoices'
@@ -89,7 +89,7 @@ const MobileFilterContainer = styled.div`
   }
 `
 
-export default function NewStudioLayout({
+export default function NewParentLayout({
   children,
   page,
   selection = false,
@@ -101,7 +101,7 @@ export default function NewStudioLayout({
 
   return (
     <Layout>
-      <NewStudioHeader />
+      <NewParentHeader />
       <BodyLayout>
         <div className='hide-ltLarge'>
           <NewParentNav />

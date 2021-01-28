@@ -56,7 +56,6 @@ const NavSection = styled.div`
 
 export default function NewStudioNav() {
   const { data, loading, error } = useQuery(STUDIO_REQUESTS_QUERY)
-  console.log('data', data)
 
   const requests = data
     ? [...data.myStudio.accessRequests, ...data.myStudio.enrollmentRequests]

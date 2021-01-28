@@ -51,7 +51,7 @@ const NavSection = styled.div`
   }
 `
 
-export default function NewStudioNav() {
+export default function NewParentNav() {
   return (
     <NewNavSidebarContainer>
       <NavSection>

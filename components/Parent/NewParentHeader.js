@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import MenuSvg from '../Icons/MenuSvg'
-import NewStudioNav from './NewStudioNav'
+import NewParentNav from './NewParentNav'
 
 const Header = styled.header`
   background: ${(props) => props.theme.gray5};
@@ -58,7 +58,8 @@ export default function NewStudioHeader() {
       </button>
       {mobileNav && (
         <MobileNavContainer>
-          <NewStudioNav />
+          <NewParentNav />
+          {/* <QuickActionLinks/> */}
         </MobileNavContainer>
       )}
       {/* <QuickCreateOptions /> */}
