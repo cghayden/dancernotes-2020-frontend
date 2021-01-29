@@ -21,9 +21,14 @@ const DanceCardTitle = styled.div`
     font-weight: 600;
     font-size: larger;
   }
-  p:last-child {
+  p:nth-child(2) {
     font-style: italic;
     color: ${(props) => props.theme.gray7};
+    margin: 0.25em 0;
+  }
+  p:last-child {
+    color: ${(props) => props.theme.gray7};
+    font-size: 0.75em;
   }
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     font-size: 1rem;
@@ -73,6 +78,7 @@ const DanceCardHeader = ({ dance }) => {
       <DanceCardTitle>
         <p>{dance.name}</p>
         <p>{dance.performanceName}</p>
+        <p>{dance.studio.studioName}</p>
       </DanceCardTitle>
       {!competitionMode ? (
         <DanceCardTime>

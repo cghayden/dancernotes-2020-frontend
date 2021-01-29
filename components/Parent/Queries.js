@@ -28,6 +28,7 @@ const ALL_Rs = gql`
       }
       studio {
         id
+        studioName
       }
       entryNumber
       entryDay
@@ -68,6 +69,7 @@ const SINGLE_ROUTINE_QUERY = gql`
       }
       studio {
         id
+        studioName
       }
       entryNumber
       entryDay
