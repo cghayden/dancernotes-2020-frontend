@@ -80,7 +80,7 @@ function MyProfile({ parentUser }) {
       </Card>
       <UpdateProfileForm parentUser={parentUser} />
       <Card>
-        <div className='card-section'>
+        <div>
           <DancernotesInfo />
         </div>
       </Card>

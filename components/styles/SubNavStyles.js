@@ -4,7 +4,7 @@ const SubNavStyles = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: ${(props) => props.theme.blackText};
+  /* color: ${(props) => props.theme.blackText}; */
   background: ${(props) => props.theme.background};
   padding: 0.5rem;
   /* box-shadow: ${(props) => props.theme.dropShadow1}; */

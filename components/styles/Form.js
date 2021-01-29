@@ -16,7 +16,7 @@ const Form = styled.form`
   /* each form should be inside a card */
   text-align: center;
   border-radius: ${(props) => props.theme.borderRadius};
-  color: ${(props) => props.theme.blackText};
+  /* color: ${(props) => props.theme.blackText}; */
   background: ${(props) => props.theme.gray0};
   width: 100%;
   max-width: 550px;

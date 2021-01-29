@@ -34,12 +34,10 @@ const SelectionWindowHeader = styled.div`
 const SelectionWindowMain = styled.div`
   width: 100%;
   background: ${(props) => props.theme.gray0};
-  /* height: 200vh; */
   padding-bottom: 50vh;
   display: flex;
   flex-direction: column;
   /* overflow: auto; */
-  color: ${(props) => props.theme.gray6};
 
   ul {
     display: flex;

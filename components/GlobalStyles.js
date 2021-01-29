@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
       '' /* font-family: "Source Sans Pro", -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue; */
     }
     font-weight: 400;
-    color: ${theme.gray6};
+    color: ${theme.blackText};
   }
   
   h1,

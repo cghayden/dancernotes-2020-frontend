@@ -1,35 +1,34 @@
-import { useState } from "react";
-import styled from "styled-components";
-import NotesDiv from "./NotesDiv";
-import CustomNotesDiv from "./CustomNotesDiv";
+import { useState } from 'react'
+import styled from 'styled-components'
+import NotesDiv from './NotesDiv'
+import CustomNotesDiv from './CustomNotesDiv'
 
 const DanceCardBodyStyles = styled.div`
-  padding-bottom: 1rem;
   li {
     padding: 0.25rem;
   }
-`;
+`
 
 const NoteItem = styled.div`
   display: flex;
   padding: 0.25rem 0;
-`;
+`
 
 const Dt = styled.dt`
   font-weight: bold;
-`;
+`
 const Dd = styled.dd`
   margin-left: 1rem;
   text-align: left;
   white-space: pre-wrap;
-`;
+`
 const Notes = styled.div`
   text-align: left;
   padding: 0.25rem 0;
-`;
+`
 function DanceCardBody({ dance }) {
-  const [addNote, toggleAddNote] = useState(false);
-  const [editNotes, toggleEditNotes] = useState(false);
+  const [addNote, toggleAddNote] = useState(false)
+  const [editNotes, toggleEditNotes] = useState(false)
 
   return (
     <DanceCardBodyStyles>
@@ -54,8 +53,8 @@ function DanceCardBody({ dance }) {
         )}
       </dl>
     </DanceCardBodyStyles>
-  );
+  )
 }
 
-export default DanceCardBody;
-export { DanceCardBodyStyles, NoteItem, Dt, Dd, Notes };
+export default DanceCardBody
+export { DanceCardBodyStyles, NoteItem, Dt, Dd, Notes }

@@ -54,7 +54,6 @@ const SelectionWindowMain = styled.div`
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  color: ${(props) => props.theme.gray6};
 
   ul {
     display: flex;
@@ -69,7 +68,7 @@ const MobileFilterContainer = styled.div`
   border-radius: 5px;
   box-shadow: ${(props) => props.theme.dropShadow3};
   background: ${(props) => props.theme.gray2};
-  color: ${(props) => props.theme.blackText};
+  /* color: ${(props) => props.theme.blackText}; */
   padding: 0.5rem;
   display: grid;
   grid-template-columns: 1fr;

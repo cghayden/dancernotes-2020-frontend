@@ -11,7 +11,6 @@ const NewNavSidebarContainer = styled.div`
   flex-direction: column;
   border-right: 1px solid ${(props) => props.theme.gray3};
   overflow: scroll;
-  color: ${(props) => props.theme.gray6};
 
   ul {
     display: flex;

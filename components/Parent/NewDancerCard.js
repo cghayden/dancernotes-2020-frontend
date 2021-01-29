@@ -26,10 +26,7 @@ const DancerCardHeaderStyles = styled.div`
   display: flex;
   justify-content: space-between;
   align-content: center;
-  color: ${(props) => props.theme.gray6};
   h2 {
-    color: ${(props) => props.theme.gray6};
-
     font-size: 1.75rem;
     flex-grow: 1;
     align-self: flex-start;

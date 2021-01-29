@@ -23,7 +23,6 @@ const DanceCardTitle = styled.div`
   }
   p:last-child {
     font-style: italic;
-    color: ${(props) => props.theme.gray7};
   }
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     font-size: 1rem;
@@ -65,11 +64,14 @@ function formatTime(timeString) {
   }
 }
 
-const DanceCardHeader = ({ dance }) => {
+const DanceCardHeader = ({ dance, visibleDancersIds }) => {
   const { competitionMode } = useDisplayControls()
   return (
     <HeaderStyle>
-      <EnrolledDancers dancers={dance.dancers} />
+      <EnrolledDancers
+        visibleDancersIds={visibleDancersIds}
+        dancers={dance.dancers}
+      />
       <DanceCardTitle>
         <p>{dance.name}</p>
         <p>{dance.performanceName}</p>
