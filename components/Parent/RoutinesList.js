@@ -8,9 +8,10 @@ import Error from '../Error'
 import { useDisplayControls } from '../../components/Parent/ParentDisplayProvider'
 import SearchForStudio from '../SearchForStudio'
 import Card from '../../components/styles/Card'
+import DanceListingLink from './DanceListingLink'
 //query all dances where ids of parents dancers are in the ids of enrolled dancers for the dance.  On the server, filter out all dancers not belonging to this parent.const NoRoutinesDiv = styled.div`
 
-function RoutinesDisplay({ dancerIds }) {
+function RoutinesList({ dancerIds }) {
   const [showStudioSearch, setShowStudioSearch] = useState(false)
   const { hiddenIds, competitionMode } = useDisplayControls()
 
@@ -90,7 +91,7 @@ function RoutinesDisplay({ dancerIds }) {
 
   if (!competitionMode)
     return (
-      <ul>
+      <ul className='optionsList'>
         {allRs
           .sort((a, b) => {
             if (a.sortValue <= b.sortValue) {
@@ -117,8 +118,14 @@ function RoutinesDisplay({ dancerIds }) {
               ) {
                 return (
                   <li key={dance.id}>
-                    <Link href={`/parent/routines/${dance.id}`}>
-                      <a className='btn-selectionOption'>{dance.name}</a>
+                    <Link
+                      href={`/parent/routines/${dance.id}`}
+                      className='btn-selectionOption'
+                    >
+                      <a>
+                        <DanceListingLink dance={dance} />
+                      </a>
+                      {/* <a className='btn-selectionOption'>{dance.name}</a> */}
                     </Link>
                   </li>
                 )
@@ -136,7 +143,10 @@ function RoutinesDisplay({ dancerIds }) {
               return (
                 <li key={dance.id}>
                   <Link href={`/parent/routines/${dance.id}`}>
-                    <a className='btn-selectionOption'>{dance.name}</a>
+                    <a className='btn-selectionOption'>
+                      <DanceListingLink dance={dance} />
+                    </a>
+                    {/* <a className='btn-selectionOption'>{dance.name}</a> */}
                   </Link>
                 </li>
               )
@@ -205,4 +215,4 @@ function RoutinesDisplay({ dancerIds }) {
   }
 }
 
-export default RoutinesDisplay
+export default RoutinesList

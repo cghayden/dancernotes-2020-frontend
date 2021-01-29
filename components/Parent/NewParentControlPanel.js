@@ -17,9 +17,9 @@ const ControlPanelStyles = styled.div`
   /* z-index: 130; */
   overflow-y: auto;
 
-  @media (max-width: ${(props) => props.theme.largeScreen}) {
+  /* @media (max-width: ${(props) => props.theme.largeScreen}) {
     display: none;
-  }
+  } */
 `
 const CompModeToggler = styled.div`
   display: flex;
@@ -75,16 +75,17 @@ const GroupOfCheckboxes = styled.div`
     align-content: center;
     margin-bottom: 0.5rem;
   } */
+  flex-direction: column;
   @media (min-width: ${(props) => props.theme.largeScreen}) {
-    flex-direction: column;
   }
 `
 
 const StudioTogglerLabel = styled.label`
-  font-size: 18px;
+  font-size: 16px;
   padding-left: 0.5rem;
   font-weight: 600;
-  color: ${(props) => (props.disabled ? props.theme.disabledText : 'inherit')};
+  color: ${(props) =>
+    props.disabled ? props.theme.disabledText : props.theme.lighterBlack};
 `
 const DancerTogglerLabel = styled.label`
   padding-left: 0.5rem;
@@ -142,7 +143,7 @@ const ControlPanel = () => {
     <ControlPanelStyles showControlPanel={showControlPanel}>
       <ControlPanelHeading>
         <h3>Display:</h3>
-        <OffScreenControlsToggler outline='true' text='Close' />
+        {/* <OffScreenControlsToggler outline='true' text='Close' /> */}
       </ControlPanelHeading>
 
       {showHelp && (

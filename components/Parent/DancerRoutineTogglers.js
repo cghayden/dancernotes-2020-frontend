@@ -44,7 +44,8 @@ const TogglerLabel = styled.label`
   font-size: 18px;
   padding-left: 0.5rem;
   font-weight: 600;
-  color: ${(props) => (props.disabled ? props.theme.disabledText : 'inherit')};
+  color: ${(props) =>
+    props.disabled ? props.theme.disabledText : props.theme.lighterBlack};
 `
 const DancerTogglersContainer = styled.div`
   padding: 5px;

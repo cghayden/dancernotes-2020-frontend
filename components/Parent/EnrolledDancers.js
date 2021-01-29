@@ -12,32 +12,32 @@ const EnrolledDiv = styled.div`
   grid-column: 1;
 `
 const Avatar = styled.img`
-  width: 35px;
-  height: 35px;
+  width: 1.4em;
+  height: 1.4em;
   border-radius: 25px;
   margin: 0 0.25rem;
   object-fit: cover;
 
-  @media (min-width: ${(props) => props.theme.largeScreen}) {
+  /* @media (min-width: ${(props) => props.theme.largeScreen}) {
     width: 42px;
     height: 42px;
-  }
+  } */
 `
 
 const InactiveAvatar = styled(Avatar)`
-  width: 32px;
-  height: 32px;
+  width: 1.5em;
+  height: 1.5em;
   filter: grayscale(80%);
   border: 2px solid ${(props) => props.theme.gray3};
-  @media (min-width: ${(props) => props.theme.largeScreen}) {
+  /* @media (min-width: ${(props) => props.theme.largeScreen}) {
     width: 38px;
     height: 38px;
-  }
+  } */
 `
 
 const Initial = styled.div`
-  width: 35px;
-  height: 35px;
+  width: 1.4em;
+  height: 1.4em;
   border-radius: 25px;
   margin: 0 0.25rem;
   display: grid;
@@ -45,10 +45,13 @@ const Initial = styled.div`
   font-size: 1.4em;
   color: ${(props) => props.theme.indigo0};
   background-color: ${(props) => props.theme.indigo9};
-  @media (min-width: ${(props) => props.theme.largeScreen}) {
+  p {
+    font-size: 0.9em;
+  }
+  /* @media (min-width: ${(props) => props.theme.largeScreen}) {
     width: 42px;
     height: 42px;
-  }
+  } */
 `
 
 export default function EnrolledDancers({ dancers }) {

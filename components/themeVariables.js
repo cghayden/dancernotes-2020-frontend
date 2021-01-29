@@ -163,7 +163,8 @@ const theme = {
   yellow8: '#B44D12',
   yellow9: '#8D2B0B',
   // text Colors...
-  blackText: colors['gray8'],
+  blackText: colors['gray9'],
+  lighterBlack: colors['gray7'],
   highlightedText: colors['indigo9'],
   disabledText: colors['gray4'],
 

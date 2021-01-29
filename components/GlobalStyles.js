@@ -24,6 +24,10 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     color: ${theme.blackText};
   }
+  .optionsList li {
+  border-bottom: 3px solid ${(props) => props.theme.gray1};
+  
+}
   
   h1,
   h2,
@@ -83,7 +87,7 @@ const GlobalStyle = createGlobalStyle`
     border-radius: 5px;
     background: transparent;
     color: inherit;
-    min-width:100px;
+    min-width: 100px;
     font: inherit;
     padding: .5rem 1rem;
     cursor: pointer;
@@ -213,6 +217,7 @@ const GlobalStyle = createGlobalStyle`
   }
   
   &.btn-nav{
+    color: ${(props) => props.theme.blackText};
     border-radius: 0;
     margin: 0;
     padding: 10px 0.5rem 0.5rem 1rem;
@@ -234,7 +239,7 @@ const GlobalStyle = createGlobalStyle`
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
-
+    width:100%;
     &:hover {
       color: hsl(200, 95%, 95%);
       background: ${(props) => props.theme.indigo5};
@@ -266,9 +271,9 @@ const GlobalStyle = createGlobalStyle`
     color: ${theme.green8};
     font-weight: bold;
   }
-  .activeStudioNav{
+  a.activeStudioNav, button.activeStudioNav {
       background: ${theme.indigo6};
-      color: hsl(200, 95%,95%);
+      color: white;
       :focus{
         outline: 2px solid ${theme.indigo2};
         background: ${theme.indigo6};
@@ -346,6 +351,7 @@ main {
   @media screen and (min-width: ${(props) => props.theme.mediumScreen}) {
     display: none;
   }
+
 }
 
 `
