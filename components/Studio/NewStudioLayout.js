@@ -82,7 +82,7 @@ const MobileFilterContainer = styled.div`
   transition: all 0.5s;
   transform: translate3d(${(props) => (props.showFilter ? 0 : '110%')}, 0, 0);
 
-  @media screen and (min-width: ${(props) => props.theme.largeScreen}) {
+  @media screen and (min-width: ${(props) => props.theme.mediumScreen}) {
     display: none;
   }
 `

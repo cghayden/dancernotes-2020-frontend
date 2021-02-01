@@ -12,16 +12,15 @@ function routinePage() {
   const { data, error, loading } = useQuery(SINGLE_ROUTINE_QUERY, {
     variables: { id: routineId },
   })
-  console.log('data', data)
 
-  //   const routine = data ? singleRoutine : {}
+  // const routine = data ? singleRoutine : {}
 
   return (
     <NewParentLayout
       page={'Routines'}
       error={error}
       loading={loading}
-      selection={`${data?.singleRoutine.name}`}
+      selection={data ? `${data.singleRoutine.name}` : ''}
     >
       {/* {routine && <StudioDanceCard dance={danceClass} />} */}
       {data && <ParentDanceCard dance={data.singleRoutine} />}

@@ -10,20 +10,8 @@ import { SliderLabel, SliderInput, Slider } from '../styles/SmallSliderToggler'
 import MenuSvg from '../Icons/MenuSvg'
 
 const DancerControlsStyle = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: baseline;
-  /* padding-top: 0.5rem; */
-  /* background-color: ${(props) => props.theme.gray1}; */
-  /* border-radius: 5px; */
-  /* padding-bottom: 1rem; */
-  /* padding-right: 1rem; */
-  /* padding-left: 1rem; */
-  /* margin-bottom: 1rem; */
-  /* box-shadow: ${(props) => props.theme.dropShadow1}; */
-  /* input[type='checkbox'] {
-    margin-right: 0.5rem;
-  } */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
 `
 const DancerTogglerAndLabel = styled.div`
   display: grid;
@@ -50,10 +38,14 @@ const TogglerLabel = styled.label`
 const DancerTogglersContainer = styled.div`
   padding: 5px;
   margin-bottom: 8px;
-  background: ${(props) =>
-    props.isOpen ? props.theme.gray1 : props.theme.gray0};
+  background: ${(props) => props.theme.gray0};
   transition: all 0.2s;
   border-radius: ${(props) => props.theme.borderRadius};
+
+  @media (min-width: ${(props) => props.theme.mediumScreen}) {
+    background: ${(props) =>
+      props.isOpen ? props.theme.gray1 : props.theme.gray0};
+  }
 `
 function DisplayController({ dancer, hiddenIds, toggleId }) {
   const [isOpen, toggleIsOpen] = useState(false)
@@ -96,7 +88,6 @@ function DisplayController({ dancer, hiddenIds, toggleId }) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0, transition: { duration: 0.1 } }}
-            // ref={dropDownRef}
           >
             <DancerControlsStyle key={dancer.id}>
               {!dancer.allRoutines.length && (

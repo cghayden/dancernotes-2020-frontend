@@ -14,13 +14,20 @@ import XSvg from '../Icons/XSvg'
 import TrashIcon from '../Icons/TrashIcon'
 
 const ControlPanelStyles = styled.div`
-  background-color: ${(props) => props.theme.gray0};
-  /* z-index: 130; */
+  z-index: 130;
   overflow-y: auto;
-
-  /* @media (max-width: ${(props) => props.theme.largeScreen}) {
-    display: none;
-  } */
+  width: 100%;
+  display: grid;
+  grid-gap: 0.5rem;
+`
+const FilterHeaderStyles = styled.div`
+  grid-column: 1/-1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  h2 {
+    flex-grow: 1;
+  }
 `
 const CompModeToggler = styled.div`
   display: flex;
@@ -63,8 +70,10 @@ const CheckboxAndLabelContainer = styled.div`
   }
 `
 
-const TogglersContainer = styled.div`
-  /* border-bottom: 1px solid ${(props) => props.theme.gray3}; */
+const StudioTogglersContainer = styled.div`
+  background: ${(props) => props.theme.gray0};
+  border-radius: ${(props) => props.theme.borderRadius};
+  padding: 5px;
 `
 const GroupOfCheckboxes = styled.div`
   /* padding-bottom: 1.2rem; */
@@ -117,7 +126,7 @@ const DancerTogglerAndCheckboxes = styled.div`
   }
 `
 
-const ParentMobileControls = () => {
+const ParentMobileControls = ({ toggleFilter }) => {
   const [showHelp, setShowHelp] = useState(false)
   const { data, loading, error } = useQuery(PARENT_USER_QUERY)
 
@@ -125,11 +134,6 @@ const ParentMobileControls = () => {
     ? data.parentUser
     : { studios: [], customRoutines: [], dancers: [] }
 
-  // const [visited, setVisited] = useState();
-  // console.log("visited:", visited);
-  // useEffect(() => {
-  //   setVisited(window.localStorage.getItem("visited"));
-  // }, [setVisited]);
   const {
     hiddenIds,
     toggleId,
@@ -137,16 +141,39 @@ const ParentMobileControls = () => {
     toggleCompetitionMode,
     showControlPanel,
   } = useDisplayControls()
+  console.log('hiddenIds', hiddenIds)
   const independents = customRoutines.filter((routine) => !routine.studio)
   const hasStudioAndIndependents = studios.length > 0 && independents.length > 0
   const showAllStudioFilter = studios.length > 1 || hasStudioAndIndependents
   return (
     <ControlPanelStyles showControlPanel={showControlPanel}>
-      <ControlPanelHeading>
-        <h3>Display:</h3>
-        {/* <OffScreenControlsToggler outline='true' text='Close' /> */}
-      </ControlPanelHeading>
-
+      <FilterHeaderStyles>
+        <h2>Display:</h2>
+        <div>
+          <button
+            className='btn-icon'
+            title='Unlock Filter'
+            onClick={() => console.log('toggle filter lock')}
+          >
+            <LockedSvg w={'16'} h={'16'} />
+          </button>
+          <button
+            className='btn-icon'
+            title='Clear all filters'
+            onClick={() => toggleId('clear')}
+            title='Clear Filter'
+          >
+            <TrashIcon w={'16'} h={'16'} />
+          </button>
+          <button
+            className='btn-icon'
+            onClick={() => toggleFilter(false)}
+            title='Close Filter Menu'
+          >
+            <XSvg w={'16'} h={'16'} />
+          </button>
+        </div>
+      </FilterHeaderStyles>
       {showHelp && (
         <HelpDiv>
           <HelpMessage>
@@ -184,80 +211,62 @@ const ParentMobileControls = () => {
           <span>?</span>
         </button>
       </CompModeToggler> */}
-      {/* checkbox for each parent studio */}
-      <div>
-        {/* <h2>My Dancers</h2> */}
-        {/* <DancerTogglerAndCheckboxes> */}
-        {dancers.map(
-          (dancer) => (
-            <DancerRoutineTogglers
-              key={dancer.id}
-              dancer={dancer}
-              hiddenIds={hiddenIds}
-              toggleId={toggleId}
-            />
-          )
-
-          // <DisplayController key={dancer.id} dancer={dancer} />
-        )}
-      </div>
+      <>
+        {dancers.map((dancer) => (
+          <DancerRoutineTogglers
+            key={dancer.id}
+            dancer={dancer}
+            hiddenIds={hiddenIds}
+            toggleId={toggleId}
+          />
+        ))}
+      </>
       {showAllStudioFilter && (
-        <div>
-          <TogglersContainer>
-            <h2>My Studios</h2>
-            <GroupOfCheckboxes>
-              {studios.map((studio) => (
-                <CheckboxAndLabelContainer key={studio.id}>
-                  <SliderLabel
-                    id={`${studio.studioName}-label`}
-                    htmlFor={`${studio.studioName}-toggler`}
-                  >
-                    <SliderInput
-                      aria-labelledby={`${studio.studioName}-label`}
-                      name={`${studio.studioName}-toggler`}
-                      id={`${studio.studioName}-toggler`}
-                      type='checkbox'
-                      checked={!hiddenIds.includes(studio.id)}
-                      onChange={() => toggleId(studio.id)}
-                    />
-                    <Slider checked={!hiddenIds.includes(studio.id)}></Slider>
-                  </SliderLabel>
-
-                  <StudioTogglerLabel disabled={hiddenIds.includes(studio.id)}>
-                    {studio.studioName}
-                  </StudioTogglerLabel>
-                  {/* <input
-        checked={!hiddenIds.includes(studio.id)}
-        onChange={() => toggleId(studio.id)}
-        type='checkbox'
-        id={studio.studioName}
-        name={studio.studioName}
-        value={studio.studioName}
-        /> */}
-                </CheckboxAndLabelContainer>
-              ))}
-              {independents.length > 0 && (
-                <div>
-                  <input
-                    checked={!hiddenIds.includes('all')}
-                    onChange={() => {
-                      toggleId('all')
-                    }}
+        <StudioTogglersContainer>
+          <h2>My Studios</h2>
+          <GroupOfCheckboxes>
+            {studios.map((studio) => (
+              <CheckboxAndLabelContainer key={studio.id}>
+                <SliderLabel
+                  id={`${studio.studioName}-label`}
+                  htmlFor={`${studio.studioName}-toggler`}
+                >
+                  <SliderInput
+                    aria-labelledby={`${studio.studioName}-label`}
+                    name={`${studio.studioName}-toggler`}
+                    id={`${studio.studioName}-toggler`}
                     type='checkbox'
-                    id={'allIndependent'}
-                    name={'allIndependent'}
-                    value={'allIndependent'}
+                    checked={!hiddenIds.includes(studio.id)}
+                    onChange={() => toggleId(studio.id)}
                   />
-                  <StudioTogglerLabel htmlFor={'allIndependent'}>
-                    Independents
-                  </StudioTogglerLabel>
-                </div>
-              )}
-            </GroupOfCheckboxes>
-          </TogglersContainer>
-        </div>
+                  <Slider checked={!hiddenIds.includes(studio.id)}></Slider>
+                </SliderLabel>
+
+                <StudioTogglerLabel disabled={hiddenIds.includes(studio.id)}>
+                  {studio.studioName}
+                </StudioTogglerLabel>
+              </CheckboxAndLabelContainer>
+            ))}
+            {independents.length > 0 && (
+              <div>
+                <input
+                  checked={!hiddenIds.includes('all')}
+                  onChange={() => {
+                    toggleId('all')
+                  }}
+                  type='checkbox'
+                  id={'allIndependent'}
+                  name={'allIndependent'}
+                  value={'allIndependent'}
+                />
+                <StudioTogglerLabel htmlFor={'allIndependent'}>
+                  Independents
+                </StudioTogglerLabel>
+              </div>
+            )}
+          </GroupOfCheckboxes>
+        </StudioTogglersContainer>
       )}
-      {/* </DancerTogglerAndCheckboxes> */}
     </ControlPanelStyles>
   )
 }

@@ -4,8 +4,7 @@ import { AnimatePresence, motion, AnimateSharedLayout } from 'framer-motion'
 import Link from 'next/link'
 import HomeSvg from '../Icons/HomeSvg'
 import PlusSvg from '../Icons/PlusSvg'
-import { FilterContext } from '../Studio/FilterContext'
-import FilterChoicesBreadcrumb from '../Studio/FilterChoicesBreadcrumb'
+// import FilterChoicesBreadcrumb from '../Studio/FilterChoicesBreadcrumb'
 
 const BreadcrumbStyles = styled(motion.div)`
   display: flex;
@@ -26,15 +25,14 @@ const BreadcrumbStyles = styled(motion.div)`
   }
 `
 
-function Breadcrumb({ page = '', selection }) {
-  const { filter } = useContext(FilterContext)
+function Breadcrumb({ page = '', selection = '' }) {
+  // const { filter } = useContext(FilterContext)
 
   // home > page > selection or filters
   return (
-    <BreadcrumbStyles layout>
+    <BreadcrumbStyles>
       <Link href={'/parent/home'}>
         <motion.a
-          layout
           className='btn-icon'
           alt='Home'
           style={{ marginBottom: '-4px' }}
@@ -43,27 +41,23 @@ function Breadcrumb({ page = '', selection }) {
           <span className='sr-only'>Home</span>
         </motion.a>
       </Link>
-      <motion.span layout>{'>'}</motion.span>
+      <motion.span>{'>'}</motion.span>
       <Link href={`/parent/${page.toLowerCase()}`}>
         <a>{page}</a>
       </Link>
       <AnimatePresence>
         {/* selection? render selection name */}
-        {selection ? (
+        {selection && (
           <motion.div
-            layout
             style={{ display: 'flex' }}
             key={'caret'}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <motion.span layout>{'>'}</motion.span>
-            <motion.p layout>{selection}</motion.p>
+            <motion.span>{'>'}</motion.span>
+            <motion.p>{selection}</motion.p>
           </motion.div>
-        ) : (
-          // or
-          <FilterChoicesBreadcrumb filter={filter} />
         )}
       </AnimatePresence>
     </BreadcrumbStyles>

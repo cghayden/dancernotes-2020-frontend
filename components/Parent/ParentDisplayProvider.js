@@ -1,25 +1,31 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext } from 'react'
 
-const ParentDisplayContext = createContext(null);
+const ParentDisplayContext = createContext(null)
 
 function ParentDisplayProvider({ children }) {
-  const [hiddenIds, setHiddenIds] = useState([]);
-  const [showControlPanel, setshowControlPanel] = useState(false);
-  const [competitionMode, setcompetitionMode] = useState(false);
+  const [hiddenIds, setHiddenIds] = useState([])
+  const [showControlPanel, setshowControlPanel] = useState(false)
+  const [competitionMode, setcompetitionMode] = useState(false)
 
   function toggleId(id) {
+    if (id === 'clear') {
+      setHiddenIds([])
+      return
+    }
     if (hiddenIds.includes(id)) {
-      setHiddenIds(hiddenIds => hiddenIds.filter(hiddenId => hiddenId !== id));
+      setHiddenIds((hiddenIds) =>
+        hiddenIds.filter((hiddenId) => hiddenId !== id)
+      )
     } else {
-      setHiddenIds([...hiddenIds, id]);
+      setHiddenIds([...hiddenIds, id])
     }
   }
 
   function toggleControlPanel() {
-    setshowControlPanel(!showControlPanel);
+    setshowControlPanel(!showControlPanel)
   }
   function toggleCompetitionMode() {
-    setcompetitionMode(!competitionMode);
+    setcompetitionMode(!competitionMode)
   }
 
   return (
@@ -30,18 +36,18 @@ function ParentDisplayProvider({ children }) {
         competitionMode,
         toggleCompetitionMode,
         hiddenIds,
-        toggleId
+        toggleId,
       }}
     >
       {children}
     </ParentDisplayContext.Provider>
-  );
+  )
 }
 
 function useDisplayControls() {
-  const all = useContext(ParentDisplayContext);
-  return all;
+  const all = useContext(ParentDisplayContext)
+  return all
 }
 
-export default ParentDisplayProvider;
-export { ParentDisplayContext, useDisplayControls };
+export default ParentDisplayProvider
+export { ParentDisplayContext, useDisplayControls }

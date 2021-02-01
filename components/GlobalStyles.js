@@ -108,7 +108,7 @@ const GlobalStyle = createGlobalStyle`
 &.btn-icon{
   min-width:initial;
   text-align:center;
-  /* padding: .25rem .5rem 0; */
+  padding: .25rem .5rem;
 }
 &.link-item{
     border-radius: 0;

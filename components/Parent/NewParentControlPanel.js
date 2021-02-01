@@ -8,10 +8,11 @@ import SliderToggler from '../styles/SliderToggler'
 import { SliderLabel, SliderInput, Slider } from '../styles/SmallSliderToggler'
 import { useDisplayControls } from './ParentDisplayProvider'
 import OffScreenControlsToggler from './OffscreenControlsToggler'
-import { ControlPanelHeading } from '../styles/ControlPanelStyles'
 
 import DancerRoutineTogglers from './DancerRoutineTogglers'
 import CompModeToggler from './CompModeToggler'
+import LockedSvg from '../Icons/LockedSvg'
+import TrashIcon from '../Icons/TrashIcon'
 
 const ControlPanelStyles = styled.div`
   background-color: ${(props) => props.theme.gray0};
@@ -21,6 +22,19 @@ const ControlPanelStyles = styled.div`
   /* @media (max-width: ${(props) => props.theme.largeScreen}) {
     display: none;
   } */
+`
+const ControlPanelHeading = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  h3 {
+    flex-grow: 1;
+  }
+`
+
+const FilterButtons = styled.div`
+  display: flex;
 `
 
 const HelpMessage = styled.p`
@@ -46,22 +60,13 @@ const CheckboxAndLabelContainer = styled.div`
   }
 `
 
-const TogglersContainer = styled.div`
+const StudioTogglersContainer = styled.div`
   /* border-bottom: 1px solid ${(props) => props.theme.gray3}; */
 `
 const GroupOfCheckboxes = styled.div`
-  /* padding-bottom: 1.2rem; */
-  /* padding-top: 1rem; */
   display: flex;
   justify-content: space-around;
-  /* div {
-    display: flex;
-    align-content: center;
-    margin-bottom: 0.5rem;
-  } */
   flex-direction: column;
-  @media (min-width: ${(props) => props.theme.largeScreen}) {
-  }
 `
 
 const StudioTogglerLabel = styled.label`
@@ -108,11 +113,6 @@ const ControlPanel = () => {
     ? data.parentUser
     : { studios: [], customRoutines: [], dancers: [] }
 
-  // const [visited, setVisited] = useState();
-  // console.log("visited:", visited);
-  // useEffect(() => {
-  //   setVisited(window.localStorage.getItem("visited"));
-  // }, [setVisited]);
   const {
     hiddenIds,
     toggleId,
@@ -127,14 +127,23 @@ const ControlPanel = () => {
     <ControlPanelStyles showControlPanel={showControlPanel}>
       <ControlPanelHeading>
         <h3>Display:</h3>
-        {/* <button
-        type='button'
-        className='btn-danger-outline btn-icon'
-        onClick={() => setShowHelp(!showHelp)}
-      >
-        <span>?</span>
-      </button> */}
-        {/* <OffScreenControlsToggler outline='true' text='Close' /> */}
+        <FilterButtons>
+          <button
+            className='btn-icon'
+            title='Unlock Filter'
+            onClick={() => console.log('toggle filter lock')}
+          >
+            <LockedSvg w={'16'} h={'16'} />
+          </button>
+          <button
+            className='btn-icon'
+            title='Clear all filters'
+            onClick={() => toggleId('clear')}
+            title='Clear Filter'
+          >
+            <TrashIcon w={'16'} h={'16'} />
+          </button>
+        </FilterButtons>
       </ControlPanelHeading>
 
       {/* {showHelp && (
@@ -178,7 +187,7 @@ const ControlPanel = () => {
       </div>
       {showAllStudioFilter && (
         <div>
-          <TogglersContainer>
+          <StudioTogglersContainer>
             <h2>My Studios</h2>
             <GroupOfCheckboxes>
               {studios.map((studio) => (
@@ -229,7 +238,7 @@ const ControlPanel = () => {
                 </div>
               )}
             </GroupOfCheckboxes>
-          </TogglersContainer>
+          </StudioTogglersContainer>
         </div>
       )}
       {/* </DancerTogglerAndCheckboxes> */}

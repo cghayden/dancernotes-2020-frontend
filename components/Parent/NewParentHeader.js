@@ -23,7 +23,9 @@ const Header = styled.header`
 `
 
 const MobileNavContainer = styled.div`
-  background: ${(props) => props.theme.gray2};
+  background: ${(props) => props.theme.gray1};
+  box-shadow: ${(props) => props.theme.dropShadow3};
+
   /* color: ${(props) => props.theme.blackText}; */
   padding: 0.5rem;
   display: grid;

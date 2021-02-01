@@ -68,7 +68,6 @@ const MobileFilterContainer = styled.div`
   border-radius: 5px;
   box-shadow: ${(props) => props.theme.dropShadow3};
   background: ${(props) => props.theme.gray2};
-  /* color: ${(props) => props.theme.blackText}; */
   padding: 0.5rem;
   display: grid;
   grid-template-columns: 1fr;
@@ -83,7 +82,7 @@ const MobileFilterContainer = styled.div`
   transition: all 0.5s;
   transform: translate3d(${(props) => (props.showFilter ? 0 : '110%')}, 0, 0);
 
-  @media screen and (min-width: ${(props) => props.theme.largeScreen}) {
+  @media screen and (min-width: ${(props) => props.theme.mediumScreen}) {
     display: none;
   }
 `
@@ -113,7 +112,7 @@ export default function NewParentLayout({
           )}
         </div>
         <MobileFilterContainer showFilter={showFilter}>
-          <div>control panel here</div>
+          {/* <h2>Display Controls</h2> */}
           <ParentMobileControls
             page={page}
             createLink={createLink}

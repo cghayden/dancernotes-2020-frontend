@@ -40,7 +40,7 @@ function StudioRoutinesCheckboxes({
   const disabled = hiddenIds.includes(studioId) || hiddenIds.includes(dancerId)
 
   return (
-    <>
+    <div>
       <StudioHeading disabled={disabled}>{studioName}</StudioHeading>
       <GroupOfCheckboxes>
         {studioRoutines.map((routine) => (
@@ -60,7 +60,7 @@ function StudioRoutinesCheckboxes({
           </CheckboxAndLabelContainer>
         ))}
       </GroupOfCheckboxes>
-    </>
+    </div>
   )
 }
 
