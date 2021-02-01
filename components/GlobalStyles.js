@@ -351,7 +351,17 @@ main {
   @media screen and (min-width: ${(props) => props.theme.mediumScreen}) {
     display: none;
   }
+}
 
+/* font utilities */
+.font12{
+  font-size: 12px;
+}
+.font14{
+  font-size: 14px;
+}
+.font18{
+  font-size: 18px;
 }
 
 `

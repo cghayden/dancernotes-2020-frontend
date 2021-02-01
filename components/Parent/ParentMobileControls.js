@@ -2,16 +2,16 @@ import { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 
 import { PARENT_USER_QUERY } from './Queries'
-
 import styled from 'styled-components'
 import SliderToggler from '../styles/SliderToggler'
 import { SliderLabel, SliderInput, Slider } from '../styles/SmallSliderToggler'
 import { useDisplayControls } from './ParentDisplayProvider'
 import OffScreenControlsToggler from './OffscreenControlsToggler'
 import { ControlPanelHeading } from '../styles/ControlPanelStyles'
-
 import DancerRoutineTogglers from './DancerRoutineTogglers'
-import CompModeToggler from './CompModeToggler'
+import LockedSvg from '../Icons/LockedSvg'
+import XSvg from '../Icons/XSvg'
+import TrashIcon from '../Icons/TrashIcon'
 
 const ControlPanelStyles = styled.div`
   background-color: ${(props) => props.theme.gray0};
@@ -21,6 +21,23 @@ const ControlPanelStyles = styled.div`
   /* @media (max-width: ${(props) => props.theme.largeScreen}) {
     display: none;
   } */
+`
+const CompModeToggler = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  p {
+    display: inline-block;
+    padding-right: 10px;
+  }
+  button {
+    margin-top: 0;
+    margin-left: auto;
+    border-radius: 50%;
+    font-size: 16px;
+    padding: 0px 7px;
+  }
 `
 
 const HelpMessage = styled.p`
@@ -100,8 +117,8 @@ const DancerTogglerAndCheckboxes = styled.div`
   }
 `
 
-const ControlPanel = () => {
-  // const [showHelp, setShowHelp] = useState(false)
+const ParentMobileControls = () => {
+  const [showHelp, setShowHelp] = useState(false)
   const { data, loading, error } = useQuery(PARENT_USER_QUERY)
 
   const { studios, customRoutines, dancers } = data
@@ -127,17 +144,10 @@ const ControlPanel = () => {
     <ControlPanelStyles showControlPanel={showControlPanel}>
       <ControlPanelHeading>
         <h3>Display:</h3>
-        {/* <button
-        type='button'
-        className='btn-danger-outline btn-icon'
-        onClick={() => setShowHelp(!showHelp)}
-      >
-        <span>?</span>
-      </button> */}
         {/* <OffScreenControlsToggler outline='true' text='Close' /> */}
       </ControlPanelHeading>
 
-      {/* {showHelp && (
+      {showHelp && (
         <HelpDiv>
           <HelpMessage>
             Control what routines are displayed by selecting a dance
@@ -158,7 +168,22 @@ const ControlPanel = () => {
             Dismiss
           </button>
         </HelpDiv>
-      )} */}
+      )}
+      {/* <CompModeToggler>
+        <p>Competiton View:</p>
+
+        <SliderToggler
+          competitionMode={competitionMode}
+          toggleCompetitionMode={toggleCompetitionMode}
+        />
+        <button
+          type='button'
+          className='btn-danger-outline btn-icon'
+          onClick={() => setShowHelp(!showHelp)}
+        >
+          <span>?</span>
+        </button>
+      </CompModeToggler> */}
       {/* checkbox for each parent studio */}
       <div>
         {/* <h2>My Dancers</h2> */}
@@ -208,7 +233,7 @@ const ControlPanel = () => {
         id={studio.studioName}
         name={studio.studioName}
         value={studio.studioName}
-      /> */}
+        /> */}
                 </CheckboxAndLabelContainer>
               ))}
               {independents.length > 0 && (
@@ -233,10 +258,9 @@ const ControlPanel = () => {
         </div>
       )}
       {/* </DancerTogglerAndCheckboxes> */}
-      <CompModeToggler />
     </ControlPanelStyles>
   )
 }
 
-export default ControlPanel
+export default ParentMobileControls
 export { ControlPanelStyles, GroupOfCheckboxes, CheckboxAndLabelContainer }

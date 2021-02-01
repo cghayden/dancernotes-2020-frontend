@@ -19,6 +19,9 @@ const DanceCardTitle = styled.div`
   font-size: 0.875rem;
   grid-column: 1 / -1;
   grid-row: 1;
+  p {
+    text-transform: none;
+  }
   p:first-child {
     font-weight: 600;
     font-size: larger;
@@ -30,7 +33,7 @@ const DanceCardTitle = styled.div`
   }
   p:last-child {
     color: ${(props) => props.theme.gray7};
-    font-size: 0.75em;
+    font-size: 1em;
   }
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     font-size: 1rem;

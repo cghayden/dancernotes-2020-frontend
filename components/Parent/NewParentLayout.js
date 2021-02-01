@@ -7,7 +7,7 @@ import NewParentNav from './NewParentNav'
 import ParentBreadcrumb from './ParentBreadcrumb'
 import ActiveFilterChoices from '../Studio/ActiveFilterChoices'
 import FilterSvg from '../Icons/FilterSvg'
-// import MobileFilter from './MobileFilter'
+import ParentMobileControls from './ParentMobileControls'
 
 import ParentSubNavFilter from './ParentSubNavFilter'
 
@@ -50,7 +50,7 @@ const SelectionWindowMain = styled.div`
   background: ${(props) => props.theme.gray0};
   height: 100vh;
   padding-bottom: 50vh;
-  padding-top: 1rem;
+  /* padding-top: 1rem; */
   display: flex;
   flex-direction: column;
   overflow: scroll;
@@ -112,13 +112,14 @@ export default function NewParentLayout({
             <ParentSubNavFilter page={page} createLink={createLink} />
           )}
         </div>
-        {/* <MobileFilterContainer showFilter={showFilter}>
-          <MobileFilter
+        <MobileFilterContainer showFilter={showFilter}>
+          <div>control panel here</div>
+          <ParentMobileControls
             page={page}
             createLink={createLink}
             toggleFilter={toggleFilter}
           />
-        </MobileFilterContainer> */}
+        </MobileFilterContainer>
         <SelectionWindow>
           <SelectionWindowHeader>
             <ParentBreadcrumb page={page} selection={selection} />
