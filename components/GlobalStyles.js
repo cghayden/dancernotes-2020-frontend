@@ -243,6 +243,10 @@ const GlobalStyle = createGlobalStyle`
     &:hover {
       color: hsl(200, 95%, 95%);
       background: ${(props) => props.theme.indigo5};
+      p{
+        color: hsl(200, 95%, 95%);
+
+      }
     }
   }
   }
