@@ -63,19 +63,19 @@ export default function QuickCreateOptions() {
         {isOpen && (
           <MotionUl variants={ulVariants}>
             <motion.li variants={linkVariants}>
-              <a href='/studio/classes/createClass'>Add a Dance Class</a>
+              <a href='/parent/routines/createRoutine'>Create a Routine</a>
             </motion.li>
             <motion.li variants={linkVariants}>
-              <a href='/studio/events/createEvent'>Add an Event</a>
+              <a href='/parent/events/createEvent'>Add an Event</a>
             </motion.li>
             <motion.li variants={linkVariants}>
-              <a href='/studio/hairstyles/createHairStyle'>Add a Hairstyle</a>
+              <a href='/parent/createHairstyle'>Add a Hairstyle</a>
             </motion.li>
             <motion.li variants={linkVariants}>
-              <a href='/studio/makeup/createMakeupSet'>Add a Makeup Set</a>
+              <a href='/parent/createMakeup'>Add a Makeup Set</a>
             </motion.li>
             <motion.li variants={linkVariants}>
-              <a href='/studio/dancers/#createDancer'>Add a Dancer</a>
+              <a href='/parent/createDancer'>Add a Dancer</a>
             </motion.li>
           </MotionUl>
         )}
