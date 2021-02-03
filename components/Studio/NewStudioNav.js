@@ -1,57 +1,12 @@
-import styled from 'styled-components'
 import { useQuery } from '@apollo/react-hooks'
 import StyledLink from '../StyledLink'
 import { STUDIO_REQUESTS_QUERY } from './Queries'
 import RequestsCount from './RequestsCount'
-
-const NewNavSidebarContainer = styled.div`
-  background: ${(props) => props.theme.gray0};
-  width: 18vw;
-  min-width: 160px;
-  max-width: 230px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid ${(props) => props.theme.gray3};
-  overflow: scroll;
-
-  ul {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-size: 16px;
-    letter-spacing: 0.02rem;
-  }
-`
-
-const SubNav = styled(NewNavSidebarContainer)``
-
-const NavSectionHeading = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding: 0.5rem 0;
-
-  h2 {
-    color: ${(props) => props.theme.black};
-  }
-  a,
-  button {
-    padding: 0;
-    margin: 0 0.5rem 0 auto;
-  }
-`
-
-const NavSection = styled.div`
-  padding: 0 0.5rem;
-
-  &:last-child {
-    padding-bottom: 40vh;
-    @media screen and (max-width: ${(props) => props.theme.mediumScreen}) {
-      padding-bottom: 0;
-    }
-  }
-`
+import {
+  NewNavSidebarContainer,
+  NavSectionHeading,
+  NavSection,
+} from '../styles/NewNavStyles'
 
 export default function NewStudioNav() {
   const { data, loading, error } = useQuery(STUDIO_REQUESTS_QUERY)
@@ -146,5 +101,3 @@ export default function NewStudioNav() {
     </NewNavSidebarContainer>
   )
 }
-
-export { NavSection, NewNavSidebarContainer, SubNav, NavSectionHeading }

@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { AnimatePresence, motion, useCycle } from 'framer-motion'
+import ParentQuickMenu from './ParentQuickMenu'
 
 const OptionsLinksContainer = styled(motion.div)`
   position: absolute;
@@ -22,12 +23,6 @@ const Background = styled(motion.div)`
   background: #fff;
   box-shadow: ${(props) => props.theme.dropShadow1};
   border-radius: ${(props) => props.theme.borderRadius};
-`
-
-const MotionUl = styled(motion.ul)`
-  padding: 25px;
-  position: absolute;
-  width: 230px;
 `
 
 const sidebarVariants = {
@@ -59,27 +54,7 @@ export default function QuickCreateOptions() {
       animate={isOpen ? 'open' : 'closed'}
     >
       <Background variants={sidebarVariants} />
-      <AnimatePresence>
-        {isOpen && (
-          <MotionUl variants={ulVariants}>
-            <motion.li variants={linkVariants}>
-              <a href='/parent/routines/createRoutine'>Create a Routine</a>
-            </motion.li>
-            <motion.li variants={linkVariants}>
-              <a href='/parent/events/createEvent'>Add an Event</a>
-            </motion.li>
-            <motion.li variants={linkVariants}>
-              <a href='/parent/createHairstyle'>Add a Hairstyle</a>
-            </motion.li>
-            <motion.li variants={linkVariants}>
-              <a href='/parent/createMakeup'>Add a Makeup Set</a>
-            </motion.li>
-            <motion.li variants={linkVariants}>
-              <a href='/parent/createDancer'>Add a Dancer</a>
-            </motion.li>
-          </MotionUl>
-        )}
-      </AnimatePresence>
+      <AnimatePresence>{isOpen && <ParentQuickMenu />}</AnimatePresence>
       <MenuToggle
         animate={isOpen ? 'open' : 'closed'}
         toggle={() => toggleOpen()}
@@ -144,21 +119,3 @@ const MenuToggle = ({ toggle, animate }) => (
     </SVGDiv>
   </button>
 )
-
-const linkVariants = {
-  open: {
-    opacity: 1,
-  },
-  closed: {
-    opacity: 0,
-  },
-}
-
-const ulVariants = {
-  open: {
-    transition: { staggerChildren: 0.07, delayChildren: 0.2 },
-  },
-  closed: {
-    transition: { staggerChildren: 0.05, staggerDirection: -1 },
-  },
-}

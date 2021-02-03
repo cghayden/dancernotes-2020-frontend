@@ -2,7 +2,11 @@ import { useContext } from 'react'
 import styled from 'styled-components'
 
 import { FilterContext } from './FilterContext'
-import { SubNav, NavSection, NavSectionHeading } from './NewStudioNav'
+import {
+  NewNavSidebarContainer,
+  NavSection,
+  NavSectionHeading,
+} from '../styles/NewNavStyles'
 
 const ActiveFilterSubNavList = styled.ul`
   li {
@@ -16,7 +20,7 @@ function ActiveFilterChoices() {
   const activeFilterChoices = Object.values(filter).flat()
 
   return (
-    <SubNav>
+    <NewNavSidebarContainer>
       <NavSection>
         <NavSectionHeading>
           <h2>Active Filters:</h2>
@@ -27,7 +31,7 @@ function ActiveFilterChoices() {
           ))}
         </ActiveFilterSubNavList>
       </NavSection>
-    </SubNav>
+    </NewNavSidebarContainer>
   )
 }
 

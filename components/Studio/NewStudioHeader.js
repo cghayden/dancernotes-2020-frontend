@@ -2,8 +2,9 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import MenuSvg from '../Icons/MenuSvg'
 import NewStudioNav from './NewStudioNav'
-import OptionsDropDown from './OptionsDropDown'
 import QuickCreateOptions from './QuickCreateOptions'
+import { MobileNavContainer } from '../styles//MobileNavContainer'
+import StaticStudioQuickMenu from './StaticStudioQuickMenu'
 
 const Header = styled.header`
   background: ${(props) => props.theme.gray5};
@@ -24,32 +25,11 @@ const Header = styled.header`
   }
 `
 
-const MobileNavContainer = styled.div`
-  background: ${(props) => props.theme.gray2};
-  /* color: ${(props) => props.theme.blackText}; */
-  padding: 0.5rem;
-  display: grid;
-  grid-template-columns: 1fr;
-  place-items: center;
-  width: 90vw;
-  max-width: 350px;
-  position: fixed;
-  top: 60px;
-  right: 0;
-  height: auto;
-  overflow: hidden;
-  z-index: 101;
-  @media screen and (min-width: ${(props) => props.theme.largeScreen}) {
-    display: none;
-  }
-`
-
 export default function NewStudioHeader() {
   const [mobileNav, toggleMobileNav] = useState(false)
   return (
     <Header>
       <input type='text' placeholder='Search...' className='search' />
-      {/* <OptionsDropDown /> */}
       <QuickCreateOptions />
       <button
         className='hide-gtLarge btn-icon'
@@ -62,6 +42,7 @@ export default function NewStudioHeader() {
       {mobileNav && (
         <MobileNavContainer>
           <NewStudioNav />
+          <StaticStudioQuickMenu />
         </MobileNavContainer>
       )}
       {/* <QuickCreateOptions /> */}

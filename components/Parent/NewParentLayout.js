@@ -53,7 +53,7 @@ const SelectionWindowMain = styled.div`
   /* padding-top: 1rem; */
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow: auto;
 
   ul {
     display: flex;
@@ -112,7 +112,6 @@ export default function NewParentLayout({
           )}
         </div>
         <MobileFilterContainer showFilter={showFilter}>
-          {/* <h2>Display Controls</h2> */}
           <ParentMobileControls
             page={page}
             createLink={createLink}

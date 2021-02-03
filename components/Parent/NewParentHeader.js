@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import MenuSvg from '../Icons/MenuSvg'
 import NewParentNav from './NewParentNav'
 import QuickCreateOptions from './QuickCreateOptions'
-
+import StaticParentQuickMenu from './StaticParentQuickMenu'
+import { MobileNavContainer } from '../styles//MobileNavContainer'
 const Header = styled.header`
   background: ${(props) => props.theme.gray5};
   display: flex;
@@ -23,29 +24,7 @@ const Header = styled.header`
   }
 `
 
-const MobileNavContainer = styled.div`
-  background: ${(props) => props.theme.gray1};
-  box-shadow: ${(props) => props.theme.dropShadow3};
-
-  /* color: ${(props) => props.theme.blackText}; */
-  padding: 0.5rem;
-  display: grid;
-  grid-template-columns: 1fr;
-  place-items: center;
-  width: 90vw;
-  max-width: 350px;
-  position: fixed;
-  top: 60px;
-  right: 0;
-  height: auto;
-  overflow: hidden;
-  z-index: 101;
-  @media screen and (min-width: ${(props) => props.theme.largeScreen}) {
-    display: none;
-  }
-`
-
-export default function NewStudioHeader() {
+export default function NewParentHeader() {
   const [mobileNav, toggleMobileNav] = useState(false)
   return (
     <Header>
@@ -62,10 +41,9 @@ export default function NewStudioHeader() {
       {mobileNav && (
         <MobileNavContainer>
           <NewParentNav />
-          {/* <QuickActionLinks/> */}
+          <StaticParentQuickMenu />
         </MobileNavContainer>
       )}
-      {/* <QuickCreateOptions /> */}
     </Header>
   )
 }

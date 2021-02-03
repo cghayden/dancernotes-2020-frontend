@@ -16,12 +16,7 @@ import TrashIcon from '../Icons/TrashIcon'
 
 const ControlPanelStyles = styled.div`
   background-color: ${(props) => props.theme.gray0};
-  /* z-index: 130; */
   overflow-y: auto;
-
-  /* @media (max-width: ${(props) => props.theme.largeScreen}) {
-    display: none;
-  } */
 `
 const ControlPanelHeading = styled.div`
   display: flex;
@@ -60,9 +55,7 @@ const CheckboxAndLabelContainer = styled.div`
   }
 `
 
-const StudioTogglersContainer = styled.div`
-  /* border-bottom: 1px solid ${(props) => props.theme.gray3}; */
-`
+const StudioTogglersContainer = styled.div``
 const GroupOfCheckboxes = styled.div`
   display: flex;
   justify-content: space-around;
@@ -145,45 +138,15 @@ const ControlPanel = () => {
           </button>
         </FilterButtons>
       </ControlPanelHeading>
-
-      {/* {showHelp && (
-        <HelpDiv>
-          <HelpMessage>
-            Control what routines are displayed by selecting a dance
-            individually, or clicking on a dancer's name/image to toggle all of
-            his/her dances.
-          </HelpMessage>
-          <HelpMessage>
-            Competition View will show only those routines that have a
-            competition entry number, sorted by entry number/ performance time
-          </HelpMessage>
-          <button
-            type='button'
-            className='btn-danger-outline'
-            onClick={() => {
-              setShowHelp(false)
-            }}
-          >
-            Dismiss
-          </button>
-        </HelpDiv>
-      )} */}
-      {/* checkbox for each parent studio */}
       <div>
-        {/* <h2>My Dancers</h2> */}
-        {/* <DancerTogglerAndCheckboxes> */}
-        {dancers.map(
-          (dancer) => (
-            <DancerRoutineTogglers
-              key={dancer.id}
-              dancer={dancer}
-              hiddenIds={hiddenIds}
-              toggleId={toggleId}
-            />
-          )
-
-          // <DisplayController key={dancer.id} dancer={dancer} />
-        )}
+        {dancers.map((dancer) => (
+          <DancerRoutineTogglers
+            key={dancer.id}
+            dancer={dancer}
+            hiddenIds={hiddenIds}
+            toggleId={toggleId}
+          />
+        ))}
       </div>
       {showAllStudioFilter && (
         <div>
@@ -210,14 +173,6 @@ const ControlPanel = () => {
                   <StudioTogglerLabel disabled={hiddenIds.includes(studio.id)}>
                     {studio.studioName}
                   </StudioTogglerLabel>
-                  {/* <input
-        checked={!hiddenIds.includes(studio.id)}
-        onChange={() => toggleId(studio.id)}
-        type='checkbox'
-        id={studio.studioName}
-        name={studio.studioName}
-        value={studio.studioName}
-      /> */}
                 </CheckboxAndLabelContainer>
               ))}
               {independents.length > 0 && (
@@ -241,11 +196,37 @@ const ControlPanel = () => {
           </StudioTogglersContainer>
         </div>
       )}
-      {/* </DancerTogglerAndCheckboxes> */}
-      <CompModeToggler />
+      {/* <CompModeToggler /> */}
     </ControlPanelStyles>
   )
 }
 
 export default ControlPanel
 export { ControlPanelStyles, GroupOfCheckboxes, CheckboxAndLabelContainer }
+{
+  /* {showHelp && (
+        <HelpDiv>
+          <HelpMessage>
+            Control what routines are displayed by selecting a dance
+            individually, or clicking on a dancer's name/image to toggle all of
+            his/her dances.
+          </HelpMessage>
+          <HelpMessage>
+            Competition View will show only those routines that have a
+            competition entry number, sorted by entry number/ performance time
+          </HelpMessage>
+          <button
+            type='button'
+            className='btn-danger-outline'
+            onClick={() => {
+              setShowHelp(false)
+            }}
+          >
+            Dismiss
+          </button>
+        </HelpDiv>
+      )} */
+}
+{
+  /* checkbox for each parent studio */
+}

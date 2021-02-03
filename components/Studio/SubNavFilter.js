@@ -1,12 +1,16 @@
 import Link from 'next/link'
 
-import { SubNav, NavSection, NavSectionHeading } from './NewStudioNav'
+import {
+  NewNavSidebarContainer,
+  NavSection,
+  NavSectionHeading,
+} from '../styles/NewNavStyles'
 import Filter from './Filter'
 import PlusSvg from '../Icons/PlusSvg'
 
 function SubNavFilter({ page, createLink }) {
   return (
-    <SubNav>
+    <NewNavSidebarContainer>
       <NavSection>
         <NavSectionHeading>
           <h2>{page}</h2>
@@ -21,7 +25,7 @@ function SubNavFilter({ page, createLink }) {
         </NavSectionHeading>
         <Filter />
       </NavSection>
-    </SubNav>
+    </NewNavSidebarContainer>
   )
 }
 

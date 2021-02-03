@@ -1,15 +1,15 @@
 import Link from 'next/link'
 import {
-  SubNav,
+  NewNavSidebarContainer,
   NavSection,
   NavSectionHeading,
-} from '../../components/Studio/NewStudioNav'
+} from '../styles/NewNavStyles'
 import PlusSvg from '../Icons/PlusSvg'
 import NewParentControlPanel from './NewParentControlPanel'
 
 function SubNavFilter({ page, createLink }) {
   return (
-    <SubNav>
+    <NewNavSidebarContainer>
       <NavSection>
         <NavSectionHeading>
           <h2>{page}</h2>
@@ -24,7 +24,7 @@ function SubNavFilter({ page, createLink }) {
         </NavSectionHeading>
         <NewParentControlPanel />
       </NavSection>
-    </SubNav>
+    </NewNavSidebarContainer>
   )
 }
 
