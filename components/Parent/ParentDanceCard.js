@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import Link from 'next/link'
 import styled from 'styled-components'
+import Link from 'next/link'
 import Card from '../styles/Card'
 import DanceCardBody from './DanceCardBody'
 import DanceCardHeader from './DanceCardHeader'
-import MusicPlayer from './MusicPlayer'
-import VideoPlayer from './VideoPlayer'
+import MusicPlayer from '../styles/MusicPlayer'
+import VideoPlayer from '../styles/VideoPlayer'
 
 const DanceCardStyles = styled(Card)`
   border: 1px solid rgba(0, 0, 0, 0.1);

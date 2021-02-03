@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-import DanceCard from './DanceCard'
+// import DanceCard from './OldDanceCard'
 import { useQuery } from '@apollo/react-hooks'
 import { ALL_Rs } from './Queries'
 import Error from '../Error'
