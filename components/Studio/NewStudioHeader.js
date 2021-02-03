@@ -2,6 +2,8 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import MenuSvg from '../Icons/MenuSvg'
 import NewStudioNav from './NewStudioNav'
+import OptionsDropDown from './OptionsDropDown'
+import QuickCreateOptions from './QuickCreateOptions'
 
 const Header = styled.header`
   background: ${(props) => props.theme.gray5};
@@ -47,7 +49,8 @@ export default function NewStudioHeader() {
   return (
     <Header>
       <input type='text' placeholder='Search...' className='search' />
-      {/* <OptionsDropdown /> */}
+      {/* <OptionsDropDown /> */}
+      <QuickCreateOptions />
       <button
         className='hide-gtLarge btn-icon'
         onClick={() => {

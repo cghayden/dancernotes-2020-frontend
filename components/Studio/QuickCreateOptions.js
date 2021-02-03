@@ -40,9 +40,9 @@ const sidebarVariants = {
     },
   },
   closed: {
-    clipPath: 'circle(20px at 89% 10%)',
+    clipPath: 'circle(0px at 100% 0%)',
     transition: {
-      delay: 0.2,
+      delay: 0.3,
       type: 'spring',
       stiffness: 400,
       damping: 40,
@@ -99,6 +99,7 @@ const SVGDiv = styled.div`
 
 const MenuToggle = ({ toggle, animate }) => (
   <button
+    className='btn-icon'
     style={{
       outline: 'none',
       border: 'none',
@@ -126,7 +127,7 @@ const MenuToggle = ({ toggle, animate }) => (
         <path
           fill='transparent'
           strokeWidth='3'
-          stroke='hsl(0, 0%, 18%)'
+          stroke={animate === 'open' ? `black` : `white`}
           strokeLinecap='round'
           opacity='1'
           d='M 11 .5 L 11 18.346'
@@ -134,7 +135,7 @@ const MenuToggle = ({ toggle, animate }) => (
         <path
           fill='transparent'
           strokeWidth='3'
-          stroke='hsl(0, 0%, 18%)'
+          stroke={animate === 'open' ? `black` : `white`}
           strokeLinecap='round'
           opacity='1'
           d='M 2 9.423 L 20 9.423'
@@ -160,36 +161,4 @@ const ulVariants = {
   closed: {
     transition: { staggerChildren: 0.05, staggerDirection: -1 },
   },
-}
-
-// const Path = (props) => (
-//   <motion.path
-//     fill="transparent"
-//     strokeWidth="3"
-//     stroke="hsl(0, 0%, 18%)"
-//     strokeLinecap="round"
-//     {...props}
-//   />
-// );
-{
-  /* <Path
-        variants={{
-          closed: { d: "M 2 2.5 L 20 2.5" },
-          open: { d: "M 3 16.5 L 17 2.5" },
-        }}
-      />
-      <Path
-        d="M 2 9.423 L 20 9.423"
-        variants={{
-          closed: { opacity: 1 },
-          open: { opacity: 0 },
-        }}
-        transition={{ duration: 0.1 }}
-      />
-      <Path
-        variants={{
-          closed: { d: "M 2 16.346 L 20 16.346" },
-          open: { d: "M 3 2.5 L 17 16.346" },
-        }}
-      /> */
 }
