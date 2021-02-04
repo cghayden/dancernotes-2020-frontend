@@ -77,7 +77,7 @@ export default function NewParentNav() {
           <li>
             <StyledLink
               activeClassName='activeStudioNav'
-              href='/parent/retailers'
+              href='/parent/discover'
             >
               <a className='btn-nav'>Shop</a>
             </StyledLink>
@@ -85,7 +85,7 @@ export default function NewParentNav() {
           <li>
             <StyledLink
               activeClassName='activeStudioNav'
-              href='/parent/conventions'
+              href='/parent/discover'
             >
               <a className='btn-nav'>Conventions</a>
             </StyledLink>
@@ -93,20 +93,23 @@ export default function NewParentNav() {
           <li>
             <StyledLink
               activeClassName='activeStudioNav'
-              href='/parent/intensives'
+              href='/parent/discover'
             >
               <a className='btn-nav'>Intensives</a>
             </StyledLink>
           </li>
           <li>
-            <StyledLink activeClassName='activeStudioNav' href='/parent/camps'>
+            <StyledLink
+              activeClassName='activeStudioNav'
+              href='/parent/discover'
+            >
               <a className='btn-nav'>Camps</a>
             </StyledLink>
           </li>
           <li>
             <StyledLink
               activeClassName='activeStudioNav'
-              href='/parent/auditions'
+              href='/parent/discover'
             >
               <a className='btn-nav'>Auditions</a>
             </StyledLink>
@@ -114,7 +117,7 @@ export default function NewParentNav() {
           <li>
             <StyledLink
               activeClassName='activeStudioNav'
-              href='/parent/performances'
+              href='/parent/discover'
             >
               <a className='btn-nav'>Performances</a>
             </StyledLink>
