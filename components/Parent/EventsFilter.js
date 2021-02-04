@@ -1,44 +1,46 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
 const EventCheckboxesDiv = styled.div`
-  width: 80%;
+  width: 85%;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-items: left;
-`;
+`
 
 const EventCheckbox = styled.div`
-  padding: 0.25rem;
+  padding: 0.25rem 0.25rem 0.25rem 2rem;
+
   display: flex;
   align-items: center;
   label {
     padding-left: 0.25rem;
     font-size: 12px;
   }
-  @media (min-width: ${props => props.theme.largeScreen}) {
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
     label {
       font-size: 1rem;
     }
   }
-`;
+`
 
 function NotesSubNav({ eventFilter, setFilter }) {
   const eventCategories = [
-    "competition",
-    "convention",
-    "rehearsal",
-    "recital",
-    "camp",
-    "other"
-  ];
+    'competition',
+    'convention',
+    'rehearsal',
+    'recital',
+    'camp',
+    'other',
+  ]
   return (
     <EventCheckboxesDiv>
-      {eventCategories.map(eventCategory => (
+      {eventCategories.map((eventCategory) => (
         <EventCheckbox key={eventCategory}>
           <input
-            type="checkbox"
+            type='checkbox'
             checked={eventFilter[eventCategory]}
             id={eventCategory}
             name={eventCategory}
@@ -46,7 +48,7 @@ function NotesSubNav({ eventFilter, setFilter }) {
             onChange={() =>
               setFilter({
                 ...eventFilter,
-                [eventCategory]: !eventFilter[eventCategory]
+                [eventCategory]: !eventFilter[eventCategory],
               })
             }
           />
@@ -56,6 +58,6 @@ function NotesSubNav({ eventFilter, setFilter }) {
         </EventCheckbox>
       ))}
     </EventCheckboxesDiv>
-  );
+  )
 }
-export default NotesSubNav;
+export default NotesSubNav

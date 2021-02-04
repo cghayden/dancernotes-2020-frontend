@@ -1,11 +1,11 @@
-import SubNavMainLayout from '../../components/SubNavMainLayout'
+import SubNavMainLayout from '../../../components/SubNavMainLayout'
 import { useQuery } from '@apollo/react-hooks'
-import CreateCustomRoutineForm from '../../components/Parent/CreateCustomRoutineForm'
-import { STUDIOS_AND_DANCERS } from '../../components/Parent/Queries'
-import Error from '../../components/Error'
-import CancelButton from '../../components/CancelButton'
-import NotesSubNav from '../../components/Parent/NotesSubNav'
-import Loading from '../../components/Loading'
+import CreateCustomRoutineForm from '../../../components/Parent/CreateCustomRoutineForm'
+import { STUDIOS_AND_DANCERS } from '../../../components/Parent/Queries'
+import Error from '../../../components/Error'
+import CancelButton from '../../../components/CancelButton'
+import NotesSubNav from '../../../components/Parent/NotesSubNav'
+import Loading from '../../../components/Loading'
 function createCustomRoutinePage() {
   const { data: parent, loading, error } = useQuery(STUDIOS_AND_DANCERS)
   if (loading || error)

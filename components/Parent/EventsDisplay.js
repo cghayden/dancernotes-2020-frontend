@@ -1,11 +1,7 @@
-import React from 'react'
 import Card from '../styles/Card'
 import styled from 'styled-components'
 
-const StudioCardsDiv = styled.div`
-  padding-top: 1rem;
-  width: 100%;
-`
+const StudioCardsDiv = styled.div``
 
 const EventNotes = styled.p`
   white-space: pre-wrap;

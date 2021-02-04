@@ -141,7 +141,6 @@ const ParentMobileControls = ({ toggleFilter }) => {
     toggleCompetitionMode,
     showControlPanel,
   } = useDisplayControls()
-  console.log('hiddenIds', hiddenIds)
   const independents = customRoutines.filter((routine) => !routine.studio)
   const hasStudioAndIndependents = studios.length > 0 && independents.length > 0
   const showAllStudioFilter = studios.length > 1 || hasStudioAndIndependents
