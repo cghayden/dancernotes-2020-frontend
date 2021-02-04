@@ -31,10 +31,10 @@ function Breadcrumb({ page = '', selection = '' }) {
   // home > page > selection or filters
   return (
     <BreadcrumbStyles>
-      <Link href={'/parent/home'}>
+      <Link href={'/parent/routines'}>
         <motion.a
           className='btn-icon'
-          alt='Home'
+          alt='home'
           style={{ marginBottom: '-4px' }}
         >
           <HomeSvg />

@@ -1,17 +1,13 @@
-import React from 'react'
-import Link from 'next/link'
-import SubNavMainLayout from '../../../components/SubNavMainLayout'
-import EventsContent from '../../../components/Parent/EventsContent'
-import NotesSubNav from '../../../components/Parent/NotesSubNav'
 import { useQuery } from '@apollo/react-hooks'
 import {
   PARENT_EVENTS_QUERY,
   CUSTOM_EVENTS_QUERY,
   ALL_Rs,
 } from '../../../components/Parent/Queries'
-import { useParentEvents } from '../../../components/Parent/useParentEvents'
-import Error from '../../../components/Error'
 import NewParentLayout from '../../../components/Parent/NewParentLayout'
+import EventsContent from '../../../components/Parent/EventsContent'
+
+import { useParentEvents } from '../../../components/Parent/useParentEvents'
 
 function EventsPage() {
   // const customEvents = useCustomEvents();
@@ -29,7 +25,6 @@ function EventsPage() {
     loading: loadingCustomEvents,
     error: errorLoadingCustomEvents,
   } = useQuery(CUSTOM_EVENTS_QUERY)
-  //   console.log('customEvents', customEvents)
 
   const {
     data: allRoutinesData,
@@ -44,12 +39,6 @@ function EventsPage() {
 
   customEvents &&
     customEvents.customEvents.forEach((event) => (event.appliesTo = ['all']))
-
-  //   const allEvents = [
-  //     ...customEvents?.customEvents,
-  //     ...parentEvents.parentEvents,
-  //   ]
-  //   console.log('allEvents', allEvents)
 
   return (
     <NewParentLayout

@@ -344,6 +344,21 @@ const STUDIO_CARD_QUERY = gql`
   }
 `
 
+const HAIRSTYLES_QUERY = gql`
+  query HAIRSTYLES_QUERY {
+    parentHairstyles {
+      studioName
+      hairStyles {
+        id
+        image
+        name
+        description
+        link
+      }
+    }
+  }
+`
+
 export {
   PARENT_USER_QUERY,
   DANCER_QUERY,
@@ -356,4 +371,5 @@ export {
   PARENTS_MAKEUP_QUERY,
   CUSTOM_EVENTS_QUERY,
   STUDIO_CARD_QUERY,
+  HAIRSTYLES_QUERY,
 }

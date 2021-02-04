@@ -1,60 +1,28 @@
-import React, { Component } from "react";
-import { Query } from "react-apollo";
-import gql from "graphql-tag";
-import HairStyleCard from "./HairStyleCard";
-import Card from "../styles/Card";
-import Error from "../Error";
-import Loading from "../Loading";
-const HAIRSTYLES_QUERY = gql`
-  query HAIRSTYLES_QUERY {
-    parentHairstyles {
-      studioName
-      hairStyles {
-        id
-        image
-        name
-        description
-        link
-      }
-    }
-  }
-`;
+import HairStyleCard from './HairStyleCard'
+import Card from '../styles/Card'
 
-class HairStylesCards extends Component {
-  render() {
-    return (
-      <Query query={HAIRSTYLES_QUERY}>
-        {({ data: { parentHairstyles } = {}, error, loading }) => {
-          if (loading) return <Loading />;
-          if (error) return <Error error={error} />;
-          return (
+export default function HairStylesCards({ hairstyles }) {
+  console.log('hairstyles', hairstyles)
+  return (
+    <>
+      {hairstyles.map((studio) => (
+        <Card>
+          <div className='card__header'>
+            <h2>Studio: {studio.studioName}</h2>
+          </div>
+          {studio.hairStyles.length ? (
             <>
-              {parentHairstyles.map(studio => {
-                return (
-                  <Card>
-                    <div className="card__header">
-                      <h2>Studio: {studio.studioName}</h2>
-                    </div>
-                    {studio.hairStyles.length ? (
-                      <>
-                        <div>
-                          {studio.hairStyles.map(style => (
-                            <HairStyleCard hairStyle={style} key={style.id} />
-                          ))}
-                        </div>
-                      </>
-                    ) : (
-                      <p>{studio.studioName} has no Hair Styles to view.</p>
-                    )}
-                  </Card>
-                );
-              })}
+              <div>
+                {studio.hairStyles.map((style) => (
+                  <HairStyleCard hairStyle={style} key={style.id} />
+                ))}
+              </div>
             </>
-          );
-        }}
-      </Query>
-    );
-  }
+          ) : (
+            <p>{studio.studioName} has no Hair Styles to view.</p>
+          )}
+        </Card>
+      ))}
+    </>
+  )
 }
-
-export default HairStylesCards;
