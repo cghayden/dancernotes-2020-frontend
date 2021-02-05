@@ -1,29 +1,35 @@
-import React, { useState } from "react";
-import EventsFilter from "./EventsFilter";
-import EventsDisplay from "./EventsDisplay";
+import React, { useState } from 'react'
+import EventsFilter from './EventsFilter'
+import EventsDisplay from './EventsDisplay'
 
-const EventsContent = ({ events, allRoutines }) => {
+function EventsContent({
+  customEvents = [],
+  parentEvents = [],
+  allRoutines,
+  allEvents,
+}) {
   const [eventFilter, setFilter] = useState({
     competition: true,
     convention: true,
     rehearsal: true,
     recital: true,
     camp: true,
-    other: true
-  });
+    other: true,
+  })
+  console.log('allEvents', allEvents)
+
   return (
     <>
       <EventsFilter eventFilter={eventFilter} setFilter={setFilter} />
-
       <EventsDisplay
         activeEvents={Object.keys(eventFilter).filter(
-          eventCategory => eventFilter[eventCategory]
+          (eventCategory) => eventFilter[eventCategory]
         )}
-        events={events}
+        events={allEvents}
         allRoutines={allRoutines}
       />
     </>
-  );
-};
+  )
+}
 
-export default EventsContent;
+export default EventsContent

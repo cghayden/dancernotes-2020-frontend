@@ -1,6 +1,5 @@
-import styled from "styled-components";
-import Link from "next/link";
-import Card from "../styles/Card";
+import styled from 'styled-components'
+import Link from 'next/link'
 
 const DanceCardBodyStyles = styled.div`
   padding: 0;
@@ -10,45 +9,37 @@ const DanceCardBodyStyles = styled.div`
   li {
     padding: 0.25rem;
   }
-`;
+`
 
 const NoteItem = styled.div`
   display: grid;
   grid-template-columns: 100px 1fr;
   padding: 0.25rem;
-`;
+`
 
 const NoteContent = styled.dd`
   margin: 0;
   padding-left: 0 0.5rem;
   text-align: left;
-`;
+`
 
 const AudioPlayer = styled.audio`
   width: 85%;
   max-width: 475px;
-`;
+`
 
 const Dt = styled.dt`
   font-weight: bold;
-`;
+`
 const Dd = styled.dd`
   margin-left: 1rem;
   text-align: left;
   white-space: pre-wrap;
-`;
+`
 
 function StudioDanceDetails({ dance }) {
   return (
     <DanceCardBodyStyles>
-      {dance.music && (
-        <AudioPlayer
-          id="musicPlayer"
-          autoPlay={false}
-          controls
-          src={dance.music}
-        />
-      )}
       <dl>
         <NoteItem>
           <Dt>Age Divsion:</Dt> <Dd>{dance.ageDivision}</Dd>
@@ -87,7 +78,7 @@ function StudioDanceDetails({ dance }) {
         </Link>
       </div>
     </DanceCardBodyStyles>
-  );
+  )
 }
 
-export default StudioDanceDetails;
+export default StudioDanceDetails

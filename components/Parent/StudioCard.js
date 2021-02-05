@@ -1,24 +1,34 @@
-import { useContext } from 'react';
-import Card from '../styles/Card';
-import Link from 'next/link';
-import { RegistrationContext } from './RegistrationContext';
+import { useContext } from 'react'
+import styled from 'styled-components'
+import Card from '../styles/Card'
+import Link from 'next/link'
+import { RegistrationContext } from './RegistrationContext'
 
+const StudioCardStyles = styled(Card)`
+  h2 {
+    font-size: 1.5rem;
+  }
+`
+const DancerListings = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  padding: 1rem 0;
+`
+const StudioCardLinks = styled.div``
 const StudioCard = ({ studio, dancers }) => {
-  const BrowsingContext = useContext(RegistrationContext);
-  const setBrowsingDancer = BrowsingContext.setBrowsingDancer;
+  console.log('studio', studio)
+  const BrowsingContext = useContext(RegistrationContext)
+  const setBrowsingDancer = BrowsingContext.setBrowsingDancer
 
   return (
-    <Card>
-      <>
-        <h2>{studio.studioName}</h2>
+    <StudioCardStyles>
+      <h2>{studio.studioName}</h2>
+      <DancerListings>
         {dancers.map((dancer) => {
-          dancer.allClasses = [
-            ...dancer.danceClasses,
-            ...dancer.customRoutines,
-          ];
+          dancer.allClasses = [...dancer.danceClasses, ...dancer.customRoutines]
           const studioClasses = dancer.allClasses.filter(
             (danceClass) => danceClass.studio.id === studio.id
-          );
+          )
           return (
             studioClasses.length > 0 && (
               <div key={dancer.firstName}>
@@ -28,22 +38,24 @@ const StudioCard = ({ studio, dancers }) => {
                 ))}
               </div>
             )
-          );
+          )
         })}
-      </>
-      <Link href={`/parent/account/browseStudio?studioId=${studio.id}`}>
-        <button
-          className='btn-action-primary'
-          onClick={() => {
-            console.log(dancers[0].id);
-            setBrowsingDancer(dancers[0].id);
-          }}
-        >
-          Manage Classes at {studio.studioName}
-        </button>
-      </Link>
-    </Card>
-  );
-};
+      </DancerListings>
+      <StudioCardLinks>
+        <Link href={`/parent/account/browseStudio?studioId=${studio.id}`}>
+          <button
+            className='btn-action-primary'
+            onClick={() => {
+              setBrowsingDancer(dancers[0].id)
+            }}
+          >
+            Manage Classes at {studio.studioName}
+          </button>
+        </Link>
+        {studio.website && <a href={`//${studio.website}`}>{studio.website}</a>}
+      </StudioCardLinks>
+    </StudioCardStyles>
+  )
+}
 
-export default StudioCard;
+export default StudioCard

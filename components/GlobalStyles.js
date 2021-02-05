@@ -22,8 +22,12 @@ const GlobalStyle = createGlobalStyle`
       '' /* font-family: "Source Sans Pro", -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue; */
     }
     font-weight: 400;
-    color: ${theme.gray6};
+    color: ${theme.blackText};
   }
+  .optionsList li {
+  border-bottom: 3px solid ${(props) => props.theme.gray1};
+  
+}
   
   h1,
   h2,
@@ -83,7 +87,7 @@ const GlobalStyle = createGlobalStyle`
     border-radius: 5px;
     background: transparent;
     color: inherit;
-    min-width:100px;
+    min-width: 100px;
     font: inherit;
     padding: .5rem 1rem;
     cursor: pointer;
@@ -104,7 +108,7 @@ const GlobalStyle = createGlobalStyle`
 &.btn-icon{
   min-width:initial;
   text-align:center;
-  /* padding: .25rem .5rem 0; */
+  padding: .25rem .5rem;
 }
 &.link-item{
     border-radius: 0;
@@ -135,14 +139,14 @@ const GlobalStyle = createGlobalStyle`
   }
   &.btn-danger-outline{
     background-color: none;
-    color: ${theme.red7};
-    border: 1px solid ${theme.red7};
+    color: ${theme.red6};
+    border: 1px solid ${theme.red6};
     :hover {
-      background-color: ${theme.red6};
+      background-color: ${theme.red7};
       color: ${theme.red0};
     }
   }
-  &.btn-action-danger-textOnly{
+  &.btn-danger-textOnly{
     color: ${theme.red7};
     border: none;
     outline: none;
@@ -160,11 +164,11 @@ const GlobalStyle = createGlobalStyle`
   }
   &.btn-action-secondary-outline{
       background-color: none;
-      color: ${theme.indigo8};
-      border: 1px solid ${theme.indigo8};
+      color: ${theme.indigo9};
+      border: 1px solid ${theme.indigo9};
       :hover {
-        background-color: ${theme.indigo8};
-      color: ${theme.indigo0};
+        /* background-color: ${theme.indigo9}; */
+      color: ${theme.indigo7};
       } 
   }
   &.btn-action-primary{
@@ -174,14 +178,13 @@ const GlobalStyle = createGlobalStyle`
       background-color: ${theme.indigo5};
       }
       :focus {
-      background-color: ${theme.indigo4};
-      outline: 2px solid ${theme.indigo0};
+      outline: 1px solid ${theme.indigo2};
       }   
     }
     &.btn-action-primary-outline{
       background-color: none;
-      color: ${theme.indigo5};
-      border: 1px solid ${theme.indigo5};
+      color: ${theme.indigo6};
+      border: 1px solid ${theme.indigo6};
      :hover {
       background-color: ${theme.indigo5};
       color: ${theme.indigo0};
@@ -204,16 +207,17 @@ const GlobalStyle = createGlobalStyle`
     }
  
   &.btn-action-primary-textOnly{
-    color: ${theme.indigo8};
+    color: ${theme.indigo6};
     border: none;
     outline: none;
     :hover{
-      color: ${theme.indigo6};
+      color: ${theme.indigo5};
       background: none;
     }
   }
   
   &.btn-nav{
+    color: ${(props) => props.theme.blackText};
     border-radius: 0;
     margin: 0;
     padding: 10px 0.5rem 0.5rem 1rem;
@@ -235,10 +239,14 @@ const GlobalStyle = createGlobalStyle`
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
-
+    width:100%;
     &:hover {
       color: hsl(200, 95%, 95%);
       background: ${(props) => props.theme.indigo5};
+      p{
+        color: hsl(200, 95%, 95%);
+
+      }
     }
   }
   }
@@ -267,9 +275,9 @@ const GlobalStyle = createGlobalStyle`
     color: ${theme.green8};
     font-weight: bold;
   }
-  .activeStudioNav{
+  a.activeStudioNav, button.activeStudioNav {
       background: ${theme.indigo6};
-      color: hsl(200, 95%,95%);
+      color: white;
       :focus{
         outline: 2px solid ${theme.indigo2};
         background: ${theme.indigo6};
@@ -347,6 +355,17 @@ main {
   @media screen and (min-width: ${(props) => props.theme.mediumScreen}) {
     display: none;
   }
+}
+
+/* font utilities */
+.font12{
+  font-size: 12px;
+}
+.font14{
+  font-size: 14px;
+}
+.font18{
+  font-size: 18px;
 }
 
 `

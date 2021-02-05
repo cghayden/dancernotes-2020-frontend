@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const SliderInput = styled.input`
   opacity: 0;
   width: 0;
   height: 0;
-`;
+`
 const SliderLabel = styled.label`
   position: relative;
   display: inline-block;
@@ -20,7 +20,7 @@ const SliderLabel = styled.label`
     position: absolute;
     width: 1px;
   }
-`;
+`
 const Slider = styled.span`
   position: absolute;
   cursor: pointer;
@@ -29,7 +29,7 @@ const Slider = styled.span`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.checked ? props.theme.green8 : props.theme.gray2};
   -webkit-transition: 0.4s;
   transition: 0.4s;
@@ -37,33 +37,33 @@ const Slider = styled.span`
   :before {
     position: absolute;
     border-radius: 50%;
-    content: "";
+    content: '';
     height: 20px;
     width: 20px;
     left: 4px;
     bottom: 4px;
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.checked ? props.theme.gray0 : props.theme.gray0};
     transition: 0.2s;
-    transform: ${props =>
+    transform: ${(props) =>
       props.checked ? `translateX(20px)` : `translateX(0px)`};
   }
-`;
+`
 
 function SliderToggler({ competitionMode, toggleCompetitionMode }) {
   return (
-    <SliderLabel id="compModeToggerLabel" htmlFor="compModeToggler">
+    <SliderLabel id='compModeTogglerLabel' htmlFor='compModeToggler'>
       <SliderInput
-        aria-labelledby="compModeToggerLabel"
-        name="compModeToggler"
-        id="compModeToggler"
-        type="checkbox"
+        aria-labelledby='compModeTogglerLabel'
+        name='compModeToggler'
+        id='compModeToggler'
+        type='checkbox'
         checked={competitionMode}
         onChange={toggleCompetitionMode}
       />
       <Slider checked={competitionMode}></Slider>
     </SliderLabel>
-  );
+  )
 }
 
-export default SliderToggler;
+export default SliderToggler

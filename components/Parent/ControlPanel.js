@@ -1,4 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { useQuery } from '@apollo/react-hooks'
+import { PARENT_USER_QUERY } from './Queries'
+
 import styled from 'styled-components'
 import DisplayController from './DisplayController'
 import SliderToggler from '../styles/SliderToggler'
@@ -81,8 +84,14 @@ const HelpDiv = styled.div`
     padding: 5px 10px;
   }
 `
-const ControlPanel = ({ studios, customRoutines, dancers }) => {
+
+const ControlPanel = () => {
   const [showHelp, setShowHelp] = useState(false)
+  const { data, loading, error } = useQuery(PARENT_USER_QUERY)
+
+  const { studios, customRoutines, dancers } = data
+    ? data.parentUser
+    : { studios: [], customRoutines: [], dancers: [] }
 
   // const [visited, setVisited] = useState();
   // console.log("visited:", visited);

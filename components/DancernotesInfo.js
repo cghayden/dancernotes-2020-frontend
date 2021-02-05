@@ -1,20 +1,15 @@
-import React from 'react';
-import Card from './styles/Card';
-const DancernotesInfo = () => {
+export default function DancernotesInfo() {
   return (
     <p>
       To submit feedback or questions, please contact:
       <span>
-        {' '}
         <a
           className='btn-action-primary-textOnly'
-          href='mailto:admin@coreyhayden.tech'
+          href='mailto:cghayden@gmail.com'
         >
-          admin@coreyhayden.tech
+          cghayden@gmail.com
         </a>
       </span>
     </p>
-  );
-};
-
-export default DancernotesInfo;
+  )
+}

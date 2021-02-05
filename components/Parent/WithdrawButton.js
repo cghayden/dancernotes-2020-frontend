@@ -1,7 +1,7 @@
-import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import { DANCER_QUERY } from "./Queries";
-import { BROWSE_STUDIO_CLASSES_QUERY } from "../../pages/parent/account/browseStudio";
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import { DANCER_QUERY } from './Queries'
+import { BROWSE_STUDIO_CLASSES_QUERY } from '../../pages/parent/account/browseStudio'
 
 const WITHDRAW_FROM_CLASS = gql`
   mutation WITHDRAW_FROM_CLASS($dancerId: ID!, $danceClassId: ID!) {
@@ -9,7 +9,7 @@ const WITHDRAW_FROM_CLASS = gql`
       message
     }
   }
-`;
+`
 
 function WithdrawButton({ dancerId, danceClassId, studioId }) {
   const [withdrawFromClass, { error, loading }] = useMutation(
@@ -18,26 +18,26 @@ function WithdrawButton({ dancerId, danceClassId, studioId }) {
       variables: { dancerId, danceClassId },
       refetchQueries: [
         { query: DANCER_QUERY, variables: { id: dancerId } },
-        { query: BROWSE_STUDIO_CLASSES_QUERY, variables: { id: studioId } }
-      ]
+        { query: BROWSE_STUDIO_CLASSES_QUERY, variables: { id: studioId } },
+      ],
     }
-  );
+  )
   return (
     <button
       disabled={loading}
-      className="btn-danger"
+      className='btn-danger-textOnly btn-small '
       onClick={async () => {
         if (
           confirm(
-            "Are you sure you want to withdraw from this class?  The studio will be notified and you will lose access to the notes for this class"
+            'Are you sure you want to withdraw from this class?  The studio will be notified and you will lose access to the notes for this class'
           )
         ) {
-          await withdrawFromClass();
+          await withdrawFromClass()
         }
       }}
     >
-      {`Withdraw${loading ? "ing..." : ""}`}
+      {`Withdraw${loading ? 'ing...' : ''}`}
     </button>
-  );
+  )
 }
-export default WithdrawButton;
+export default WithdrawButton

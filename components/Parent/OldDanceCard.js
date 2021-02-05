@@ -1,19 +1,19 @@
-import { useState } from "react";
-import Link from "next/link";
-import styled from "styled-components";
-import { useSpring, animated } from "react-spring";
-import useMeasure from "../../lib/useMeasure";
-import Card from "../styles/Card";
-import DanceCardBody from "./DanceCardBody";
-import DanceCardHeader from "./DanceCardHeader";
-import MusicPlayer from "./MusicPlayer";
-import VideoPlayer from "./VideoPlayer";
+import { useState } from 'react'
+import Link from 'next/link'
+import styled from 'styled-components'
+import { useSpring, animated } from 'react-spring'
+import useMeasure from '../../lib/useMeasure'
+import Card from '../styles/Card'
+import DanceCardBody from './DanceCardBody'
+import DanceCardHeader from './DanceCardHeader'
+import MusicPlayer from '../styles/MusicPlayer'
+import VideoPlayer from '../styles/VideoPlayer'
 
 const DanceCardStyles = styled(Card)`
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1),
     -1px -1px 1px 0px rgba(0, 0, 0, 0.02);
-`;
+`
 
 const DanceCardNav = styled.div`
   display: flex;
@@ -32,39 +32,39 @@ const DanceCardNav = styled.div`
       margin-bottom: -2px;
     }
   }
-`;
+`
 
 function DanceCard({ dance, visibleDancersIds }) {
-  const [showBody, setShowBody] = useState(false);
-  const [showMediaPlayer, setShowMediaPlayer] = useState(false);
-  const [showVideoPlayer, setShowVideoPlayer] = useState(false);
-  const [bind, { height }] = useMeasure();
+  const [showBody, setShowBody] = useState(false)
+  const [showMediaPlayer, setShowMediaPlayer] = useState(false)
+  const [showVideoPlayer, setShowVideoPlayer] = useState(false)
+  const [bind, { height }] = useMeasure()
 
   const animation = useSpring({
-    overflow: "hidden",
+    overflow: 'hidden',
     height: showBody ? height : 0,
-  });
+  })
 
   function toggleBody() {
-    setShowBody(!showBody);
+    setShowBody(!showBody)
   }
 
   return (
     <DanceCardStyles>
       <DanceCardHeader dance={dance} visibleDancersIds={visibleDancersIds} />
       <DanceCardNav>
-        <button className="btn-action-primary-textOnly" onClick={toggleBody}>
+        <button className='btn-action-primary-textOnly' onClick={toggleBody}>
           Details
         </button>
         <button
-          className="btn-action-primary-textOnly"
+          className='btn-action-primary-textOnly'
           onClick={() => setShowMediaPlayer(!showMediaPlayer)}
         >
           Music
         </button>
         {dance.videoUrl && (
           <button
-            className="btn-action-primary-textOnly"
+            className='btn-action-primary-textOnly'
             onClick={() => setShowVideoPlayer(!showVideoPlayer)}
           >
             Video
@@ -72,7 +72,7 @@ function DanceCard({ dance, visibleDancersIds }) {
         )}
         {dance.custom && (
           <Link href={`/parent/updateDance/${dance.id}`}>
-            <a className="btn-action-primary-textOnly">Edit</a>
+            <a className='btn-action-primary-textOnly'>Edit</a>
           </Link>
         )}
       </DanceCardNav>
@@ -87,7 +87,7 @@ function DanceCard({ dance, visibleDancersIds }) {
         </div>
       </animated.div>
     </DanceCardStyles>
-  );
+  )
 }
 
-export default DanceCard;
+export default DanceCard

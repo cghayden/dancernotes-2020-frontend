@@ -28,6 +28,48 @@ const ALL_Rs = gql`
       }
       studio {
         id
+        studioName
+      }
+      entryNumber
+      entryDay
+      entryTime
+      videoUrl
+    }
+  }
+`
+
+const SINGLE_ROUTINE_QUERY = gql`
+  query SINGLE_ROUTINE_QUERY($id: ID!) {
+    singleRoutine(id: $id) {
+      id
+      style
+      competitiveLevel
+      ageDivision
+      name
+      performanceName
+      day
+      startTime
+      endTime
+      shoes
+      tights
+      notes
+      music
+      custom
+      parentsNotes {
+        note
+        id
+      }
+      dancers {
+        id
+        firstName
+        avatar
+        parent {
+          id
+        }
+      }
+      studio {
+        id
+        studioName
       }
       entryNumber
       entryDay
@@ -105,6 +147,7 @@ const PARENT_USER_QUERY = gql`
       studios {
         id
         studioName
+        website
       }
       dancers {
         id
@@ -159,7 +202,26 @@ const STUDIOS_AND_DANCERS = gql`
 const PARENTS_DANCERS = gql`
   query PARENTS_DANCERS {
     parentsDancers {
+      id
       firstName
+      avatar
+      studios {
+        id
+        studioName
+        email
+        #link
+        #phone
+      }
+      danceClasses {
+        id
+        name
+        performanceName
+      }
+      customRoutines {
+        id
+        name
+        performanceName
+      }
     }
   }
 `
@@ -197,6 +259,7 @@ const DANCER_QUERY = gql`
         name
         studio {
           id
+          studioName
         }
         custom
       }
@@ -211,10 +274,14 @@ const DANCER_QUERY = gql`
       studios {
         id
         studioName
+        email
       }
       requests {
         id
-        classesRequested {
+        studio {
+          id
+        }
+        classRequested {
           id
         }
       }
@@ -278,10 +345,26 @@ const STUDIO_CARD_QUERY = gql`
   }
 `
 
+const HAIRSTYLES_QUERY = gql`
+  query HAIRSTYLES_QUERY {
+    parentHairstyles {
+      studioName
+      hairStyles {
+        id
+        image
+        name
+        description
+        link
+      }
+    }
+  }
+`
+
 export {
   PARENT_USER_QUERY,
   DANCER_QUERY,
   ALL_Rs,
+  SINGLE_ROUTINE_QUERY,
   PARENT_EVENTS_QUERY,
   PARENTS_DANCERS,
   CUSTOM_ROUTINE_QUERY,
@@ -289,4 +372,5 @@ export {
   PARENTS_MAKEUP_QUERY,
   CUSTOM_EVENTS_QUERY,
   STUDIO_CARD_QUERY,
+  HAIRSTYLES_QUERY,
 }

@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
-import { useSpring, animated } from 'react-spring'
-import useMeasure from '../../lib/useMeasure'
 import Card from '../styles/Card'
+
 import DanceCardHeader from './DanceCardHeader'
 import StudioDanceDetails from './StudioDanceDetails'
-import MusicPlayer from '../Parent/MusicPlayer'
+import MusicPlayer from '../styles/MusicPlayer'
+import VideoPlayer from '../styles/VideoPlayer'
 
 const DanceCardStyles = styled(Card)`
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -17,47 +17,35 @@ const DanceCardStyles = styled(Card)`
 const DanceCardNav = styled.div`
   display: flex;
   justify-content: space-around;
-  font-size: 0.825rem;
+  font-size: 1rem;
 `
 
 function StudioDanceCard({ dance }) {
-  const [showBody, setShowBody] = useState(false)
   const [showMediaPlayer, setShowMediaPlayer] = useState(false)
-  const [bind, { height }] = useMeasure()
+  const [showVideoPlayer, setShowVideoPlayer] = useState(false)
 
-  const animation = useSpring({
-    overflow: 'hidden',
-    height: showBody ? height : 0,
-  })
-
-  function toggleBody() {
-    setShowBody(!showBody)
-  }
   return (
     <DanceCardStyles>
-      <DanceCardHeader dance={dance} setShowBody={setShowBody} />
+      <DanceCardHeader dance={dance} />
       <DanceCardNav>
-        <button className='btn-action-primary-textOnly' onClick={toggleBody}>
-          Details
-        </button>
-        <button
-          className='btn-action-primary-textOnly'
-          onClick={() => setShowMediaPlayer(!showMediaPlayer)}
-        >
-          Music
-        </button>
+        {dance.videoUrl && (
+          <button
+            className='btn-action-primary-textOnly'
+            onClick={() => setShowVideoPlayer(!showVideoPlayer)}
+          >
+            Video
+          </button>
+        )}
+
+        {dance.music && <MusicPlayer src={dance.music} />}
+        {showVideoPlayer && <VideoPlayer src={dance.videoUrl} />}
+
         <Link href={`/studio/updateClass/${dance.id}`}>
           <a className='btn-action-primary-textOnly'>Edit</a>
         </Link>
       </DanceCardNav>
-      {showMediaPlayer && (
-        <MusicPlayer danceName={dance.name} src={dance.music} />
-      )}
-      <animated.div style={animation}>
-        <div {...bind}>
-          <StudioDanceDetails dance={dance} />
-        </div>
-      </animated.div>
+      {showMediaPlayer && <MusicPlayer src={dance.music} />}
+      <StudioDanceDetails dance={dance} />
     </DanceCardStyles>
   )
 }

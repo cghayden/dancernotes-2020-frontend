@@ -1,24 +1,23 @@
-import React from "react";
-import AddNote from "./AddNote";
-import UpdateParentNotes from "./UpdateParentNotes";
+import AddNote from './AddNote'
+import UpdateParentNotes from './UpdateParentNotes'
 
-import { Dt, Dd, Notes } from "./DanceCardBody";
+import { Dt, Dd, Notes } from './DanceCardBody'
 const NotesDiv = ({
   addNote,
   toggleAddNote,
   editNotes,
   toggleEditNotes,
-  dance
+  dance,
 }) => {
   return (
     <>
       <Notes>
-        <Dt>{!dance.custom && `Studio`} Notes:</Dt>{" "}
+        <Dt>{!dance.custom && `Studio`} Notes:</Dt>
         <Dd>{dance.notes ? dance.notes : `N/A`}</Dd>
       </Notes>
       {!dance.parentsNotes && !addNote && (
         <button
-          className="btn-action-primary-outline"
+          className='btn-action-primary-outline'
           onClick={() => toggleAddNote(true)}
         >
           + Note
@@ -44,16 +43,18 @@ const NotesDiv = ({
           <AddNote toggleAddNote={toggleAddNote} danceId={dance.id} />
         </Notes>
       )}
-      {dance.parentsNotes && !editNotes && (
-        <button
-          className="btn-action-primary-outline btn-small"
-          onClick={() => toggleEditNotes(true)}
-        >
-          Add/Edit Notes
-        </button>
-      )}
+      <div className='card__section'>
+        {dance.parentsNotes && !editNotes && (
+          <button
+            className='btn-action-primary-outline btn-small'
+            onClick={() => toggleEditNotes(true)}
+          >
+            Add/Edit Notes
+          </button>
+        )}
+      </div>
     </>
-  );
-};
+  )
+}
 
-export default NotesDiv;
+export default NotesDiv

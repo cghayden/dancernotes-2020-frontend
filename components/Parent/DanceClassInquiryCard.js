@@ -1,79 +1,82 @@
-import React from "react";
-import styled from "styled-components";
-import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import { DANCER_QUERY } from "./Queries";
-import { BROWSE_STUDIO_CLASSES_QUERY } from "../../pages/parent/account/browseStudio";
-import WithdrawButton from "./WithdrawButton";
-import Error from "../../components/Error";
+import styled from 'styled-components'
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import { DANCER_QUERY } from './Queries'
+import { BROWSE_STUDIO_CLASSES_QUERY } from '../../pages/parent/account/browseStudio'
+import WithdrawButton from './WithdrawButton'
+import Error from '../../components/Error'
 
 const ClassListing = styled.div`
-  background: ${props => props.theme.gray0};
-  border-radius: ${props => props.theme.borderRadius};
-  box-shadow: ${props => props.theme.dropShadowPizzazz};
+  background: ${(props) => props.theme.gray0};
+  border-radius: ${(props) => props.theme.borderRadius};
+  box-shadow: ${(props) => props.theme.dropShadowPizzazz};
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  justify-items: center;
+  grid-template-columns: 50% 50%;
+  /* grid-template-rows:  */
+  place-items: center;
   margin-bottom: 2rem;
-  padding: 1rem 0;
-`;
+  /* padding: 1rem 0; */
+  min-height: 100px;
+`
 
 const DanceClassInfo = styled.div`
-  color: ${props => props.theme.gray7};
-  display: grid;
+  /* color: ${(props) => props.theme.gray7}; */
+  /* display: grid;
   grid-template-columns: 1fr;
-  justify-items: center;
-`;
+  justify-items: center; */
+`
 
 const DanceClassName = styled.p`
   font-size: 1.25rem;
-  color: ${props => props.theme.gray9};
-`;
+  color: ${(props) => props.theme.gray9};
+`
 
 const DanceClassTime = styled.div`
   display: flex;
-
   flex-wrap: nowrap;
-`;
+`
 
 const Day = styled.p`
   padding-right: 0.5rem;
-`;
+`
 
 const DanceClassOptions = styled.div`
-padding-top: .5rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  button {
-    font-size: 0.875rem;
-    /* background-color: ${props => props.theme.vividBlue1}; */
-    :disabled{
-      background: none;
-      color: ${props => props.theme.gray5};
-    }
-  }
-`;
+`
 
-const ADD_DANCE_TO_REQUESTS = gql`
-  mutation ADD_DANCE_TO_REQUESTS(
-    $requestId: ID!
+const RequestedStyle = styled.div`
+  background: ${(props) => props.theme.secondary};
+  color: ${(props) => props.theme.primary};
+  border-radius: 5px;
+  margin-bottom: 5px;
+  p {
+    padding: 0.5rem 0.75rem;
+  }
+`
+const EnrolledStyle = styled.div`
+  background: ${(props) => props.theme.green7};
+  color: white;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  p {
+    padding: 0.5rem 0.75rem;
+  }
+`
+
+const CREATE_DANCECLASS_REQUEST = gql`
+  mutation CREATE_DANCECLASS_REQUEST(
     $danceId: ID!
     $dancerId: ID!
     $studioId: ID!
-    $parentEmail: String!
   ) {
-    requestDance(
-      requestId: $requestId
-      danceId: $danceId
-      dancerId: $dancerId
-      studioId: $studioId
-      parentEmail: $parentEmail
-    ) {
+    requestDance(danceId: $danceId, dancerId: $dancerId, studioId: $studioId) {
       message
     }
   }
-`;
+`
 
 const REMOVE_CLASS_FROM_REQUESTS = gql`
   mutation REMOVE_CLASS_FROM_REQUESTS($requestId: ID!, $danceClassId: ID!) {
@@ -81,7 +84,7 @@ const REMOVE_CLASS_FROM_REQUESTS = gql`
       message
     }
   }
-`;
+`
 
 //check to see if dancerId is in array of dancers
 
@@ -92,71 +95,68 @@ function DanceClassInquiryCard({
   requested,
   studioId,
   dancerName,
-  parentEmail
 }) {
   const [
     removeClassFromRequest,
-    { error: errorRemovingRequest, loading: removeRequestLoading }
+    { error: errorRemovingRequest, loading: removeRequestLoading },
   ] = useMutation(REMOVE_CLASS_FROM_REQUESTS, {
     variables: { requestId: dancersRequestsId, danceClassId: dance.id },
     refetchQueries: [
       { query: DANCER_QUERY, variables: { id: dancerId } },
-      { query: BROWSE_STUDIO_CLASSES_QUERY, variables: { id: studioId } }
-    ]
-  });
+      { query: BROWSE_STUDIO_CLASSES_QUERY, variables: { id: studioId } },
+    ],
+  })
 
   const [
     requestDance,
-    { error: errorRequestingDance, loading: requestingDance }
-  ] = useMutation(ADD_DANCE_TO_REQUESTS, {
+    { error: errorRequestingDance, loading: requestingDance },
+  ] = useMutation(CREATE_DANCECLASS_REQUEST, {
     variables: {
-      requestId: dancersRequestsId || "new",
       danceId: dance.id,
       dancerId: dancerId,
       studioId: studioId,
-      parentEmail
     },
     refetchQueries: [
       { query: DANCER_QUERY, variables: { id: dancerId } },
-      { query: BROWSE_STUDIO_CLASSES_QUERY, variables: { id: studioId } }
-    ]
-  });
-  const loading = requestingDance || removeRequestLoading;
-  const error = errorRequestingDance || errorRemovingRequest;
+      { query: BROWSE_STUDIO_CLASSES_QUERY, variables: { id: studioId } },
+    ],
+  })
+  const loading = requestingDance || removeRequestLoading
+  const error = errorRequestingDance || errorRemovingRequest
   function isEnrolled(dancerId, dancers) {
-    let dancersInDance = [];
+    let dancersInDance = []
     for (const dancer of dancers) {
-      dancersInDance.push(dancer.id);
+      dancersInDance.push(dancer.id)
     }
     if (dancersInDance.includes(dancerId)) {
-      return true;
+      return true
     } else {
-      return false;
+      return false
     }
   }
 
   function getStatus(enrolled, requested) {
     if (enrolled) {
-      return "enrolled";
+      return 'enrolled'
     }
     if (requested) {
-      return "requested";
+      return 'requested'
     } else {
-      return "available";
+      return 'available'
     }
   }
-  const enrolled = isEnrolled(dancerId, dance.dancers);
-  const status = getStatus(enrolled, requested, dancerName);
+  const enrolled = isEnrolled(dancerId, dance.dancers)
+  const status = getStatus(enrolled, requested, dancerName)
 
   return (
     <ClassListing>
       <DanceClassInfo>
         <DanceClassName>{dance.name}</DanceClassName>
         <p>
-          <span>{dance.ageDivision}</span>
-          {"  "}
           <span>{dance.competitiveLevel}</span>
-          {"  "}
+          {'  '}
+          <span>{dance.ageDivision}</span>
+          {'  '}
           <span>{dance.style}</span>
         </p>
         <DanceClassTime>
@@ -171,33 +171,37 @@ function DanceClassInquiryCard({
         {error && <Error error={error} />}
       </DanceClassInfo>
       <DanceClassOptions>
-        {status === "available" && (
+        {status === 'available' && (
           <button
-            type="button"
-            className="btn-action-primary"
+            type='button'
+            className='btn-action-primary'
             disabled={loading}
             onClick={async () => {
-              await requestDance();
+              await requestDance()
             }}
           >
             Enroll {dancerName}
           </button>
         )}
-        {status === "requested" && (
-          <div>
-            <p>Requested for {dancerName}</p>
+        {status === 'requested' && (
+          <>
+            <RequestedStyle>
+              <p>Requested for {dancerName}</p>
+            </RequestedStyle>
             <button
-              type="button"
-              className="btn-danger"
+              type='button'
+              className='btn-danger-textOnly btn-small '
               onClick={async () => await removeClassFromRequest()}
             >
-              Cancel
+              Cancel Request
             </button>
-          </div>
+          </>
         )}
-        {status === "enrolled" && (
+        {status === 'enrolled' && (
           <div>
-            <p>{dancerName} is enrolled</p>
+            <EnrolledStyle>
+              <p>{dancerName} is enrolled</p>
+            </EnrolledStyle>
             <WithdrawButton
               danceClassId={dance.id}
               dancerId={dancerId}
@@ -207,7 +211,7 @@ function DanceClassInquiryCard({
         )}
       </DanceClassOptions>
     </ClassListing>
-  );
+  )
 }
 
-export default DanceClassInquiryCard;
+export default DanceClassInquiryCard

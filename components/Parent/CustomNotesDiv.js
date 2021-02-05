@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import AddNote from "./AddNote";
-import UpdateCustomRoutineNotes from "./UpdateCustomRoutineNotes";
+import React, { useState } from 'react'
+import AddNote from './AddNote'
+import UpdateCustomRoutineNotes from './UpdateCustomRoutineNotes'
 
-import { Dt, Dd, Notes } from "./DanceCardBody";
+import { Dt, Dd, Notes } from './DanceCardBody'
 const CustomNotesDiv = ({ addNote, dance }) => {
-  const [editNotes, toggleEditNotes] = useState(false);
+  const [editNotes, toggleEditNotes] = useState(false)
 
   return (
     <>
@@ -14,10 +14,10 @@ const CustomNotesDiv = ({ addNote, dance }) => {
       </Notes>
       {!editNotes && (
         <button
-          className="btn-action-primary-outline btn-small"
+          className='btn-action-primary-outline btn-small'
           onClick={() => toggleEditNotes(true)}
         >
-          Add / Edit Custom Routine Notes
+          Add / Edit Notes
         </button>
       )}
 
@@ -29,7 +29,7 @@ const CustomNotesDiv = ({ addNote, dance }) => {
         />
       )}
     </>
-  );
-};
+  )
+}
 
-export default CustomNotesDiv;
+export default CustomNotesDiv

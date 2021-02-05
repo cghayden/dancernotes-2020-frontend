@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 
@@ -23,6 +22,8 @@ const DanceCardTitle = styled.div`
   }
   p:last-child {
     font-style: italic;
+    color: ${(props) => props.theme.gray7};
+    margin: 0.25em 0;
   }
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     font-size: 1rem;
@@ -51,27 +52,21 @@ const DanceCardEntryInfo = styled.div`
 
 const DanceCardHeader = ({ dance }) => {
   return (
-    <>
-      <HeaderStyle>
-        <DanceCardEntryInfo>
-          <p>{dance.entryNumber}</p>
-          <p>{dance.entryDay}</p>
-          <p>{dance.entryTime}</p>
-        </DanceCardEntryInfo>
-        <DanceCardTitle>
-          <Link href={`/studio/classes/${dance.id}`}>
-            <a>
-              <p>{dance.name}</p>
-              <p>{dance.performanceName}</p>
-            </a>
-          </Link>
-        </DanceCardTitle>
-        <DanceCardTime>
-          <p>{dance.day}</p>
-          <p>{dance.startTime}</p>
-        </DanceCardTime>
-      </HeaderStyle>
-    </>
+    <HeaderStyle>
+      <DanceCardEntryInfo>
+        <p>{dance.entryNumber}</p>
+        <p>{dance.entryDay}</p>
+        <p>{dance.entryTime}</p>
+      </DanceCardEntryInfo>
+      <DanceCardTitle>
+        <p>{dance.name}</p>
+        <p>{dance.performanceName}</p>
+      </DanceCardTitle>
+      <DanceCardTime>
+        <p>{dance.day}</p>
+        <p>{dance.startTime}</p>
+      </DanceCardTime>
+    </HeaderStyle>
   )
 }
 

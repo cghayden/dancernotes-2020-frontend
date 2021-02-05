@@ -1,11 +1,11 @@
-import { useState } from "react";
-import styled from "styled-components";
-import { AnimatePresence, motion } from "framer-motion";
+import { useState } from 'react'
+import styled from 'styled-components'
+import { AnimatePresence, motion } from 'framer-motion'
 
 const OptionsDiv = styled.div`
   position: relative;
   margin-left: auto;
-`;
+`
 
 const OptionsButton = styled.button`
   font-size: 2rem;
@@ -17,7 +17,7 @@ const OptionsButton = styled.button`
   display: flex;
   place-items: center;
   justify-content: center;
-`;
+`
 
 const OptionsLinksContainer = styled(motion.div)`
   position: absolute;
@@ -34,41 +34,46 @@ const OptionsLinksContainer = styled(motion.div)`
       color: ${(props) => props.theme.blackText};
     }
   }
-`;
+`
 // ~~~~~~~~~~~~~~~~~~~ CODE ~~~~~~~~~~~~~~~~~~~~~~;
 export default function OptionsDropDown() {
-  const [options, toggleOptions] = useState(false);
+  const [options, toggleOptions] = useState(false)
   return (
     <OptionsDiv>
-      <OptionsButton onClick={() => toggleOptions(!options)}>+</OptionsButton>
+      <OptionsButton
+        className='btn-icon'
+        onClick={() => toggleOptions(!options)}
+      >
+        +
+      </OptionsButton>
       <AnimatePresence>
         {options && (
           <OptionsLinksContainer
-            key={"links"}
+            key={'links'}
             initial={{ height: 0 }}
-            animate={{ height: "auto" }}
+            animate={{ height: 'auto' }}
             exit={{ height: 0 }}
           >
             <ul>
               <li>
-                <a href="/studio/createClass">Add a Dance Class</a>
+                <a href='/studio/createClass'>Add a Dance Class</a>
               </li>
               <li>
-                <a href="/studio/createEvent">Add an Event</a>
+                <a href='/studio/createEvent'>Add an Event</a>
               </li>
               <li>
-                <a href="/studio/createHairstyle">Add a Hairstyle</a>
+                <a href='/studio/createHairstyle'>Add a Hairstyle</a>
               </li>
               <li>
-                <a href="/studio/createMakeup">Add a Makeup Set</a>
+                <a href='/studio/createMakeup'>Add a Makeup Set</a>
               </li>
               <li>
-                <a href="/studio/#createDancer">Add a Dancer</a>
+                <a href='/studio/#createDancer'>Add a Dancer</a>
               </li>
             </ul>
           </OptionsLinksContainer>
         )}
       </AnimatePresence>
     </OptionsDiv>
-  );
+  )
 }
