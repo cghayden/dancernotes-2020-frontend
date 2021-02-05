@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Error from '../../components/Error'
 import Loading from '../../components/Loading'
-import NewStudioHeader from '../Studio/NewStudioHeader'
+import NewParentHeader from '../Parent/NewParentHeader'
 import NewParentNav from './NewParentNav'
 
 import ParentBreadcrumb from './ParentBreadcrumb'
@@ -60,7 +60,7 @@ export default function NoFilterLayout({
 }) {
   return (
     <NoFiltLayout>
-      <NewStudioHeader />
+      <NewParentHeader />
       <BodyLayout>
         <div className='hide-ltLarge'>
           <NewParentNav />

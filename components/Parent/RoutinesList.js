@@ -43,9 +43,6 @@ function RoutinesList({ dancerIds }) {
     }
   }
 
-  if (error) return <Error error={error} />
-  if (loading) return <p>5, 6, 7, 8 ...</p>
-
   const allRs = data ? data.allRs : []
   if (!allRs.length) {
     return (

@@ -147,6 +147,7 @@ const PARENT_USER_QUERY = gql`
       studios {
         id
         studioName
+        website
       }
       dancers {
         id

@@ -1,32 +1,31 @@
-import React, { Component } from "react";
-import cookie from "cookie";
-import decode from "jwt-decode";
-import LandingPage from "../components/LandingPage";
+import cookie from 'cookie'
+import decode from 'jwt-decode'
+import LandingPage from '../components/LandingPage'
 
-const Index = props => <LandingPage />;
+const Index = () => <LandingPage />
 
-Index.getInitialProps = function({ res, req }) {
+Index.getInitialProps = function ({ res, req }) {
   if (req) {
     // TODO - ERROR HANDLING FOR TOKEN READ ERRORS
 
     if (req.headers.cookie) {
-      const cookies = cookie.parse(req.headers.cookie);
+      const cookies = cookie.parse(req.headers.cookie)
       if (cookies.token) {
-        const token = decode(cookies.token);
-        if (token.userType === "parent") {
-          res.writeHead(302, { Location: `parent/notes/routines` });
+        const token = decode(cookies.token)
+        if (token.userType === 'parent') {
+          res.writeHead(302, { Location: `parent/routines` })
         }
-        if (token.userType === "studio") {
-          res.writeHead(302, { Location: `studio/home` });
+        if (token.userType === 'studio') {
+          res.writeHead(302, { Location: `studio/home` })
         } else {
-          res.writeHead(302, { Location: `${token.userType}/home` });
+          res.writeHead(302, { Location: `/` })
         }
-        res.end();
+        res.end()
       }
     }
-    return { user: "none" };
+    return { user: 'none' }
   }
-  return { user: "none" };
-};
+  return { user: 'none' }
+}
 
-export default Index;
+export default Index

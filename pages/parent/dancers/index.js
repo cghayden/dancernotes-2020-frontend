@@ -11,17 +11,6 @@ export default function dancersIndex() {
   //   const activeFilterChoices = Object.values(userFilter).flat()
   const { data, error, loading } = useQuery(PARENTS_DANCERS)
 
-  //    const filteredDancers = data?.studioDancers.filter((dancer) => {
-  //     const dancerValues = []
-  //     dancer.danceClasses.forEach((danceClass) => {
-  //       const danceClassValues = Object.values(danceClass)
-  //       dancerValues.push(...danceClassValues)
-  //     })
-  //     return activeFilterChoices?.every((filterChoice) =>
-  //       dancerValues.includes(filterChoice)
-  //     )
-  //   })
-
   return (
     <ParentNoFilterLayout
       error={error}

@@ -33,14 +33,14 @@ export default function ParentQuickMenu() {
       <motion.li variants={linkVariants}>
         <a href='/parent/events/createEvent'>Add an Event</a>
       </motion.li>
-      <motion.li variants={linkVariants}>
-        <a href='/parent/createHairstyle'>Add a Hairstyle</a>
+      {/* <motion.li variants={linkVariants}>
+        <a href='/parent/hairstlyes/createHairstyle'>Add a Hairstyle</a>
       </motion.li>
       <motion.li variants={linkVariants}>
-        <a href='/parent/createMakeup'>Add a Makeup Set</a>
-      </motion.li>
+        <a href='/parent/makeup/createMakeup'>Add a Makeup Set</a>
+      </motion.li> */}
       <motion.li variants={linkVariants}>
-        <a href='/parent/createDancer'>Add a Dancer</a>
+        <a href='/parent/dancers/createDancer'>Add a Dancer</a>
       </motion.li>
     </MotionUl>
   )

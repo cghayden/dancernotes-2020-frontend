@@ -3,7 +3,6 @@ import { useQuery } from '@apollo/react-hooks'
 import NewParentLayout from '../../../components/Parent/NewParentLayout'
 import { SINGLE_ROUTINE_QUERY } from '../../../components/Parent/Queries'
 import ParentDanceCard from '../../../components/Parent/ParentDanceCard'
-// import StudioDanceCard from '../../../components/Parent/StudioDanceCard'
 
 function routinePage() {
   const router = useRouter()
@@ -13,8 +12,6 @@ function routinePage() {
     variables: { id: routineId },
   })
 
-  // const routine = data ? singleRoutine : {}
-
   return (
     <NewParentLayout
       page={'Routines'}
@@ -22,7 +19,6 @@ function routinePage() {
       loading={loading}
       selection={data ? `${data.singleRoutine.name}` : ''}
     >
-      {/* {routine && <StudioDanceCard dance={danceClass} />} */}
       {data && <ParentDanceCard dance={data.singleRoutine} />}
     </NewParentLayout>
   )

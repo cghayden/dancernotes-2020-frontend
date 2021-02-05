@@ -127,5 +127,3 @@ export default function NewParentNav() {
     </NewNavSidebarContainer>
   )
 }
-
-export { NavSection, NewNavSidebarContainer, NavSectionHeading }

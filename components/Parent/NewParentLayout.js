@@ -5,7 +5,6 @@ import Loading from '../../components/Loading'
 import NewParentHeader from '../Parent/NewParentHeader'
 import NewParentNav from './NewParentNav'
 import ParentBreadcrumb from './ParentBreadcrumb'
-import ActiveFilterChoices from '../Studio/ActiveFilterChoices'
 import FilterSvg from '../Icons/FilterSvg'
 import ParentMobileControls from './ParentMobileControls'
 
@@ -105,11 +104,7 @@ export default function NewParentLayout({
           <NewParentNav />
         </div>
         <div className='hide-ltMedium'>
-          {selection ? (
-            <ActiveFilterChoices />
-          ) : (
-            <ParentSubNavFilter page={page} createLink={createLink} />
-          )}
+          <ParentSubNavFilter page={page} createLink={createLink} />
         </div>
         <MobileFilterContainer showFilter={showFilter}>
           <ParentMobileControls

@@ -3,7 +3,6 @@ import { useQuery } from '@apollo/react-hooks'
 
 import { PARENT_USER_QUERY } from './Queries'
 import styled from 'styled-components'
-import SliderToggler from '../styles/SliderToggler'
 import { SliderLabel, SliderInput, Slider } from '../styles/SmallSliderToggler'
 import { useDisplayControls } from './ParentDisplayProvider'
 import OffScreenControlsToggler from './OffscreenControlsToggler'

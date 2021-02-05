@@ -1,10 +1,8 @@
-import styled from 'styled-components'
 import {
   NavSection,
   NewNavSidebarContainer,
-  SubNav,
   NavSectionHeading,
-} from '../Parent/NewParentNav'
+} from '../styles/NewNavStyles'
 
 export default function StaticParentQuickMenu() {
   return (

@@ -1,9 +1,8 @@
 import {
   NavSection,
   NewNavSidebarContainer,
-  SubNav,
   NavSectionHeading,
-} from './NewParentNav'
+} from '../styles/NewNavStyles'
 
 export default function StaticParentQuickMenu() {
   return (
@@ -23,18 +22,18 @@ export default function StaticParentQuickMenu() {
               Add an Event
             </a>
           </li>
-          <li>
-            <a className='btn-nav' href='/parent/createHairstyle'>
+          {/* <li>
+            <a className='btn-nav' href='/parent/hairstyles/createHairstyle'>
               Add a Hairstyle
             </a>
           </li>
           <li>
-            <a className='btn-nav' href='/parent/createMakeup'>
+            <a className='btn-nav' href='/parent/makeup/createMakeup'>
               Add a Makeup Set
             </a>
-          </li>
+          </li> */}
           <li>
-            <a className='btn-nav' href='/parent/createDancer'>
+            <a className='btn-nav' href='/parent/dancers/createDancer'>
               Add a Dancer
             </a>
           </li>
