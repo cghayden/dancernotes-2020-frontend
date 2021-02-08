@@ -6,7 +6,6 @@ import RoutinesList from '../../../components/Parent/RoutinesList'
 export default function routinesIndex() {
   //   const { data, loading, error } = useQuery(ALL_Rs)
   const { data, loading, error } = useQuery(PARENT_USER_QUERY)
-  console.log(' routines page data', data)
   return (
     <NewParentLayout
       error={error}

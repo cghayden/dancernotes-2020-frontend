@@ -40,7 +40,7 @@ export default function ParentQuickMenu() {
         <a href='/parent/makeup/createMakeup'>Add a Makeup Set</a>
       </motion.li> */}
       <motion.li variants={linkVariants}>
-        <a href='/parent/dancers/createDancer'>Add a Dancer</a>
+        <a href='/parent/dancers/addDancer'>Add a Dancer</a>
       </motion.li>
     </MotionUl>
   )

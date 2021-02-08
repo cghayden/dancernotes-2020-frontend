@@ -1,7 +1,8 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import Cookies from 'js-cookie'
 import styled from 'styled-components'
+
 import DanceClassInquiryCard from './DanceClassInquiryCard'
 import { ActiveFilters } from './BrowseClassFilter'
 import { PARENT_USER_QUERY } from './Queries'
@@ -102,7 +103,6 @@ function BrowseStudioClasses({ classFilter, studio }) {
     variables: { id: activeDancerId },
   })
   const dancer = dancerData ? dancerData.dancer : {}
-  console.log('browsing dancer', dancer)
 
   const isParentLinkedToStudio =
     parentUser.studios &&
@@ -132,7 +132,6 @@ function BrowseStudioClasses({ classFilter, studio }) {
   const requestIds = dancer.requests
     ? dancer.requests.map((request) => request.classRequested.id)
     : []
-  console.log('requestIds', requestIds)
   return (
     <>
       <DancerTabs>

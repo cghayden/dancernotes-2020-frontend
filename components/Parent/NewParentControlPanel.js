@@ -117,7 +117,7 @@ const ControlPanel = () => {
   const hasStudioAndIndependents = studios.length > 0 && independents.length > 0
   const showAllStudioFilter = studios.length > 1 || hasStudioAndIndependents
   return (
-    <ControlPanelStyles showControlPanel={showControlPanel}>
+    <ControlPanelStyles>
       <ControlPanelHeading>
         <h3>Display:</h3>
         <FilterButtons>

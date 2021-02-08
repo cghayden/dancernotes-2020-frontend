@@ -1,11 +1,11 @@
-import React from "react";
-import Downshift from "downshift";
-import Router from "next/router";
-import { ApolloConsumer } from "react-apollo";
-import gql from "graphql-tag";
-import debounce from "../lib/debounce";
-import { DropDown, DropDownItem, SearchStyles } from "./styles/DropDown";
-import { RegistrationContextConsumer } from "../components/Parent/RegistrationContext";
+import React from 'react'
+import Downshift from 'downshift'
+import Router from 'next/router'
+import { ApolloConsumer } from 'react-apollo'
+import gql from 'graphql-tag'
+import debounce from '../lib/debounce'
+import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown'
+import { RegistrationContextConsumer } from '../components/Parent/RegistrationContext'
 
 const SEARCH_STUDIOS_QUERY = gql`
   query SEARCH_STUDIOS_QUERY($searchTerm: String!) {
@@ -14,51 +14,51 @@ const SEARCH_STUDIOS_QUERY = gql`
       studioName
     }
   }
-`;
+`
 
 class SearchForStudio extends React.Component {
   state = {
     studios: [],
-    loading: false
-  };
+    loading: false,
+  }
 
-  textInput = React.createRef();
+  textInput = React.createRef()
   componentDidMount() {
-    this.textInput.current.focus();
+    this.textInput.current.focus()
   }
 
   onChange = debounce(async (e, client) => {
     // turn loading on
-    this.setState({ loading: true });
+    this.setState({ loading: true })
     // Manually query apollo client
     const res = await client.query({
       query: SEARCH_STUDIOS_QUERY,
-      variables: { searchTerm: e.target.value }
-    });
+      variables: { searchTerm: e.target.value },
+    })
     this.setState({
       studios: res.data.studios,
-      loading: false
-    });
-  }, 350);
+      loading: false,
+    })
+  }, 350)
   render() {
-    const { dancerId } = this.props;
+    const { dancerId } = this.props
     return (
       <RegistrationContextConsumer>
         {({ setBrowsingDancer }) => {
           return (
             <SearchStyles>
               <Downshift
-                onChange={async studio => {
-                  await setBrowsingDancer(dancerId);
+                onChange={async (studio) => {
+                  await setBrowsingDancer(dancerId)
                   Router.push({
-                    pathname: "/parent/account/browseStudio",
+                    pathname: '/parent/browseStudio',
                     query: {
-                      studioId: studio.id
-                    }
-                  });
+                      studioId: studio.id,
+                    },
+                  })
                 }}
-                itemToString={studio =>
-                  studio === null ? "" : studio.studioName
+                itemToString={(studio) =>
+                  studio === null ? '' : studio.studioName
                 }
               >
                 {({
@@ -66,22 +66,22 @@ class SearchForStudio extends React.Component {
                   getItemProps,
                   isOpen,
                   inputValue,
-                  highlightedIndex
+                  highlightedIndex,
                 }) => (
                   <div>
                     <ApolloConsumer>
-                      {client => (
+                      {(client) => (
                         <input
                           ref={this.textInput}
                           {...getInputProps({
-                            type: "search",
-                            placeholder: "Search...",
-                            id: "search",
-                            className: this.state.loading ? "loading" : "",
-                            onChange: e => {
-                              e.persist();
-                              this.onChange(e, client);
-                            }
+                            type: 'search',
+                            placeholder: 'Search...',
+                            id: 'search',
+                            className: this.state.loading ? 'loading' : '',
+                            onChange: (e) => {
+                              e.persist()
+                              this.onChange(e, client)
+                            },
                           })}
                         />
                       )}
@@ -99,7 +99,7 @@ class SearchForStudio extends React.Component {
                         ))}
                         {!this.state.studios.length && !this.state.loading && (
                           <DropDownItem>
-                            {" "}
+                            {' '}
                             Nothing Found for {inputValue}
                           </DropDownItem>
                         )}
@@ -109,11 +109,11 @@ class SearchForStudio extends React.Component {
                 )}
               </Downshift>
             </SearchStyles>
-          );
+          )
         }}
       </RegistrationContextConsumer>
-    );
+    )
   }
 }
 
-export default SearchForStudio;
+export default SearchForStudio

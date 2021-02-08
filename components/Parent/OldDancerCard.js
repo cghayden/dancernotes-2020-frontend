@@ -173,7 +173,7 @@ function DancerCard({ dancer }) {
             {dancer.studios.map((studio) => (
               <Link
                 key={studio.id}
-                href={`/parent/account/browseStudio?studioId=${studio.id}`}
+                href={`/parent/browseStudio?studioId=${studio.id}`}
               >
                 <button
                   className='btn-action-secondary'

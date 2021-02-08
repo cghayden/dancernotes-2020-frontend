@@ -70,7 +70,7 @@ function RoutinesList({ dancerIds }) {
           </button>
           {showStudioSearch && <SearchForStudio dancerId={dancerIds[0]} />}
           <p>- OR -</p>
-          <Link href='/parent/createCustomRoutine'>
+          <Link href='/parent/routines/createRoutine'>
             <a className='btn-action-primary'>Create your own Routine</a>
           </Link>
         </CardOptions>

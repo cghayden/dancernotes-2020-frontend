@@ -42,7 +42,7 @@ const StudioCard = ({ studio, dancers }) => {
         })}
       </DancerListings>
       <StudioCardLinks>
-        <Link href={`/parent/account/browseStudio?studioId=${studio.id}`}>
+        <Link href={`/parent/browseStudio?studioId=${studio.id}`}>
           <button
             className='btn-action-primary'
             onClick={() => {

@@ -33,7 +33,7 @@ export default function StaticParentQuickMenu() {
             </a>
           </li> */}
           <li>
-            <a className='btn-nav' href='/parent/dancers/createDancer'>
+            <a className='btn-nav' href='/parent/dancers/addDancer'>
               Add a Dancer
             </a>
           </li>

@@ -18,12 +18,10 @@ export default function dancersIndex() {
       page='Dancers'
       createLink={`/parent/dancers/createDancer`}
     >
-      <div>
-        {data &&
-          data.parentsDancers.map((dancer) => (
-            <DancerListing dancer={dancer} key={dancer.id} />
-          ))}
-      </div>
+      {data &&
+        data.parentsDancers.map((dancer) => (
+          <DancerListing dancer={dancer} key={dancer.id} />
+        ))}
     </ParentNoFilterLayout>
   )
 }

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { DANCER_QUERY } from './Queries'
-import { BROWSE_STUDIO_CLASSES_QUERY } from '../../pages/parent/account/browseStudio'
+import { BROWSE_STUDIO_CLASSES_QUERY } from '../../pages/parent/browseStudio'
 import WithdrawButton from './WithdrawButton'
 import Error from '../../components/Error'
 
