@@ -18,6 +18,8 @@ import useForm from '../../lib/useForm'
 
 const ModalCard = styled(Card)`
   box-shadow: none;
+  display: grid;
+  grid-gap: 20px;
 `
 
 //same as DancerCard with z-index to put it on top of cardBody(form)
@@ -228,7 +230,7 @@ function CreateDancerForm() {
           >
             Create Another Dancer
           </button>
-          <Link href='/parent/account/dancers'>
+          <Link href='/parent/dancers'>
             <a className='btn-action-secondary-outline'>I'm finished</a>
           </Link>
         </ModalCard>

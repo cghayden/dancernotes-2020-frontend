@@ -1,16 +1,21 @@
 import { useState } from 'react'
 import Link from 'next/link'
-
-// import DanceCard from './OldDanceCard'
 import { useQuery } from '@apollo/react-hooks'
+import styled from 'styled-components'
+
 import { ALL_Rs } from './Queries'
-import Error from '../Error'
 import { useDisplayControls } from '../../components/Parent/ParentDisplayProvider'
 import SearchForStudio from '../SearchForStudio'
 import Card from '../../components/styles/Card'
 import DanceListingLink from './DanceListingLink'
+
 //query all dances where ids of parents dancers are in the ids of enrolled dancers for the dance.  On the server, filter out all dancers not belonging to this parent.const NoRoutinesDiv = styled.div`
 
+const NoRoutinesCard = styled(Card)``
+const CardOptions = styled.div`
+  display: grid;
+  grid-gap: 20px;
+`
 function RoutinesList({ dancerIds }) {
   const [showStudioSearch, setShowStudioSearch] = useState(false)
   const { hiddenIds, competitionMode } = useDisplayControls()
@@ -46,32 +51,30 @@ function RoutinesList({ dancerIds }) {
   const allRs = data ? data.allRs : []
   if (!allRs.length) {
     return (
-      <Card>
-        <div className='card__section'>
+      <NoRoutinesCard>
+        <div>
           <p>
-            Competition Routines and other dance classes your dancers are in
-            will appear here.
+            Dance Classes and competition routines your dancers are in will
+            appear here.
           </p>
-          <p>You can filter the view with the display option above.</p>
           <p>You currently have no routines to display.</p>
           <p>You can:</p>
         </div>
-        <p>
-          Search for a studio to request notes, signup for classes, or browse
-          the studio's class offerings...
-        </p>
-        <button
-          className='btn-action-primary'
-          onClick={() => setShowStudioSearch(!showStudioSearch)}
-        >
-          Search for a Studio
-        </button>
-        {showStudioSearch && <SearchForStudio dancerId={dancerIds[0]} />}
-        <p>- OR -</p>
-        <Link href='/parent/createCustomRoutine'>
-          <a className='btn-action-primary'>Create your own Routine</a>
-        </Link>
-      </Card>
+
+        <CardOptions className='card__section'>
+          <button
+            className='btn-action-primary'
+            onClick={() => setShowStudioSearch(!showStudioSearch)}
+          >
+            Search for a studio to browse and/or register for classes.
+          </button>
+          {showStudioSearch && <SearchForStudio dancerId={dancerIds[0]} />}
+          <p>- OR -</p>
+          <Link href='/parent/createCustomRoutine'>
+            <a className='btn-action-primary'>Create your own Routine</a>
+          </Link>
+        </CardOptions>
+      </NoRoutinesCard>
     )
   }
 

@@ -58,9 +58,10 @@ const Tab = styled.div`
 `
 
 const BrowsingHeader = styled.div`
-  width: 90%;
-  margin: 0 auto;
-  padding: 1rem;
+  display: grid;
+  grid-gap: 10px;
+  margin-bottom: 10px;
+  place-items: center;
 `
 const LargeScreenActiveFilters = styled(ActiveFilters)`
   h2 {

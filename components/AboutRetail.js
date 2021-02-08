@@ -1,6 +1,3 @@
-import React from 'react'
-// import SignupRetail from "./SignupRetail";
-
 const AboutRetail = ({ setActive }) => {
   return (
     <div>
@@ -13,9 +10,9 @@ const AboutRetail = ({ setActive }) => {
       <div>
         <button
           className='btn-action-secondary'
-          onClick={() => setActive('signupRetail')}
+          // onClick={() => setActive('signupRetail')}
         >
-          Try dancernotes
+          Coming Soon!
         </button>
       </div>
     </div>
