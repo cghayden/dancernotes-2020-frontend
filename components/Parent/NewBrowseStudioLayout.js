@@ -6,10 +6,16 @@ import NewParentHeader from '../Parent/NewParentHeader'
 import NewParentNav from './NewParentNav'
 import ParentBreadcrumb from './ParentBreadcrumb'
 import FilterSvg from '../Icons/FilterSvg'
+import {
+  NewNavSidebarContainer,
+  NavSection,
+  NavSectionHeading,
+} from '../styles/NewNavStyles'
 // import ParentMobileControls from './ParentMobileControls'
 
 // import ParentSubNavFilter from './ParentSubNavFilter'
 import BrowseClassFilter from './BrowseClassFilter'
+import MobileBrowseClassFilter from './MobileBrowseClassFilter'
 
 const BodyLayout = styled.div`
   display: flex;
@@ -17,14 +23,6 @@ const BodyLayout = styled.div`
 
 const Layout = styled.div`
   height: 100vh;
-  .scrollingWindow {
-    height: 100vh;
-    overflow-y: scroll;
-    display: grid;
-    grid-template-rows: minmax(4rem, auto) 1fr;
-    position: relative;
-    flex-grow: 1;
-  }
 `
 
 const SelectionWindow = styled.div`
@@ -47,7 +45,7 @@ const SelectionWindowHeader = styled.div`
 
 const SelectionWindowMain = styled.div`
   width: 100%;
-  background: ${(props) => props.theme.gray0};
+  /* background: ${(props) => props.theme.gray0}; */
   height: 100vh;
   padding-bottom: 50vh;
   /* padding-top: 1rem; */
@@ -107,17 +105,19 @@ export default function NewBrowseStudioLayout({
           <NewParentNav />
         </div>
         <div className='hide-ltMedium'>
-          <BrowseClassFilter
-            studio={studio}
-            filter={classFilter}
-            setFilter={setFilter}
-          />
+          <NewNavSidebarContainer>
+            <NavSection>
+              <BrowseClassFilter
+                studio={studio}
+                filter={classFilter}
+                setFilter={setFilter}
+              />
+            </NavSection>
+          </NewNavSidebarContainer>
         </div>
         <MobileFilterContainer showFilter={showFilter}>
-          <BrowseClassFilter
+          <MobileBrowseClassFilter
             studio={studio}
-            filter={classFilter}
-            setFilter={setFilter}
             toggleFilter={toggleFilter}
           />
         </MobileFilterContainer>

@@ -19,10 +19,10 @@ import RequestAccessButton from './RequestAccessButton'
 //4. render classes
 const ClassListCard = styled(Card)`
   background: ${(props) => props.theme.gray0};
+  width: 97%;
   max-width: 900px;
   box-shadow: none;
   margin-top: -2px;
-  /* border-radius:  5px 5px 5px; */
 `
 const DancerTabs = styled(Card)`
   display: flex;
@@ -152,7 +152,7 @@ function BrowseStudioClasses({ classFilter, studio }) {
           <p>
             The following dance classes are available at {studio.studioName}
           </p>
-          {!isParentLinkedToStudio &&
+          {/* {!isParentLinkedToStudio &&
             !parentUser.accessRequests.includes(studio.id) && (
               <>
                 <p>
@@ -168,7 +168,7 @@ function BrowseStudioClasses({ classFilter, studio }) {
             )}
           {parentUser.accessRequests.includes(studio.id) && (
             <RequestNotice>Notes are requested from this studio</RequestNotice>
-          )}
+          )} */}
         </BrowsingHeader>
         <LargeScreenActiveFilters>
           {/*display a list of the active filters */}

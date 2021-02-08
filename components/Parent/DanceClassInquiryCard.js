@@ -12,10 +12,8 @@ const ClassListing = styled.div`
   box-shadow: ${(props) => props.theme.dropShadowPizzazz};
   display: grid;
   grid-template-columns: 50% 50%;
-  /* grid-template-rows:  */
   place-items: center;
   margin-bottom: 2rem;
-  /* padding: 1rem 0; */
   min-height: 100px;
 `
 

@@ -16,14 +16,6 @@ const BodyLayout = styled.div`
 
 const Layout = styled.div`
   height: 100vh;
-  .scrollingWindow {
-    height: 100vh;
-    overflow-y: scroll;
-    display: grid;
-    grid-template-rows: minmax(4rem, auto) 1fr;
-    position: relative;
-    flex-grow: 1;
-  }
 `
 
 const SelectionWindow = styled.div`
@@ -112,11 +104,7 @@ export default function NewStudioLayout({
           )}
         </div>
         <MobileFilterContainer showFilter={showFilter}>
-          <MobileFilter
-            page={page}
-            createLink={createLink}
-            toggleFilter={toggleFilter}
-          />
+          <MobileFilter toggleFilter={toggleFilter} />
         </MobileFilterContainer>
         <SelectionWindow>
           <SelectionWindowHeader>
