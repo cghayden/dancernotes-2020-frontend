@@ -100,7 +100,6 @@ const CheckboxAreaHeader = styled.div`
 
 const BrowseClassFilter = ({ studio }) => {
   const { filter, setFilter } = useContext(FilterContext)
-  console.log('class filter', filter)
 
   const filterOptions = ['style', 'competitiveLevel', 'ageDivision', 'day']
   const days = ['Mon.', 'Tue.', 'Wed.', 'Thur.', 'Fri', 'Sat.', 'Sun.']

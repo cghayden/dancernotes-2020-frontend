@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -185,7 +185,7 @@ function CreateDancerForm() {
   }
 
   return (
-    <Fragment>
+    <>
       {hasDancers && (
         <Card className='message'>
           <p>Welcome to Dancernotes! To begin, add a Dancer to your account.</p>
@@ -248,7 +248,6 @@ function CreateDancerForm() {
         </DancerCardHeaderStyles>
         <Form method='post' onSubmit={(e) => saveNewDancer(e)}>
           <fieldset disabled={loading} aria-busy={loading}>
-            {/* <Error error={error || errorLoadingAvatar} /> */}
             <div className='input-item'>
               <label htmlFor='firstName'>Name</label>
               <input
@@ -292,7 +291,7 @@ function CreateDancerForm() {
           </fieldset>
         </Form>
       </DancerCardContainer>
-    </Fragment>
+    </>
   )
 }
 

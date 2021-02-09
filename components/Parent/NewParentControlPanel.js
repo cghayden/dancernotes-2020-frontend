@@ -101,6 +101,7 @@ const DancerTogglerAndCheckboxes = styled.div`
 const ControlPanel = () => {
   // const [showHelp, setShowHelp] = useState(false)
   const { data, loading, error } = useQuery(PARENT_USER_QUERY)
+  console.log('data', data)
 
   const { studios, customRoutines, dancers } = data
     ? data.parentUser

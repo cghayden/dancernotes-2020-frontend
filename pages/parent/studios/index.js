@@ -5,12 +5,38 @@ import StudioCard from '../../../components/Parent/StudioCard'
 import Card from '../../../components/styles/Card'
 import { useToggle } from '../../../utilities/useToggle'
 import SearchForStudio from '../../../components/SearchForStudio'
+import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
+import Link from 'next/link'
+
 export default function studiosIndex() {
   const { isToggled, toggle } = useToggle(false)
   const { data, loading, error } = useQuery(STUDIO_CARD_QUERY)
 
   const studios = data ? data.parentUser.studios : []
   const dancers = data ? data.parentUser.dancers : []
+
+  if (dancers.length < 1) {
+    return (
+      <ParentNoFilterLayout page='Studios'>
+        <Card>
+          <div>
+            <p>You currently have no dancers.</p>
+            <p>You can:</p>
+          </div>
+          <div className='card__section'>
+            <button className='btn-action-primary' onClick={toggle}>
+              Search for a studio to browse classes.
+            </button>
+            {isToggled && <NoDancersSearchStudio />}
+            <p>- OR -</p>
+            <Link href='/parent/dancers/addDancer'>
+              <a className='btn-action-primary'>Add a Dancer to your Account</a>
+            </Link>
+          </div>
+        </Card>
+      </ParentNoFilterLayout>
+    )
+  }
 
   if (studios.length < 1) {
     return (

@@ -1,10 +1,14 @@
 import { useState } from 'react'
+import { useQuery } from '@apollo/react-hooks'
+
 import styled from 'styled-components'
 import MenuSvg from '../Icons/MenuSvg'
 import NewParentNav from './NewParentNav'
 import QuickCreateOptions from './QuickCreateOptions'
 import StaticParentQuickMenu from './StaticParentQuickMenu'
 import { MobileNavContainer } from '../styles//MobileNavContainer'
+import { PARENT_USER_QUERY } from './Queries'
+
 const Header = styled.header`
   background: ${(props) => props.theme.gray5};
   display: flex;
@@ -26,10 +30,12 @@ const Header = styled.header`
 
 export default function NewParentHeader() {
   const [mobileNav, toggleMobileNav] = useState(false)
+  const { data, loading, error } = useQuery(PARENT_USER_QUERY)
+  const dancers = data ? data.parentUser.dancers : []
   return (
     <Header>
       <input type='text' placeholder='Search...' className='search' />
-      <QuickCreateOptions />
+      <QuickCreateOptions dancers={dancers} />
       <button
         className='hide-gtLarge btn-icon'
         onClick={() => {
@@ -41,7 +47,7 @@ export default function NewParentHeader() {
       {mobileNav && (
         <MobileNavContainer>
           <NewParentNav />
-          <StaticParentQuickMenu />
+          <StaticParentQuickMenu dancers={dancers} />
         </MobileNavContainer>
       )}
     </Header>

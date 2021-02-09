@@ -4,7 +4,8 @@ import { motion } from 'framer-motion'
 const MotionUl = styled(motion.ul)`
   padding: 25px;
   position: absolute;
-  width: 230px;
+  width: 200px;
+  right: 60px;
 `
 
 const linkVariants = {
@@ -24,21 +25,19 @@ const ulVariants = {
     transition: { staggerChildren: 0.05, staggerDirection: -1 },
   },
 }
-export default function ParentQuickMenu() {
+export default function ParentQuickMenu({ dancers }) {
   return (
     <MotionUl variants={ulVariants}>
-      <motion.li variants={linkVariants}>
-        <a href='/parent/routines/createRoutine'>Create a Routine</a>
-      </motion.li>
-      <motion.li variants={linkVariants}>
-        <a href='/parent/events/createEvent'>Add an Event</a>
-      </motion.li>
-      {/* <motion.li variants={linkVariants}>
-        <a href='/parent/hairstlyes/createHairstyle'>Add a Hairstyle</a>
-      </motion.li>
-      <motion.li variants={linkVariants}>
-        <a href='/parent/makeup/createMakeup'>Add a Makeup Set</a>
-      </motion.li> */}
+      {dancers.length > 0 && (
+        <>
+          <motion.li variants={linkVariants}>
+            <a href='/parent/routines/createRoutine'>Create a Routine</a>
+          </motion.li>
+          <motion.li variants={linkVariants}>
+            <a href='/parent/events/createEvent'>Add an Event</a>
+          </motion.li>
+        </>
+      )}
       <motion.li variants={linkVariants}>
         <a href='/parent/dancers/addDancer'>Add a Dancer</a>
       </motion.li>

@@ -11,7 +11,7 @@ function SubNavFilter({ page, createLink }) {
   return (
     <NewNavSidebarContainer>
       <NavSection>
-        <NavSectionHeading>
+        {/* <NavSectionHeading>
           <h2>{page}</h2>
           {createLink && (
             <Link href={createLink}>
@@ -21,7 +21,7 @@ function SubNavFilter({ page, createLink }) {
               </a>
             </Link>
           )}
-        </NavSectionHeading>
+        </NavSectionHeading> */}
         <NewParentControlPanel />
       </NavSection>
     </NewNavSidebarContainer>

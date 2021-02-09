@@ -1,12 +1,12 @@
-import NewParentLayout from '../../../components/Parent/NewParentLayout'
-
 import CreateDancerForm from '../../../components/Parent/CreateDancerForm'
+import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
 
 function AddDancerPage() {
   return (
-    <NewParentLayout page={'Add a Dancer'}>
+    <ParentNoFilterLayout page={'Add a Dancer'}>
+      <h2>Add a New Dancer</h2>
       <CreateDancerForm />
-    </NewParentLayout>
+    </ParentNoFilterLayout>
   )
 }
 

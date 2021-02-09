@@ -4,7 +4,7 @@ import {
   NavSectionHeading,
 } from '../styles/NewNavStyles'
 
-export default function StaticParentQuickMenu() {
+export default function StaticParentQuickMenu({ dancers }) {
   return (
     <NewNavSidebarContainer>
       <NavSection>
@@ -12,26 +12,20 @@ export default function StaticParentQuickMenu() {
           <h2>Actions</h2>
         </NavSectionHeading>
         <ul>
-          <li>
-            <a className='btn-nav' href='/parent/routines/createRoutine'>
-              Create a Routine
-            </a>
-          </li>
-          <li>
-            <a className='btn-nav' href='/parent/events/createEvent'>
-              Add an Event
-            </a>
-          </li>
-          {/* <li>
-            <a className='btn-nav' href='/parent/hairstyles/createHairstyle'>
-              Add a Hairstyle
-            </a>
-          </li>
-          <li>
-            <a className='btn-nav' href='/parent/makeup/createMakeup'>
-              Add a Makeup Set
-            </a>
-          </li> */}
+          {dancers.length > 0 && (
+            <>
+              <li>
+                <a className='btn-nav' href='/parent/routines/createRoutine'>
+                  Create a Routine
+                </a>
+              </li>
+              <li>
+                <a className='btn-nav' href='/parent/events/createEvent'>
+                  Add an Event
+                </a>
+              </li>
+            </>
+          )}
           <li>
             <a className='btn-nav' href='/parent/dancers/addDancer'>
               Add a Dancer

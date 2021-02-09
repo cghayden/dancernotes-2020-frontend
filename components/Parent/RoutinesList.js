@@ -9,7 +9,6 @@ import SearchForStudio from '../SearchForStudio'
 import Card from '../../components/styles/Card'
 import DanceListingLink from './DanceListingLink'
 import { useToggle } from '../../utilities/useToggle'
-
 //query all dances where ids of parents dancers are in the ids of enrolled dancers for the dance.  On the server, filter out all dancers not belonging to this parent.const NoRoutinesDiv = styled.div`
 
 const NoRoutinesCard = styled(Card)``
@@ -67,10 +66,14 @@ function RoutinesList({ dancerIds }) {
             Search for a studio to browse and/or register for classes.
           </button>
           {isToggled && <SearchForStudio dancerId={dancerIds[0]} />}
-          <p>- OR -</p>
-          <Link href='/parent/routines/createRoutine'>
-            <a className='btn-action-primary'>Create your own Routine</a>
-          </Link>
+          {dancerIds.length > 0 && (
+            <>
+              <p>- OR -</p>
+              <Link href='/parent/routines/createRoutine'>
+                <a className='btn-action-primary'>Create your own Routine</a>
+              </Link>
+            </>
+          )}
         </CardOptions>
       </NoRoutinesCard>
     )

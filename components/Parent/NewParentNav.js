@@ -1,11 +1,15 @@
+import { useQuery } from '@apollo/react-hooks'
 import StyledLink from '../StyledLink'
 import {
   NewNavSidebarContainer,
   NavSectionHeading,
   NavSection,
 } from '../styles/NewNavStyles'
-
+import { PARENT_USER_QUERY } from './Queries'
 export default function NewParentNav() {
+  const { data, loading, error } = useQuery(PARENT_USER_QUERY)
+  const parentUser = data ? data.parentUser : { dancers: [] }
+
   return (
     <NewNavSidebarContainer>
       <NavSection>
@@ -21,25 +25,34 @@ export default function NewParentNav() {
               <a className='btn-nav'>Routines</a>
             </StyledLink>
           </li>
-
-          <li>
-            <StyledLink activeClassName='activeStudioNav' href='/parent/events'>
-              <a className='btn-nav'>Events</a>
-            </StyledLink>
-          </li>
-          <li>
-            <StyledLink
-              activeClassName='activeStudioNav'
-              href='/parent/hairstyles'
-            >
-              <a className='btn-nav'>Hair Styles</a>
-            </StyledLink>
-          </li>
-          <li>
-            <StyledLink activeClassName='activeStudioNav' href='/parent/makeup'>
-              <a className='btn-nav'>Makeup</a>
-            </StyledLink>
-          </li>
+          {parentUser.dancers.lenfgth > 0 && (
+            <>
+              <li>
+                <StyledLink
+                  activeClassName='activeStudioNav'
+                  href='/parent/events'
+                >
+                  <a className='btn-nav'>Events</a>
+                </StyledLink>
+              </li>
+              <li>
+                <StyledLink
+                  activeClassName='activeStudioNav'
+                  href='/parent/hairstyles'
+                >
+                  <a className='btn-nav'>Hair Styles</a>
+                </StyledLink>
+              </li>
+              <li>
+                <StyledLink
+                  activeClassName='activeStudioNav'
+                  href='/parent/makeup'
+                >
+                  <a className='btn-nav'>Makeup</a>
+                </StyledLink>
+              </li>
+            </>
+          )}
         </ul>
       </NavSection>
       <NavSection>
