@@ -19,7 +19,7 @@ const Layout = styled.div`
 `
 
 const SelectionWindow = styled.div`
-  /* height: 100vh; */
+  height: 100vh;
   overflow-y: scroll;
   position: relative;
   flex-grow: 1;
