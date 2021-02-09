@@ -9,6 +9,8 @@ import { PARENT_USER_QUERY } from './Queries'
 import { DANCER_QUERY } from './Queries'
 import { RegistrationContext } from './RegistrationContext'
 import Card from '../styles/Card'
+import { FilterContext } from '../Studio/FilterContext'
+
 import RequestAccessButton from './RequestAccessButton'
 // import LinkDancerToStudioButton from "./LinkDancerToStudioButton";
 // import SoloDuoTrioSubscribe from "./SoloDuoTrioSubscribe";
@@ -84,8 +86,11 @@ const RequestNotice = styled.p`
 const FiltersDisplay = styled.div`
   text-align: left;
   display: flex;
+  align-items: center;
 `
-function BrowseStudioClasses({ classFilter, studio }) {
+function BrowseStudioClasses({ studio }) {
+  const { filter: classFilter } = useContext(FilterContext)
+
   const BrowsingContext = useContext(RegistrationContext)
   const setBrowsingDancer = BrowsingContext.setBrowsingDancer
 
@@ -108,11 +113,11 @@ function BrowseStudioClasses({ classFilter, studio }) {
     parentUser.studios &&
     parentUser.studios.some((parentStudio) => parentStudio.id === studio.id)
 
-  function compareDanceToFilter(danceClass, filter) {
+  function compareDanceToFilter(danceClass, classFilter) {
     let pass = true
-    const filterCategories = Object.keys(filter)
+    const filterCategories = Object.keys(classFilter)
     filterCategories.forEach((category) => {
-      if (!filter[category].includes(danceClass[category])) {
+      if (!classFilter[category].includes(danceClass[category])) {
         pass = false
       }
     })

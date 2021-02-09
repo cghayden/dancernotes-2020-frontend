@@ -36,7 +36,7 @@ const BROWSE_STUDIO_CLASSES_QUERY = gql`
 `
 
 const BrowseStudioPage = () => {
-  const [classFilter, setFilter] = useState({})
+  // const [classFilter, setFilter] = useState({})
   // const { showControlPanel, toggleControlPanel } = useDisplayControls()
 
   const router = useRouter()
@@ -58,7 +58,7 @@ const BrowseStudioPage = () => {
       {!error && !loading && (
         <>
           <BrowseStudioClasses
-            classFilter={classFilter}
+            // classFilter={classFilter}
             studio={studio}
             // toggleControls={toggleControlPanel}
           />

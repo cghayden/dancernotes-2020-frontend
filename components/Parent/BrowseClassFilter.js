@@ -1,13 +1,11 @@
+import { useContext } from 'react'
 import styled from 'styled-components'
 import CategoryFilter from './CategoryFilter'
-import {
-  NewNavSidebarContainer,
-  NavSection,
-  NavSectionHeading,
-} from '../styles/NewNavStyles'
+
 import { FilterContext } from '../Studio/FilterContext'
 import LockedSvg from '../Icons/LockedSvg'
 import TrashIcon from '../Icons/TrashIcon'
+
 const FilterPanelStyles = styled.div`
   a,
   button {
@@ -47,22 +45,6 @@ const Categories = styled.div`
   justify-content: center;
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     grid-template-columns: repeat(auto-fit, minmax(100px, 200px));
-  }
-`
-const FilterPanelHeader = styled.div`
-  grid-column: 1/-1;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  align-items: center;
-  justify-content: space-evenly;
-  padding: 0 1rem;
-`
-
-const CloseFilterPanel = styled.button`
-  display: inline-block;
-  margin-left: auto;
-  @media (min-width: ${(props) => props.theme.largeScreen}) {
-    display: none;
   }
 `
 
@@ -116,13 +98,15 @@ const CheckboxAreaHeader = styled.div`
   }
 `
 
-const BrowseClassFilter = ({ studio, filter, setFilter }) => {
+const BrowseClassFilter = ({ studio }) => {
+  const { filter, setFilter } = useContext(FilterContext)
+  console.log('class filter', filter)
+
   const filterOptions = ['style', 'competitiveLevel', 'ageDivision', 'day']
   const days = ['Mon.', 'Tue.', 'Wed.', 'Thur.', 'Fri', 'Sat.', 'Sun.']
+
   const activeFilters = [].concat.apply([], Object.values(filter))
-  const clearFilter = () => {
-    setFilter({})
-  }
+
   return (
     <FilterPanelStyles>
       <FilterHeaderStyles>

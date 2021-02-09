@@ -107,11 +107,7 @@ export default function NewBrowseStudioLayout({
         <div className='hide-ltMedium'>
           <NewNavSidebarContainer>
             <NavSection>
-              <BrowseClassFilter
-                studio={studio}
-                filter={classFilter}
-                setFilter={setFilter}
-              />
+              <BrowseClassFilter studio={studio} />
             </NavSection>
           </NewNavSidebarContainer>
         </div>
