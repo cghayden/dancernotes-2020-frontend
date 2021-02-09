@@ -12,6 +12,7 @@ import Card from '../styles/Card'
 import { FilterContext } from '../Studio/FilterContext'
 
 import RequestAccessButton from './RequestAccessButton'
+
 // import LinkDancerToStudioButton from "./LinkDancerToStudioButton";
 // import SoloDuoTrioSubscribe from "./SoloDuoTrioSubscribe";
 
@@ -91,8 +92,7 @@ const FiltersDisplay = styled.div`
 function BrowseStudioClasses({ studio }) {
   const { filter: classFilter } = useContext(FilterContext)
 
-  const BrowsingContext = useContext(RegistrationContext)
-  const setBrowsingDancer = BrowsingContext.setBrowsingDancer
+  const { setBrowsingDancer } = useContext(RegistrationContext)
 
   //get browsing dancer from cookies so it will still be available if page is refreshed
   const activeDancerId = Cookies.get('browsingDancerId')
@@ -157,37 +157,18 @@ function BrowseStudioClasses({ studio }) {
           <p>
             The following dance classes are available at {studio.studioName}
           </p>
-          {/* {!isParentLinkedToStudio &&
-            !parentUser.accessRequests.includes(studio.id) && (
-              <>
-                <p>
-                  If your classes are not listed here, you can request access to
-                  the studio's notes
-                </p>
-                <RequestAccessButton
-                  accessRequests={parentUser.accessRequests}
-                  parentEmail={parentUser.email}
-                  studioId={studio.id}
-                />
-              </>
-            )}
-          {parentUser.accessRequests.includes(studio.id) && (
-            <RequestNotice>Notes are requested from this studio</RequestNotice>
-          )} */}
         </BrowsingHeader>
+        {/*display a list of the active filters */}
         <LargeScreenActiveFilters>
-          {/*display a list of the active filters */}
           {Object.keys(classFilter).length > 0 && (
-            <>
-              <FiltersDisplay>
-                <h2>Active Filters:</h2>
-                <ul>
-                  {activeFilters.map((choice) => (
-                    <li key={choice}>{choice}</li>
-                  ))}
-                </ul>
-              </FiltersDisplay>
-            </>
+            <FiltersDisplay>
+              <h2>Active Filters:</h2>
+              <ul>
+                {activeFilters.map((choice) => (
+                  <li key={choice}>{choice}</li>
+                ))}
+              </ul>
+            </FiltersDisplay>
           )}
         </LargeScreenActiveFilters>
 
@@ -216,6 +197,25 @@ function BrowseStudioClasses({ studio }) {
 }
 export default BrowseStudioClasses
 
+{
+  /* {!isParentLinkedToStudio &&
+            !parentUser.accessRequests.includes(studio.id) && (
+              <>
+                <p>
+                  If your classes are not listed here, you can request access to
+                  the studio's notes
+                </p>
+                <RequestAccessButton
+                  accessRequests={parentUser.accessRequests}
+                  parentEmail={parentUser.email}
+                  studioId={studio.id}
+                />
+              </>
+            )}
+          {parentUser.accessRequests.includes(studio.id) && (
+            <RequestNotice>Notes are requested from this studio</RequestNotice>
+          )} */
+}
 // todo - 1. where and how to include options below .. when a studio has a dancer registered in a solo/duo/trio and the parent has not subscribed,
 // todo -2. when the studio has the dancers information and contact but the dancer is not registered for any classes
 

@@ -1,40 +1,35 @@
-import React, { Component, createContext } from "react";
-import Cookies from "js-cookie";
+import React, { Component, createContext } from 'react'
+import Cookies from 'js-cookie'
 
-const RegistrationContext = createContext();
+const RegistrationContext = createContext()
 
 class RegistrationContextProvider extends Component {
   state = {
-    browsingDancerId: "",
-    browsingDancerName: ""
-  };
+    browsingDancerId: '',
+    browsingDancerName: '',
+  }
 
-  setBrowsingDancer = id => {
-    // console.log(" set browsing dancer:", name);
-    Cookies.set("browsingDancerId", id);
-    // Cookies.set("browsingDancerName", name);
-    this.setState({ browsingDancerId: id });
-  };
+  setBrowsingDancer = (id) => {
+    Cookies.set('browsingDancerId', id)
+    this.setState({ browsingDancerId: id })
+  }
   render() {
-    const {
-      browsingDancerId
-      // browsingDancerName
-    } = this.state;
+    const { browsingDancerId } = this.state
+    // console.log('browsingDancerId=', browsingDancerId)
     return (
       <RegistrationContext.Provider
         value={{
           browsingDancerId,
-          // browsingDancerName,
-          setBrowsingDancer: this.setBrowsingDancer
+          setBrowsingDancer: this.setBrowsingDancer,
         }}
       >
         {this.props.children}
       </RegistrationContext.Provider>
-    );
+    )
   }
 }
 
-const RegistrationContextConsumer = RegistrationContext.Consumer;
+const RegistrationContextConsumer = RegistrationContext.Consumer
 
-export default RegistrationContextProvider;
-export { RegistrationContextConsumer, RegistrationContext };
+export default RegistrationContextProvider
+export { RegistrationContextConsumer, RegistrationContext }

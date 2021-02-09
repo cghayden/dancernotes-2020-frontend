@@ -8,19 +8,20 @@ import { useDisplayControls } from '../../components/Parent/ParentDisplayProvide
 import SearchForStudio from '../SearchForStudio'
 import Card from '../../components/styles/Card'
 import DanceListingLink from './DanceListingLink'
+import { useToggle } from '../../utilities/useToggle'
 
 //query all dances where ids of parents dancers are in the ids of enrolled dancers for the dance.  On the server, filter out all dancers not belonging to this parent.const NoRoutinesDiv = styled.div`
 
 const NoRoutinesCard = styled(Card)``
 const CardOptions = styled.div`
   display: grid;
-  grid-gap: 20px;
 `
 function RoutinesList({ dancerIds }) {
-  const [showStudioSearch, setShowStudioSearch] = useState(false)
+  // const [showStudioSearch, setShowStudioSearch] = useState(false)
   const { hiddenIds, competitionMode } = useDisplayControls()
 
   const { data, error, loading } = useQuery(ALL_Rs)
+  const { isToggled, toggle } = useToggle(false)
 
   function formatSortValue(day, startTime) {
     const dayValues = {
@@ -62,13 +63,10 @@ function RoutinesList({ dancerIds }) {
         </div>
 
         <CardOptions className='card__section'>
-          <button
-            className='btn-action-primary'
-            onClick={() => setShowStudioSearch(!showStudioSearch)}
-          >
+          <button className='btn-action-primary' onClick={toggle}>
             Search for a studio to browse and/or register for classes.
           </button>
-          {showStudioSearch && <SearchForStudio dancerId={dancerIds[0]} />}
+          {isToggled && <SearchForStudio dancerId={dancerIds[0]} />}
           <p>- OR -</p>
           <Link href='/parent/routines/createRoutine'>
             <a className='btn-action-primary'>Create your own Routine</a>

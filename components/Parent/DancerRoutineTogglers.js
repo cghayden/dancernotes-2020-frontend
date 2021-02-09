@@ -8,7 +8,7 @@ import StudioRoutinesCheckboxes from './StudioRoutinesCheckboxes'
 import IndependentRoutinesCheckboxes from './IndependentRoutinesCheckboxes'
 import { SliderLabel, SliderInput, Slider } from '../styles/SmallSliderToggler'
 import MenuSvg from '../Icons/MenuSvg'
-
+import { useToggle } from '../../utilities/useToggle'
 const DancerControlsStyle = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
@@ -48,7 +48,8 @@ const DancerTogglersContainer = styled.div`
   }
 `
 function DisplayController({ dancer, hiddenIds, toggleId }) {
-  const [isOpen, toggleIsOpen] = useState(false)
+  // const [isOpen, toggleIsOpen] = useState(false)
+  const { isToggled, toggle } = useToggle(false)
 
   dancer.allRoutines = [...dancer.danceClasses, ...dancer.customRoutines]
   const independentRoutines = dancer.allRoutines.filter(
@@ -56,7 +57,7 @@ function DisplayController({ dancer, hiddenIds, toggleId }) {
   )
 
   return (
-    <DancerTogglersContainer isOpen={isOpen}>
+    <DancerTogglersContainer isOpen={isToggled}>
       <DancerTogglerAndLabel key={dancer.id}>
         <SliderLabel
           id={`${dancer.firstName}-label`}
@@ -74,16 +75,13 @@ function DisplayController({ dancer, hiddenIds, toggleId }) {
         </SliderLabel>
 
         <TogglerLabel>{dancer.firstName}</TogglerLabel>
-        <button
-          className='btn-icon'
-          onClick={() => toggleIsOpen((isOpen) => !isOpen)}
-        >
+        <button className='btn-icon' onClick={toggle}>
           <MenuSvg />
         </button>
       </DancerTogglerAndLabel>
 
       <AnimatePresence>
-        {isOpen && (
+        {isToggled && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
@@ -91,11 +89,16 @@ function DisplayController({ dancer, hiddenIds, toggleId }) {
           >
             <DancerControlsStyle key={dancer.id}>
               {!dancer.allRoutines.length && (
-                <Link href='/parent/account/dancers'>
-                  <a className='btn-action-primary-textOnly'>
-                    Create or Find a Class
-                  </a>
-                </Link>
+                <>
+                  <Link href='/parent/studios'>
+                    <a className='btn-action-primary-textOnly'>Find a Class</a>
+                  </Link>
+                  <Link href='/parent/routines/addRoutine'>
+                    <a className='btn-action-primary-textOnly'>
+                      Create a Class
+                    </a>
+                  </Link>
+                </>
               )}
               {dancer.studios &&
                 dancer.studios.map((studio) => (
