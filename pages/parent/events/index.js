@@ -7,17 +7,15 @@ import {
 import NewParentLayout from '../../../components/Parent/NewParentLayout'
 import EventsContent from '../../../components/Parent/EventsContent'
 
-import { useParentEvents } from '../../../components/Parent/useParentEvents'
+// import { useParentEvents } from '../../../components/Parent/useParentEvents'
 
 function EventsPage() {
-  // const customEvents = useCustomEvents();
   //events entered by studios
   const {
     data: parentEvents,
     loading: loadingEvents,
     error: errorLoadingEvents,
   } = useQuery(PARENT_EVENTS_QUERY)
-  //   console.log('parentEvents', parentEvents)
 
   //events entered by parent
   const {

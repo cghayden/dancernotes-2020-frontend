@@ -254,6 +254,7 @@ const DANCER_QUERY = gql`
       id
       firstName
       avatar
+      avatarId
       danceClasses {
         id
         name

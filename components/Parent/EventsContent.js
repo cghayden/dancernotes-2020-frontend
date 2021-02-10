@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import EventsFilter from './EventsFilter'
 import EventsDisplay from './EventsDisplay'
 
@@ -16,7 +16,6 @@ function EventsContent({
     camp: true,
     other: true,
   })
-  console.log('allEvents', allEvents)
 
   return (
     <>

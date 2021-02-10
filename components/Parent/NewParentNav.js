@@ -6,6 +6,19 @@ import {
   NavSection,
 } from '../styles/NewNavStyles'
 import { PARENT_USER_QUERY } from './Queries'
+
+// import NProgress from "nprogress";
+
+// Router.onRouteChangeStart = () => {
+//   NProgress.start();
+// };
+// Router.onRouteChangeComplete = () => {
+//   NProgress.done();
+// };
+// Router.onRouteChangeError = () => {
+//   NProgress.done();
+// };
+
 export default function NewParentNav() {
   const { data, loading, error } = useQuery(PARENT_USER_QUERY)
   const parentUser = data ? data.parentUser : { dancers: [] }
@@ -25,7 +38,7 @@ export default function NewParentNav() {
               <a className='btn-nav'>Routines</a>
             </StyledLink>
           </li>
-          {parentUser.dancers.lenfgth > 0 && (
+          {parentUser.dancers.length > 0 && (
             <>
               <li>
                 <StyledLink

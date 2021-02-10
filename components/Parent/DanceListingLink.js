@@ -82,8 +82,7 @@ const DanceListingLink = ({ dance }) => {
       <EnrolledDancers dancers={dance.dancers} />
       <DanceCardTitle>
         <p>{dance.name}</p>
-        {/* <p>{dance.performanceName}</p> */}
-        <p>{dance.studio.studioName}</p>
+        <p>{dance.studio?.studioName}</p>
       </DanceCardTitle>
       {!competitionMode ? (
         <DanceCardTime>

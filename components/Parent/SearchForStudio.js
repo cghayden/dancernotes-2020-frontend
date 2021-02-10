@@ -1,11 +1,10 @@
-import React from 'react'
 import Downshift from 'downshift'
 import Router from 'next/router'
 import { ApolloConsumer } from 'react-apollo'
 import gql from 'graphql-tag'
-import debounce from '../utilities/debounce'
-import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown'
-import { RegistrationContextConsumer } from '../components/Parent/RegistrationContext'
+import debounce from '../../utilities/debounce'
+import { DropDown, DropDownItem, SearchStyles } from '../styles/DropDown'
+import { RegistrationContextConsumer } from './RegistrationContext'
 
 const SEARCH_STUDIOS_QUERY = gql`
   query SEARCH_STUDIOS_QUERY($searchTerm: String!) {

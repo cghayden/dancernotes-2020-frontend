@@ -17,12 +17,7 @@ const ClassListing = styled.div`
   min-height: 100px;
 `
 
-const DanceClassInfo = styled.div`
-  /* color: ${(props) => props.theme.gray7}; */
-  /* display: grid;
-  grid-template-columns: 1fr;
-  justify-items: center; */
-`
+const DanceClassInfo = styled.div``
 
 const DanceClassName = styled.p`
   font-size: 1.25rem;

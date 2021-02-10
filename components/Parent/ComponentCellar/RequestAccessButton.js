@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-import { PARENT_USER_QUERY } from './Queries'
+import { PARENT_USER_QUERY } from '../Queries'
 
 const REQUEST_STUDIO_ACCESS = gql`
   mutation REQUEST_STUDIO_ACCESS(

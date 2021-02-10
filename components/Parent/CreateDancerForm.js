@@ -12,10 +12,23 @@ import { PARENT_USER_QUERY } from './Queries'
 import { DELETE_CLOUDINARY_ASSET } from '../Mutations'
 
 import { UPDATE_DANCER_MUTATION } from './UpdateDancerForm'
-import { DancerCardContainer } from './OldDancerCard'
-import { DancerCardHeaderStyles } from './OldDancerCard'
-import useForm from '../../lib/useForm'
 
+import useForm from '../../utilities/useForm'
+
+const DancerCardContainer = styled(Card)`
+  padding-bottom: 0;
+  margin-top: 4rem;
+  p {
+    margin-bottom: 10px;
+  }
+`
+const DancerCardHeaderStyles = styled.div`
+  height: 80px;
+  position: relative;
+  text-align: right;
+  margin-bottom: -20px;
+  z-index: 100;
+`
 const ModalCard = styled(Card)`
   box-shadow: none;
   display: grid;

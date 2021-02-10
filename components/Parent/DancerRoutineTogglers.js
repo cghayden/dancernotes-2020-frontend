@@ -1,14 +1,12 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
-
-import DancerToggler from './DancerToggler'
 import StudioRoutinesCheckboxes from './StudioRoutinesCheckboxes'
 import IndependentRoutinesCheckboxes from './IndependentRoutinesCheckboxes'
 import { SliderLabel, SliderInput, Slider } from '../styles/SmallSliderToggler'
 import MenuSvg from '../Icons/MenuSvg'
 import { useToggle } from '../../utilities/useToggle'
+
 const DancerControlsStyle = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
@@ -47,8 +45,7 @@ const DancerTogglersContainer = styled.div`
       props.isOpen ? props.theme.gray1 : props.theme.gray0};
   }
 `
-function DisplayController({ dancer, hiddenIds, toggleId }) {
-  // const [isOpen, toggleIsOpen] = useState(false)
+function DancerRoutineTogglers({ dancer, hiddenIds, toggleId }) {
   const { isToggled, toggle } = useToggle(false)
 
   dancer.allRoutines = [...dancer.danceClasses, ...dancer.customRoutines]
@@ -125,4 +122,4 @@ function DisplayController({ dancer, hiddenIds, toggleId }) {
   )
 }
 
-export default DisplayController
+export default DancerRoutineTogglers

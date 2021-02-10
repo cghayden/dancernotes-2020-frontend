@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Link from 'next/link'
-
-const DanceCardBodyStyles = styled.div`
+import { Dt, Dd } from '../styles/CardBodyStyles'
+const StudioDanceCardBodyStyles = styled.div`
   padding: 0;
   width: unset;
   min-width: unset;
@@ -28,18 +28,9 @@ const AudioPlayer = styled.audio`
   max-width: 475px;
 `
 
-const Dt = styled.dt`
-  font-weight: bold;
-`
-const Dd = styled.dd`
-  margin-left: 1rem;
-  text-align: left;
-  white-space: pre-wrap;
-`
-
 function StudioDanceDetails({ dance }) {
   return (
-    <DanceCardBodyStyles>
+    <StudioDanceCardBodyStyles>
       <dl>
         <NoteItem>
           <Dt>Age Divsion:</Dt> <Dd>{dance.ageDivision}</Dd>
@@ -77,7 +68,7 @@ function StudioDanceDetails({ dance }) {
           <a>Edit</a>
         </Link>
       </div>
-    </DanceCardBodyStyles>
+    </StudioDanceCardBodyStyles>
   )
 }
 

@@ -11,7 +11,7 @@ import { DELETE_CLOUDINARY_ASSET } from '../Mutations'
 import { SelectChoices } from '../styles/SelectChoices'
 import Form from '../styles/Form'
 import Card from '../styles/Card'
-import useForm from '../../lib/useForm'
+import useForm from '../../utilities/useForm'
 import CancelButton from '../CancelButton'
 
 const CREATE_CUSTOM_ROUTINE_MUTATION = gql`
@@ -57,7 +57,13 @@ const Alert = styled.div`
   left: 10px;
   right: 10px;
   height: 300px;
-  background: white;
+  color: ${(props) => props.theme.blackText};
+  background: ${(props) => props.theme.gray1};
+  padding: 1rem;
+  font-size: 1.2rem;
+  p {
+    padding: 1rem;
+  }
 `
 
 const initialInputState = {
@@ -232,6 +238,7 @@ function CreateCustomRoutineForm({ parent }) {
                     <p>{dancer[0]}</p>
                     <button
                       type='button'
+                      className='btn-icon'
                       onClick={() => removeChosenDancer(dancer[0])}
                     >
                       X
@@ -501,7 +508,7 @@ function CreateCustomRoutineForm({ parent }) {
                 >
                   Create Another Routine
                 </button>
-                <Link href='/parent/notes/routines'>
+                <Link href='/parent/routines'>
                   <a className='btn-action-secondary'>
                     I'm finished creating classes
                   </a>

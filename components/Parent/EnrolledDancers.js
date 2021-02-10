@@ -1,11 +1,8 @@
-//render a icon or identifirer for each dancer that is actively displayed
-import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const EnrolledDiv = styled.div`
   display: flex;
   justify-content: flex-start;
-  /* padding: 0 10%; */
   flex-wrap: wrap;
   align-items: center;
   grid-row: 1;

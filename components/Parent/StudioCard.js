@@ -16,7 +16,6 @@ const DancerListings = styled.div`
 `
 const StudioCardLinks = styled.div``
 const StudioCard = ({ studio, dancers }) => {
-  console.log('studio', studio)
   const BrowsingContext = useContext(RegistrationContext)
   const setBrowsingDancer = BrowsingContext.setBrowsingDancer
 
@@ -27,7 +26,7 @@ const StudioCard = ({ studio, dancers }) => {
         {dancers.map((dancer) => {
           dancer.allClasses = [...dancer.danceClasses, ...dancer.customRoutines]
           const studioClasses = dancer.allClasses.filter(
-            (danceClass) => danceClass.studio.id === studio.id
+            (danceClass) => danceClass.studio?.id === studio.id
           )
           return (
             studioClasses.length > 0 && (

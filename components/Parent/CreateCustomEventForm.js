@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import DatePicker from 'react-datepicker'
@@ -6,7 +6,7 @@ import Router from 'next/router'
 import Form from '../styles/Form'
 import Card from '../styles/Card'
 import Error from '../Error'
-import useForm from '../../lib/useForm'
+import useForm from '../../utilities/useForm'
 import { SelectChoices } from './CreateCustomRoutineForm'
 import { CUSTOM_EVENTS_QUERY } from './Queries'
 
@@ -62,7 +62,7 @@ const initialInputState = {
 }
 
 function CreateCustomEventForm({ parent }) {
-  const { inputs, updateInputs, handleChange } = useForm(initialInputState)
+  const { inputs, handleChange } = useForm(initialInputState)
   const [dancerChoice, setDancerChoice] = useState(() =>
     parent.dancers.length > 1
       ? {}
@@ -76,7 +76,7 @@ function CreateCustomEventForm({ parent }) {
     {
       refetchQueries: [{ query: CUSTOM_EVENTS_QUERY }],
       onCompleted: () => {
-        Router.push('/parent/notes/events')
+        Router.push('/parent/events')
       },
     }
   )

@@ -1,14 +1,9 @@
-import { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
+import styled from 'styled-components'
 
 import { PARENT_USER_QUERY } from './Queries'
-
-import styled from 'styled-components'
-import SliderToggler from '../styles/SliderToggler'
 import { SliderLabel, SliderInput, Slider } from '../styles/SmallSliderToggler'
 import { useDisplayControls } from './ParentDisplayProvider'
-import OffScreenControlsToggler from './OffscreenControlsToggler'
-
 import DancerRoutineTogglers from './DancerRoutineTogglers'
 import CompModeToggler from './CompModeToggler'
 import LockedSvg from '../Icons/LockedSvg'

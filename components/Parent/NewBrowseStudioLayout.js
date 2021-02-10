@@ -6,14 +6,7 @@ import NewParentHeader from '../Parent/NewParentHeader'
 import NewParentNav from './NewParentNav'
 import ParentBreadcrumb from './ParentBreadcrumb'
 import FilterSvg from '../Icons/FilterSvg'
-import {
-  NewNavSidebarContainer,
-  NavSection,
-  NavSectionHeading,
-} from '../styles/NewNavStyles'
-// import ParentMobileControls from './ParentMobileControls'
-
-// import ParentSubNavFilter from './ParentSubNavFilter'
+import { NewNavSidebarContainer, NavSection } from '../styles/NewNavStyles'
 import BrowseClassFilter from './BrowseClassFilter'
 import MobileBrowseClassFilter from './MobileBrowseClassFilter'
 
@@ -45,10 +38,8 @@ const SelectionWindowHeader = styled.div`
 
 const SelectionWindowMain = styled.div`
   width: 100%;
-  /* background: ${(props) => props.theme.gray0}; */
   height: 100vh;
   padding-bottom: 50vh;
-  /* padding-top: 1rem; */
   display: flex;
   flex-direction: column;
   overflow: auto;

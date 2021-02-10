@@ -1,15 +1,12 @@
 import { useContext, useState } from 'react'
-import Link from 'next/link'
-import { AnimatePresence, motion } from 'framer-motion'
-
 import styled from 'styled-components'
-import SearchForStudio from '../SearchForStudio'
+import SearchForStudio from './SearchForStudio'
 import Card from '../styles/Card'
 import Edit from '../Icons/Edit'
-import UpdateDancerForm from './UpdateDancerForm'
 import DancerStudios from './DancerStudios'
 import DancerClasses from './DancerClasses'
 import { RegistrationContext } from './RegistrationContext'
+import Link from 'next/link'
 
 const DancerCardContainer = styled(Card)`
   padding-bottom: 0;
@@ -57,6 +54,11 @@ const FlipButton = styled.button`
   border: none;
 `
 
+const ClassesContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+`
+
 const DancerCardFooter = styled.div`
   display: flex;
   flex-direction: column;
@@ -64,7 +66,7 @@ const DancerCardFooter = styled.div`
 `
 
 function DancerCard({ dancer }) {
-  const [showEdit, toggleEdit] = useState(false)
+  // const [showEdit, toggleEdit] = useState(false)
   const BrowsingContext = useContext(RegistrationContext)
   const setBrowsingDancer = BrowsingContext.setBrowsingDancer
   const [showStudioSearch, setShowStudioSearch] = useState(false)
@@ -75,7 +77,6 @@ function DancerCard({ dancer }) {
     setNewAvatar(newAvatar)
   }
 
-  const hasDanceClasses = dancer.danceClasses.length > 0
   const hasAvatar = dancer.avatar
 
   return (
@@ -91,13 +92,38 @@ function DancerCard({ dancer }) {
           )}
         </AvatarInitials>
         <h2>{dancer.firstName}</h2>
-        <FlipButton onClick={(toggleEdit) => (showEdit) => !showEdit}>
+        <Link href={`/parent/updateDancer/${dancer.id}`}>
+          <a>Edit</a>
+        </Link>
+        {/* <FlipButton onClick={(toggleEdit) => (showEdit) => !showEdit}>
           <Edit />
-        </FlipButton>
+        </FlipButton> */}
       </DancerCardHeaderStyles>
-      <div className='.card__section'>
-        <DancerStudios studios={dancer.studios} />
-        <DancerClasses danceClasses={dancer.danceClasses} />
+      <ClassesContainer className='.card__section'>
+        {dancer.studios.map((studio) => (
+          <div key={studio.id}>
+            <h4>Classes at {studio.studioName}</h4>
+            <ul>
+              {dancer.danceClasses.map((dance) => {
+                if (dance.studio.id === studio.id) {
+                  return <li key={dance.id}>{dance.name}</li>
+                }
+              })}
+            </ul>
+            <Link href={`/parent/browseStudio?studioId=${studio.id}`}>
+              <button
+                className='btn-action-primary-textOnly'
+                onClick={() => {
+                  setBrowsingDancer(dancers.id)
+                }}
+              >
+                Manage Classes at {studio.studioName}
+              </button>
+            </Link>
+          </div>
+        ))}
+        {/* <DancerStudios studios={dancer.studios} /> */}
+        {/* <DancerClasses danceClasses={dancer.danceClasses} /> */}
         {/* //studios/groups // classes //requests //events */}
         {/* {dancer.studios.length > 1 ? (
           <div>
@@ -118,7 +144,7 @@ function DancerCard({ dancer }) {
         ) : (
           <h3>{dancer.studios[0].studioName}</h3>
         )}*/}
-      </div>
+      </ClassesContainer>
       <DancerCardFooter>
         <p>Footer</p>
         <button

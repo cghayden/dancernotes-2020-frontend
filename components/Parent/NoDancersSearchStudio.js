@@ -2,8 +2,8 @@ import Downshift from 'downshift'
 import Router from 'next/router'
 import { ApolloConsumer } from 'react-apollo'
 import gql from 'graphql-tag'
-import debounce from '../utilities/debounce'
-import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown'
+import debounce from '../../utilities/debounce'
+import { DropDown, DropDownItem, SearchStyles } from '../styles/DropDown'
 
 const SEARCH_STUDIOS_QUERY = gql`
   query SEARCH_STUDIOS_QUERY($searchTerm: String!) {
@@ -14,7 +14,7 @@ const SEARCH_STUDIOS_QUERY = gql`
   }
 `
 
-class SearchForStudio extends React.Component {
+class NoDancersSearchStudio extends React.Component {
   state = {
     studios: [],
     loading: false,
@@ -101,4 +101,4 @@ class SearchForStudio extends React.Component {
   }
 }
 
-export default SearchForStudio
+export default NoDancersSearchStudio

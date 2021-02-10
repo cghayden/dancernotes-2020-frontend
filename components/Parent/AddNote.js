@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import styled from 'styled-components'
@@ -9,7 +9,6 @@ const AddNoteForm = styled(Form)`
   grid-column: 1/-1;
   textarea {
     margin-top: 1rem;
-
     width: 100%;
   }
 `
@@ -23,24 +22,12 @@ const ADD_NOTE_MUTATION = gql`
 `
 
 function DanceCardFooter({ danceId, toggleAddNote }) {
-  // const [showInput, toggleShowInput] = useState(false);
   const [note, setNote] = useState('')
 
   const [addNote, { loading, error }] = useMutation(ADD_NOTE_MUTATION, {
     variables: { danceId, note },
     refetchQueries: [{ query: ALL_Rs }],
   })
-
-  // function updateNotes(cache, payload) {
-  //   const newNote = payload.data.addNote;
-  //   const data = cache.readQuery({ query: ALL_Rs });
-  //   for (const dance of data.allRs) {
-  //     if (dance.id === this.props.danceId) {
-  //       dance.parentsNotes.push(newNote.note);
-  //     }
-  //   }
-  //   cache.writeQuery({ query: ALL_Rs, data });
-  // };
 
   return (
     <AddNoteForm

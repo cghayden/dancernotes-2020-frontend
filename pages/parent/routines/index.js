@@ -6,25 +6,14 @@ import RoutinesList from '../../../components/Parent/RoutinesList'
 import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
 import Card from '../../../components/styles/Card'
 import { useToggle } from '../../../utilities/useToggle'
-import NoDancersSearchStudio from '../../../components/NoDancersSearchStudio'
+import NoDancersSearchStudio from '../../../components/Parent/NoDancersSearchStudio'
 export default function routinesIndex() {
   const { isToggled, toggle } = useToggle(false)
   //   const { data, loading, error } = useQuery(ALL_Rs)
   const { data, loading, error } = useQuery(PARENT_USER_QUERY)
   // console.log('data', data)
   const parentUser = data ? data.parentUser : { dancers: [] }
-  if (parentUser.dancers.length > 0) {
-    return (
-      <NewParentLayout
-        error={error}
-        loading={loading}
-        page={'Routines'}
-        createLink={`/parent/routines/createRoutine`}
-      >
-        {data && <RoutinesList dancerIds={data.parentUser.dancersIds} />}
-      </NewParentLayout>
-    )
-  }
+
   if (parentUser.dancers.length < 1) {
     return (
       <ParentNoFilterLayout page='Routines'>
@@ -52,4 +41,14 @@ export default function routinesIndex() {
       </ParentNoFilterLayout>
     )
   }
+  return (
+    <NewParentLayout
+      error={error}
+      loading={loading}
+      page={'Routines'}
+      createLink={`/parent/routines/createRoutine`}
+    >
+      {data && <RoutinesList dancerIds={data.parentUser.dancersIds} />}
+    </NewParentLayout>
+  )
 }

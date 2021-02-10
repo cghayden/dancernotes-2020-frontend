@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-import useForm from '../../lib/useForm'
+import useForm from '../../utilities/useForm'
 import Card from '../styles/Card'
 import Form from '../styles/Form'
 import Error from '../Error'
@@ -28,7 +28,6 @@ export default function UpdateProfileForm({ parentUser }) {
 
   async function saveChanges(e) {
     e.preventDefault()
-    console.log('save')
     await updateParent()
   }
 

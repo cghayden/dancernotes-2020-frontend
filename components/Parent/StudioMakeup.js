@@ -1,20 +1,14 @@
-import styled from 'styled-components'
 import Card from '../styles/Card'
-import { DanceCardBodyStyles, NoteItem, Dt, Dd, Notes } from './DanceCardBody'
-const StudioMakeupContainer = styled.div`
-  h2 {
-    padding: 1rem;
-  }
-`
+import { NoteItem, Dt, Dd, Notes } from '../styles/CardBodyStyles'
+
 const StudioMakeup = ({ studio }) => {
-  console.log('studio', studio)
   if (!studio.makeupSets.length) {
     return (
       <Card>
         <h2>Makeup Sets for {studio.studioName}</h2>
-        <DanceCardBodyStyles>
+        <div>
           <p>None</p>
-        </DanceCardBodyStyles>
+        </div>
       </Card>
     )
   }
@@ -22,7 +16,7 @@ const StudioMakeup = ({ studio }) => {
     <Card>
       <h2>Makeup Sets for {studio.studioName}</h2>
       {studio.makeupSets.map((makeupSet) => (
-        <DanceCardBodyStyles key={makeupSet.id}>
+        <div key={makeupSet.id}>
           <h3>{makeupSet.name}</h3>
           <dl>
             <NoteItem>
@@ -59,7 +53,7 @@ const StudioMakeup = ({ studio }) => {
               <Dt>Notes:</Dt> <Dd>{makeupSet.notes}</Dd>
             </Notes>
           </dl>
-        </DanceCardBodyStyles>
+        </div>
       ))}
     </Card>
   )

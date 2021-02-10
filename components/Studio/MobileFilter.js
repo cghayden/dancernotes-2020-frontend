@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import StaticCategoryFilter from '../Parent/StaticCategoryFilter'
+import StaticClassCategoryFilter from '../StaticClassCategoryFilter'
 import { useStudio } from './useStudio'
 import { FilterContext } from './FilterContext'
 import LockedSvg from '../Icons/LockedSvg'
@@ -141,7 +141,7 @@ const MobileFilter = ({ toggleFilter }) => {
         {filterOptions.map((filterCategory) => {
           const pluralCategory = filterCategory.concat('s')
           return (
-            <StaticCategoryFilter
+            <StaticClassCategoryFilter
               key={filterCategory}
               setFilter={setFilter}
               classFilter={filter}

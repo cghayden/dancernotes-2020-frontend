@@ -1,12 +1,10 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { AnimatePresence, motion } from 'framer-motion'
-
 const CheckboxDiv = styled.div`
-  background: ${(props) => props.theme.gray0};
-  padding-left: 0.5rem;
-  border-radius: 5px;
-
+  .category-heading {
+    text-transform: uppercase;
+  }
   li {
     padding: 0.25rem 0;
   }
@@ -14,11 +12,14 @@ const CheckboxDiv = styled.div`
 
 const FilterDropDownButton = styled.button`
   white-space: nowrap;
+  display: flex;
+  width: 100%;
+  justify-content: left;
 `
 
 const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
   const [isOpen, toggleIsOpen] = useState(false)
-  const dropDownRef = useRef()
+  // const dropDownRef = useRef()
 
   function removeFromArray(array, item) {
     const index = array.indexOf(item)
@@ -63,30 +64,40 @@ const CategoryFilter = ({ setFilter, classFilter, category, selections }) => {
 
   return (
     <CheckboxDiv>
-      <button onClick={() => toggleIsOpen(!isOpen)}>
+      <FilterDropDownButton onClick={() => toggleIsOpen(!isOpen)}>
         {formatHeading(category)}
-      </button>
-
-      <ul>
-        {selections &&
-          selections.map((selection) => {
-            return (
-              <li key={selection}>
-                <label>
-                  <input
-                    type='checkbox'
-                    checked={
-                      classFilter.hasOwnProperty([category]) &&
-                      classFilter[category].includes(selection)
-                    }
-                    onChange={() => handleChange(category, selection)}
-                  />
-                  {selection}
-                </label>
-              </li>
-            )
-          })}
-      </ul>
+      </FilterDropDownButton>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0, transition: { duration: 0.1 } }}
+            // ref={dropDownRef}
+          >
+            <ul>
+              {selections &&
+                selections.map((selection) => {
+                  return (
+                    <li key={selection}>
+                      <label>
+                        <input
+                          type='checkbox'
+                          checked={
+                            classFilter.hasOwnProperty([category]) &&
+                            classFilter[category].includes(selection)
+                          }
+                          onChange={() => handleChange(category, selection)}
+                        />
+                        {selection}
+                      </label>
+                    </li>
+                  )
+                })}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </CheckboxDiv>
   )
 }

@@ -4,7 +4,7 @@ import Router from 'next/router'
 import { LandingPageForm } from './styles/Form'
 import Error from './Error'
 import styled from 'styled-components'
-import useForm from '../lib/useForm'
+import useForm from '../utilities/useForm'
 
 const ResetButton = styled.button``
 

@@ -11,15 +11,10 @@ import { RegistrationContext } from './RegistrationContext'
 import Card from '../styles/Card'
 import { FilterContext } from '../Studio/FilterContext'
 
-import RequestAccessButton from './RequestAccessButton'
-
+// import RequestAccessButton from './RequestAccessButton'
 // import LinkDancerToStudioButton from "./LinkDancerToStudioButton";
 // import SoloDuoTrioSubscribe from "./SoloDuoTrioSubscribe";
 
-// 1. get all classes from studio
-//2. get filters
-//3. filter classes array
-//4. render classes
 const ClassListCard = styled(Card)`
   background: ${(props) => props.theme.gray0};
   width: 97%;
@@ -80,10 +75,6 @@ const LargeScreenActiveFilters = styled(ActiveFilters)`
   }
 `
 
-const RequestNotice = styled.p`
-  color: ${(props) => props.theme.red7};
-  font-size: 1.1rem;
-`
 const FiltersDisplay = styled.div`
   text-align: left;
   display: flex;
@@ -109,9 +100,9 @@ function BrowseStudioClasses({ studio }) {
   })
   const dancer = dancerData ? dancerData.dancer : {}
 
-  const isParentLinkedToStudio =
-    parentUser.studios &&
-    parentUser.studios.some((parentStudio) => parentStudio.id === studio.id)
+  // const isParentLinkedToStudio =
+  //   parentUser.studios &&
+  //   parentUser.studios.some((parentStudio) => parentStudio.id === studio.id)
 
   function compareDanceToFilter(danceClass, classFilter) {
     let pass = true
@@ -186,7 +177,6 @@ function BrowseStudioClasses({ studio }) {
                 request={dancer.requests?.filter(
                   (request) => request.classRequested.id === dance.id
                 )}
-                // dancersRequestsId={dancer.requests && dancer.requests.id}
               />
             )
           }

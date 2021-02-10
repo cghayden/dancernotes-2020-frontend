@@ -1,9 +1,9 @@
-import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import Router from "next/router";
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import Router from 'next/router'
 
-import { DELETE_CLOUDINARY_ASSET } from "../Mutations";
-import { ALL_Rs } from "./Queries";
+import { DELETE_CLOUDINARY_ASSET } from '../Mutations'
+import { ALL_Rs } from './Queries'
 
 const DELETE_CUSTOM_ROUTINE = gql`
   mutation DELETE_CUSTOM_ROUTINE($id: ID!, $musicId: String) {
@@ -11,7 +11,7 @@ const DELETE_CUSTOM_ROUTINE = gql`
       message
     }
   }
-`;
+`
 
 function DeleteCustomRoutineButton({ id, musicId }) {
   const [deleteCustomRoutine, { loading, error }] = useMutation(
@@ -20,23 +20,23 @@ function DeleteCustomRoutineButton({ id, musicId }) {
       variables: { id, musicId },
       refetchQueries: [{ query: ALL_Rs }],
       awaitRefetchQueries: true,
-      onCompleted: () => Router.push("/parent/notes/routines")
+      onCompleted: () => Router.push('/parent/routines'),
     }
-  );
+  )
   return (
     <button
-      type="button"
-      className="btn-danger"
+      type='button'
+      className='btn-danger'
       disabled={loading}
       onClick={async () => {
-        if (confirm("Are you sure you want to delete this Class?")) {
-          await deleteCustomRoutine();
+        if (confirm('Are you sure you want to delete this Class?')) {
+          await deleteCustomRoutine()
         }
       }}
     >
       Delet{loading ? `ing...` : `e`}
     </button>
-  );
+  )
 }
 
-export default DeleteCustomRoutineButton;
+export default DeleteCustomRoutineButton

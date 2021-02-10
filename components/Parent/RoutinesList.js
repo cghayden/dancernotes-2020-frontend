@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import { ALL_Rs } from './Queries'
 import { useDisplayControls } from '../../components/Parent/ParentDisplayProvider'
-import SearchForStudio from '../SearchForStudio'
+import SearchForStudio from './SearchForStudio'
 import Card from '../../components/styles/Card'
 import DanceListingLink from './DanceListingLink'
 import { useToggle } from '../../utilities/useToggle'
@@ -119,14 +119,10 @@ function RoutinesList({ dancerIds }) {
               ) {
                 return (
                   <li key={dance.id}>
-                    <Link
-                      href={`/parent/routines/${dance.id}`}
-                      className='btn-selectionOption'
-                    >
-                      <a>
+                    <Link href={`/parent/routines/${dance.id}`}>
+                      <a className='btn-selectionOption'>
                         <DanceListingLink dance={dance} />
                       </a>
-                      {/* <a className='btn-selectionOption'>{dance.name}</a> */}
                     </Link>
                   </li>
                 )

@@ -1,14 +1,10 @@
-import styled from "styled-components";
-
-const AboutStyles = styled.div``;
-
 function About() {
   return (
-    <AboutStyles>
+    <div>
       <p>Index</p>
       <p>DANCERNOTES!!!-- tell user all about it!</p>
-    </AboutStyles>
-  );
+    </div>
+  )
 }
 
-export default About;
+export default About

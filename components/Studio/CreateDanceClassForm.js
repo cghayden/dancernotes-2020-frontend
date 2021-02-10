@@ -7,7 +7,7 @@ import { UPDATE_DANCECLASS_MUTATION } from './UpdateDanceClass'
 import { DELETE_CLOUDINARY_ASSET } from '../Mutations'
 import Form from '../styles/Form'
 import Card from '../styles/Card'
-import useForm from '../../lib/useForm'
+import useForm from '../../utilities/useForm'
 import Modal from '../Modal'
 
 const CREATE_DANCE_CLASS_MUTATION = gql`

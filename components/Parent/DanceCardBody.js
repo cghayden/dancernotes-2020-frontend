@@ -1,37 +1,14 @@
 import { useState } from 'react'
-import styled from 'styled-components'
 import NotesDiv from './NotesDiv'
-import CustomNotesDiv from './CustomNotesDiv'
+import CustomRoutineNotes from './CustomRoutineNotes'
+import { NoteItem, Dt, Dd } from '../styles/CardBodyStyles'
 
-const DanceCardBodyStyles = styled.div`
-  li {
-    padding: 0.25rem;
-  }
-`
-
-const NoteItem = styled.div`
-  display: flex;
-  padding: 0.25rem 0;
-`
-
-const Dt = styled.dt`
-  font-weight: bold;
-`
-const Dd = styled.dd`
-  margin-left: 1rem;
-  text-align: left;
-  white-space: pre-wrap;
-`
-const Notes = styled.div`
-  text-align: left;
-  padding: 0.25rem 0;
-`
 function DanceCardBody({ dance }) {
   const [addNote, toggleAddNote] = useState(false)
   const [editNotes, toggleEditNotes] = useState(false)
 
   return (
-    <DanceCardBodyStyles>
+    <div>
       <dl>
         <NoteItem>
           <Dt>Shoes:</Dt> <Dd>{dance.shoes}</Dd>
@@ -49,12 +26,11 @@ function DanceCardBody({ dance }) {
             dance={dance}
           />
         ) : (
-          <CustomNotesDiv dance={dance} />
+          <CustomRoutineNotes dance={dance} />
         )}
       </dl>
-    </DanceCardBodyStyles>
+    </div>
   )
 }
 
 export default DanceCardBody
-export { DanceCardBodyStyles, NoteItem, Dt, Dd, Notes }

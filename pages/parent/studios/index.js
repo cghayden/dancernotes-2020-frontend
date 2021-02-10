@@ -4,9 +4,10 @@ import NewParentLayout from '../../../components/Parent/NewParentLayout'
 import StudioCard from '../../../components/Parent/StudioCard'
 import Card from '../../../components/styles/Card'
 import { useToggle } from '../../../utilities/useToggle'
-import SearchForStudio from '../../../components/SearchForStudio'
+import SearchForStudio from '../../../components/Parent/SearchForStudio'
 import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
 import Link from 'next/link'
+import NoDancersSearchStudio from '../../../components/Parent/NoDancersSearchStudio'
 
 export default function studiosIndex() {
   const { isToggled, toggle } = useToggle(false)

@@ -2,7 +2,6 @@ import HairStyleCard from './HairStyleCard'
 import Card from '../styles/Card'
 
 export default function HairStylesCards({ hairstyles }) {
-  console.log('hairstyles', hairstyles)
   return (
     <>
       {hairstyles.map((studio) => (
