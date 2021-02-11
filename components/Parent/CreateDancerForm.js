@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -12,12 +12,27 @@ import { PARENT_USER_QUERY } from './Queries'
 import { DELETE_CLOUDINARY_ASSET } from '../Mutations'
 
 import { UPDATE_DANCER_MUTATION } from './UpdateDancerForm'
-import { DancerCardContainer } from './OldDancerCard'
-import { DancerCardHeaderStyles } from './OldDancerCard'
-import useForm from '../../lib/useForm'
 
+import useForm from '../../utilities/useForm'
+
+const DancerCardContainer = styled(Card)`
+  padding-bottom: 0;
+  margin-top: 4rem;
+  p {
+    margin-bottom: 10px;
+  }
+`
+const DancerCardHeaderStyles = styled.div`
+  height: 80px;
+  position: relative;
+  text-align: right;
+  margin-bottom: -20px;
+  z-index: 100;
+`
 const ModalCard = styled(Card)`
   box-shadow: none;
+  display: grid;
+  grid-gap: 20px;
 `
 
 //same as DancerCard with z-index to put it on top of cardBody(form)
@@ -183,7 +198,7 @@ function CreateDancerForm() {
   }
 
   return (
-    <Fragment>
+    <>
       {hasDancers && (
         <Card className='message'>
           <p>Welcome to Dancernotes! To begin, add a Dancer to your account.</p>
@@ -228,7 +243,7 @@ function CreateDancerForm() {
           >
             Create Another Dancer
           </button>
-          <Link href='/parent/account/dancers'>
+          <Link href='/parent/dancers'>
             <a className='btn-action-secondary-outline'>I'm finished</a>
           </Link>
         </ModalCard>
@@ -246,7 +261,6 @@ function CreateDancerForm() {
         </DancerCardHeaderStyles>
         <Form method='post' onSubmit={(e) => saveNewDancer(e)}>
           <fieldset disabled={loading} aria-busy={loading}>
-            {/* <Error error={error || errorLoadingAvatar} /> */}
             <div className='input-item'>
               <label htmlFor='firstName'>Name</label>
               <input
@@ -290,7 +304,7 @@ function CreateDancerForm() {
           </fieldset>
         </Form>
       </DancerCardContainer>
-    </Fragment>
+    </>
   )
 }
 

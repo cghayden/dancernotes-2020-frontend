@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { DANCER_QUERY } from './Queries'
-import { BROWSE_STUDIO_CLASSES_QUERY } from '../../pages/parent/account/browseStudio'
+import { BROWSE_STUDIO_CLASSES_QUERY } from '../../pages/parent/browseStudio'
 
 const WITHDRAW_FROM_CLASS = gql`
   mutation WITHDRAW_FROM_CLASS($dancerId: ID!, $danceClassId: ID!) {

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { DANCER_QUERY } from './Queries'
-import { BROWSE_STUDIO_CLASSES_QUERY } from '../../pages/parent/account/browseStudio'
+import { BROWSE_STUDIO_CLASSES_QUERY } from '../../pages/parent/browseStudio'
 import WithdrawButton from './WithdrawButton'
 import Error from '../../components/Error'
 
@@ -12,19 +12,12 @@ const ClassListing = styled.div`
   box-shadow: ${(props) => props.theme.dropShadowPizzazz};
   display: grid;
   grid-template-columns: 50% 50%;
-  /* grid-template-rows:  */
   place-items: center;
   margin-bottom: 2rem;
-  /* padding: 1rem 0; */
   min-height: 100px;
 `
 
-const DanceClassInfo = styled.div`
-  /* color: ${(props) => props.theme.gray7}; */
-  /* display: grid;
-  grid-template-columns: 1fr;
-  justify-items: center; */
-`
+const DanceClassInfo = styled.div``
 
 const DanceClassName = styled.p`
   font-size: 1.25rem;

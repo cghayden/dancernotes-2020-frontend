@@ -1,9 +1,9 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Link from 'next/link'
 import Form from '../styles/Form'
-import useForm from '../../lib/useForm'
+import useForm from '../../utilities/useForm'
 import Modal from '../Modal'
 import CancelButton from '../CancelButton'
 import Card from '../styles/Card'
@@ -172,7 +172,7 @@ function UpdateCustomRoutine({ dance, parent }) {
   const disableButton = Object.keys(inputs).length < 1
 
   return (
-    <Fragment>
+    <>
       <Modal open={showModal} setOpen={toggleModal}>
         <div>
           {errorUpdatingRoutine && (
@@ -416,7 +416,7 @@ function UpdateCustomRoutine({ dance, parent }) {
           </fieldset>
         </Form>
       </Card>
-    </Fragment>
+    </>
   )
 }
 

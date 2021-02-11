@@ -5,7 +5,7 @@ import Router from 'next/router'
 import Form from '../styles/Form'
 import Card from '../styles/Card'
 import Error from '../Error'
-import useForm from '../../lib/useForm'
+import useForm from '../../utilities/useForm'
 import { STUDIO_MAKEUP_QUERY } from './Queries'
 
 const CREATE_MAKEUP_SET_MUTATION = gql`

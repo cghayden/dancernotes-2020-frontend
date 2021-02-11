@@ -18,7 +18,7 @@ const Background = styled(motion.div)`
   position: absolute;
   top: 0;
   right: 0;
-  width: 300px;
+  width: 250px;
   height: 300px;
   background: #fff;
   box-shadow: ${(props) => props.theme.dropShadow1};
@@ -45,7 +45,7 @@ const sidebarVariants = {
   },
 }
 
-export default function QuickCreateOptions() {
+export default function QuickCreateOptions({ dancers }) {
   const [isOpen, toggleOpen] = useCycle(false, true)
   return (
     <OptionsLinksContainer
@@ -54,7 +54,9 @@ export default function QuickCreateOptions() {
       animate={isOpen ? 'open' : 'closed'}
     >
       <Background variants={sidebarVariants} />
-      <AnimatePresence>{isOpen && <ParentQuickMenu />}</AnimatePresence>
+      <AnimatePresence>
+        {isOpen && <ParentQuickMenu dancers={dancers} />}
+      </AnimatePresence>
       <MenuToggle
         animate={isOpen ? 'open' : 'closed'}
         toggle={() => toggleOpen()}

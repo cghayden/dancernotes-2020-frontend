@@ -17,12 +17,14 @@ const ListingCard = styled(Card)`
 
 const AvatarInitials = styled.div`
   position: absolute;
+  transform: translateY(-50%);
+  top: 50%;
   background: ${(props) => props.theme.gray4};
   border-radius: 50%;
-  left: 0;
+  left: 0.5em;
   font-size: 2em;
-  width: 2.5em;
-  height: 2.5em;
+  width: 2em;
+  height: 2em;
   display: grid;
   place-items: center;
   color: white;

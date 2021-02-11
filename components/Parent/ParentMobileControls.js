@@ -5,8 +5,6 @@ import { PARENT_USER_QUERY } from './Queries'
 import styled from 'styled-components'
 import { SliderLabel, SliderInput, Slider } from '../styles/SmallSliderToggler'
 import { useDisplayControls } from './ParentDisplayProvider'
-import OffScreenControlsToggler from './OffscreenControlsToggler'
-import { ControlPanelHeading } from '../styles/ControlPanelStyles'
 import DancerRoutineTogglers from './DancerRoutineTogglers'
 import LockedSvg from '../Icons/LockedSvg'
 import XSvg from '../Icons/XSvg'
@@ -16,13 +14,17 @@ const ControlPanelStyles = styled.div`
   z-index: 130;
   overflow-y: auto;
   width: 100%;
+  height: 85vh;
   display: grid;
   grid-gap: 0.5rem;
+  grid-template-rows: 50px 1fr;
+  position: relative;
 `
 const FilterHeaderStyles = styled.div`
   grid-column: 1/-1;
   display: flex;
   align-items: center;
+  align-self: flex-start;
   justify-content: space-between;
   h2 {
     flex-grow: 1;
@@ -124,7 +126,12 @@ const DancerTogglerAndCheckboxes = styled.div`
     }
   }
 `
-
+const AllTogglersContainer = styled.div`
+  width: 100%;
+  position: absolute;
+  top: 60px;
+  overflow-y: auto;
+`
 const ParentMobileControls = ({ toggleFilter }) => {
   const [showHelp, setShowHelp] = useState(false)
   const { data, loading, error } = useQuery(PARENT_USER_QUERY)
@@ -172,29 +179,71 @@ const ParentMobileControls = ({ toggleFilter }) => {
           </button>
         </div>
       </FilterHeaderStyles>
-      {showHelp && (
-        <HelpDiv>
-          <HelpMessage>
-            Control what routines are displayed by selecting a dance
-            individually, or clicking on a dancer's name/image to toggle all of
-            his/her dances.
-          </HelpMessage>
-          <HelpMessage>
-            Competition View will show only those routines that have a
-            competition entry number, sorted by entry number/ performance time
-          </HelpMessage>
-          <button
-            type='button'
-            className='btn-danger-outline'
-            onClick={() => {
-              setShowHelp(false)
-            }}
-          >
-            Dismiss
-          </button>
-        </HelpDiv>
-      )}
-      {/* <CompModeToggler>
+      <AllTogglersContainer>
+        {dancers.map((dancer) => (
+          <DancerRoutineTogglers
+            key={dancer.id}
+            dancer={dancer}
+            hiddenIds={hiddenIds}
+            toggleId={toggleId}
+          />
+        ))}
+        {showAllStudioFilter && (
+          <StudioTogglersContainer>
+            <h2>My Studios</h2>
+            <GroupOfCheckboxes>
+              {studios.map((studio) => (
+                <CheckboxAndLabelContainer key={studio.id}>
+                  <SliderLabel
+                    id={`${studio.studioName}-label`}
+                    htmlFor={`${studio.studioName}-toggler`}
+                  >
+                    <SliderInput
+                      aria-labelledby={`${studio.studioName}-label`}
+                      name={`${studio.studioName}-toggler`}
+                      id={`${studio.studioName}-toggler`}
+                      type='checkbox'
+                      checked={!hiddenIds.includes(studio.id)}
+                      onChange={() => toggleId(studio.id)}
+                    />
+                    <Slider checked={!hiddenIds.includes(studio.id)}></Slider>
+                  </SliderLabel>
+
+                  <StudioTogglerLabel disabled={hiddenIds.includes(studio.id)}>
+                    {studio.studioName}
+                  </StudioTogglerLabel>
+                </CheckboxAndLabelContainer>
+              ))}
+              {independents.length > 0 && (
+                <div>
+                  <input
+                    checked={!hiddenIds.includes('all')}
+                    onChange={() => {
+                      toggleId('all')
+                    }}
+                    type='checkbox'
+                    id={'allIndependent'}
+                    name={'allIndependent'}
+                    value={'allIndependent'}
+                  />
+                  <StudioTogglerLabel htmlFor={'allIndependent'}>
+                    Independents
+                  </StudioTogglerLabel>
+                </div>
+              )}
+            </GroupOfCheckboxes>
+          </StudioTogglersContainer>
+        )}
+      </AllTogglersContainer>
+    </ControlPanelStyles>
+  )
+}
+
+export default ParentMobileControls
+export { ControlPanelStyles, GroupOfCheckboxes, CheckboxAndLabelContainer }
+
+{
+  /* <CompModeToggler>
         <p>Competiton View:</p>
 
         <SliderToggler
@@ -208,66 +257,27 @@ const ParentMobileControls = ({ toggleFilter }) => {
         >
           <span>?</span>
         </button>
-      </CompModeToggler> */}
-      <>
-        {dancers.map((dancer) => (
-          <DancerRoutineTogglers
-            key={dancer.id}
-            dancer={dancer}
-            hiddenIds={hiddenIds}
-            toggleId={toggleId}
-          />
-        ))}
-      </>
-      {showAllStudioFilter && (
-        <StudioTogglersContainer>
-          <h2>My Studios</h2>
-          <GroupOfCheckboxes>
-            {studios.map((studio) => (
-              <CheckboxAndLabelContainer key={studio.id}>
-                <SliderLabel
-                  id={`${studio.studioName}-label`}
-                  htmlFor={`${studio.studioName}-toggler`}
-                >
-                  <SliderInput
-                    aria-labelledby={`${studio.studioName}-label`}
-                    name={`${studio.studioName}-toggler`}
-                    id={`${studio.studioName}-toggler`}
-                    type='checkbox'
-                    checked={!hiddenIds.includes(studio.id)}
-                    onChange={() => toggleId(studio.id)}
-                  />
-                  <Slider checked={!hiddenIds.includes(studio.id)}></Slider>
-                </SliderLabel>
-
-                <StudioTogglerLabel disabled={hiddenIds.includes(studio.id)}>
-                  {studio.studioName}
-                </StudioTogglerLabel>
-              </CheckboxAndLabelContainer>
-            ))}
-            {independents.length > 0 && (
-              <div>
-                <input
-                  checked={!hiddenIds.includes('all')}
-                  onChange={() => {
-                    toggleId('all')
-                  }}
-                  type='checkbox'
-                  id={'allIndependent'}
-                  name={'allIndependent'}
-                  value={'allIndependent'}
-                />
-                <StudioTogglerLabel htmlFor={'allIndependent'}>
-                  Independents
-                </StudioTogglerLabel>
-              </div>
-            )}
-          </GroupOfCheckboxes>
-        </StudioTogglersContainer>
-      )}
-    </ControlPanelStyles>
-  )
+      </CompModeToggler> */
 }
-
-export default ParentMobileControls
-export { ControlPanelStyles, GroupOfCheckboxes, CheckboxAndLabelContainer }
+// {showHelp && (
+//   <HelpDiv>
+//     <HelpMessage>
+//       Control what routines are displayed by selecting a dance
+//       individually, or clicking on a dancer's name/image to toggle all of
+//       his/her dances.
+//     </HelpMessage>
+//     <HelpMessage>
+//       Competition View will show only those routines that have a
+//       competition entry number, sorted by entry number/ performance time
+//     </HelpMessage>
+//     <button
+//       type='button'
+//       className='btn-danger-outline'
+//       onClick={() => {
+//         setShowHelp(false)
+//       }}
+//     >
+//       Dismiss
+//     </button>
+//   </HelpDiv>
+// )}

@@ -11,7 +11,6 @@ function DancerPage() {
   const { data, error, loading } = useQuery(DANCER_QUERY, {
     variables: { id: dancerId },
   })
-  console.log('dancer page data', data)
 
   return (
     <ParentNoFilterLayout

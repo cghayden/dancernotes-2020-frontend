@@ -2,7 +2,7 @@ import React from 'react'
 import App from 'next/app'
 // import { ApolloProvider } from "@apollo/react-hooks";
 import { ApolloProvider } from 'react-apollo'
-import withApollo from '../lib/withApollo'
+import withApollo from '../utilities/withApollo'
 
 import '../public/normalize.css'
 import 'react-datepicker/dist/react-datepicker.css'

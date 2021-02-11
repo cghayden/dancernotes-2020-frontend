@@ -4,7 +4,6 @@ import DanceClasses from '../../../components/Studio/DanceClasses'
 import { ALL_DANCE_CLASSES_QUERY } from '../../../components/Studio/Queries'
 
 export default function classesIndex() {
-  //   const { showControlPanel, toggleControlPanel } = useDisplayControls()
   const { data, error, loading } = useQuery(ALL_DANCE_CLASSES_QUERY)
   console.log('data', data)
 

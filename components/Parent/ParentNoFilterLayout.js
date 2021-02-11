@@ -35,7 +35,8 @@ const SelectionWindowHeader = styled.div`
 const SelectionWindowMain = styled.div`
   width: 100%;
   background: ${(props) => props.theme.gray0};
-  height: 100vh;
+  /* height: 100vh; */
+  padding-top: 20px;
   padding-bottom: 50vh;
   display: flex;
   flex-direction: column;
@@ -51,7 +52,7 @@ const SelectionWindowMain = styled.div`
   }
 `
 
-export default function NoFilterLayout({
+export default function ParentNoFilterLayout({
   children,
   page,
   selection = false,

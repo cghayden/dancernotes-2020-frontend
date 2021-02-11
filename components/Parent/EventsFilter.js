@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 
 const EventCheckboxesDiv = styled.div`
@@ -26,7 +25,7 @@ const EventCheckbox = styled.div`
   }
 `
 
-function NotesSubNav({ eventFilter, setFilter }) {
+function EventsFilter({ eventFilter, setFilter }) {
   const eventCategories = [
     'competition',
     'convention',
@@ -60,4 +59,4 @@ function NotesSubNav({ eventFilter, setFilter }) {
     </EventCheckboxesDiv>
   )
 }
-export default NotesSubNav
+export default EventsFilter

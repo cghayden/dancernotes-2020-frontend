@@ -2,6 +2,7 @@
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Router from 'next/router'
+import Cookies from 'js-cookie'
 
 const SIGN_OUT_MUTATION = gql`
   mutation SIGN_OUT_MUTATION {
@@ -14,15 +15,19 @@ const SIGN_OUT_MUTATION = gql`
 function Signout() {
   const [signout, { error, loading, client }] = useMutation(SIGN_OUT_MUTATION, {
     onCompleted: () => {
-      Router.push(`/`)
       client.clearStore()
+
+      Router.push(`/`)
     },
   })
   return (
     <button
       role='button'
       className='btn-small btn-danger-outline'
-      onClick={async () => await signout()}
+      onClick={async () => {
+        Cookies.remove('browsingDancerId')
+        await signout()
+      }}
     >
       Sign Out
     </button>

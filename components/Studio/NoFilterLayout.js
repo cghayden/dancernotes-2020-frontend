@@ -14,7 +14,7 @@ const NoFiltLayout = styled.div`
 `
 
 const SelectionWindow = styled.div`
-  height: 100vh;
+  /* height: 100vh; */
   overflow-y: auto;
   position: relative;
   flex-grow: 1;

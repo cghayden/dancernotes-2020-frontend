@@ -1,6 +1,5 @@
-import React, { Component } from "react";
-import { Query } from "react-apollo";
-import gql from "graphql-tag";
+import { useQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
 
 const PARENT_NOTES_QUERY = gql`
   query PARENT_NOTES_QUERY($danceId: ID!) {
@@ -9,27 +8,19 @@ const PARENT_NOTES_QUERY = gql`
       id
     }
   }
-`;
+`
 
-export default class ParentNotes extends Component {
-  render() {
-    return (
-      <Query
-        query={PARENT_NOTES_QUERY}
-        variables={{ danceId: this.props.danceId }}
-      >
-        {({ data: { parentNotes } = {}, loading, error }) => {
-          if (loading) return <p>Loading...</p>;
-          return (
-            <>
-              <h5>My Notes</h5>
-              {loading && <p>Loading...</p>}
-              {parentNotes &&
-                parentNotes.map(note => <p key={note.id}>{note.note}</p>)}
-            </>
-          );
-        }}
-      </Query>
-    );
-  }
+export default function ParentNotes({ danceId }) {
+  const { data, error, loading } = useQuery(PARENT_NOTES_QUERY, {
+    variables: { danceId },
+  })
+  return (
+    <>
+      <h5>My Notes</h5>
+      {loading && <p>Loading...</p>}
+      {error && <p>There was an error loading your notes.</p>}
+      {data?.parentNotes &&
+        parentNotes.map((note) => <p key={note.id}>{note.note}</p>)}
+    </>
+  )
 }

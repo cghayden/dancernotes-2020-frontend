@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, useEffect } from 'react'
+import { useState, createContext, useContext } from 'react'
 const FilterContext = createContext(null)
 
 function FilterProvider({ children }) {

@@ -1,14 +1,9 @@
-import { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
+import styled from 'styled-components'
 
 import { PARENT_USER_QUERY } from './Queries'
-
-import styled from 'styled-components'
-import SliderToggler from '../styles/SliderToggler'
 import { SliderLabel, SliderInput, Slider } from '../styles/SmallSliderToggler'
 import { useDisplayControls } from './ParentDisplayProvider'
-import OffScreenControlsToggler from './OffscreenControlsToggler'
-
 import DancerRoutineTogglers from './DancerRoutineTogglers'
 import CompModeToggler from './CompModeToggler'
 import LockedSvg from '../Icons/LockedSvg'
@@ -101,6 +96,7 @@ const DancerTogglerAndCheckboxes = styled.div`
 const ControlPanel = () => {
   // const [showHelp, setShowHelp] = useState(false)
   const { data, loading, error } = useQuery(PARENT_USER_QUERY)
+  console.log('data', data)
 
   const { studios, customRoutines, dancers } = data
     ? data.parentUser
@@ -117,7 +113,7 @@ const ControlPanel = () => {
   const hasStudioAndIndependents = studios.length > 0 && independents.length > 0
   const showAllStudioFilter = studios.length > 1 || hasStudioAndIndependents
   return (
-    <ControlPanelStyles showControlPanel={showControlPanel}>
+    <ControlPanelStyles>
       <ControlPanelHeading>
         <h3>Display:</h3>
         <FilterButtons>

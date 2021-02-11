@@ -67,7 +67,7 @@ class SignupParent extends Component {
         }}
         onCompleted={(data) => {
           Router.push({
-            pathname: '/parent/account/addDancer',
+            pathname: '/parent/dancers/addDancer',
             query: {
               hasDancers: false,
             },

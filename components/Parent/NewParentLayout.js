@@ -16,14 +16,6 @@ const BodyLayout = styled.div`
 
 const Layout = styled.div`
   height: 100vh;
-  .scrollingWindow {
-    height: 100vh;
-    overflow-y: scroll;
-    display: grid;
-    grid-template-rows: minmax(4rem, auto) 1fr;
-    position: relative;
-    flex-grow: 1;
-  }
 `
 
 const SelectionWindow = styled.div`
@@ -47,7 +39,7 @@ const SelectionWindowHeader = styled.div`
 const SelectionWindowMain = styled.div`
   width: 100%;
   background: ${(props) => props.theme.gray0};
-  height: 100vh;
+  /* height: 100vh; */
   padding-bottom: 50vh;
   /* padding-top: 1rem; */
   display: flex;

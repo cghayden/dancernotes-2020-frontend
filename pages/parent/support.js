@@ -1,16 +1,12 @@
-import React from "react";
-import DancernotesInfo from "../../components/DancernotesInfo";
-import SubNavMainLayout from "../../components/SubNavMainLayout";
-import AccountSubNav from "../../components/Parent/AccountSubNav";
+import DancernotesInfo from '../../components/DancernotesInfo'
+import ParentNoFilterLayout from '../../components/Parent/ParentNoFilterLayout'
+
 const supportPage = () => {
   return (
-    <>
-      <AccountSubNav />
-      <SubNavMainLayout mobileHeader={"Account"} page="My Profile">
-        <DancernotesInfo />
-      </SubNavMainLayout>
-    </>
-  );
-};
+    <ParentNoFilterLayout page='About Dancer Notes'>
+      <DancernotesInfo />
+    </ParentNoFilterLayout>
+  )
+}
 
-export default supportPage;
+export default supportPage

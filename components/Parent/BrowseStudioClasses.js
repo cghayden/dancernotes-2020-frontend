@@ -1,27 +1,26 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import Cookies from 'js-cookie'
 import styled from 'styled-components'
+
 import DanceClassInquiryCard from './DanceClassInquiryCard'
 import { ActiveFilters } from './BrowseClassFilter'
 import { PARENT_USER_QUERY } from './Queries'
 import { DANCER_QUERY } from './Queries'
 import { RegistrationContext } from './RegistrationContext'
 import Card from '../styles/Card'
-import RequestAccessButton from './RequestAccessButton'
+import { FilterContext } from '../Studio/FilterContext'
+
+// import RequestAccessButton from './RequestAccessButton'
 // import LinkDancerToStudioButton from "./LinkDancerToStudioButton";
 // import SoloDuoTrioSubscribe from "./SoloDuoTrioSubscribe";
 
-// 1. get all classes from studio
-//2. get filters
-//3. filter classes array
-//4. render classes
 const ClassListCard = styled(Card)`
   background: ${(props) => props.theme.gray0};
+  width: 97%;
   max-width: 900px;
   box-shadow: none;
   margin-top: -2px;
-  /* border-radius:  5px 5px 5px; */
 `
 const DancerTabs = styled(Card)`
   display: flex;
@@ -58,9 +57,10 @@ const Tab = styled.div`
 `
 
 const BrowsingHeader = styled.div`
-  width: 90%;
-  margin: 0 auto;
-  padding: 1rem;
+  display: grid;
+  grid-gap: 10px;
+  margin-bottom: 10px;
+  place-items: center;
 `
 const LargeScreenActiveFilters = styled(ActiveFilters)`
   h2 {
@@ -75,17 +75,15 @@ const LargeScreenActiveFilters = styled(ActiveFilters)`
   }
 `
 
-const RequestNotice = styled.p`
-  color: ${(props) => props.theme.red7};
-  font-size: 1.1rem;
-`
 const FiltersDisplay = styled.div`
   text-align: left;
   display: flex;
+  align-items: center;
 `
-function BrowseStudioClasses({ classFilter, studio }) {
-  const BrowsingContext = useContext(RegistrationContext)
-  const setBrowsingDancer = BrowsingContext.setBrowsingDancer
+function BrowseStudioClasses({ studio }) {
+  const { filter: classFilter } = useContext(FilterContext)
+
+  const { setBrowsingDancer } = useContext(RegistrationContext)
 
   //get browsing dancer from cookies so it will still be available if page is refreshed
   const activeDancerId = Cookies.get('browsingDancerId')
@@ -101,17 +99,16 @@ function BrowseStudioClasses({ classFilter, studio }) {
     variables: { id: activeDancerId },
   })
   const dancer = dancerData ? dancerData.dancer : {}
-  console.log('browsing dancer', dancer)
 
-  const isParentLinkedToStudio =
-    parentUser.studios &&
-    parentUser.studios.some((parentStudio) => parentStudio.id === studio.id)
+  // const isParentLinkedToStudio =
+  //   parentUser.studios &&
+  //   parentUser.studios.some((parentStudio) => parentStudio.id === studio.id)
 
-  function compareDanceToFilter(danceClass, filter) {
+  function compareDanceToFilter(danceClass, classFilter) {
     let pass = true
-    const filterCategories = Object.keys(filter)
+    const filterCategories = Object.keys(classFilter)
     filterCategories.forEach((category) => {
-      if (!filter[category].includes(danceClass[category])) {
+      if (!classFilter[category].includes(danceClass[category])) {
         pass = false
       }
     })
@@ -131,7 +128,6 @@ function BrowseStudioClasses({ classFilter, studio }) {
   const requestIds = dancer.requests
     ? dancer.requests.map((request) => request.classRequested.id)
     : []
-  console.log('requestIds', requestIds)
   return (
     <>
       <DancerTabs>
@@ -152,37 +148,18 @@ function BrowseStudioClasses({ classFilter, studio }) {
           <p>
             The following dance classes are available at {studio.studioName}
           </p>
-          {!isParentLinkedToStudio &&
-            !parentUser.accessRequests.includes(studio.id) && (
-              <>
-                <p>
-                  If your classes are not listed here, you can request access to
-                  the studio's notes
-                </p>
-                <RequestAccessButton
-                  accessRequests={parentUser.accessRequests}
-                  parentEmail={parentUser.email}
-                  studioId={studio.id}
-                />
-              </>
-            )}
-          {parentUser.accessRequests.includes(studio.id) && (
-            <RequestNotice>Notes are requested from this studio</RequestNotice>
-          )}
         </BrowsingHeader>
+        {/*display a list of the active filters */}
         <LargeScreenActiveFilters>
-          {/*display a list of the active filters */}
           {Object.keys(classFilter).length > 0 && (
-            <>
-              <FiltersDisplay>
-                <h2>Active Filters:</h2>
-                <ul>
-                  {activeFilters.map((choice) => (
-                    <li key={choice}>{choice}</li>
-                  ))}
-                </ul>
-              </FiltersDisplay>
-            </>
+            <FiltersDisplay>
+              <h2>Active Filters:</h2>
+              <ul>
+                {activeFilters.map((choice) => (
+                  <li key={choice}>{choice}</li>
+                ))}
+              </ul>
+            </FiltersDisplay>
           )}
         </LargeScreenActiveFilters>
 
@@ -200,7 +177,6 @@ function BrowseStudioClasses({ classFilter, studio }) {
                 request={dancer.requests?.filter(
                   (request) => request.classRequested.id === dance.id
                 )}
-                // dancersRequestsId={dancer.requests && dancer.requests.id}
               />
             )
           }
@@ -211,6 +187,25 @@ function BrowseStudioClasses({ classFilter, studio }) {
 }
 export default BrowseStudioClasses
 
+{
+  /* {!isParentLinkedToStudio &&
+            !parentUser.accessRequests.includes(studio.id) && (
+              <>
+                <p>
+                  If your classes are not listed here, you can request access to
+                  the studio's notes
+                </p>
+                <RequestAccessButton
+                  accessRequests={parentUser.accessRequests}
+                  parentEmail={parentUser.email}
+                  studioId={studio.id}
+                />
+              </>
+            )}
+          {parentUser.accessRequests.includes(studio.id) && (
+            <RequestNotice>Notes are requested from this studio</RequestNotice>
+          )} */
+}
 // todo - 1. where and how to include options below .. when a studio has a dancer registered in a solo/duo/trio and the parent has not subscribed,
 // todo -2. when the studio has the dancers information and contact but the dancer is not registered for any classes
 

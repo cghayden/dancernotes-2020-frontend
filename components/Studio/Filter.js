@@ -1,5 +1,4 @@
 import { useContext } from 'react'
-
 import styled from 'styled-components'
 import CategoryFilter from '../Parent/CategoryFilter'
 import { useStudio } from './useStudio'
@@ -70,26 +69,6 @@ const Categories = styled.div`
   justify-content: center;
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     grid-template-columns: repeat(auto-fit, minmax(100px, 200px));
-  }
-`
-
-const CheckboxAreaHeader = styled.div`
-  grid-column: 1/-1;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 0.5rem;
-  h3 {
-    font-size: 1.25rem;
-  }
-  button {
-    background-color: ${(props) => props.theme.red5};
-    color: ${(props) => props.theme.red0};
-    margin: 0;
-  }
-  @media (min-width: ${(props) => props.theme.largeScreen}) {
-    display: none;
   }
 `
 

@@ -1,7 +1,7 @@
 import AddNote from './AddNote'
 import UpdateParentNotes from './UpdateParentNotes'
+import { Dt, Dd, Notes } from '../styles/CardBodyStyles'
 
-import { Dt, Dd, Notes } from './DanceCardBody'
 const NotesDiv = ({
   addNote,
   toggleAddNote,

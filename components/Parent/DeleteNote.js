@@ -1,7 +1,6 @@
-import { useMutation } from "react-apollo";
-import gql from "graphql-tag";
-import { ALL_Rs } from "./Queries";
-// import { PARENT_NOTES_QUERY } from "./UpdateParentNotes";
+import { useMutation } from 'react-apollo'
+import gql from 'graphql-tag'
+import { ALL_Rs } from './Queries'
 
 const DELETE_PARENT_NOTE = gql`
   mutation DELETE_PARENT_NOTE($noteId: ID!) {
@@ -10,7 +9,7 @@ const DELETE_PARENT_NOTE = gql`
       note
     }
   }
-`;
+`
 
 function DeleteNote({ noteId, toggleEditNotes }) {
   const [deleteParentNote, { error, loading }] = useMutation(
@@ -18,21 +17,21 @@ function DeleteNote({ noteId, toggleEditNotes }) {
     {
       variables: { noteId },
       refetchQueries: [{ query: ALL_Rs }],
-      awaitRefetchQueries: true
+      awaitRefetchQueries: true,
     }
-  );
+  )
   return (
     <button
-      type="button"
-      className="btn-danger-outline btn-small"
+      type='button'
+      className='btn-danger-outline btn-small'
       onClick={async () => {
-        await deleteParentNote();
-        toggleEditNotes(false);
+        await deleteParentNote()
+        toggleEditNotes(false)
       }}
     >
       Delete
     </button>
-  );
+  )
 }
 
-export default DeleteNote;
+export default DeleteNote
