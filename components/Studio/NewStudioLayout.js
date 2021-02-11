@@ -29,7 +29,7 @@ const SelectionWindowHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem;
   button {
     margin: 0;
     padding: 0;
@@ -39,7 +39,6 @@ const SelectionWindowHeader = styled.div`
 const SelectionWindowMain = styled.div`
   width: 100%;
   background: ${(props) => props.theme.gray0};
-  /* height: 100vh; */
   padding-bottom: 50vh;
   padding-top: 1rem;
   display: flex;
@@ -59,14 +58,13 @@ const MobileFilterContainer = styled.div`
   border-radius: 5px;
   box-shadow: ${(props) => props.theme.dropShadow3};
   background: ${(props) => props.theme.gray2};
-  /* color: ${(props) => props.theme.blackText}; */
   padding: 0.5rem;
   display: grid;
   grid-template-columns: 1fr;
   place-items: center;
   width: 95vw;
   position: fixed;
-  top: ${(props) => props.theme.studioHeaderHeight};
+  top: ${(props) => props.theme.mobileHeaderHeight};
   right: 0;
   height: auto;
   overflow: hidden;

@@ -10,7 +10,7 @@ const MobileNavContainer = styled.div`
   width: 95vw;
   max-width: 400px;
   position: fixed;
-  top: 60px;
+  top: ${(props) => props.theme.mobileHeaderHeight};
   right: 0;
   height: auto;
   overflow: hidden;

@@ -172,21 +172,27 @@ const ControlPanel = () => {
                 </CheckboxAndLabelContainer>
               ))}
               {independents.length > 0 && (
-                <div>
-                  <input
-                    checked={!hiddenIds.includes('all')}
-                    onChange={() => {
-                      toggleId('all')
-                    }}
-                    type='checkbox'
-                    id={'allIndependent'}
-                    name={'allIndependent'}
-                    value={'allIndependent'}
-                  />
-                  <StudioTogglerLabel htmlFor={'allIndependent'}>
+                <CheckboxAndLabelContainer>
+                  <SliderLabel
+                    id={`independentDances-label`}
+                    htmlFor={`independentDances-toggler`}
+                  >
+                    <SliderInput
+                      aria-labelledby={`independentDances-label`}
+                      name={`independentDances-toggler`}
+                      id={`independentDances-toggler`}
+                      type='checkbox'
+                      checked={!hiddenIds.includes('all')}
+                      onChange={() => {
+                        toggleId('all')
+                      }}
+                    />
+                    <Slider checked={!hiddenIds.includes('all')}></Slider>
+                  </SliderLabel>
+                  <StudioTogglerLabel disabled={hiddenIds.includes('all')}>
                     Independents
                   </StudioTogglerLabel>
-                </div>
+                </CheckboxAndLabelContainer>
               )}
             </GroupOfCheckboxes>
           </StudioTogglersContainer>

@@ -17,7 +17,7 @@ const Background = styled(motion.div)`
   position: absolute;
   top: 0;
   right: 0;
-  width: 300px;
+  width: 280px;
   height: 300px;
   background: #fff;
   box-shadow: ${(props) => props.theme.dropShadow1};
@@ -27,7 +27,9 @@ const Background = styled(motion.div)`
 const MotionUl = styled(motion.ul)`
   padding: 25px;
   position: absolute;
-  width: 230px;
+  width: 200px;
+  right: 60px;
+  top: 15px;
 `
 
 const sidebarVariants = {
@@ -63,19 +65,44 @@ export default function QuickCreateOptions() {
         {isOpen && (
           <MotionUl variants={ulVariants}>
             <motion.li variants={linkVariants}>
-              <a href='/studio/classes/createClass'>Add a Dance Class</a>
+              <a
+                className='btn-action-primary-textOnly'
+                href='/studio/classes/createClass'
+              >
+                Add a Dance Class
+              </a>
             </motion.li>
             <motion.li variants={linkVariants}>
-              <a href='/studio/events/createEvent'>Add an Event</a>
+              <a
+                className='btn-action-primary-textOnly'
+                href='/studio/events/createEvent'
+              >
+                Add an Event
+              </a>
             </motion.li>
             <motion.li variants={linkVariants}>
-              <a href='/studio/hairstyles/createHairStyle'>Add a Hairstyle</a>
+              <a
+                className='btn-action-primary-textOnly'
+                href='/studio/hairstyles/createHairStyle'
+              >
+                Add a Hairstyle
+              </a>
             </motion.li>
             <motion.li variants={linkVariants}>
-              <a href='/studio/makeup/createMakeupSet'>Add a Makeup Set</a>
+              <a
+                className='btn-action-primary-textOnly'
+                href='/studio/makeup/createMakeupSet'
+              >
+                Add a Makeup Set
+              </a>
             </motion.li>
             <motion.li variants={linkVariants}>
-              <a href='/studio/dancers/#createDancer'>Add a Dancer</a>
+              <a
+                className='btn-action-primary-textOnly'
+                href='/studio/dancers/#createDancer'
+              >
+                Add a Dancer
+              </a>
             </motion.li>
           </MotionUl>
         )}

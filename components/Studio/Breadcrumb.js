@@ -1,10 +1,8 @@
 import { useContext } from 'react'
-
 import styled from 'styled-components'
-import { AnimatePresence, motion, AnimateSharedLayout } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import HomeSvg from '../Icons/HomeSvg'
-import PlusSvg from '../Icons/PlusSvg'
 import { FilterContext } from './FilterContext'
 import FilterChoicesBreadcrumb from './FilterChoicesBreadcrumb'
 
@@ -25,10 +23,6 @@ const BreadcrumbStyles = styled(motion.div)`
     text-decoration: underline;
     color: ${(props) => props.theme.indigo6};
   }
-`
-
-const CreateLinkDiv = styled.div`
-  margin-left: auto;
 `
 
 function Breadcrumb({ page = '', selection }) {

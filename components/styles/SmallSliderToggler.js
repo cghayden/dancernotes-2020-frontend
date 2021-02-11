@@ -11,16 +11,6 @@ const SliderLabel = styled.label`
   width: 28px;
   height: 16px;
   margin-top: 4px;
-  /* p {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-  } */
 `
 const Slider = styled.span`
   position: absolute;
