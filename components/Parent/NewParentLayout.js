@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
+
 import Error from '../../components/Error'
 import Loading from '../../components/Loading'
 import NewParentHeader from '../Parent/NewParentHeader'
@@ -7,7 +8,6 @@ import NewParentNav from './NewParentNav'
 import ParentBreadcrumb from './ParentBreadcrumb'
 import FilterSvg from '../Icons/FilterSvg'
 import ParentMobileControls from './ParentMobileControls'
-
 import ParentSubNavFilter from './ParentSubNavFilter'
 
 const BodyLayout = styled.div`
@@ -29,7 +29,7 @@ const SelectionWindowHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem;
   button {
     margin: 0;
     padding: 0;
@@ -65,7 +65,7 @@ const MobileFilterContainer = styled.div`
   place-items: center;
   width: 95vw;
   position: fixed;
-  top: ${(props) => props.theme.studioHeaderHeight};
+  top: ${(props) => props.theme.mobileHeaderHeight};
   right: 0;
   height: auto;
   overflow: hidden;

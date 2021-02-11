@@ -63,7 +63,7 @@ const MobileFilterContainer = styled.div`
   place-items: center;
   width: 95vw;
   position: fixed;
-  top: ${(props) => props.theme.studioHeaderHeight};
+  top: ${(props) => props.theme.desktopHeaderHeight};
   right: 0;
   height: auto;
   overflow: hidden;

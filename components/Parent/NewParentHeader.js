@@ -1,20 +1,20 @@
 import { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-
 import styled from 'styled-components'
+
+import { PARENT_USER_QUERY } from './Queries'
 import MenuSvg from '../Icons/MenuSvg'
 import NewParentNav from './NewParentNav'
 import QuickCreateOptions from './QuickCreateOptions'
 import StaticParentQuickMenu from './StaticParentQuickMenu'
 import { MobileNavContainer } from '../styles//MobileNavContainer'
-import { PARENT_USER_QUERY } from './Queries'
 
 const Header = styled.header`
   background: ${(props) => props.theme.gray5};
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: ${(props) => props.theme.studioHeaderHeight};
+  height: ${(props) => props.theme.mobileHeaderHeight};
   padding: 0 20px;
   color: white;
   button {
@@ -23,8 +23,22 @@ const Header = styled.header`
   .search {
     border-radius: 5px;
     background: ${(props) => props.theme.gray0};
-    width: 30%;
-    height: 30px;
+    width: 40%;
+    height: 20px;
+  }
+
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
+    height: ${(props) => props.theme.desktopHeaderHeight};
+    .search {
+      border-radius: 5px;
+      background: ${(props) => props.theme.gray0};
+      width: 30%;
+      height: 30px;
+    }
+    button {
+      padding: 0;
+      margin-left: auto;
+    }
   }
 `
 
@@ -34,7 +48,8 @@ export default function NewParentHeader() {
   const dancers = data ? data.parentUser.dancers : []
   return (
     <Header>
-      <input type='text' placeholder='Search...' className='search' />
+      {/* <input type='text' placeholder='Search...' className='search' /> */}
+      {/* <DancerNotesLogo></DancerNotesLogo> */}
       <QuickCreateOptions dancers={dancers} />
       <button
         className='hide-gtLarge btn-icon'

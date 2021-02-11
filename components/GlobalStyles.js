@@ -211,7 +211,7 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     outline: none;
     :hover{
-      color: ${theme.indigo5};
+      color: ${theme.indigo4};
       background: none;
     }
   }

@@ -76,10 +76,11 @@ function formatTime(timeString) {
 }
 
 const DanceListingLink = ({ dance }) => {
-  const { competitionMode } = useDisplayControls()
+  const { competitionMode, hiddenIds } = useDisplayControls()
+  console.log('hiddenIds', hiddenIds)
   return (
     <HeaderStyle>
-      <EnrolledDancers dancers={dance.dancers} />
+      <EnrolledDancers hiddenIds={hiddenIds} dancers={dance.dancers} />
       <DanceCardTitle>
         <p>{dance.name}</p>
         <p>{dance.studio?.studioName}</p>
