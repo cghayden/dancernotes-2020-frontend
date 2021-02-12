@@ -1,19 +1,17 @@
 import { useQuery } from '@apollo/react-hooks'
 import Link from 'next/link'
-import { PARENT_USER_QUERY } from '../../../components/Parent/Queries'
-import NewParentLayout from '../../../components/Parent/NewParentLayout'
-import RoutinesList from '../../../components/Parent/RoutinesList'
-import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
-import Card from '../../../components/styles/Card'
-import { useToggle } from '../../../utilities/useToggle'
-import NoDancersSearchStudio from '../../../components/Parent/NoDancersSearchStudio'
-import Loading from '../../../components/Loading'
-import Error from '../../../components/Error'
-export default function routinesIndex() {
+import { PARENT_USER_QUERY } from '../../components/Parent/Queries'
+import NewParentLayout from '../../components/Parent/NewParentLayout'
+import RoutinesList from '../../components/Parent/RoutinesList'
+import ParentNoFilterLayout from '../../components/Parent/ParentNoFilterLayout'
+import Card from '../../components/styles/Card'
+import { useToggle } from '../../utilities/useToggle'
+import NoDancersSearchStudio from '../../components/Parent/NoDancersSearchStudio'
+import Loading from '../../components/Loading'
+import Error from '../../components/Error'
+export default function homePage() {
   const { isToggled, toggle } = useToggle(false)
-  //   const { data, loading, error } = useQuery(ALL_Rs)
   const { data, loading, error } = useQuery(PARENT_USER_QUERY)
-  // console.log('data', data)
 
   if (loading || error || !data) {
     return (

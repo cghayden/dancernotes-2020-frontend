@@ -7,15 +7,18 @@ import Form from '../styles/Form'
 import Error from '../Error'
 import useForm from '../../utilities/useForm'
 import { DELETE_CLOUDINARY_ASSET } from '../Mutations'
-import { PARENT_USER_QUERY } from './Queries'
+import { PARENTS_DANCERS } from './Queries'
+import Modal from '../Modal'
+import Link from 'next/link'
+import Router from 'next/router'
+
 const DancerCardContainer = styled(Card)`
-  padding-bottom: 0;
   margin-top: 4rem;
   p {
     margin-bottom: 10px;
   }
 `
-const DancerCardHeaderStyles = styled.div`
+const UpdateDancerCardHeaderStyles = styled.div`
   height: 80px;
   position: relative;
   text-align: right;
@@ -72,8 +75,8 @@ const UPDATE_DANCER_MUTATION = gql`
 const initialInputState = {}
 
 function UpdateDancerForm({ dancer }) {
+  const [showModal, toggleModal] = useState(false)
   const [avatarPreview, setAvatarPreview] = useState()
-
   const { inputs, updateInputs, handleChange } = useForm(initialInputState)
   const [showFileInput, toggleFileInput] = useState(false)
   const [avatarForUpload, setAvatarForUpload] = useState()
@@ -92,17 +95,27 @@ function UpdateDancerForm({ dancer }) {
       ...inputs,
       id: dancer.id,
     },
-    refetchQueries: [{ query: PARENT_USER_QUERY }],
+    refetchQueries: [{ query: PARENTS_DANCERS }],
     awaitRefetchQueries: true,
-    onError: () => cloudinaryCleanup(),
+    onError: () => handleError(),
+    onCompleted: () => {
+      resetForm()
+      Router.back({
+        pathname: '/parent/dancers',
+      })
+    },
   })
 
   const [
     deleteCloudinaryAsset,
     { loading: deletingAsset, error: errorDeletingAsset },
   ] = useMutation(DELETE_CLOUDINARY_ASSET)
-
+  const handleError = () => {
+    cloudinaryCleanup()
+    resetForm()
+  }
   const cloudinaryCleanup = () => {
+    console.log('running cloudinaryCleanup', inputs.avatarId)
     if (inputs.avatarId) {
       deleteCloudinaryAsset({
         variables: { publicId: inputs.avatarId, resourceType: 'image' },
@@ -111,7 +124,7 @@ function UpdateDancerForm({ dancer }) {
   }
 
   const loading = updatingDancer || deletingAsset
-  const error = errorUpdatingDancer || errorUploadingToCloudinary
+  let error = errorUpdatingDancer || errorUploadingToCloudinary
   function resetForm() {
     updateInputs({ ...initialInputState })
     setStatus()
@@ -149,7 +162,7 @@ function UpdateDancerForm({ dancer }) {
       // file upload successful, set url and id to input state to send with update
       updateInputs({
         ...inputs,
-        avatar: file.eager[0].secure_url,
+        avatar: file.secure_url,
         avatarId: file.public_id,
       })
     }
@@ -172,78 +185,101 @@ function UpdateDancerForm({ dancer }) {
         setCloudinaryUploadError(err)
       })
     }
-    await updateDancer()
+    await updateDancer().catch((err) => {
+      console.log(err)
+      error = err
+      cloudinaryCleanup()
+    })
   }
+
+  const avatar = avatarPreview ? avatarPreview : dancer.avatar
 
   const disableButton = Object.keys(inputs).length < 1 && !avatarForUpload
 
   return (
-    <DancerCardContainer>
-      <DancerCardHeaderStyles>
-        <ImageDiv>
-          {avatarPreview ? (
-            <img src={avatarPreview} alt={`image preview`} />
-          ) : (
-            <p>{inputs.firstName && inputs.firstName[0]}</p>
+    <>
+      <Modal open={showModal} setOpen={toggleModal}>
+        <div>
+          {error && (
+            <>
+              <p>
+                Warning: there was a problem saving your class. Please try
+                again:
+              </p>
+              <button role='button' onClick={() => toggleModal(false)}>
+                Try Again
+              </button>
+              <Link href={`/parent/dancers`}>
+                <a>Never Mind!</a>
+              </Link>
+            </>
           )}
-        </ImageDiv>
-      </DancerCardHeaderStyles>
-      <FormStyles method='post' onSubmit={(e) => saveChanges(e)}>
-        <Error error={error} />
-        <fieldset disabled={loading} aria-busy={loading}>
-          <h5>Update {dancer.firstName}'s Profile</h5>
-          <div className='input-item'>
-            <label htmlFor='firstName'>Name </label>
-            <input
-              type='text'
-              name='firstName'
-              onChange={handleChange}
-              defaultValue={dancer.firstName}
-            />
-          </div>
-          <button
-            type='button'
-            className='btn-action-secondary-outline'
-            onClick={() => toggleFileInput(!showFileInput)}
-          >
-            {dancer.avatarId ? `Change Picture` : `Add a picture`}
-          </button>
-          {showFileInput && (
+        </div>
+      </Modal>
+      <DancerCardContainer>
+        <UpdateDancerCardHeaderStyles>
+          <ImageDiv>
+            {avatar ? (
+              <img src={avatar} alt={`dancer avatar image`} />
+            ) : (
+              <p>{dancer.firstName[0]}</p>
+            )}
+          </ImageDiv>
+        </UpdateDancerCardHeaderStyles>
+        <FormStyles method='post' onSubmit={(e) => saveChanges(e)}>
+          <Error error={error} />
+          <fieldset disabled={loading} aria-busy={loading}>
+            <h5>Update {dancer.firstName}'s Profile</h5>
             <div className='input-item'>
-              <label htmlFor='image'>Choose an Image</label>
+              <label htmlFor='firstName'>Name </label>
               <input
-                type='file'
-                id='image'
-                name='image'
-                onChange={handleFileInput}
+                type='text'
+                name='firstName'
+                onChange={handleChange}
+                defaultValue={dancer.firstName}
               />
             </div>
-          )}
-          <p>{status}</p>
-          <div className='form-footer'>
             <button
-              className='btn-action-primary'
-              type='submit'
-              disabled={loading || disableButton}
-              aria-busy={loading}
-            >
-              Sav
-              {loading ? 'ing ' : 'e '} Changes
-            </button>
-            <button
-              className='btn-danger'
               type='button'
-              onClick={async () => {
-                await showAvatarPreview('')
-                closeFunc()
-              }}
+              className='btn-small btn-action-secondary-outline'
+              onClick={() => toggleFileInput(!showFileInput)}
             >
-              Cancel
+              {dancer.avatarId ? `Change Picture` : `Add a picture`}
             </button>
-          </div>
-        </fieldset>
-      </FormStyles>
-    </DancerCardContainer>
+            {showFileInput && (
+              <div className='input-item'>
+                <label htmlFor='image'>Choose an Image</label>
+                <input
+                  type='file'
+                  id='image'
+                  name='image'
+                  onChange={handleFileInput}
+                />
+              </div>
+            )}
+            <p>{status}</p>
+            <div className='form-footer'>
+              <button
+                className='btn-action-primary'
+                type='submit'
+                disabled={loading || disableButton}
+                aria-busy={loading}
+              >
+                Sav
+                {loading ? 'ing ' : 'e '} Changes
+              </button>
+              <button
+                className='btn-danger'
+                type='button'
+                onClick={() => Router.back()}
+              >
+                Cancel
+              </button>
+            </div>
+          </fieldset>
+        </FormStyles>
+      </DancerCardContainer>
+    </>
   )
 }
 

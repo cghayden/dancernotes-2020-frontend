@@ -46,49 +46,50 @@ const BrowseStudioPage = () => {
 
   const router = useRouter()
 
-  const { data: studioData, loading: loading, error: error } = useQuery(
-    BROWSE_STUDIO_CLASSES_QUERY,
-    {
-      variables: { id: router.query.studioId },
-    }
-  )
-  const studio = studioData ? studioData.studio : {}
+  const { data, loading, error } = useQuery(BROWSE_STUDIO_CLASSES_QUERY, {
+    variables: { id: router.query.studioId },
+  })
 
-  if (!browsingDancerId) {
+  if (error || loading || !data) {
+    return (
+      <ParentNoFilterLayout page={'Studios'}>
+        {error && <Error error={error} />}
+        {loading && <Loading />}
+      </ParentNoFilterLayout>
+    )
+  }
+  //if the parent haw no dancers, there will be no dancer id.  They can see the studios offereings, but there is no student to register or query to seee if they are registered for any of the classes at that studio, so a whole new component os made that is query free, and just lists the studios classes
+  if (data && !browsingDancerId) {
     return (
       <NewBrowseStudioLayout
-        error={error}
-        loading={loading}
-        page={`Classes at ${studio.studioName}`}
-        studio={studio}
+        page='Studios'
+        selection={`${data.studio.studioName}`}
+        studio={data.studio}
       >
-        {!error && !loading && <NoDancersBrowseStudio studio={studio} />}
+        <NoDancersBrowseStudio studio={studio} />
       </NewBrowseStudioLayout>
     )
   }
-
+  // parent has at least one dancer - that dancer is set as the browsing dancer when linking to this page
   return (
     <NewBrowseStudioLayout
-      error={error}
-      loading={loading}
-      page={`Classes at ${studio.studioName}`}
+      page='Studios'
+      selection={`${studio.studioName}`}
       studio={studio}
     >
-      {!error && !loading && (
-        <>
-          <BrowseStudioClasses
-            // classFilter={classFilter}
-            studio={studio}
-            // toggleControls={toggleControlPanel}
-          />
-        </>
-      )}
+      <BrowseStudioClasses
+        // classFilter={classFilter}
+        studio={studio}
+        // toggleControls={toggleControlPanel}
+      />
     </NewBrowseStudioLayout>
   )
 }
 
 export default BrowseStudioPage
 export { BROWSE_STUDIO_CLASSES_QUERY }
+
+// to clear all browsing dancer cookies when routing from page?
 // useEffect(() => {
 //   const handleRouteChange = () => {
 //     setBrowsingDancer(null)

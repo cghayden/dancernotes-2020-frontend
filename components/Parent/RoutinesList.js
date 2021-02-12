@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Link from 'next/link'
 import { useQuery } from '@apollo/react-hooks'
 import styled from 'styled-components'
@@ -9,6 +8,7 @@ import SearchForStudio from './SearchForStudio'
 import Card from '../../components/styles/Card'
 import DanceListingLink from './DanceListingLink'
 import { useToggle } from '../../utilities/useToggle'
+import Loading from '../Loading'
 //query all dances where ids of parents dancers are in the ids of enrolled dancers for the dance.  On the server, filter out all dancers not belonging to this parent.const NoRoutinesDiv = styled.div`
 
 const NoRoutinesCard = styled(Card)``
@@ -16,11 +16,10 @@ const CardOptions = styled.div`
   display: grid;
 `
 function RoutinesList({ dancerIds }) {
-  // const [showStudioSearch, setShowStudioSearch] = useState(false)
   const { hiddenIds, competitionMode } = useDisplayControls()
+  const { isToggled, toggle } = useToggle(false)
 
   const { data, error, loading } = useQuery(ALL_Rs)
-  const { isToggled, toggle } = useToggle(false)
 
   function formatSortValue(day, startTime) {
     const dayValues = {
@@ -47,9 +46,9 @@ function RoutinesList({ dancerIds }) {
       return 1
     }
   }
-
+  if (loading) return <Loading />
   const allRs = data ? data.allRs : []
-  if (!allRs.length) {
+  if (!data.allRs.length) {
     return (
       <NoRoutinesCard>
         <div>
@@ -79,7 +78,7 @@ function RoutinesList({ dancerIds }) {
     )
   }
 
-  for (const dance of allRs) {
+  for (const dance of data.allRs) {
     // dance.sortValue = formatSortValue(dance.day, dance.startTime);
     const dancerIds = []
     for (const dancer of dance.dancers) {

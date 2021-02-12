@@ -37,23 +37,20 @@ function EventsPage() {
 
   customEvents &&
     customEvents.customEvents.forEach((event) => (event.appliesTo = ['all']))
-
+  if (error || loading || !data) {
+    return (
+      <NewParentLayout page={'Events'}>
+        {error && <Error error={error} />}
+        {loading && <Loading />}
+      </NewParentLayout>
+    )
+  }
   return (
-    <NewParentLayout
-      error={error}
-      loading={loading}
-      page={'Events'}
-      createLink={`/parent/events/createEvent`}
-    >
-      {!error && !loading && (
-        <EventsContent
-          allRoutines={allRoutines}
-          allEvents={[
-            ...customEvents.customEvents,
-            ...parentEvents.parentEvents,
-          ]}
-        />
-      )}
+    <NewParentLayout page={'Events'} createLink={`/parent/events/createEvent`}>
+      <EventsContent
+        allRoutines={allRoutines}
+        allEvents={[...customEvents.customEvents, ...parentEvents.parentEvents]}
+      />
     </NewParentLayout>
   )
 }

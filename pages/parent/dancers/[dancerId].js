@@ -3,6 +3,8 @@ import { useQuery } from '@apollo/react-hooks'
 import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
 import NewDancerCard from '../../../components/Parent/NewDancerCard'
 import { DANCER_QUERY } from '../../../components/Parent/Queries'
+import Loading from '../../../components/Loading'
+import Error from '../../../components/Error'
 
 function DancerPage() {
   const router = useRouter()
@@ -11,15 +13,20 @@ function DancerPage() {
   const { data, error, loading } = useQuery(DANCER_QUERY, {
     variables: { id: dancerId },
   })
-
+  if (error || loading || !data) {
+    return (
+      <ParentNoFilterLayout page={'Dancers'}>
+        {error && <Error error={error} />}
+        {loading && <Loading />}
+      </ParentNoFilterLayout>
+    )
+  }
   return (
     <ParentNoFilterLayout
-      error={error}
-      loading={loading}
       page='Dancers'
       selection={`${data?.dancer.firstName}`}
     >
-      {data && <NewDancerCard dancer={data.dancer} />}
+      <NewDancerCard dancer={data.dancer} />
     </ParentNoFilterLayout>
   )
 }

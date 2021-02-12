@@ -1,11 +1,10 @@
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/react-hooks'
-
-import UpdateCustomRoutine from '../../../components/Parent/UpdateCustomRoutine'
-import CancelButton from '../../../components/CancelButton'
 import { DANCER_QUERY } from '../../../components/Parent/Queries'
 import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
 import UpdateDancerForm from '../../../components/Parent/UpdateDancerForm'
+import Loading from '../../../components/Loading'
+import Error from '../../../components/Error'
 
 const updateDancePage = () => {
   const router = useRouter()
@@ -14,15 +13,22 @@ const updateDancePage = () => {
   const { data, loading, error } = useQuery(DANCER_QUERY, {
     variables: { id: dancerId },
   })
-  console.log('data', data)
+
+  if (error || loading || !data) {
+    return (
+      <ParentNoFilterLayout page={'Dancers'}>
+        {error && <Error error={error} />}
+        {loading && <Loading />}
+      </ParentNoFilterLayout>
+    )
+  }
 
   return (
     <ParentNoFilterLayout
-      error={error}
-      loading={loading}
-      page={'Update Your Dancer'}
+      page={'Dancers'}
+      selection={`Update ${data.dancer.firstName}`}
     >
-      {!loading && !error && <UpdateDancerForm dancer={data.dancer} />}
+      <UpdateDancerForm dancer={data.dancer} />
     </ParentNoFilterLayout>
   )
 }

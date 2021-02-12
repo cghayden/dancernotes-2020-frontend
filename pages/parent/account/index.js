@@ -5,13 +5,18 @@ import MyProfile from '../../../components/Parent/MyProfile'
 
 export default function makeupIndex() {
   const { data, loading, error } = useQuery(PARENT_USER_QUERY)
-  console.log('data', data)
 
-  const parentUser = data ? data.parentUser : {}
-
+  if (error || loading || !data) {
+    return (
+      <ParentNoFilterLayout page={'My Account'}>
+        {error && <Error error={error} />}
+        {loading && <Loading />}
+      </ParentNoFilterLayout>
+    )
+  }
   return (
-    <NewParentLayout error={error} loading={loading} page={'My Account'}>
-      {!error && !loading && <MyProfile parentUser={parentUser} />}
+    <NewParentLayout page={'My Account'}>
+      <MyProfile parentUser={data.parentUser} />
     </NewParentLayout>
   )
 }

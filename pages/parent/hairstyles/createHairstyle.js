@@ -5,6 +5,7 @@ export default function createHairStylePage() {
   return (
     <NewParentLayout page={'Create Hairstyle'}>
       <div>Create Hairstyle Page</div>
+      <div>Coming Soon</div>
     </NewParentLayout>
   )
 }

@@ -6,7 +6,7 @@ import Card from '../styles/Card'
 import DancernotesInfo from '../DancernotesInfo'
 import UpdateProfileForm from './UpdateProfileForm'
 import Signout from '../Signout'
-
+import { useToggle } from '../../utilities/useToggle'
 const REQUEST_RESET_PASSWORD = gql`
   mutation REQUEST_RESET_PASSWORD($email: String!) {
     requestReset(email: $email) {
@@ -37,6 +37,7 @@ const AccountCardOptions = styled.div`
 `
 
 function MyProfile({ parentUser }) {
+  const { isToggled, toggle } = useToggle()
   const [confirmResetRequest, setConfirmResetRequest] = useState()
   const [requestReset, { loading, error, called }] = useMutation(
     REQUEST_RESET_PASSWORD,
@@ -63,7 +64,8 @@ function MyProfile({ parentUser }) {
         <AccountCardOptions>
           {confirmResetRequest && <p>{confirmResetRequest}</p>}
           <button
-            role='button'
+            type='button'
+            onClick={toggle}
             className='btn-small btn-action-primary-outline'
           >
             Edit
@@ -78,7 +80,7 @@ function MyProfile({ parentUser }) {
           <Signout />
         </AccountCardOptions>
       </Card>
-      <UpdateProfileForm parentUser={parentUser} />
+      {isToggled && <UpdateProfileForm parentUser={parentUser} />}
       <Card>
         <div>
           <DancernotesInfo />

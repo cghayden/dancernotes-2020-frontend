@@ -19,6 +19,7 @@ const Header = styled.header`
   color: white;
   button {
     padding: 0;
+    margin-left: auto;
   }
   .search {
     border-radius: 5px;

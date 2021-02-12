@@ -26,7 +26,7 @@ function Breadcrumb({ page = '', selection = '' }) {
   // home > page > selection or filters
   return (
     <BreadcrumbStyles>
-      <Link href={'/parent/routines'}>
+      <Link href={'/parent'}>
         <motion.a
           className='btn-icon'
           alt='home'
