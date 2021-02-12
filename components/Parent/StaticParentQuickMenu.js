@@ -15,7 +15,11 @@ export default function StaticParentQuickMenu({ dancers }) {
           {dancers.length > 0 && (
             <>
               <li>
-                <a className='btn-nav' href='/parent/routines/createRoutine'>
+                <a
+                  style={{ whiteSpace: 'nowrap' }}
+                  className='btn-nav'
+                  href='/parent/routines/createRoutine'
+                >
                   Create a Routine
                 </a>
               </li>

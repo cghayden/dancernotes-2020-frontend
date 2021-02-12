@@ -4,12 +4,27 @@ import DancerListing from '../../../components/Parent/DancerListing'
 import { PARENTS_DANCERS } from '../../../components/Parent/Queries'
 import Link from 'next/link'
 import Card from '../../../components/styles/Card'
+import Error from '../../../components/Error'
+import Loading from '../../../components/Loading'
 
 export default function dancersIndex() {
   const { data, error, loading } = useQuery(PARENTS_DANCERS)
-  const dancers = data ? data.parentsDancers : []
+  console.log('loading', loading)
+  // const dancers = data ? data.parentsDancers : []
 
-  if (!dancers.length) {
+  if (loading || error || !data) {
+    return (
+      <ParentNoFilterLayout
+        page='Dancers'
+        createLink={`/parent/dancers/createDancer`}
+      >
+        {error && <Error error={error} />}
+        {loading && <Loading />}
+      </ParentNoFilterLayout>
+    )
+  }
+
+  if (data.dancers && !data.dancers.length) {
     return (
       <ParentNoFilterLayout page='Dancers'>
         <Card>
@@ -26,18 +41,11 @@ export default function dancersIndex() {
       </ParentNoFilterLayout>
     )
   }
-
   return (
-    <ParentNoFilterLayout
-      error={error}
-      loading={loading}
-      page='Dancers'
-      createLink={`/parent/dancers/createDancer`}
-    >
-      {data &&
-        data.parentsDancers.map((dancer) => (
-          <DancerListing dancer={dancer} key={dancer.id} />
-        ))}
+    <ParentNoFilterLayout page='Dancers'>
+      {data.parentsDancers.map((dancer) => (
+        <DancerListing dancer={dancer} key={dancer.id} />
+      ))}
     </ParentNoFilterLayout>
   )
 }

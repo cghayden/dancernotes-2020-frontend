@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/react-hooks'
-
-import UpdateCustomRoutine from '../../../components/Parent/UpdateCustomRoutine'
-import CancelButton from '../../../components/CancelButton'
 import {
   CUSTOM_ROUTINE_QUERY,
   STUDIOS_AND_DANCERS,
 } from '../../../components/Parent/Queries'
 import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
+import UpdateCustomRoutine from '../../../components/Parent/UpdateCustomRoutine'
+import Error from '../../../components/Error'
+import Loading from '../../../components/Loading'
 
 const updateDancePage = () => {
   const {
@@ -30,21 +30,22 @@ const updateDancePage = () => {
   const loading = loadingParent || loadingRoutine
   const error = errorLoadingParent || errorloadingRoutine
 
-  return (
-    <>
-      <ParentNoFilterLayout
-        error={error}
-        loading={loading}
-        page={'Update Your Routine'}
-      >
-        {!loading && !error && (
-          <UpdateCustomRoutine
-            dance={routine.customRoutine}
-            parent={parent.parentUser}
-          />
-        )}
+  if (error || loading) {
+    return (
+      <ParentNoFilterLayout page={'Update Your Routine'}>
+        {error && <Error error={error} />}
+        {loading && <Loading />}
       </ParentNoFilterLayout>
-    </>
+    )
+  }
+
+  return (
+    <ParentNoFilterLayout page={'Update Your Routine'}>
+      <UpdateCustomRoutine
+        dance={routine?.customRoutine}
+        parent={parent?.parentUser}
+      />
+    </ParentNoFilterLayout>
   )
 }
 

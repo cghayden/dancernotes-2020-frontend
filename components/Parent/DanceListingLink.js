@@ -77,7 +77,6 @@ function formatTime(timeString) {
 
 const DanceListingLink = ({ dance }) => {
   const { competitionMode, hiddenIds } = useDisplayControls()
-  console.log('hiddenIds', hiddenIds)
   return (
     <HeaderStyle>
       <EnrolledDancers hiddenIds={hiddenIds} dancers={dance.dancers} />

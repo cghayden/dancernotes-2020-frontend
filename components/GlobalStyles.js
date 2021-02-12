@@ -230,6 +230,12 @@ const GlobalStyle = createGlobalStyle`
       color: hsl(200, 95%, 95%);
       background: ${(props) => props.theme.indigo5};
     }
+    @media screen and (max-width: ${(props) => props.theme.smallScreen}) {
+    
+      padding: .4rem;
+      font-size:14px;
+    
+  }
   }
   &.btn-selectionOption{
     border-radius: 0;

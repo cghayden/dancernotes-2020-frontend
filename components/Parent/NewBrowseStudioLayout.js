@@ -80,9 +80,6 @@ export default function NewBrowseStudioLayout({
   children,
   page,
   selection = false,
-  createLink = false,
-  loading = false,
-  error = false,
   studio,
 }) {
   const [showFilter, toggleFilter] = useState(false)
@@ -118,8 +115,6 @@ export default function NewBrowseStudioLayout({
               <FilterSvg w='20' h='20' />
             </button>
           </SelectionWindowHeader>
-          {loading && <Loading />}
-          {error && <Error error={error} />}
           <SelectionWindowMain>{children}</SelectionWindowMain>
         </SelectionWindow>
       </BodyLayout>

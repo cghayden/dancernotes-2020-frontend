@@ -1,19 +1,22 @@
 import { useQuery } from '@apollo/react-hooks'
 import CreateCustomRoutineForm from '../../../components/Parent/CreateCustomRoutineForm'
 import { STUDIOS_AND_DANCERS } from '../../../components/Parent/Queries'
-import CancelButton from '../../../components/CancelButton'
 import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
+import Loading from '../../../components/Loading'
 
 function createCustomRoutinePage() {
-  const { data: parent, loading, error } = useQuery(STUDIOS_AND_DANCERS)
-
+  const { data, loading, error } = useQuery(STUDIOS_AND_DANCERS)
+  if (error || loading || !data) {
+    return (
+      <ParentNoFilterLayout page={'Create a Routine'}>
+        {error && <Error error={error} />}
+        {loading && <Loading />}
+      </ParentNoFilterLayout>
+    )
+  }
   return (
-    <ParentNoFilterLayout
-      page={'Create a Routine'}
-      error={error}
-      loading={loading}
-    >
-      {parent && <CreateCustomRoutineForm parent={parent.parentUser} />}
+    <ParentNoFilterLayout page={'Create a Routine'}>
+      <CreateCustomRoutineForm parent={data.parentUser} />
     </ParentNoFilterLayout>
   )
 }

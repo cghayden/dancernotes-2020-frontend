@@ -78,7 +78,7 @@ const DanceCardHeader = ({ dance }) => {
       <DanceCardTitle>
         <p>{dance.name}</p>
         <p>{dance.performanceName}</p>
-        <p>{dance.studio.studioName}</p>
+        <p>{dance.studio?.studioName}</p>
       </DanceCardTitle>
       {!competitionMode ? (
         <DanceCardTime>

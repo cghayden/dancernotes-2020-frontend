@@ -1,8 +1,5 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-
-import Error from '../../components/Error'
-import Loading from '../../components/Loading'
 import NewParentHeader from '../Parent/NewParentHeader'
 import NewParentNav from './NewParentNav'
 import ParentBreadcrumb from './ParentBreadcrumb'
@@ -83,8 +80,6 @@ export default function NewParentLayout({
   page,
   selection = false,
   createLink = false,
-  loading = false,
-  error = false,
 }) {
   const [showFilter, toggleFilter] = useState(false)
 
@@ -115,8 +110,6 @@ export default function NewParentLayout({
               <FilterSvg w='20' h='20' />
             </button>
           </SelectionWindowHeader>
-          {loading && <Loading />}
-          {error && <Error error={error} />}
           <SelectionWindowMain>{children}</SelectionWindowMain>
         </SelectionWindow>
       </BodyLayout>

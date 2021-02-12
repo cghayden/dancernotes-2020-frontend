@@ -194,6 +194,7 @@ const theme = {
 
   largeScreen: '787px',
   mediumScreen: '600px',
+  smallScreen: '500px',
   borderRadius: '5px',
 
   //Permalink: https://colorlab.dev/WyIxLjAuMCIsIiMzYjhhZWIiLDExLDAsMCwiaHNsdXYiLCJsaW5lYXIiXQ==

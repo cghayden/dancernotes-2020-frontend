@@ -7,7 +7,7 @@ const MobileNavContainer = styled.div`
   padding: 0.5rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  width: 95vw;
+  width: 97vw;
   max-width: 400px;
   position: fixed;
   top: ${(props) => props.theme.mobileHeaderHeight};

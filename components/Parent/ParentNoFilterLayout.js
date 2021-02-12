@@ -1,6 +1,4 @@
 import styled from 'styled-components'
-import Error from '../../components/Error'
-import Loading from '../../components/Loading'
 import NewParentHeader from '../Parent/NewParentHeader'
 import NewParentNav from './NewParentNav'
 
@@ -56,8 +54,6 @@ export default function ParentNoFilterLayout({
   children,
   page,
   selection = false,
-  loading = false,
-  error = false,
 }) {
   return (
     <NoFiltLayout>
@@ -70,8 +66,6 @@ export default function ParentNoFilterLayout({
           <SelectionWindowHeader>
             <ParentBreadcrumb page={page} selection={selection} />
           </SelectionWindowHeader>
-          {loading && <Loading />}
-          {error && <Error error={error} />}
           <SelectionWindowMain>{children}</SelectionWindowMain>
         </SelectionWindow>
       </BodyLayout>

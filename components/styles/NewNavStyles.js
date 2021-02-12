@@ -2,9 +2,7 @@ import styled from 'styled-components'
 
 const NewNavSidebarContainer = styled.div`
   background: ${(props) => props.theme.gray0};
-  /* width: 18vw; */
   min-width: 160px;
-  /* max-width: 230px; */
   height: 100vh;
   display: flex;
   flex-direction: column;
