@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const MobileFilterContainer = styled.div`
+const MobileFilterContainerStyles = styled.div`
   border-radius: 5px;
   box-shadow: ${(props) => props.theme.dropShadow3};
   background: ${(props) => props.theme.gray2};
@@ -23,4 +23,4 @@ const MobileFilterContainer = styled.div`
   }
 `
 
-export { MobileFilterContainer }
+export { MobileFilterContainerStyles }

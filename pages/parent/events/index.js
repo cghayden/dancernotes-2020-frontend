@@ -6,6 +6,8 @@ import {
 } from '../../../components/Parent/Queries'
 import NewParentLayout from '../../../components/Parent/NewParentLayout'
 import EventsContent from '../../../components/Parent/EventsContent'
+import Error from '../../../components/Error'
+import Loading from '../../../components/Loading'
 
 // import { useParentEvents } from '../../../components/Parent/useParentEvents'
 
@@ -37,7 +39,7 @@ function EventsPage() {
 
   customEvents &&
     customEvents.customEvents.forEach((event) => (event.appliesTo = ['all']))
-  if (error || loading || !data) {
+  if (error || loading) {
     return (
       <NewParentLayout page={'Events'}>
         {error && <Error error={error} />}
