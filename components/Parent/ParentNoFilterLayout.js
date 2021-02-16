@@ -1,54 +1,13 @@
 import styled from 'styled-components'
 import NewParentHeader from '../Parent/NewParentHeader'
 import NewParentNav from './NewParentNav'
-
 import ParentBreadcrumb from './ParentBreadcrumb'
-
-const BodyLayout = styled.div`
-  display: flex;
-`
-
-const NoFiltLayout = styled.div`
-  height: 100vh;
-`
-
-const SelectionWindow = styled.div`
-  height: 100vh;
-  overflow-y: scroll;
-  position: relative;
-  flex-grow: 1;
-`
-
-const SelectionWindowHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  button {
-    margin: 0;
-    padding: 0;
-  }
-`
-
-const SelectionWindowMain = styled.div`
-  width: 100%;
-  background: ${(props) => props.theme.gray0};
-  /* height: 100vh; */
-  padding-top: 20px;
-  padding-bottom: 50vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: scroll;
-
-  ul {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-size: 1rem;
-    letter-spacing: 0.02rem;
-  }
-`
+import {
+  SelectionWindowStyles,
+  SelectionWindowHeaderStyles,
+  SelectionWindowMainStyles,
+} from '../styles/SelectionWindowStyles'
+import { LayoutStyles, BodyLayoutStyles } from '../styles/PageLayoutStyles'
 
 export default function ParentNoFilterLayout({
   children,
@@ -56,19 +15,19 @@ export default function ParentNoFilterLayout({
   selection = false,
 }) {
   return (
-    <NoFiltLayout>
+    <LayoutStyles>
       <NewParentHeader />
-      <BodyLayout>
+      <BodyLayoutStyles>
         <div className='hide-ltLarge'>
           <NewParentNav />
         </div>
-        <SelectionWindow>
-          <SelectionWindowHeader>
+        <SelectionWindowStyles>
+          <SelectionWindowHeaderStyles>
             <ParentBreadcrumb page={page} selection={selection} />
-          </SelectionWindowHeader>
-          <SelectionWindowMain>{children}</SelectionWindowMain>
-        </SelectionWindow>
-      </BodyLayout>
-    </NoFiltLayout>
+          </SelectionWindowHeaderStyles>
+          <SelectionWindowMainStyles>{children}</SelectionWindowMainStyles>
+        </SelectionWindowStyles>
+      </BodyLayoutStyles>
+    </LayoutStyles>
   )
 }
