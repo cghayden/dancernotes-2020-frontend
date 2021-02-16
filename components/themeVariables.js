@@ -185,10 +185,10 @@ const theme = {
   perimeterShadow: '1px 1px 5px 3px rgba(0, 0, 0, 0.15)',
   hoveringDropdownShadow: '5px 5px 6px 5px rgba(0, 0, 0, 0.10)',
   navHeight: `4rem`,
-  mobileHeaderHeight: '40px',
+  mobileHeaderHeight: '50px',
+  breadcrumbHeaderHeight: '50px',
   desktopHeaderHeight: '60px',
   topFilterHeight: '60px',
-  mobileStatusBarHeight: '3rem',
   mobileSubNavHeight: '3.5rem',
   mobileMainTop: '6.5rem',
 

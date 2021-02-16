@@ -17,10 +17,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${theme.background};
     margin: 0;
     line-height: 1.25;
-    font-family: "Source Sans Pro", "Roboto", -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue;
-    ${
-      '' /* font-family: "Source Sans Pro", -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue; */
-    }
+    font-family: "Source Sans Pro", "Roboto", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: 400;
     color: ${theme.blackText};
   }
@@ -290,7 +287,6 @@ const GlobalStyle = createGlobalStyle`
         box-shadow: 1px -1px 3px 2px ${theme.indigo2}, 1px 1px 3px 2px ${
   theme.indigo2
 };      
-        ${'' /* box-shadow: 1px 1px 3px 2px ${theme.indigo2};       */}
         color: hsl(200, 95%,95%);
 
       }
@@ -315,21 +311,8 @@ const GlobalStyle = createGlobalStyle`
     padding-bottom: 1rem;
   }
 
-main {
-  margin-top: ${(props) => props.theme.mobileStatusBarHeight};
-  padding-top: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 100px;
-  align-items: center;
-  @media (min-width: ${(props) => props.theme.largeScreen}) {
-    margin-top: ${(props) => props.theme.navHeight};
-    padding-top: 1rem;
-  }
-}
 .subHeading{
   font-size: 12px;
-  ${'' /* font-weight: normal; */}
 }
 .left{
   text-align: left;
@@ -372,6 +355,11 @@ main {
 }
 .font18{
   font-size: 18px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
 }
 
 `

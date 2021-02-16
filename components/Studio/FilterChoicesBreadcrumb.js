@@ -1,4 +1,3 @@
-import React from 'react'
 import { AnimatePresence, motion, AnimateSharedLayout } from 'framer-motion'
 
 function FilterChoicesBreadcrumb({ filter }) {
