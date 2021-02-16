@@ -1,10 +1,7 @@
-import { useContext } from 'react'
 import styled from 'styled-components'
-import { AnimatePresence, motion, AnimateSharedLayout } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import HomeSvg from '../Icons/HomeSvg'
-import PlusSvg from '../Icons/PlusSvg'
-// import FilterChoicesBreadcrumb from '../Studio/FilterChoicesBreadcrumb'
 
 const BreadcrumbStyles = styled(motion.div)`
   display: flex;
@@ -26,12 +23,10 @@ const BreadcrumbStyles = styled(motion.div)`
 `
 
 function Breadcrumb({ page = '', selection = '' }) {
-  // const { filter } = useContext(FilterContext)
-
   // home > page > selection or filters
   return (
     <BreadcrumbStyles>
-      <Link href={'/parent/routines'}>
+      <Link href={'/parent'}>
         <motion.a
           className='btn-icon'
           alt='home'

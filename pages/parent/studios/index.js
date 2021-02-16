@@ -8,15 +8,24 @@ import SearchForStudio from '../../../components/Parent/SearchForStudio'
 import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
 import Link from 'next/link'
 import NoDancersSearchStudio from '../../../components/Parent/NoDancersSearchStudio'
+import Error from '../../../components/Error'
+import Loading from '../../../components/Loading'
 
 export default function studiosIndex() {
   const { isToggled, toggle } = useToggle(false)
   const { data, loading, error } = useQuery(STUDIO_CARD_QUERY)
 
-  const studios = data ? data.parentUser.studios : []
-  const dancers = data ? data.parentUser.dancers : []
-
-  if (dancers.length < 1) {
+  // const studios = data ? data.parentUser.studios : []
+  // const dancers = data ? data.parentUser.dancers : []
+  if (error || loading || !data) {
+    return (
+      <ParentNoFilterLayout page={'My Studios'}>
+        {error && <Error error={error} />}
+        {loading && <Loading />}
+      </ParentNoFilterLayout>
+    )
+  }
+  if (data && data.parentUser.dancers.length < 1) {
     return (
       <ParentNoFilterLayout page='Studios'>
         <Card>
@@ -39,14 +48,9 @@ export default function studiosIndex() {
     )
   }
 
-  if (studios.length < 1) {
+  if (data && data.parentUser.studios.length < 1) {
     return (
-      <NewParentLayout
-        error={error}
-        loading={loading}
-        page={'My Studios'}
-        //   createLink={`/parent/makeup/createMakeupSet`}
-      >
+      <NewParentLayout page={'My Studios'}>
         <Card>
           <p>
             You're dancers are not enrolled at or subscribed to any studios.
@@ -63,13 +67,8 @@ export default function studiosIndex() {
   }
 
   return (
-    <NewParentLayout
-      error={error}
-      loading={loading}
-      page={'My Studios'}
-      //   createLink={`/parent/makeup/createMakeupSet`}
-    >
-      {studios.map((studio) => (
+    <NewParentLayout page={'My Studios'}>
+      {data.parentUser.studios.map((studio) => (
         <StudioCard
           key={studio.id}
           studio={studio}

@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import CategoryFilter from '../Parent/CategoryFilter'
 import { useStudio } from './useStudio'
 import { FilterContext } from './FilterContext'
 import LockedSvg from '../Icons/LockedSvg'
 import TrashIcon from '../Icons/TrashIcon'
+import CategoryFilter from '../CategoryFilter'
 
 const FilterPanelStyles = styled.div`
   a,

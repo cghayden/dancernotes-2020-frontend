@@ -253,6 +253,9 @@ const DANCER_QUERY = gql`
     dancer(id: $id) {
       id
       firstName
+      parent {
+        id
+      }
       avatar
       avatarId
       danceClasses {

@@ -1,14 +1,10 @@
-import Router from 'next/router'
+import Link from 'next/link'
 
 const CancelButton = () => {
   return (
-    <button
-      type='button'
-      className='btn-action-secondary'
-      onClick={() => Router.back()}
-    >
-      Cancel
-    </button>
+    <Link href='/parent/'>
+      <a className='btn-action-secondary'>Cancel</a>
+    </Link>
   )
 }
 

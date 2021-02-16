@@ -9,70 +9,58 @@ const EnrolledDiv = styled.div`
   grid-column: 1;
 `
 const Avatar = styled.img`
-  width: 1.4em;
-  height: 1.4em;
+  width: 40px;
+  height: 40px;
+  width: ${(props) => (props.isDancerHidden ? `30px` : `40px`)};
+  height: ${(props) => (props.isDancerHidden ? `30px` : `40px`)};
+  filter: ${(props) => (props.isDancerHidden ? `opacity(.4)` : `none`)};
+  /* width: ${(props) => (props.isDancerHidden ? `1.2em` : `1.4em`)};
+  height: ${(props) => (props.isDancerHidden ? `1.2em` : `1.4em`)}; */
   border-radius: 25px;
   margin: 0 0.25rem;
   object-fit: cover;
-
-  /* @media (min-width: ${(props) => props.theme.largeScreen}) {
-    width: 42px;
-    height: 42px;
-  } */
-`
-
-const InactiveAvatar = styled(Avatar)`
-  width: 1.5em;
-  height: 1.5em;
-  filter: grayscale(80%);
-  border: 2px solid ${(props) => props.theme.gray3};
-  /* @media (min-width: ${(props) => props.theme.largeScreen}) {
-    width: 38px;
-    height: 38px;
-  } */
 `
 
 const Initial = styled.div`
-  width: 1.4em;
-  height: 1.4em;
+  /* width: 40px;
+  height: 40px; */
+  width: ${(props) => (props.isDancerHidden ? `30px` : `40px`)};
+  height: ${(props) => (props.isDancerHidden ? `30px` : `40px`)};
   border-radius: 25px;
   margin: 0 0.25rem;
   display: grid;
   place-items: center;
-  font-size: 1.4em;
-  color: ${(props) => props.theme.indigo0};
-  background-color: ${(props) => props.theme.indigo9};
-  p {
-    font-size: 0.9em;
-  }
-  /* @media (min-width: ${(props) => props.theme.largeScreen}) {
-    width: 42px;
-    height: 42px;
-  } */
+  font-size: ${(props) => (props.isDancerHidden ? `1.4em` : `1.6em`)};
+  background-color: ${(props) =>
+    props.isDancerHidden ? props.theme.gray2 : props.theme.green7};
+  color: ${(props) =>
+    props.isDancerHidden ? props.theme.gray4 : props.theme.green0};
 `
 
-export default function EnrolledDancers({ dancers }) {
+export default function EnrolledDancers({ dancers, hiddenIds = [] }) {
   return (
     <EnrolledDiv>
-      <>
-        {dancers.map((dancer) => {
-          if (dancer.avatar) {
-            return (
-              <Avatar
-                key={dancer.id}
-                src={dancer.avatar}
-                alt={dancer.firstName}
-              />
-            )
-          } else {
-            return (
-              <Initial key={dancer.id}>
-                <p>{dancer.firstName[0]}</p>
-              </Initial>
-            )
-          }
-        })}
-      </>
+      {dancers.map((dancer) => {
+        if (dancer.avatar) {
+          return (
+            <Avatar
+              isDancerHidden={hiddenIds.includes(dancer.id)}
+              key={dancer.id}
+              src={dancer.avatar}
+              alt={dancer.firstName}
+            />
+          )
+        } else {
+          return (
+            <Initial
+              key={dancer.id}
+              isDancerHidden={hiddenIds.includes(dancer.id)}
+            >
+              <p>{dancer.firstName[0]}</p>
+            </Initial>
+          )
+        }
+      })}
     </EnrolledDiv>
   )
 }

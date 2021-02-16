@@ -166,7 +166,8 @@ function CreateDancerForm() {
     await updateDancer({
       variables: {
         id: dancerId,
-        avatar: file.eager[0].secure_url,
+        // avatar: file.eager[0].secure_url,
+        avatar: file.secure_url,
         avatarId: file.public_id,
       },
     }).catch(() => {

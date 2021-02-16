@@ -5,17 +5,20 @@ import MakeupContent from '../../../components/Parent/MakeupContent'
 
 export default function makeupIndex() {
   const { data, loading, error } = useQuery(PARENTS_MAKEUP_QUERY)
-
-  const parentMakeup = data ? data.parentMakeup : []
-
+  if (error || loading || !data) {
+    return (
+      <ParentNoFilterLayout page={'Makeup'}>
+        {error && <Error error={error} />}
+        {loading && <Loading />}
+      </ParentNoFilterLayout>
+    )
+  }
   return (
     <NewParentLayout
-      error={error}
-      loading={loading}
       page={'Makeup'}
       createLink={`/parent/makeup/createMakeupSet`}
     >
-      {!error && !loading && <MakeupContent studios={parentMakeup.studios} />}
+      <MakeupContent studios={parentMakeup.studios} />
     </NewParentLayout>
   )
 }

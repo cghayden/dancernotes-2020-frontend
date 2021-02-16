@@ -6,6 +6,7 @@ const MotionUl = styled(motion.ul)`
   position: absolute;
   width: 200px;
   right: 60px;
+  top: 15px;
 `
 
 const linkVariants = {
@@ -31,15 +32,30 @@ export default function ParentQuickMenu({ dancers }) {
       {dancers.length > 0 && (
         <>
           <motion.li variants={linkVariants}>
-            <a href='/parent/routines/createRoutine'>Create a Routine</a>
+            <a
+              className='btn-action-primary-textOnly'
+              href='/parent/routines/createRoutine'
+            >
+              Create a Routine
+            </a>
           </motion.li>
           <motion.li variants={linkVariants}>
-            <a href='/parent/events/createEvent'>Add an Event</a>
+            <a
+              className='btn-action-primary-textOnly'
+              href='/parent/events/createEvent'
+            >
+              Add an Event
+            </a>
           </motion.li>
         </>
       )}
       <motion.li variants={linkVariants}>
-        <a href='/parent/dancers/addDancer'>Add a Dancer</a>
+        <a
+          className='btn-action-primary-textOnly'
+          href='/parent/dancers/addDancer'
+        >
+          Add a Dancer
+        </a>
       </motion.li>
     </MotionUl>
   )
