@@ -46,8 +46,9 @@ function RoutinesList({ dancerIds }) {
       return 1
     }
   }
+  if (error) return <Error error={error} />
   if (loading) return <Loading />
-  const allRs = data ? data.allRs : []
+
   if (!data.allRs.length) {
     return (
       <NoRoutinesCard>
@@ -78,21 +79,29 @@ function RoutinesList({ dancerIds }) {
     )
   }
 
-  for (const dance of data.allRs) {
-    // dance.sortValue = formatSortValue(dance.day, dance.startTime);
+  const allRoutines = data.allRs.map((routine) => {
     const dancerIds = []
-    for (const dancer of dance.dancers) {
+    for (const dancer of routine.dancers) {
       dancerIds.push(dancer.id)
     }
-    dance.dancerIds = dancerIds
-  }
+    return { ...routine, dancerIds }
+  })
+
+  // for (const dance of data.allRs) {
+  //   // dance.sortValue = formatSortValue(dance.day, dance.startTime);
+  //   const dancerIds = []
+  //   for (const dancer of dance.dancers) {
+  //     dancerIds.push(dancer.id)
+  //   }
+  //   dance.dancerIds = dancerIds
+  // }
 
   const visibleDancersIds = dancerIds.filter((id) => !hiddenIds.includes(id))
 
   if (!competitionMode)
     return (
       <ul className='optionsList'>
-        {allRs
+        {allRoutines
           .sort((a, b) => {
             if (a.sortValue <= b.sortValue) {
               return -1
@@ -152,7 +161,7 @@ function RoutinesList({ dancerIds }) {
     )
 
   if (competitionMode) {
-    const compRoutines = allRs.filter((routine) => routine.entryNumber)
+    const compRoutines = allRoutines.filter((routine) => routine.entryNumber)
     return (
       <ul>
         {compRoutines

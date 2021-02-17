@@ -53,7 +53,7 @@ function DancerCard({ dancer }) {
               <button
                 className='btn-action-primary-textOnly'
                 onClick={() => {
-                  setBrowsingDancer(dancers.id)
+                  setBrowsingDancer(dancer.id)
                 }}
               >
                 Manage Classes at {studio.studioName}

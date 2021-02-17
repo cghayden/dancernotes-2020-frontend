@@ -1,6 +1,6 @@
 import { useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
-import { ALL_Rs } from './Queries'
+import { SINGLE_ROUTINE_QUERY } from './Queries'
 
 const DELETE_PARENT_NOTE = gql`
   mutation DELETE_PARENT_NOTE($noteId: ID!) {
@@ -11,12 +11,14 @@ const DELETE_PARENT_NOTE = gql`
   }
 `
 
-function DeleteNote({ noteId, toggleEditNotes }) {
+function DeleteNote({ noteId, toggleEditNotes, danceId }) {
   const [deleteParentNote, { error, loading }] = useMutation(
     DELETE_PARENT_NOTE,
     {
       variables: { noteId },
-      refetchQueries: [{ query: ALL_Rs }],
+      refetchQueries: [
+        { query: SINGLE_ROUTINE_QUERY, variables: { id: danceId } },
+      ],
       awaitRefetchQueries: true,
     }
   )

@@ -37,8 +37,6 @@ function EventsPage() {
   const error =
     errorLoadingEvents || errorLoadingRoutines || errorLoadingCustomEvents
 
-  customEvents &&
-    customEvents.customEvents.forEach((event) => (event.appliesTo = ['all']))
   if (error || loading) {
     return (
       <NewParentLayout page={'Events'}>
@@ -47,11 +45,18 @@ function EventsPage() {
       </NewParentLayout>
     )
   }
+
+  const customEventsWithAll =
+    customEvents &&
+    customEvents.customEvents.map((event) => {
+      return { ...event, appliesTo: ['all'] }
+    })
+
   return (
     <NewParentLayout page={'Events'} createLink={`/parent/events/createEvent`}>
       <EventsContent
         allRoutines={allRoutines}
-        allEvents={[...customEvents.customEvents, ...parentEvents.parentEvents]}
+        allEvents={[...customEventsWithAll, ...parentEvents.parentEvents]}
       />
     </NewParentLayout>
   )
