@@ -30,7 +30,7 @@ const NotesDiv = ({
         </Notes>
       )}
 
-      {editNotes && (
+      {dance.parentsNotes && editNotes && (
         <UpdateParentNotes
           existingNote={dance.parentsNotes}
           danceId={dance.id}

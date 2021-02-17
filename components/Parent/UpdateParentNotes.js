@@ -1,25 +1,17 @@
-import React, { useState } from "react";
-import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import styled from "styled-components";
-import DeleteNote from "./DeleteNote";
-import Error from "../Error";
-import { ALL_Rs } from "./Queries";
-import Form from "../styles/Form";
+import React, { useState } from 'react'
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import styled from 'styled-components'
+import DeleteNote from './DeleteNote'
+import Error from '../Error'
+import { SINGLE_ROUTINE_QUERY } from './Queries'
+import Form from '../styles/Form'
 const EditNoteInput = styled(Form)`
   textarea {
     width: 100%;
   }
-`;
+`
 
-// const PARENT_NOTES_QUERY = gql`
-//   query PARENT_NOTES_QUERY($danceId: ID!) {
-//     parentNotes(danceId: $danceId) {
-//       note
-//       id
-//     }
-//   }
-// `;
 const UPDATE_PARENT_NOTE = gql`
   mutation UPDATE_PARENT_NOTE($noteId: ID!, $note: String!) {
     updateParentNote(noteId: $noteId, note: $note) {
@@ -27,15 +19,10 @@ const UPDATE_PARENT_NOTE = gql`
       note
     }
   }
-`;
+`
 
 function UpdateParentNote({ danceId, existingNote, toggleEditNotes }) {
-  const [note, setNote] = useState("");
-  // const { data, loading, error } = useQuery(PARENT_NOTES_QUERY, {
-  //   variables: { danceId }
-  // });
-
-  // const existingNote = data ? data.parentNotes : {};
+  const [note, setNote] = useState('')
   // console.log("existingNote:", existingNote);
 
   const [updateParentNote, { loading, error }] = useMutation(
@@ -43,57 +30,60 @@ function UpdateParentNote({ danceId, existingNote, toggleEditNotes }) {
     {
       variables: {
         noteId: existingNote.id,
-        note
+        note,
       },
-      refetchQueries: [{ query: ALL_Rs }]
+      // refetchQueries: [
+      //   { query: SINGLE_ROUTINE_QUERY, variables: { id: danceId } },
+      // ],
     }
-  );
+  )
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <Error error={error} />;
+  if (loading) return <p>Loading...</p>
+  if (error) return <Error error={error} />
   // save all at once
   return (
     <EditNoteInput
-      method="post"
-      onSubmit={async e => {
-        e.preventDefault();
-        await updateParentNote();
-        toggleEditNotes(false);
+      method='post'
+      onSubmit={async (e) => {
+        e.preventDefault()
+        await updateParentNote()
+        toggleEditNotes(false)
       }}
     >
-      <label className="visuallyHidden" htmlFor="note">
+      <label className='visuallyHidden' htmlFor='note'>
         My Notes:
       </label>
       <textarea
-        id="note"
-        type="text"
-        name="note"
-        rows="3"
+        id='note'
+        type='text'
+        name='note'
+        rows='3'
         defaultValue={existingNote.note}
-        onChange={e => setNote(e.target.value)}
+        onChange={(e) => setNote(e.target.value)}
       />
-      <div className="form-footer">
+      <div className='form-footer'>
         {note && (
-          <button type="submit" className="btn-action-primary btn-small">
+          <button type='submit' className='btn-action-primary btn-small'>
             Save
           </button>
         )}
         <DeleteNote
           noteId={existingNote.id}
           toggleEditNotes={toggleEditNotes}
+          danceId={danceId}
         />
 
         <button
-          type="button"
-          className="btn-action-secondary-outline btn-small"
+          type='button'
+          className='btn-action-secondary-outline btn-small'
           onClick={() => toggleEditNotes(false)}
         >
           Cancel
         </button>
       </div>
     </EditNoteInput>
-  );
+  )
 }
 
-export default UpdateParentNote;
+export default UpdateParentNote
 // export { PARENT_NOTES_QUERY };
