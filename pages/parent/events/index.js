@@ -4,7 +4,7 @@ import {
   CUSTOM_EVENTS_QUERY,
   ALL_Rs,
 } from '../../../components/Parent/Queries'
-import NewParentLayout from '../../../components/Parent/NewParentLayout'
+import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
 import EventsContent from '../../../components/Parent/EventsContent'
 import Error from '../../../components/Error'
 import Loading from '../../../components/Loading'
@@ -39,10 +39,10 @@ function EventsPage() {
 
   if (error || loading) {
     return (
-      <NewParentLayout page={'Events'}>
+      <ParentNoFilterLayout page={'Events'}>
         {error && <Error error={error} />}
         {loading && <Loading />}
-      </NewParentLayout>
+      </ParentNoFilterLayout>
     )
   }
 
@@ -53,12 +53,15 @@ function EventsPage() {
     })
 
   return (
-    <NewParentLayout page={'Events'} createLink={`/parent/events/createEvent`}>
+    <ParentNoFilterLayout
+      page={'Events'}
+      createLink={`/parent/events/createEvent`}
+    >
       <EventsContent
         allRoutines={allRoutines}
         allEvents={[...customEventsWithAll, ...parentEvents.parentEvents]}
       />
-    </NewParentLayout>
+    </ParentNoFilterLayout>
   )
 }
 

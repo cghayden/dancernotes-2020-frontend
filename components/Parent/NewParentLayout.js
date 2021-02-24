@@ -42,6 +42,7 @@ export default function NewParentLayout({
           <SelectionWindowHeaderStyles>
             <ParentBreadcrumb page={page} selection={selection} />
             <button
+              type='button'
               className='hide-gtMedium btn-icon'
               onClick={() => toggleFilter(!showFilter)}
             >

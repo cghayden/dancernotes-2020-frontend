@@ -5,7 +5,6 @@ import gql from 'graphql-tag'
 
 import BrowseStudioClasses from '../../components/Parent/BrowseStudioClasses'
 
-// import { useDisplayControls } from '../../../components/Parent/ParentDisplayProvider'
 import NewBrowseStudioLayout from '../../components/Parent/NewBrowseStudioLayout'
 import { RegistrationContext } from '../../components/Parent/RegistrationContext'
 import NoDancersBrowseStudio from '../../components/Parent/NoDancersBrowseStudio'
@@ -61,7 +60,7 @@ const BrowseStudioPage = () => {
       </ParentNoFilterLayout>
     )
   }
-  //if the parent haw no dancers, there will be no dancer id.  They can see the studios offereings, but there is no student to register or query to seee if they are registered for any of the classes at that studio, so a whole new component os made that is query free, and just lists the studios classes
+  //if the parent has no dancers, there will be no dancer id.  They can see the studios offereings, but there is no student to register or query to seee if they are registered for any of the classes at that studio, so a whole new component os made that is query free, and just lists the studios classes
   if (data && !browsingDancerId) {
     return (
       <NewBrowseStudioLayout

@@ -57,6 +57,14 @@ export default function ParentQuickMenu({ dancers }) {
           Add a Dancer
         </a>
       </motion.li>
+      <motion.li variants={linkVariants}>
+        <a
+          className='btn-action-primary-textOnly'
+          href='/parent/studios/search'
+        >
+          Find a Studio{' '}
+        </a>
+      </motion.li>
     </MotionUl>
   )
 }
