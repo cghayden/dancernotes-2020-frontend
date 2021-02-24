@@ -8,14 +8,14 @@ export default function makeupIndex() {
 
   if (error || loading || !data) {
     return (
-      <ParentNoFilterLayout page={'My Account'}>
+      <ParentNoFilterLayout page={'Account'}>
         {error && <Error error={error} />}
         {loading && <Loading />}
       </ParentNoFilterLayout>
     )
   }
   return (
-    <NewParentLayout page={'My Account'}>
+    <NewParentLayout page={'Account'}>
       <MyProfile parentUser={data.parentUser} />
     </NewParentLayout>
   )

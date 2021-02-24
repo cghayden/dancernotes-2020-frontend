@@ -97,10 +97,6 @@ const ControlPanel = () => {
   // const [showHelp, setShowHelp] = useState(false)
   const { data, loading, error } = useQuery(PARENT_USER_QUERY)
 
-  const { studios, customRoutines, dancers } = data
-    ? data.parentUser
-    : { studios: [], customRoutines: [], dancers: [] }
-
   const {
     hiddenIds,
     toggleId,
@@ -108,22 +104,31 @@ const ControlPanel = () => {
     toggleCompetitionMode,
     showControlPanel,
   } = useDisplayControls()
-  const independents = customRoutines.filter((routine) => !routine.studio)
-  const hasStudioAndIndependents = studios.length > 0 && independents.length > 0
-  const showAllStudioFilter = studios.length > 1 || hasStudioAndIndependents
+
+  if (loading) return null
+  if (error) return null
+
+  const independents = data?.parentUser.customRoutines.filter(
+    (routine) => !routine.studio
+  )
+  const hasStudioAndIndependents =
+    data?.parentUser.studios.length > 0 && independents.length > 0
+  const showAllStudioFilter =
+    data?.parentUser.studios.length > 1 || hasStudioAndIndependents
   return (
     <ControlPanelStyles>
       <ControlPanelHeading>
         <h3>Display:</h3>
         <FilterButtons>
-          <button
+          {/* <button
             className='btn-icon'
             title='Unlock Filter'
             onClick={() => console.log('toggle filter lock')}
           >
             <LockedSvg w={'16'} h={'16'} />
-          </button>
+          </button> */}
           <button
+            type='button'
             className='btn-icon'
             title='Clear all filters'
             onClick={() => toggleId('clear')}
@@ -134,7 +139,7 @@ const ControlPanel = () => {
         </FilterButtons>
       </ControlPanelHeading>
       <div>
-        {dancers.map((dancer) => (
+        {data.parentUser.dancers.map((dancer) => (
           <DancerRoutineTogglers
             key={dancer.id}
             dancer={dancer}
@@ -148,7 +153,7 @@ const ControlPanel = () => {
           <StudioTogglersContainer>
             <h2>My Studios</h2>
             <GroupOfCheckboxes>
-              {studios.map((studio) => (
+              {data.parentUser.studios.map((studio) => (
                 <CheckboxAndLabelContainer key={studio.id}>
                   <SliderLabel
                     id={`${studio.studioName}-label`}

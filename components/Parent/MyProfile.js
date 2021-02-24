@@ -32,10 +32,17 @@ const Dd = styled.dd`
 `
 
 const AccountCardOptions = styled.div`
+  display: grid;
+  grid-gap: 20px;
+`
+const MessageDivStyle = styled.div`
+  color: ${(props) => props.theme.red7};
+`
+
+const OptionsDivStyle = styled.div`
   display: flex;
   justify-content: space-around;
 `
-
 function MyProfile({ parentUser }) {
   const { isToggled, toggle } = useToggle()
   const [confirmResetRequest, setConfirmResetRequest] = useState()
@@ -45,7 +52,7 @@ function MyProfile({ parentUser }) {
       variables: { email: parentUser.email },
       onCompleted: () => {
         setConfirmResetRequest(
-          'Check your email for a link that will allow you to reset your password...'
+          'An email has been sent to your Dancer Notes User-Id email that contains a link that will allow you to reset your password...'
         )
       },
     }
@@ -62,22 +69,30 @@ function MyProfile({ parentUser }) {
           </NoteItem>
         </dl>
         <AccountCardOptions>
-          {confirmResetRequest && <p>{confirmResetRequest}</p>}
-          <button
-            type='button'
-            onClick={toggle}
-            className='btn-small btn-action-primary-outline'
-          >
-            Edit
-          </button>
-          <ResetButton
-            type='button'
-            className='btn-small btn-danger-outline'
-            onClick={() => requestReset()}
-          >
-            Reset my Password
-          </ResetButton>
-          <Signout />
+          <MessageDivStyle>
+            {confirmResetRequest && <p>{confirmResetRequest}</p>}
+          </MessageDivStyle>
+          <OptionsDivStyle>
+            <button
+              type='button'
+              onClick={toggle}
+              className='btn-small btn-action-primary-outline'
+            >
+              Edit
+            </button>
+            <ResetButton
+              type='button'
+              className='btn-small btn-danger-outline'
+              onClick={() => {
+                if (confirm('Would you like to reset your password?')) {
+                  requestReset()
+                }
+              }}
+            >
+              Reset my Password
+            </ResetButton>
+            <Signout />
+          </OptionsDivStyle>
         </AccountCardOptions>
       </Card>
       {isToggled && <UpdateProfileForm parentUser={parentUser} />}

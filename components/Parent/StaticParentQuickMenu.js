@@ -35,6 +35,11 @@ export default function StaticParentQuickMenu({ dancers }) {
               Add a Dancer
             </a>
           </li>
+          <li>
+            <a className='btn-nav' href='/parent/studios/search'>
+              Find a Studio
+            </a>
+          </li>
         </ul>
       </NavSection>
     </NewNavSidebarContainer>

@@ -19,7 +19,7 @@ export default function studiosIndex() {
   // const dancers = data ? data.parentUser.dancers : []
   if (error || loading || !data) {
     return (
-      <ParentNoFilterLayout page={'My Studios'}>
+      <ParentNoFilterLayout page={'Studios'}>
         {error && <Error error={error} />}
         {loading && <Loading />}
       </ParentNoFilterLayout>
@@ -50,7 +50,7 @@ export default function studiosIndex() {
 
   if (data && data.parentUser.studios.length < 1) {
     return (
-      <NewParentLayout page={'My Studios'}>
+      <NewParentLayout page={'Studios'}>
         <Card>
           <p>
             You're dancers are not enrolled at or subscribed to any studios.
@@ -67,7 +67,7 @@ export default function studiosIndex() {
   }
 
   return (
-    <NewParentLayout page={'My Studios'}>
+    <NewParentLayout page={'Studios'}>
       {data.parentUser.studios.map((studio) => (
         <StudioCard
           key={studio.id}

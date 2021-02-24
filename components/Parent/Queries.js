@@ -209,8 +209,6 @@ const PARENTS_DANCERS = gql`
         id
         studioName
         email
-        #link
-        #phone
       }
       danceClasses {
         id

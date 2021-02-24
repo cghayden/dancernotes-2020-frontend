@@ -13,7 +13,8 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: inherit;
   }
   body {
-    height:100vh; overflow: hidden;
+    height:100vh; 
+    overflow: auto;
     background-color: ${theme.background};
     margin: 0;
     line-height: 1.25;
