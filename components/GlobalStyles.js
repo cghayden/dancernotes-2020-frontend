@@ -347,6 +347,8 @@ const GlobalStyle = createGlobalStyle`
   }
 }
 
+
+
 /* font utilities */
 .font12{
   font-size: 12px;

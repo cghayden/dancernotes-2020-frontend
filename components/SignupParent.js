@@ -1,10 +1,10 @@
-import { Component } from 'react'
-import { Mutation } from 'react-apollo'
 import Router from 'next/router'
 import gql from 'graphql-tag'
 import { LandingPageForm } from './styles/Form'
 import Error from './Error'
 import styled from 'styled-components'
+import useForm from '../utilities/useForm'
+import { useMutation } from 'react-apollo'
 
 const SIGNUP_PARENT_MUTATION = gql`
   mutation SIGNUP_PARENT_MUTATION(
@@ -45,113 +45,103 @@ const Terms = styled.div`
     min-width: initial;
   }
 `
+const initialInputState = {
+  email: '',
+  firstName: '',
+  password: '',
+  userType: 'parent',
+}
 
-class SignupParent extends Component {
-  state = {
-    email: '',
-    firstName: '',
-    password: '',
-    userType: 'parent',
-  }
-  saveToState = (e) => {
-    this.setState({ [e.target.name]: e.target.value })
-  }
+function SignupParent() {
+  const { inputs, handleChange, resetForm } = useForm(initialInputState)
 
-  render() {
-    return (
-      <Mutation
-        mutation={SIGNUP_PARENT_MUTATION}
-        variables={{
-          ...this.state,
-          agreedToTermsAndPrivacy: new Date(Date.now()),
-        }}
-        onCompleted={(data) => {
-          Router.push({
-            pathname: '/parent/dancers/addDancer',
-            query: {
-              hasDancers: false,
-            },
-          })
-        }}
-      >
-        {(signupParent, { error, loading }) => (
-          <LandingPageForm
-            method='post'
-            onSubmit={async (e) => {
-              e.preventDefault()
-              await signupParent()
-              this.setState({
-                firstName: '',
-                email: '',
-                password: '',
-              })
-            }}
-          >
-            <fieldset disabled={loading} aria-busy={loading}>
-              <h2>Sign Up For A Parent Account</h2>
-              <Error error={error} />
-              <div>
-                <label htmlFor='email' className='visuallyHidden'>
-                  Email
-                </label>
-                <input
-                  aria-label='email'
-                  type='email'
-                  name='email'
-                  placeholder='email'
-                  value={this.state.email}
-                  onChange={this.saveToState}
-                />
-              </div>
-              <label htmlFor='firstName' className='visuallyHidden'>
-                First Name
-              </label>
-              <input
-                aria-label='first name'
-                type='text'
-                name='firstName'
-                placeholder='firstName'
-                value={this.state.firstName}
-                onChange={this.saveToState}
-              />
-              <label htmlFor='password' className='visuallyHidden'>
-                Password
-              </label>
-              <input
-                aria-label='password'
-                type='password'
-                name='password'
-                placeholder='password'
-                value={this.state.password}
-                onChange={this.saveToState}
-              />
-              <Terms>
-                <p>
-                  By signing up, you acknowledge your agreement to our
-                  <a
-                    rel='noreferrer noopener'
-                    target='_blank'
-                    href='https://www.websitepolicies.com/policies/view/Xd9syaYo'
-                  >
-                    Terms
-                  </a>
-                  and
-                  <a
-                    rel='noreferrer noopener'
-                    target='_blank'
-                    href='https://www.websitepolicies.com/policies/view/Xd9syaYo'
-                  >
-                    Privacy Policy
-                  </a>
-                </p>
-              </Terms>
-              <button type='submit'>Sign Up</button>
-            </fieldset>
-          </LandingPageForm>
-        )}
-      </Mutation>
-    )
-  }
+  const [signupParent, { data, loading, error }] = useMutation(
+    SIGNUP_PARENT_MUTATION,
+    {
+      variables: { ...inputs, agreedToTermsAndPrivacy: new Date(Date.now()) },
+      onCompleted: (data) => {
+        Router.push({
+          pathname: '/parent/dancers/addDancer',
+          query: {
+            hasDancers: false,
+          },
+        })
+      },
+    }
+  )
+
+  return (
+    <LandingPageForm
+      method='post'
+      onSubmit={async (e) => {
+        e.preventDefault()
+        await signupParent()
+      }}
+    >
+      <fieldset disabled={loading} aria-busy={loading}>
+        <h2>Sign Up For A Parent Account</h2>
+        <Error error={error} />
+        <div>
+          <label htmlFor='email' className='visuallyHidden'>
+            Email
+          </label>
+          <input
+            aria-label='email'
+            type='email'
+            name='email'
+            placeholder='email'
+            value={inputs.email}
+            onChange={handleChange}
+          />
+        </div>
+        <label htmlFor='firstName' className='visuallyHidden'>
+          First Name
+        </label>
+        <input
+          aria-label='first name'
+          type='text'
+          name='firstName'
+          placeholder='firstName'
+          value={inputs.firstName}
+          onChange={handleChange}
+        />
+        <label htmlFor='password' className='visuallyHidden'>
+          Password
+        </label>
+        <input
+          aria-label='password'
+          type='password'
+          name='password'
+          placeholder='password'
+          value={inputs.password}
+          onChange={handleChange}
+        />
+        <Terms>
+          <p>
+            By signing up, you acknowledge your agreement to our
+            <a
+              rel='noreferrer noopener'
+              target='_blank'
+              href='https://www.websitepolicies.com/policies/view/Xd9syaYo'
+            >
+              Terms
+            </a>
+            and
+            <a
+              rel='noreferrer noopener'
+              target='_blank'
+              href='https://www.websitepolicies.com/policies/view/Xd9syaYo'
+            >
+              Privacy Policy
+            </a>
+          </p>
+        </Terms>
+        <button type='submit' className='btn-action-primary'>
+          Sign Up
+        </button>
+      </fieldset>
+    </LandingPageForm>
+  )
 }
 
 export default SignupParent

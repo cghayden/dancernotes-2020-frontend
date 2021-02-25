@@ -9,7 +9,7 @@ import { MobileNavContainer } from '../styles//MobileNavContainer'
 import { HeaderStyles } from '../styles/HeaderStyles'
 
 export default function NewParentHeader() {
-  const [mobileNav, toggleMobileNav] = useState(false)
+  const [showMobileNav, toggleShowMobileNav] = useState(false)
   const { data, loading, error } = useQuery(PARENT_USER_QUERY)
   const dancers = data ? data.parentUser.dancers : []
   return (
@@ -20,17 +20,15 @@ export default function NewParentHeader() {
       <button
         className='hide-gtLarge btn-icon'
         onClick={() => {
-          toggleMobileNav(!mobileNav)
+          toggleShowMobileNav((showMobileNav) => !showMobileNav)
         }}
       >
         <MenuSvg />
       </button>
-      {mobileNav && (
-        <MobileNavContainer>
-          <NewParentNav />
-          <StaticParentQuickMenu dancers={dancers} />
-        </MobileNavContainer>
-      )}
+      <MobileNavContainer showMobileNav={showMobileNav}>
+        <NewParentNav />
+        <StaticParentQuickMenu dancers={dancers} />
+      </MobileNavContainer>
     </HeaderStyles>
   )
 }

@@ -1,29 +1,24 @@
-import React from 'react'
-
 const AboutStudio = ({ setActive }) => {
   return (
-    <div>
+    <>
       <h1>Dancernotes for Studios</h1>
-      <div className='aboutBody'>
-        All of your dance and costume information in one place
-      </div>
-      <div className='aboutBody'>
-        A single location for all parent communications
-      </div>
-
-      <div className='aboutBody'>
-        Keep parents and retailers up to date on all apparel requirements
-      </div>
-
+      <ul>
+        <li>All of your dance and costume information in one place</li>
+        <li>
+          Keep parents and retailers up to date on all apparel requirements
+        </li>
+        <li>A single location for all parent communications</li>
+      </ul>
       <div>
         <button
-          className='btn-action-secondary'
+          type='button'
+          className='btn-action-primary'
           onClick={() => setActive('signupStudio')}
         >
-          Try dancernotes
+          Try Dancer Notes for Free
         </button>
       </div>
-    </div>
+    </>
   )
 }
 

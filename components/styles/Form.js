@@ -20,7 +20,9 @@ const Form = styled.form`
   background: ${(props) => props.theme.gray0};
   width: 100%;
   max-width: 550px;
-
+  .form-section {
+    padding: 0.5rem 0;
+  }
   .datePicker {
     margin-bottom: 0.5rem;
   }
@@ -216,22 +218,13 @@ const Form = styled.form`
 const LandingPageForm = styled(Form)`
   border: none;
   background: transparent;
-  color: ${(props) => props.theme.newBlue[0].hsl};
   max-width: 330px;
   h2 {
-    color: ${(props) => props.theme.newBlue[0].hsl};
+    color: ${(props) => props.theme.indigo8};
   }
   input {
-    background-color: ${(props) => props.theme.cream};
-    color: ${(props) => props.theme.newBlue[90].hsl};
     font-size: larger;
     display: block;
-    margin: 0 auto 1.25rem auto;
-  }
-  button[type='submit'] {
-    width: 80%;
-    background-color: ${(props) => props.theme.newBlue[70].hsl};
-    color: ${(props) => props.theme.newBlue[0].hsl};
     margin: 0 auto 1.25rem auto;
   }
 `

@@ -9,7 +9,7 @@ const colors = {
   indigo7: '#35469C',
   indigo8: '#2D3A8C',
   indigo9: '#19216C',
-
+  white: '#fafafa',
   gray0: '#F5F7FA',
   gray05: '#F6F7F8',
   gray1: '#E4E7EB',
@@ -93,6 +93,7 @@ const theme = {
   indigo8: '#2D3A8C',
   indigo9: '#19216C',
 
+  white: '#fafafa',
   gray0: '#F5F7FA',
   gray05: '#F6F7F8',
   gray1: '#E4E7EB',
@@ -172,7 +173,7 @@ const theme = {
   secondary: colors['indigo1'],
   danger: colors['red7'],
 
-  background: colors['gray1'],
+  background: colors['white'],
   border: colors['vividBlue4'],
 
   sidebarWidth: '18vw',
