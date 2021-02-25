@@ -1,9 +1,7 @@
 import cookie from 'cookie'
 import decode from 'jwt-decode'
-// import LandingPage from '../components/LandingPage'
 import NewLandingPage from '../components/NewLandingPage'
 
-// const Index = () => <LandingPage />
 const Index = () => <NewLandingPage />
 
 Index.getInitialProps = function ({ res, req }) {
