@@ -4,8 +4,10 @@ import {
   CUSTOM_EVENTS_QUERY,
   ALL_Rs,
 } from '../../../components/Parent/Queries'
-import NewParentLayout from '../../../components/Parent/NewParentLayout'
+import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
 import EventsContent from '../../../components/Parent/EventsContent'
+import Error from '../../../components/Error'
+import Loading from '../../../components/Loading'
 
 // import { useParentEvents } from '../../../components/Parent/useParentEvents'
 
@@ -35,23 +37,31 @@ function EventsPage() {
   const error =
     errorLoadingEvents || errorLoadingRoutines || errorLoadingCustomEvents
 
-  customEvents &&
-    customEvents.customEvents.forEach((event) => (event.appliesTo = ['all']))
-  if (error || loading || !data) {
+  if (error || loading) {
     return (
-      <NewParentLayout page={'Events'}>
+      <ParentNoFilterLayout page={'Events'}>
         {error && <Error error={error} />}
         {loading && <Loading />}
-      </NewParentLayout>
+      </ParentNoFilterLayout>
     )
   }
+
+  const customEventsWithAll =
+    customEvents &&
+    customEvents.customEvents.map((event) => {
+      return { ...event, appliesTo: ['all'] }
+    })
+
   return (
-    <NewParentLayout page={'Events'} createLink={`/parent/events/createEvent`}>
+    <ParentNoFilterLayout
+      page={'Events'}
+      createLink={`/parent/events/createEvent`}
+    >
       <EventsContent
         allRoutines={allRoutines}
-        allEvents={[...customEvents.customEvents, ...parentEvents.parentEvents]}
+        allEvents={[...customEventsWithAll, ...parentEvents.parentEvents]}
       />
-    </NewParentLayout>
+    </ParentNoFilterLayout>
   )
 }
 

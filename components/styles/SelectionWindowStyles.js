@@ -5,6 +5,15 @@ const SelectionWindowStyles = styled.div`
   overflow-y: scroll;
   position: relative;
   flex-grow: 1;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-align: center;
+    padding: 1rem 0;
+  }
 `
 const SelectionWindowHeaderStyles = styled.div`
   height: ${(props) => props.theme.breadcrumbHeaderHeight};

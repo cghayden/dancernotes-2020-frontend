@@ -24,8 +24,8 @@ const StudioCard = ({ studio, dancers }) => {
       <h2>{studio.studioName}</h2>
       <DancerListings>
         {dancers.map((dancer) => {
-          dancer.allClasses = [...dancer.danceClasses, ...dancer.customRoutines]
-          const studioClasses = dancer.allClasses.filter(
+          const allClasses = [...dancer.danceClasses, ...dancer.customRoutines]
+          const studioClasses = allClasses.filter(
             (danceClass) => danceClass.studio?.id === studio.id
           )
           return (

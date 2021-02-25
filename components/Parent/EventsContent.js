@@ -16,6 +16,7 @@ function EventsContent({
     camp: true,
     other: true,
   })
+  console.log('allEvents', allEvents)
 
   return (
     <>

@@ -53,7 +53,7 @@ function DancerCard({ dancer }) {
               <button
                 className='btn-action-primary-textOnly'
                 onClick={() => {
-                  setBrowsingDancer(dancers.id)
+                  setBrowsingDancer(dancer.id)
                 }}
               >
                 Manage Classes at {studio.studioName}
@@ -62,7 +62,7 @@ function DancerCard({ dancer }) {
           </div>
         ))}
       </ClassesContainer>
-      <DancerCardFooter>
+      {/* <DancerCardFooter>
         <button
           className='btn-action-primary'
           onClick={() => setShowStudioSearch(!showStudioSearch)}
@@ -70,7 +70,7 @@ function DancerCard({ dancer }) {
           Search for a Studio
         </button>
         {showStudioSearch && <SearchForStudio dancerId={dancer.id} />}
-      </DancerCardFooter>
+      </DancerCardFooter> */}
     </Card>
   )
 }

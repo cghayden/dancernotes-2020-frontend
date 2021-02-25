@@ -155,27 +155,27 @@ const ParentMobileControls = ({ toggleFilter }) => {
       <FilterHeaderStyles>
         <h2>Display:</h2>
         <div>
-          <button
+          {/* <button
             className='btn-icon'
             title='Unlock Filter'
             onClick={() => console.log('toggle filter lock')}
           >
             <LockedSvg w={'16'} h={'16'} />
-          </button>
+          </button> */}
           <button
             className='btn-icon'
             title='Clear all filters'
             onClick={() => toggleId('clear')}
             title='Clear Filter'
           >
-            <TrashIcon w={'16'} h={'16'} />
+            <TrashIcon w={'18'} h={'18'} />
           </button>
           <button
             className='btn-icon'
             onClick={() => toggleFilter(false)}
             title='Close Filter Menu'
           >
-            <XSvg w={'16'} h={'16'} />
+            <XSvg w={'18'} h={'18'} />
           </button>
         </div>
       </FilterHeaderStyles>

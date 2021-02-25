@@ -48,10 +48,9 @@ const DancerTogglersContainer = styled.div`
 function DancerRoutineTogglers({ dancer, hiddenIds, toggleId }) {
   const { isToggled, toggle } = useToggle(false)
 
-  dancer.allRoutines = [...dancer.danceClasses, ...dancer.customRoutines]
-  const independentRoutines = dancer.allRoutines.filter(
-    (routine) => !routine.studio
-  )
+  const allRoutines = [...dancer.danceClasses, ...dancer.customRoutines]
+  // dancer.allRoutines = [...dancer.danceClasses, ...dancer.customRoutines]
+  const independentRoutines = allRoutines.filter((routine) => !routine.studio)
 
   return (
     <DancerTogglersContainer isOpen={isToggled}>
@@ -85,7 +84,7 @@ function DancerRoutineTogglers({ dancer, hiddenIds, toggleId }) {
             exit={{ opacity: 0, height: 0, transition: { duration: 0.1 } }}
           >
             <DancerControlsStyle key={dancer.id}>
-              {!dancer.allRoutines.length && (
+              {!allRoutines.length && (
                 <>
                   <Link href='/parent/studios'>
                     <a className='btn-action-primary-textOnly'>Find a Class</a>
@@ -100,7 +99,7 @@ function DancerRoutineTogglers({ dancer, hiddenIds, toggleId }) {
               {dancer.studios &&
                 dancer.studios.map((studio) => (
                   <StudioRoutinesCheckboxes
-                    allRoutines={dancer.allRoutines}
+                    allRoutines={allRoutines}
                     studioName={studio.studioName}
                     studioId={studio.id}
                     key={studio.id}
