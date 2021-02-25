@@ -40,7 +40,6 @@
     "react-apollo": "^3.1.1",
     "react-datepicker": "^2.12.1",
     "react-dom": "^16.9.0",
-    "react-spring": "^8.0.27",
     "resize-observer-polyfill": "^1.5.1",
     "styled-components": "^4.3.2"
   },
