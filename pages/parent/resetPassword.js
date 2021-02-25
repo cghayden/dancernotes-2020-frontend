@@ -1,19 +1,19 @@
-import ResetParentPassword from "../../components/ResetParentPassword";
-import { useRouter } from "next/router";
+import ResetParentPassword from '../../components/ResetParentPassword'
+import { useRouter } from 'next/router'
 import {
   StyledLandingPage,
-  StyledLandingContent
-} from "../../components/LandingPage";
-import { LandingNavStyle, AboutButton } from "../../components/LandingNav";
+  StyledLandingContent,
+} from '../../components/NewLandingPage'
+import { LandingNavStyle, AboutButton } from '../../components/LandingNav'
 
 const resetPassword = () => {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <StyledLandingPage>
       <header>
         <LandingNavStyle>
-          <AboutButton className="brand" onClick={() => router.push("/")}>
+          <AboutButton className='brand' onClick={() => router.push('/')}>
             dancernotes
           </AboutButton>
         </LandingNavStyle>
@@ -23,7 +23,7 @@ const resetPassword = () => {
         <ResetParentPassword resetToken={router.query.resetToken} />
       </StyledLandingContent>
     </StyledLandingPage>
-  );
-};
+  )
+}
 
-export default resetPassword;
+export default resetPassword
