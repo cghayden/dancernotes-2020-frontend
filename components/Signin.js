@@ -6,7 +6,11 @@ import Error from './Error'
 import styled from 'styled-components'
 import useForm from '../utilities/useForm'
 
-const ResetButton = styled.button``
+const SigninButtonsStyle = styled.div`
+  display: grid;
+  place-items: center;
+  grid-gap: 20px;
+`
 
 const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($email: String!, $password: String!) {
@@ -21,7 +25,7 @@ const initialInputState = {
   email: '',
   password: '',
 }
-function Signin({ setActive }) {
+function Signin({ setView }) {
   const { inputs, handleChange, resetForm } = useForm(initialInputState)
   const [signin, { loading, error }] = useMutation(SIGNIN_MUTATION, {
     variables: { ...inputs },
@@ -70,14 +74,18 @@ function Signin({ setActive }) {
             onChange={handleChange}
           />
         </div>
-        <button type='submit'>Sign In!</button>
-        <ResetButton
-          type='button'
-          className='btn-small'
-          onClick={() => setActive('requestResetPassword')}
-        >
-          Reset my Password
-        </ResetButton>
+        <SigninButtonsStyle>
+          <button type='submit' className='btn-action-primary'>
+            Sign In!
+          </button>
+          <button
+            type='button'
+            className='btn-small btn-danger-textOnly'
+            onClick={() => setView('requestPassword')}
+          >
+            Reset my Password
+          </button>
+        </SigninButtonsStyle>
       </fieldset>
     </LandingPageForm>
   )

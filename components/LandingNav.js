@@ -1,6 +1,4 @@
-import React from "react";
-import styled from "styled-components";
-import Link from "next/link";
+import styled from 'styled-components'
 
 const LandingNavStyle = styled.nav`
   padding-top: 1rem;
@@ -8,8 +6,9 @@ const LandingNavStyle = styled.nav`
   grid-template-columns: min-content 1fr max-content;
 
   .brand {
+    color: ${(props) => props.theme.indigo8};
     font-size: 24px;
-    font-family: "Dancing Script", cursive;
+    font-family: 'Dancing Script', cursive;
     padding-left: 1rem;
   }
   .login {
@@ -21,75 +20,88 @@ const LandingNavStyle = styled.nav`
       margin: 0;
     }
   }
-  @media (min-width: ${props => props.theme.largeScreen}) {
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
     grid-template-columns: 1fr 3fr 1fr;
     .brand {
       font-size: 1.75rem;
     }
   }
-`;
+`
 
 const AboutNav = styled.div`
   display: flex;
   justify-content: space-evenly;
   grid-column: 1/-1;
 
-  @media (min-width: ${props => props.theme.largeScreen}) {
-    /* display: flex; */
+  @media (min-width: ${(props) => props.theme.largeScreen}) {
     grid-row: 1;
     grid-column: 2;
   }
-`;
+`
 
-const AboutButton = styled.button`
+const BrandButton = styled.button`
   padding-left: 0;
   padding-right: 0;
   :hover {
     background-color: transparent;
     color: unset;
   }
-`;
+`
 
-const LandingNav = ({ setActive }) => {
+const LandingNav = ({ setView }) => {
   return (
     <header>
       <LandingNavStyle>
-        <AboutButton className="brand" onClick={() => setActive("aboutParent")}>
+        <BrandButton
+          type='button'
+          className='brand'
+          onClick={() => setView('aboutParent')}
+        >
           dancernotes
-        </AboutButton>
-        <div className="login">
-          <button onClick={() => setActive("signin")}>Sign In</button>
-          <button onClick={() => setActive("signup")}>Sign Up</button>
+        </BrandButton>
+        <div className='login'>
+          <button
+            className='btn-action-primary-textOnly'
+            onClick={() => setView('signin')}
+          >
+            Sign In
+          </button>
+          <button
+            className='btn-action-primary-textOnly'
+            onClick={() => setView('signup')}
+          >
+            Sign Up
+          </button>
         </div>
         <AboutNav>
-          <AboutButton
+          <BrandButton
             onClick={() => {
-              setActive("aboutParent");
+              setView('aboutParent')
             }}
           >
             <p>Parents</p>
-          </AboutButton>
+          </BrandButton>
 
-          <AboutButton
+          <BrandButton
             onClick={() => {
-              setActive("aboutStudio");
+              setView('aboutStudio')
             }}
           >
             Studios
-          </AboutButton>
+          </BrandButton>
 
-          <AboutButton
+          <BrandButton
             onClick={() => {
-              setActive("aboutRetail");
+              setView('aboutRetail')
             }}
           >
             Retailers
-          </AboutButton>
+          </BrandButton>
         </AboutNav>
       </LandingNavStyle>
     </header>
-  );
-};
+  )
+}
 
-export default LandingNav;
-export { LandingNavStyle, AboutButton };
+export default LandingNav
+export { LandingNavStyle, BrandButton as AboutButton }

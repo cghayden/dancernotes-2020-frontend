@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { SliderLabel, SliderInput, Slider } from '../styles/SmallSliderToggler'
 import { useDisplayControls } from './ParentDisplayProvider'
 import DancerRoutineTogglers from './DancerRoutineTogglers'
-import LockedSvg from '../Icons/LockedSvg'
+// import LockedSvg from '../Icons/LockedSvg'
 import XSvg from '../Icons/XSvg'
 import TrashIcon from '../Icons/TrashIcon'
 
@@ -77,15 +77,8 @@ const StudioTogglersContainer = styled.div`
   padding: 5px;
 `
 const GroupOfCheckboxes = styled.div`
-  /* padding-bottom: 1.2rem; */
-  /* padding-top: 1rem; */
   display: flex;
   justify-content: space-around;
-  /* div {
-    display: flex;
-    align-content: center;
-    margin-bottom: 0.5rem;
-  } */
   flex-direction: column;
   @media (min-width: ${(props) => props.theme.largeScreen}) {
   }
@@ -97,34 +90,6 @@ const StudioTogglerLabel = styled.label`
   font-weight: 600;
   color: ${(props) =>
     props.disabled ? props.theme.disabledText : props.theme.lighterBlack};
-`
-const DancerTogglerLabel = styled.label`
-  padding-left: 0.5rem;
-  font-weight: 600;
-  color: ${(props) => (props.disabled ? props.theme.disabledText : 'inherit')};
-`
-
-const DancerTogglerAndCheckboxes = styled.div`
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  margin-bottom: 100px;
-  ul {
-    display: flex;
-    flex-direction: column;
-    font-size: 0.825rem;
-    li {
-      padding: 0.25rem 0;
-    }
-  }
-
-  @media (min-width: ${(props) => props.theme.largeScreen}) {
-    margin-bottom: 0;
-    ul {
-      font-size: 1rem;
-      align-items: start;
-    }
-  }
 `
 const AllTogglersContainer = styled.div`
   width: 100%;
@@ -215,21 +180,25 @@ const ParentMobileControls = ({ toggleFilter }) => {
                 </CheckboxAndLabelContainer>
               ))}
               {independents.length > 0 && (
-                <div>
-                  <input
-                    checked={!hiddenIds.includes('all')}
-                    onChange={() => {
-                      toggleId('all')
-                    }}
-                    type='checkbox'
-                    id={'allIndependent'}
-                    name={'allIndependent'}
-                    value={'allIndependent'}
-                  />
-                  <StudioTogglerLabel htmlFor={'allIndependent'}>
+                <CheckboxAndLabelContainer>
+                  <SliderLabel
+                    id={`independents-label`}
+                    htmlFor={`independents-toggler`}
+                  >
+                    <SliderInput
+                      aria-labelledby={`independents-label`}
+                      name={`independents-toggler`}
+                      id={`independents-toggler`}
+                      type='checkbox'
+                      checked={!hiddenIds.includes('all')}
+                      onChange={() => toggleId('all')}
+                    />
+                    <Slider checked={!hiddenIds.includes('all')}></Slider>
+                  </SliderLabel>
+                  <StudioTogglerLabel disabled={hiddenIds.includes('all')}>
                     Independents
                   </StudioTogglerLabel>
-                </div>
+                </CheckboxAndLabelContainer>
               )}
             </GroupOfCheckboxes>
           </StudioTogglersContainer>

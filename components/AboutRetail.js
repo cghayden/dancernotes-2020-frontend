@@ -1,12 +1,16 @@
 const AboutRetail = ({ setActive }) => {
   return (
-    <div>
-      <h1>Dancernotes for Retail</h1>
-      <div className='aboutBody'>
-        Link up with local studios and enjoy real time information on their
-        apparel requirements and enrollment numbers
+    <>
+      <h1>Dancernotes for Retailers</h1>
+      <div>
+        <p>
+          Link up with local studios and enjoy real time information on apparel
+          requirements and enrollment numbers
+        </p>
       </div>
-      <div>Offer discounts and sales directly to parents</div>
+      <div>
+        <p>Offer discounts and sales directly to parents</p>
+      </div>
       <div>
         <button
           className='btn-action-secondary'
@@ -15,7 +19,7 @@ const AboutRetail = ({ setActive }) => {
           Coming Soon!
         </button>
       </div>
-    </div>
+    </>
   )
 }
 

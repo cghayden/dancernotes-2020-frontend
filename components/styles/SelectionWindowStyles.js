@@ -16,6 +16,7 @@ const SelectionWindowStyles = styled.div`
   }
 `
 const SelectionWindowHeaderStyles = styled.div`
+  background: ${(props) => props.theme.gray1};
   height: ${(props) => props.theme.breadcrumbHeaderHeight};
   display: flex;
   justify-content: space-between;

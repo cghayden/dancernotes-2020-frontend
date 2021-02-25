@@ -1,34 +1,31 @@
-import React from 'react'
-import styled from 'styled-components'
+import { AboutUl } from './styles/AboutStyles'
 
 const AboutParent = ({ setActive }) => {
-  return <AboutParentContent setActive={setActive} />
-}
-
-const AboutParentContent = ({ setActive }) => {
   return (
-    <div>
+    <>
       <h1>Dancernotes for Parents</h1>
-      <div className='aboutBody'>
-        <ul>
+      <div>
+        <AboutUl>
           <li>
-            <p>
-              All of your dancers' information, from all of their studios, in
-              one place
-            </p>
+            All of your dancers' information, from all of their studios, in one
+            place
           </li>
-        </ul>
+          <li>
+            Find studios, retailers,opportunities for your dancers, and more!
+          </li>
+        </AboutUl>
       </div>
 
       <div>
         <button
-          className='btn-action-secondary'
+          type='button'
+          className='btn-action-primary'
           onClick={() => setActive('signupParent')}
         >
-          Try dancernotes
+          Try Dancer Notes for Free
         </button>
       </div>
-    </div>
+    </>
   )
 }
 

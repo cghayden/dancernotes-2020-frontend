@@ -1,9 +1,8 @@
-import React, { useState } from "react"
-import ClientOnlyPortal from "./ClientOnlyPortal"
-import { useTransition, animated } from "react-spring"
-import styled from "styled-components"
+import ClientOnlyPortal from './ClientOnlyPortal'
+import { AnimatePresence, motion } from 'framer-motion'
+import styled from 'styled-components'
 
-const AnimatedModalContainer = styled(animated.div)`
+const AnimatedModalContainer = styled.div`
   background-color: ${(props) => props.theme.gray0};
   position: absolute;
   top: 10%;
@@ -20,7 +19,7 @@ const AnimatedModalContainer = styled(animated.div)`
   }
 `
 
-const ModalBackdrop = styled(animated.div)`
+const ModalBackdrop = styled(motion.div)`
   position: fixed;
   background-color: rgba(0, 0, 0, 0.7);
   top: 9rem;
@@ -35,24 +34,19 @@ const ModalBackdrop = styled(animated.div)`
 `
 
 export default function Modal({ children, open }) {
-  const transition = useTransition(open, null, {
-    from: { opacity: 0, transform: "translate3d(-1000px, 0, 0)" },
-    enter: { opacity: 1, transform: "translate3d(0, 0, 0)" },
-    leave: { opacity: 0, transform: "translate3d(-1000px, 0, 0)" },
-  })
-
   return (
     <div>
       {open && (
-        <ClientOnlyPortal selector="#modal">
-          {transition.map(
-            ({ item, key, props: animation }) =>
-              item && (
-                <ModalBackdrop key={key} style={animation}>
-                  <AnimatedModalContainer>{children}</AnimatedModalContainer>
-                </ModalBackdrop>
-              )
-          )}
+        <ClientOnlyPortal selector='#modal'>
+          <AnimatePresence>
+            <ModalBackdrop
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <AnimatedModalContainer>{children}</AnimatedModalContainer>
+            </ModalBackdrop>
+          </AnimatePresence>
         </ClientOnlyPortal>
       )}
     </div>

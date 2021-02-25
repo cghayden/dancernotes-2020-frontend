@@ -7,7 +7,7 @@ const MobileNavContainer = styled.div`
   padding: 0.5rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  width: 97vw;
+  width: 92vw;
   max-width: 400px;
   position: fixed;
   top: ${(props) => props.theme.mobileHeaderHeight};
@@ -15,6 +15,14 @@ const MobileNavContainer = styled.div`
   height: auto;
   overflow: hidden;
   z-index: 101;
+
+  transition: all 0.5s;
+  transform: translate3d(
+    ${(props) => (props.showMobileNav ? 0 : '110%')},
+    0,
+    0
+  );
+
   @media screen and (min-width: ${(props) => props.theme.largeScreen}) {
     display: none;
   }

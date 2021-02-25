@@ -188,7 +188,7 @@ function UpdateCustomRoutine({ dance, parent }) {
               >
                 Try Again
               </button>
-              <Link href={`/parent/notes/routines`}>
+              <Link href={`/parent/routines`}>
                 <a className='btn-action-secondary'>Never Mind!</a>
               </Link>
             </>
@@ -213,7 +213,7 @@ function UpdateCustomRoutine({ dance, parent }) {
               </p>
             </>
           )}
-          <Link href='/parent/notes/routines'>
+          <Link href='/parent/routines'>
             <a className='btn-action-primary'>Return to Routines</a>
           </Link>
         </div>
