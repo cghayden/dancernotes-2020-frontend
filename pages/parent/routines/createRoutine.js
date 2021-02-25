@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import CreateCustomRoutineForm from '../../../components/Parent/CreateCustomRoutineForm'
 import { STUDIOS_AND_DANCERS } from '../../../components/Parent/Queries'
 import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'

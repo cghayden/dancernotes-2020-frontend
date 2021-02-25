@@ -1,6 +1,6 @@
 import Error from '../../components/Error'
 import Loading from '../../components/Loading'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import MyStudioCard from '../../components/Studio/MyStudioCard'
 import NewStudioLayout from '../../components/Studio/NewStudioLayout'
 

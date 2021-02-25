@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
 import { SINGLE_DANCE_QUERY } from '../../../components/Studio/Queries'
 import StudioDanceCard from '../../../components/Studio/StudioDanceCard'

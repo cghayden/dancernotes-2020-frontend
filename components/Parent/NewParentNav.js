@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import StyledLink from '../StyledLink'
 import {
   NewNavSidebarContainer,

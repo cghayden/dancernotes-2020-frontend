@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
 import Card from '../styles/Card'
 import DancernotesInfo from '../DancernotesInfo'
 import UpdateProfileForm from './UpdateProfileForm'

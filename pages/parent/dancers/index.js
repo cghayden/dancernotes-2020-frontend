@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
 import DancerListing from '../../../components/Parent/DancerListing'
 import { PARENTS_DANCERS } from '../../../components/Parent/Queries'

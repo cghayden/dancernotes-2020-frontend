@@ -1,7 +1,4 @@
 import styled from 'styled-components'
-import React from 'react'
-
-import PropTypes from 'prop-types'
 
 const ErrorStyles = styled.div`
   color: inherit;
@@ -41,15 +38,13 @@ const Error = ({ error }) => {
           <strong>Shoot!</strong>
           An account using this email already exists
         </p>
-        <p>
-          Visit the Sign in link above to sign in or reset your password,
-        </p>{' '}
+        <p>Visit the Sign in link above to sign in or reset your password,</p>
         <p>
           Or email{' '}
-          <a href='mailto:admin@coreyhayden.tech for assistance'>
+          <a href='mailto:cghayden@gmail.com for assistance'>
             admin@coreyhayden.tech
           </a>{' '}
-          for assistance
+          for assistance.
         </p>
       </ErrorStyles>
     )
@@ -63,14 +58,6 @@ const Error = ({ error }) => {
       </p>
     </ErrorStyles>
   )
-}
-
-Error.defaultProps = {
-  error: {},
-}
-
-Error.propTypes = {
-  error: PropTypes.object,
 }
 
 export default Error

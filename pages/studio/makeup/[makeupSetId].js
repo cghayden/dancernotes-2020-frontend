@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
 import MakeupSetCard from '../../../components/Studio/MakeupSetCard'
 import { STUDIO_MAKEUPSET_QUERY } from '../../../components/Studio/Queries'

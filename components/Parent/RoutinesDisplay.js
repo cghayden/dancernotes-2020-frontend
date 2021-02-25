@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 
 import { ALL_Rs } from './Queries'
 import DanceCard from './DanceCard'

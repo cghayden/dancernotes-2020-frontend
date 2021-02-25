@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import { PARENTS_MAKEUP_QUERY } from '../../../components/Parent/Queries'
 import NewParentLayout from '../../../components/Parent/NewParentLayout'
 import MakeupContent from '../../../components/Parent/MakeupContent'

@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
 import EventsList from '../../../components/Studio/EventsList'
 import { STUDIO_EVENTS_QUERY } from '../../../components/Studio/Queries'

@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import Cookies from 'js-cookie'
 import styled from 'styled-components'
 

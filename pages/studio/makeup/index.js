@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
 import MakeupSetsList from '../../../components/Studio/MakeupSetsList'
 import { STUDIO_MAKEUP_QUERY } from '../../../components/Studio/Queries'

@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import Link from 'next/link'
 import { ALL_DANCE_CLASSES_QUERY } from './Queries'

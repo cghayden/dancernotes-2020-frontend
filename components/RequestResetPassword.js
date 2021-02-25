@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import { LandingPageForm } from './styles/Form'
 import Error from './Error'

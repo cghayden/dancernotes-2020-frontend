@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import { DANCER_QUERY } from './Queries'
 import { BROWSE_STUDIO_CLASSES_QUERY } from '../../pages/parent/browseStudio'

@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import { HAIRSTYLES_QUERY } from '../../../components/Parent/Queries'
 import NewParentLayout from '../../../components/Parent/NewParentLayout'
 import HairStylesCards from '../../../components/Parent/HairStylesCards'

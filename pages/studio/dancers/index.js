@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
 import Dancers from '../../../components/Studio/Dancers'
 import { STUDIO_ALL_DANCERS_QUERY } from '../../../components/Studio/Queries'

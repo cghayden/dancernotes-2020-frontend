@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
 import EventCard from '../../../components/Studio/EventCard'
 import { STUDIO_EVENT_QUERY } from '../../../components/Studio/Queries'
