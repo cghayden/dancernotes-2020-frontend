@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import Link from 'next/link'
 import { PARENT_USER_QUERY } from '../../components/Parent/Queries'
 import NewParentLayout from '../../components/Parent/NewParentLayout'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import Router from 'next/router'
 import Form from '../styles/Form'

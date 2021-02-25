@@ -1,6 +1,6 @@
-// import { useQuery } from '@apollo/react-hooks'
+// import { useQuery } from '@apollo/client'
 import NoFilterLayout from '../../components/Studio/NoFilterLayout'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 
 import Requests from '../../components/Studio/Requests'
 import { STUDIO_REQUESTS_QUERY } from '../../components/Studio/Queries'

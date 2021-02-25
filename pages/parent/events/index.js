@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import {
   PARENT_EVENTS_QUERY,
   CUSTOM_EVENTS_QUERY,

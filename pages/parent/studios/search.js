@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import { STUDIOS_AND_DANCERS } from '../../../components/Parent/Queries'
 import Card from '../../../components/styles/Card'
 import SearchForStudio from '../../../components/Parent/SearchForStudio'

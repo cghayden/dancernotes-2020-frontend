@@ -2,7 +2,7 @@ import { ApolloProvider } from 'react-apollo'
 import withData from '../utilities/withData'
 
 // import App from 'next/app'
-// import { ApolloProvider } from "@apollo/react-hooks";
+// import { ApolloProvider } from "@apollo/client";
 // import withApollo from '../utilities/withApollo'
 
 import '../public/normalize.css'

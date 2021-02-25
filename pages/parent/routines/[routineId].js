@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import NewParentLayout from '../../../components/Parent/NewParentLayout'
 import { SINGLE_ROUTINE_QUERY } from '../../../components/Parent/Queries'
 import ParentDanceCard from '../../../components/Parent/ParentDanceCard'

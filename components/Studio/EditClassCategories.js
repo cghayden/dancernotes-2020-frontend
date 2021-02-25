@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import { useQuery } from "@apollo/react-hooks";
-import { CATEGORIES_QUERY } from "./Queries";
-import ClassCategoryList from "./ClassCategoryList";
+import React from 'react'
+import styled from 'styled-components'
+import { useQuery } from '@apollo/client'
+import { CATEGORIES_QUERY } from './Queries'
+import ClassCategoryList from './ClassCategoryList'
 
 const CategoryCards = styled.div`
   width: 90%;
@@ -20,17 +20,17 @@ const CategoryCards = styled.div`
     /* font-size: 1.5rem; */
     margin: 0;
   }
-`;
+`
 
 const EditClassCategories = () => {
-  const { data, loading, error } = useQuery(CATEGORIES_QUERY);
-  const studioCategories = data ? data.studioCategories : {};
-  const categories = ["styles", "competitiveLevels", "ageDivisions"];
-  if (loading) return <h1>5, 6, 7, 8...</h1>;
-  if (error) return <Error error={error} />;
+  const { data, loading, error } = useQuery(CATEGORIES_QUERY)
+  const studioCategories = data ? data.studioCategories : {}
+  const categories = ['styles', 'competitiveLevels', 'ageDivisions']
+  if (loading) return <h1>5, 6, 7, 8...</h1>
+  if (error) return <Error error={error} />
   return (
     <CategoryCards>
-      {categories.map(cat => (
+      {categories.map((cat) => (
         <ClassCategoryList
           key={cat}
           category={cat}
@@ -38,7 +38,7 @@ const EditClassCategories = () => {
         />
       ))}
     </CategoryCards>
-  );
-};
+  )
+}
 
-export default EditClassCategories;
+export default EditClassCategories

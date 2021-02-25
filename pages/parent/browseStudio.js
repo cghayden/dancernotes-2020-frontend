@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { useRouter } from 'next/router'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 
 import BrowseStudioClasses from '../../components/Parent/BrowseStudioClasses'

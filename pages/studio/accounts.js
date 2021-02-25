@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import NewStudioLayout from '../../components/Studio/NewStudioLayout'
 import { STUDIO_LINKED_PARENTS } from '../../components/Studio/Queries'
 import StudioAccounts from '../../components/Studio/StudioAccounts'

@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import { STUDIOS_AND_DANCERS } from '../../../components/Parent/Queries'
 import CreateCustomEventForm from '../../../components/Parent/CreateCustomEventForm'
 import Error from '../../../components/Error'

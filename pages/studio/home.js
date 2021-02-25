@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import NewStudioLayout from '../../components/Studio/NewStudioLayout'
 import Link from 'next/link'
 import styled from 'styled-components'

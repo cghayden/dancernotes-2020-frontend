@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import StyledLink from '../StyledLink'
 import { STUDIO_REQUESTS_QUERY } from './Queries'
 import RequestsCount from './RequestsCount'

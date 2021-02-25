@@ -1,5 +1,5 @@
 import { useState, Fragment } from 'react'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import Link from 'next/link'
 import Router from 'next/router'

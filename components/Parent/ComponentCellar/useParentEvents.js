@@ -1,5 +1,5 @@
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import gql from 'graphql-tag'
+import { useQuery } from '@apollo/client'
 
 const PARENT_EVENTS_QUERY = gql`
   query {
@@ -24,18 +24,18 @@ const PARENT_EVENTS_QUERY = gql`
       dancerIds
     }
   }
-`;
+`
 
 function useParentEvents() {
-  const { data, error, loading } = useQuery(PARENT_EVENTS_QUERY);
-  if (loading) return;
-  if (error) return { status: "error", error };
+  const { data, error, loading } = useQuery(PARENT_EVENTS_QUERY)
+  if (loading) return
+  if (error) return { status: 'error', error }
   if (data) {
-    console.log("data:", data);
-    return data.customEvents;
+    console.log('data:', data)
+    return data.customEvents
     // return data.customEvents;}
   }
-  return null;
+  return null
 }
 
-export { useParentEvents };
+export { useParentEvents }
