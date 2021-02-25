@@ -4,7 +4,7 @@ import { LandingPageForm } from './styles/Form'
 import Error from './Error'
 import styled from 'styled-components'
 import useForm from '../utilities/useForm'
-import { useMutation } from 'react-apollo'
+import { useMutation } from '@apollo/client'
 
 const SIGNUP_STUDIO_MUTATION = gql`
   mutation SIGNUP_STUDIO_MUTATION(
