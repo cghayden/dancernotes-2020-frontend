@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const SelectionWindowStyles = styled.div`
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: relative;
   flex-grow: 1;
   h1,

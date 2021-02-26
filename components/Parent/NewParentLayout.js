@@ -22,8 +22,9 @@ export default function NewParentLayout({
   const [showFilter, toggleFilter] = useState(false)
 
   return (
-    <LayoutStyles>
+    <>
       <NewParentHeader />
+      {/* <LayoutStyles> */}
       <BodyLayoutStyles>
         <div className='hide-ltLarge'>
           <NewParentNav />
@@ -52,6 +53,7 @@ export default function NewParentLayout({
           <SelectionWindowMainStyles>{children}</SelectionWindowMainStyles>
         </SelectionWindowStyles>
       </BodyLayoutStyles>
-    </LayoutStyles>
+      {/* </LayoutStyles> */}
+    </>
   )
 }

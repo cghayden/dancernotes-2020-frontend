@@ -24,7 +24,7 @@ export default function NewBrowseStudioLayout({
   const [classFilter, setFilter] = useState({})
 
   return (
-    <LayoutStyles>
+    <>
       <NewParentHeader />
       <BodyLayoutStyles>
         <div className='hide-ltLarge'>
@@ -56,6 +56,6 @@ export default function NewBrowseStudioLayout({
           <SelectionWindowMainStyles>{children}</SelectionWindowMainStyles>
         </SelectionWindowStyles>
       </BodyLayoutStyles>
-    </LayoutStyles>
+    </>
   )
 }

@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
 const HeaderStyles = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   background: ${(props) => props.theme.gray5};
   display: flex;
   align-items: center;
@@ -8,6 +12,7 @@ const HeaderStyles = styled.header`
   height: ${(props) => props.theme.mobileHeaderHeight};
   padding: 0 20px;
   color: white;
+  z-index: 50000;
   button {
     padding: 0;
     margin-left: auto;

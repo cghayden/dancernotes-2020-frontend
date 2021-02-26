@@ -15,7 +15,7 @@ export default function ParentNoFilterLayout({
   selection = false,
 }) {
   return (
-    <LayoutStyles>
+    <>
       <NewParentHeader />
       <BodyLayoutStyles>
         <div className='hide-ltLarge'>
@@ -28,6 +28,6 @@ export default function ParentNoFilterLayout({
           <SelectionWindowMainStyles>{children}</SelectionWindowMainStyles>
         </SelectionWindowStyles>
       </BodyLayoutStyles>
-    </LayoutStyles>
+    </>
   )
 }
