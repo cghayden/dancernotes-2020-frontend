@@ -21,6 +21,7 @@ const ClassListCard = styled(Card)`
   max-width: 900px;
   box-shadow: none;
   margin-top: -2px;
+  border: 2px solid ${(props) => props.theme.indigo7};
 `
 const DancerTabs = styled(Card)`
   display: flex;
@@ -40,12 +41,25 @@ const Tab = styled.div`
     props.active ? props.theme.highlightedText : props.theme.blackText};
   background-color: ${(props) =>
     props.active ? props.theme.gray0 : props.theme.gray1};
+  /* zIndex so it will drop down over studio offerings  to create a tab-effect */
+  z-index: 99;
+
   button {
     background: inherit;
     margin: 0;
     overflow: hidden;
     white-space: nowrap;
     width: 100%;
+    //tab effect: border radius and colored edges when active
+    border-radius: 5px 5px 0 0;
+    border-top: 2px solid
+      ${(props) => (props.active ? props.theme.indigo7 : 'none')};
+    border-right: 2px solid
+      ${(props) => (props.active ? props.theme.indigo7 : 'none')};
+    border-left: 2px solid
+      ${(props) => (props.active ? props.theme.indigo7 : 'none')};
+    border-bottom: 2px solid
+      ${(props) => (props.active ? 'none' : props.theme.indigo7)};
     :hover {
       color: ${(props) => props.theme.indigo9};
     }
@@ -137,7 +151,10 @@ function BrowseStudioClasses({ studio }) {
               key={dancer.firstName}
               active={dancer.id === activeDancerId ? true : false}
             >
-              <button onClick={() => setBrowsingDancer(dancer.id)}>
+              <button
+                active={dancer.id === activeDancerId ? true : false}
+                onClick={() => setBrowsingDancer(dancer.id)}
+              >
                 {dancer.firstName}
               </button>
             </Tab>
