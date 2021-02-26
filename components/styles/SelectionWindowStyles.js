@@ -22,6 +22,9 @@ const SelectionWindowHeaderStyles = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
+  position: sticky;
+  z-index: 100;
+  top: 0;
   button {
     margin: 0;
     padding: 0;
