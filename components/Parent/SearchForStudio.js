@@ -15,16 +15,6 @@ const SEARCH_STUDIOS_QUERY = gql`
   }
 `
 
-class SearchForStudio extends React.Component {
-  state = {
-    studios: [],
-    loading: false,
-  }
-
-  textInput = React.createRef()
-  componentDidMount() {
-    this.textInput.current.focus()
-  }
 
   onChange = debounce(async (e, client) => {
     // turn loading on

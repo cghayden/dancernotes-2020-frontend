@@ -4,7 +4,7 @@ import NewParentLayout from '../../../components/Parent/NewParentLayout'
 import StudioCard from '../../../components/Parent/StudioCard'
 import Card from '../../../components/styles/Card'
 import { useToggle } from '../../../utilities/useToggle'
-import SearchForStudio from '../../../components/Parent/SearchForStudio'
+import NewSearchForStudio from '../../../components/Parent/NewSearchForStudio'
 import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
 import Link from 'next/link'
 import NoDancersSearchStudio from '../../../components/Parent/NoDancersSearchStudio'
@@ -59,7 +59,7 @@ export default function studiosIndex() {
             Search for a studio to browse and/or register for classes.
           </button>
           {isToggled && (
-            <SearchForStudio dancerId={dancers ? dancers[0].id : 'null'} />
+            <NewSearchForStudio dancerId={dancers ? dancers[0].id : 'null'} />
           )}
         </Card>
       </NewParentLayout>
