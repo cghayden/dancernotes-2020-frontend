@@ -3,7 +3,8 @@ import styled from 'styled-components'
 const LandingNavStyle = styled.nav`
   padding-top: 1rem;
   display: grid;
-  grid-template-columns: min-content 1fr max-content;
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: 50px 50px;
 
   .brand {
     color: ${(props) => props.theme.indigo8};
@@ -11,15 +12,7 @@ const LandingNavStyle = styled.nav`
     font-family: 'Dancing Script', cursive;
     padding-left: 1rem;
   }
-  .login {
-    justify-self: right;
-    padding-right: 1rem;
-    display: flex;
-    justify-items: space-around;
-    button {
-      margin: 0;
-    }
-  }
+
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     grid-template-columns: 1fr 3fr 1fr;
     .brand {
@@ -42,9 +35,29 @@ const AboutNav = styled.div`
 const BrandButton = styled.button`
   padding-left: 0;
   padding-right: 0;
-  :hover {
-    background-color: transparent;
-    color: unset;
+`
+const AboutButtonsDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  a,
+  button {
+    padding: 10px 5px;
+    font-size: 13px;
+    min-width: auto;
+    @media (min-width: ${(props) => props.theme.largeScreen}) {
+      padding: 10px 10px;
+      font-size: 16px;
+      min-width: 100;
+    }
+  }
+`
+const LoginButtonsDiv = styled.div`
+  display: flex;
+  grid-column: 1/-1;
+  place-content: center;
+  button {
+    margin: 0;
   }
 `
 
@@ -59,7 +72,32 @@ const LandingNav = ({ setView }) => {
         >
           dancernotes
         </BrandButton>
-        <div className='login'>
+        <AboutButtonsDiv>
+          <button
+            onClick={() => {
+              setView('aboutParent')
+            }}
+          >
+            <p>Parents</p>
+          </button>
+
+          <button
+            onClick={() => {
+              setView('aboutStudio')
+            }}
+          >
+            Studios
+          </button>
+
+          <button
+            onClick={() => {
+              setView('aboutRetail')
+            }}
+          >
+            Retailers
+          </button>
+        </AboutButtonsDiv>
+        <LoginButtonsDiv>
           <button
             className='btn-action-primary-textOnly'
             onClick={() => setView('signin')}
@@ -72,32 +110,8 @@ const LandingNav = ({ setView }) => {
           >
             Sign Up
           </button>
-        </div>
-        <AboutNav>
-          <BrandButton
-            onClick={() => {
-              setView('aboutParent')
-            }}
-          >
-            <p>Parents</p>
-          </BrandButton>
-
-          <BrandButton
-            onClick={() => {
-              setView('aboutStudio')
-            }}
-          >
-            Studios
-          </BrandButton>
-
-          <BrandButton
-            onClick={() => {
-              setView('aboutRetail')
-            }}
-          >
-            Retailers
-          </BrandButton>
-        </AboutNav>
+        </LoginButtonsDiv>
+        <AboutNav></AboutNav>
       </LandingNavStyle>
     </header>
   )

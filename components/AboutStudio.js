@@ -1,4 +1,4 @@
-const AboutStudio = ({ setActive }) => {
+const AboutStudio = ({ setView }) => {
   return (
     <>
       <h1>Dancernotes for Studios</h1>
@@ -13,7 +13,7 @@ const AboutStudio = ({ setActive }) => {
         <button
           type='button'
           className='btn-action-primary'
-          onClick={() => setActive('signupStudio')}
+          onClick={() => setView('signupStudio')}
         >
           Try Dancer Notes for Free
         </button>

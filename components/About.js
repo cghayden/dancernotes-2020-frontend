@@ -6,8 +6,8 @@ import AboutRetail from './AboutRetail'
 function About({ view, setView }) {
   return (
     <>
-      {view === 'aboutParent' && <AboutParent />}
-      {view === 'aboutStudio' && <AboutStudio />}
+      {view === 'aboutParent' && <AboutParent setView={setView} />}
+      {view === 'aboutStudio' && <AboutStudio setView={setView} />}
       {view === 'aboutRetail' && <AboutRetail />}
     </>
   )
