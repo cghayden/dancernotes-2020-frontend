@@ -1,7 +1,9 @@
 import { useQuery } from '@apollo/client'
 import { PARENT_USER_QUERY } from '../../../components/Parent/Queries'
-import NewParentLayout from '../../../components/Parent/NewParentLayout'
+import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
 import MyProfile from '../../../components/Parent/MyProfile'
+import Loading from '../../../components/Loading'
+import Error from '../../../components/Error'
 
 export default function makeupIndex() {
   const { data, loading, error } = useQuery(PARENT_USER_QUERY)
@@ -15,8 +17,8 @@ export default function makeupIndex() {
     )
   }
   return (
-    <NewParentLayout page={'Account'}>
+    <ParentNoFilterLayout page={'Account'}>
       <MyProfile parentUser={data.parentUser} />
-    </NewParentLayout>
+    </ParentNoFilterLayout>
   )
 }

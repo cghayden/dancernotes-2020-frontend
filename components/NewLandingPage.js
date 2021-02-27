@@ -11,6 +11,8 @@ import RequestResetPassword from './RequestResetPassword'
 const StyledLandingPage = styled.div`
   display: grid;
   grid-template-rows: min-content auto;
+  grid-template-rows: 2fr 8fr 1fr 1fr;
+  height: 100vh;
 `
 
 const StyledLandingContent = styled.div`
@@ -18,12 +20,26 @@ const StyledLandingContent = styled.div`
   justify-items: center;
   position: relative;
   grid-gap: 20px;
-  padding-top: 20px;
+  padding-top: 30px;
   margin: 0 auto;
   width: 80%;
   max-width: 600px;
 `
-
+const PageSignInStyle = styled.div`
+  height: 50px;
+  display: grid;
+  place-items: center;
+`
+const FooterStyle = styled.footer`
+  width: 100%;
+  align-items: flex-end;
+  grid-row: 4/-1;
+  a {
+    padding: 0;
+    margin: 0;
+  }
+  place-self: center;
+`
 function LandingPage() {
   const [view, setView] = useState('aboutParent')
 
@@ -41,6 +57,19 @@ function LandingPage() {
         {view === 'signupStudio' && <SignupStudio />}
         {view == 'requestPassword' && <RequestResetPassword />}
       </StyledLandingContent>
+
+      <FooterStyle>
+        <p>
+          <span>
+            <a
+              className='btn-action-primary-textOnly'
+              href='mailto:cghayden@gmail.com'
+            >
+              cghayden@gmail.com
+            </a>
+          </span>
+        </p>
+      </FooterStyle>
     </StyledLandingPage>
   )
 }
