@@ -300,6 +300,7 @@ const PARENTS_MAKEUP_QUERY = gql`
           id
           name
           lipstick
+          eyeNotes
           eyeShadow
           eyeLids
           eyeCrease

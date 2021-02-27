@@ -19,16 +19,17 @@ const DanceCardTitle = styled.div`
   grid-row: 1;
   p:first-child {
     font-weight: 600;
-    font-size: larger;
+    font-size: 17px;
   }
   p:nth-child(2) {
     font-style: italic;
+    font-size: 16px;
     color: ${(props) => props.theme.gray7};
     margin: 0.25em 0;
   }
   p:last-child {
     color: ${(props) => props.theme.gray7};
-    font-size: 0.75em;
+    font-size: 0.85em;
   }
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     font-size: 1rem;

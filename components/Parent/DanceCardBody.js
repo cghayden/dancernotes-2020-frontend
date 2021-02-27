@@ -2,13 +2,18 @@ import { useState } from 'react'
 import NotesDiv from './NotesDiv'
 import CustomRoutineNotes from './CustomRoutineNotes'
 import { NoteItem, Dt, Dd } from '../styles/CardBodyStyles'
+import styled from 'styled-components'
+
+const DanceCardBodyStyles = styled.div`
+  /* background: ${(props) => props.theme.gray2}; */
+`
 
 function DanceCardBody({ dance }) {
   const [addNote, toggleAddNote] = useState(false)
   const [editNotes, toggleEditNotes] = useState(false)
 
   return (
-    <div>
+    <DanceCardBodyStyles>
       <dl>
         <NoteItem>
           <Dt>Shoes:</Dt> <Dd>{dance.shoes}</Dd>
@@ -29,7 +34,7 @@ function DanceCardBody({ dance }) {
           <CustomRoutineNotes dance={dance} />
         )}
       </dl>
-    </div>
+    </DanceCardBodyStyles>
   )
 }
 

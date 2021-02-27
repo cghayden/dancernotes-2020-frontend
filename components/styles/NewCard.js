@@ -4,13 +4,23 @@ const Card = styled.div`
   text-align: center;
   border-radius: ${(props) => props.theme.borderRadius};
   /* color: ${(props) => props.theme.newBlue[90].hsl}; */
-  background-color: aliceblue;
+  background-color: ${(props) => props.theme.gray1};
   box-shadow: ${(props) => props.theme.dropShadow1};
   margin: 0 auto 1rem auto;
-  padding: 1rem 3vmin;
-  width: 94%;
+  padding: 1rem 1vmin;
+  width: 98%;
   min-width: 200px;
   max-width: 600px;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    padding: 5px;
+  }
+  h3 {
+    font-size: 1.1rem;
+  }
   &:first-child {
     margin-top: 1rem;
   }
