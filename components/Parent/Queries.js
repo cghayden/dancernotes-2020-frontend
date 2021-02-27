@@ -205,6 +205,10 @@ const PARENTS_DANCERS = gql`
       id
       firstName
       avatar
+      parent {
+        id
+        email
+      }
       studios {
         id
         studioName

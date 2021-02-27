@@ -154,7 +154,7 @@ const ENROLLMENT_REQUESTS_QUERY = gql`
         id
         firstName
       }
-      classesRequested {
+      classRequested {
         id
         name
       }
