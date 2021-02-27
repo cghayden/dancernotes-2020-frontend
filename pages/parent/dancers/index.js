@@ -9,10 +9,10 @@ import Loading from '../../../components/Loading'
 
 export default function dancersIndex() {
   const { data, error, loading } = useQuery(PARENTS_DANCERS)
-  console.log('loading', loading)
+  console.log('data', data)
   // const dancers = data ? data.parentsDancers : []
 
-  if (loading || error || !data) {
+  if (loading || error) {
     return (
       <ParentNoFilterLayout
         page='Dancers'
@@ -24,7 +24,7 @@ export default function dancersIndex() {
     )
   }
 
-  if (data.dancers && !data.dancers.length) {
+  if (!data.parentsDancers.length) {
     return (
       <ParentNoFilterLayout page='Dancers'>
         <Card>

@@ -58,9 +58,7 @@ export default function studiosIndex() {
           <button className='btn-action-primary' onClick={toggle}>
             Search for a studio to browse and/or register for classes.
           </button>
-          {isToggled && (
-            <NewSearchForStudio dancerId={dancers ? dancers[0].id : 'null'} />
-          )}
+          {isToggled && <NewSearchForStudio />}
         </Card>
       </NewParentLayout>
     )

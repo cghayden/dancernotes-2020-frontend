@@ -21,11 +21,7 @@ export default function searchStudioPage() {
     <ParentNoFilterLayout page={'Search Studios'}>
       <Card>
         <h2>Search for a Studio</h2>
-        <NewSearchForStudio
-          dancerId={
-            data.parentUser.dancers ? data.parentUser.dancers[0].id : 'null'
-          }
-        />
+        <NewSearchForStudio />
       </Card>
     </ParentNoFilterLayout>
   )

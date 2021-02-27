@@ -5,12 +5,6 @@ import debounce from 'lodash.debounce'
 import { useRouter } from 'next/router'
 import { DropDown, DropDownItem, SearchStyles } from '../styles/DropDown'
 
-import { ApolloConsumer } from 'react-apollo'
-import {
-  RegistrationContext,
-  RegistrationContextConsumer,
-} from './RegistrationContext'
-
 const SEARCH_STUDIOS_QUERY = gql`
   query SEARCH_STUDIOS_QUERY($searchTerm: String!) {
     studios(where: { studioName_contains: $searchTerm }) {
@@ -20,15 +14,16 @@ const SEARCH_STUDIOS_QUERY = gql`
   }
 `
 
-// autofocus on search box with useRef
+// TODO autofocus on search box with useRef
 export default function NewSearchForStudio() {
-  const router = useRouter()
   const [findStudios, { loading, data, error }] = useLazyQuery(
     SEARCH_STUDIOS_QUERY,
     {
       fetchPolicy: 'no-cache',
     }
   )
+
+  const router = useRouter()
   const items = data?.studios || []
   const findStudiosDelayed = debounce(findStudios, 350)
   resetIdCounter()
@@ -50,9 +45,8 @@ export default function NewSearchForStudio() {
       })
     },
     onSelectedItemChange({ selectedItem }) {
-      console.log('selectedItem', selectedItem)
       router.push({
-        pathname: `/parent/browseStudio`,
+        pathname: `/parent/browseStudioxd`,
         query: { studioId: selectedItem.id },
       })
     },
