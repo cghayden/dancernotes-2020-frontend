@@ -3,6 +3,8 @@ import { useQuery } from '@apollo/client'
 import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
 import EventCard from '../../../components/Studio/EventCard'
 import { STUDIO_EVENT_QUERY } from '../../../components/Studio/Queries'
+import Loading from '../../../components/Loading'
+import Error from '../../../components/Error'
 
 function EventPage() {
   const router = useRouter()
@@ -12,16 +14,17 @@ function EventPage() {
     variables: { id: eventId },
   })
 
-  const studioEvent = data?.studioEvent ? data.studioEvent : {}
-
+  if (error || loading) {
+    return (
+      <NewStudioLayout page={'Events'}>
+        <Error error={error} />
+        <Loading />
+      </NewStudioLayout>
+    )
+  }
   return (
-    <NewStudioLayout
-      page={'Events'}
-      error={error}
-      loading={loading}
-      selection={`${studioEvent?.name}`}
-    >
-      <EventCard event={studioEvent} />
+    <NewStudioLayout page={'Events'} selection={`${data?.studioEvent?.name}`}>
+      <EventCard event={data.studioEvent} />
     </NewStudioLayout>
   )
 }

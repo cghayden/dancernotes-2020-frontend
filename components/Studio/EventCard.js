@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react'
 import Card from '../styles/Card'
+import styled from 'styled-components'
+
+const EventNotes = styled.p`
+  white-space: pre-wrap;
+`
 
 export default function EventCard({ event }) {
   const [showEdit, setShowEdit] = useState(false)
