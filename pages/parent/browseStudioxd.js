@@ -1,14 +1,11 @@
-import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
-import BrowseStudioClasses from '../../components/Parent/BrowseStudioClasses'
-import NewBrowseStudioLayout from '../../components/Parent/NewBrowseStudioLayout'
-import { useRegistrationContext } from '../../components/Parent/RegistrationContext'
+import NoDancersBrowseStudio from '../../components/Parent/NoDancersBrowseStudio'
 import Error from '../../components/Error'
 import Loading from '../../components/Loading'
+import NewBrowseStudioLayout from '../../components/Parent/NewBrowseStudioLayout'
 import ParentNoFilterLayout from '../../components/Parent/ParentNoFilterLayout'
-import { useEffect } from 'react'
 
 const BROWSE_STUDIO_CLASSES_QUERY = gql`
   query BROWSE_STUDIO_CLASSES_QUERY($id: ID!) {
@@ -37,16 +34,7 @@ const BROWSE_STUDIO_CLASSES_QUERY = gql`
   }
 `
 
-const BrowseStudioPage = () => {
-  useEffect(() => {
-    const id = Cookies.get('browsingDancerId')
-    console.log('useEffect running', id)
-    setBrowsingDancer(id)
-  })
-
-  const { browsingDancerId, setBrowsingDancer } = useRegistrationContext()
-  console.log('browsingDancerId', browsingDancerId)
-
+const BrowseStudioPageNoDancers = () => {
   const router = useRouter()
   const { data, loading, error } = useQuery(BROWSE_STUDIO_CLASSES_QUERY, {
     variables: { id: router.query.studioId },
@@ -61,18 +49,15 @@ const BrowseStudioPage = () => {
     )
   }
 
-  // parent has at least one dancer - that dancer is set as the browsing dancer when linking to this page
-  console.log('theres a dancer')
   return (
     <NewBrowseStudioLayout
       page='Studios'
       selection={`${data.studio.studioName}`}
       studio={data.studio}
     >
-      <BrowseStudioClasses studio={data.studio} />
+      <NoDancersBrowseStudio studio={data.studio} />
     </NewBrowseStudioLayout>
   )
 }
 
-export default BrowseStudioPage
-export { BROWSE_STUDIO_CLASSES_QUERY }
+export default BrowseStudioPageNoDancers

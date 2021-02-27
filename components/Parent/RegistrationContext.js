@@ -1,35 +1,43 @@
-import React, { Component, createContext } from 'react'
+import { createContext, useState, useContext, useEffect } from 'react'
 import Cookies from 'js-cookie'
+import { useQuery } from '@apollo/client'
+import { PARENTS_DANCERS } from './Queries'
 
 const RegistrationContext = createContext()
 
-class RegistrationContextProvider extends Component {
-  state = {
-    browsingDancerId: '',
-    browsingDancerName: '',
+function RegistrationContextProvider({ children }) {
+  const [browsingDancerId, setBrowsingDancerId] = useState(0)
+  // const { data, loading, error } = useQuery(PARENTS_DANCERS, {
+  //   onCompleted: (data) => setBrowsingDancerId(data.parentsDancers[0].id),
+  // })
+
+  const setBrowsingDancer = (id) => {
+    Cookies.set('browsingDancerId', id)
+    setBrowsingDancerId(id)
   }
 
-  setBrowsingDancer = (id) => {
-    Cookies.set('browsingDancerId', id)
-    this.setState({ browsingDancerId: id })
-  }
-  render() {
-    const { browsingDancerId } = this.state
-    // console.log('browsingDancerId=', browsingDancerId)
-    return (
-      <RegistrationContext.Provider
-        value={{
-          browsingDancerId,
-          setBrowsingDancer: this.setBrowsingDancer,
-        }}
-      >
-        {this.props.children}
-      </RegistrationContext.Provider>
-    )
-  }
+  return (
+    <RegistrationContext.Provider
+      value={{
+        browsingDancerId,
+        setBrowsingDancer,
+      }}
+    >
+      {children}
+    </RegistrationContext.Provider>
+  )
 }
 
 const RegistrationContextConsumer = RegistrationContext.Consumer
 
+function useRegistrationContext() {
+  const all = useContext(RegistrationContext)
+  return all
+}
+
 export default RegistrationContextProvider
-export { RegistrationContextConsumer, RegistrationContext }
+export {
+  RegistrationContextConsumer,
+  RegistrationContext,
+  useRegistrationContext,
+}

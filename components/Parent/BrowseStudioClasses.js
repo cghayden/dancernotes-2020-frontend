@@ -7,7 +7,7 @@ import DanceClassInquiryCard from './DanceClassInquiryCard'
 import { ActiveFilters } from './BrowseClassFilter'
 import { PARENT_USER_QUERY } from './Queries'
 import { DANCER_QUERY } from './Queries'
-import { RegistrationContext } from './RegistrationContext'
+import { useRegistrationContext } from './RegistrationContext'
 import Card from '../styles/Card'
 import { FilterContext } from '../Studio/FilterContext'
 
@@ -69,7 +69,6 @@ const Tab = styled.div`
     }
   }
 `
-
 const BrowsingHeader = styled.div`
   display: grid;
   grid-gap: 10px;
@@ -96,11 +95,10 @@ const FiltersDisplay = styled.div`
 `
 function BrowseStudioClasses({ studio }) {
   const { filter: classFilter } = useContext(FilterContext)
-
-  const { setBrowsingDancer } = useContext(RegistrationContext)
+  const { browsingDancerId, setBrowsingDancer } = useRegistrationContext()
 
   //get browsing dancer from cookies so it will still be available if page is refreshed
-  const activeDancerId = Cookies.get('browsingDancerId')
+  // const browsingDancerId = Cookies.get('browsingDancerId')
 
   const { data: parentData, loading, error } = useQuery(PARENT_USER_QUERY)
   const parentUser = parentData ? parentData.parentUser : {}
@@ -110,7 +108,7 @@ function BrowseStudioClasses({ studio }) {
     loading: loadingDancer,
     error: errorLoadingDancer,
   } = useQuery(DANCER_QUERY, {
-    variables: { id: activeDancerId },
+    variables: { id: browsingDancerId },
   })
   const dancer = dancerData ? dancerData.dancer : {}
 
@@ -149,10 +147,10 @@ function BrowseStudioClasses({ studio }) {
           parentUser.dancers.map((dancer) => (
             <Tab
               key={dancer.firstName}
-              active={dancer.id === activeDancerId ? true : false}
+              active={dancer.id === browsingDancerId ? true : false}
             >
               <button
-                active={dancer.id === activeDancerId ? true : false}
+                active={dancer.id === browsingDancerId ? true : false}
                 onClick={() => setBrowsingDancer(dancer.id)}
               >
                 {dancer.firstName}
@@ -187,7 +185,7 @@ function BrowseStudioClasses({ studio }) {
                 parentEmail={parentUser.email}
                 dancerName={dancer.firstName}
                 dance={dance}
-                dancerId={activeDancerId}
+                dancerId={browsingDancerId}
                 studioId={studio.id}
                 key={dance.id}
                 requested={requestIds.includes(dance.id)}

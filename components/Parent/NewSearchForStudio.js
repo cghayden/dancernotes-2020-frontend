@@ -1,9 +1,11 @@
-import { useLazyQuery } from '@apollo/client'
+import { useLazyQuery, useQuery } from '@apollo/client'
 import { resetIdCounter, useCombobox } from 'downshift'
 import gql from 'graphql-tag'
 import debounce from 'lodash.debounce'
 import { useRouter } from 'next/router'
 import { DropDown, DropDownItem, SearchStyles } from '../styles/DropDown'
+import { useRegistrationContext } from './RegistrationContext'
+import { PARENTS_DANCERS } from './Queries'
 
 const SEARCH_STUDIOS_QUERY = gql`
   query SEARCH_STUDIOS_QUERY($searchTerm: String!) {
@@ -22,6 +24,14 @@ export default function NewSearchForStudio() {
       fetchPolicy: 'no-cache',
     }
   )
+  const {
+    data: parentsDancers,
+    loading: loadingDancers,
+    error: errorLoadingDancers,
+  } = useQuery(PARENTS_DANCERS)
+
+  const dancerId = parentsDancers ? parentsDancers.parentsDancers[0].id : 0
+  const { browsingDancerId, setBrowsingDancer } = useRegistrationContext()
 
   const router = useRouter()
   const items = data?.studios || []
@@ -45,9 +55,10 @@ export default function NewSearchForStudio() {
       })
     },
     onSelectedItemChange({ selectedItem }) {
+      setBrowsingDancer(dancerId)
       router.push({
-        pathname: `/parent/browseStudioxd`,
-        query: { studioId: selectedItem.id },
+        pathname: `/parent/browseStudio`,
+        query: { studioId: selectedItem.id, dancer: dancerId },
       })
     },
     itemToString: (item) => item?.studioName || '',
