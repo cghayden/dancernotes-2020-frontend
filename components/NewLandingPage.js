@@ -16,14 +16,9 @@ const StyledLandingPage = styled.div`
 `
 
 const StyledLandingContent = styled.div`
-  display: grid;
-  justify-items: center;
-  position: relative;
   grid-gap: 20px;
   padding-top: 30px;
   margin: 0 auto;
-  width: 80%;
-  max-width: 600px;
 `
 const PageSignInStyle = styled.div`
   height: 50px;
@@ -31,6 +26,11 @@ const PageSignInStyle = styled.div`
   place-items: center;
 `
 const FooterStyle = styled.footer`
+  position: fixed;
+  bottom: 0;
+  height: 40px;
+  width: 100%;
+  text-align: center;
   width: 100%;
   align-items: flex-end;
   grid-row: 4/-1;
