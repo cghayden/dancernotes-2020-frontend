@@ -61,11 +61,10 @@ const ImageDiv = styled.div`
 `
 
 const CREATE_DANCER = gql`
-  mutation CREATE_DANCER($firstName: String!, $avatar: String) {
-    createDancer(firstName: $firstName, avatar: $avatar) {
+  mutation CREATE_DANCER($firstName: String!) {
+    createDancer(firstName: $firstName) {
       id
       firstName
-      avatar
       parent {
         id
       }
@@ -75,7 +74,6 @@ const CREATE_DANCER = gql`
 
 const initialInputState = {
   firstName: '',
-  avatar: '',
 }
 
 function CreateDancerForm() {
@@ -166,7 +164,6 @@ function CreateDancerForm() {
     await updateDancer({
       variables: {
         id: dancerId,
-        // avatar: file.eager[0].secure_url,
         avatar: file.secure_url,
         avatarId: file.public_id,
       },

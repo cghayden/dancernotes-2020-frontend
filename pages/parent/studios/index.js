@@ -52,9 +52,11 @@ export default function studiosIndex() {
     return (
       <NewParentLayout page={'Studios'}>
         <Card>
-          <p>
-            You're dancers are not enrolled at or subscribed to any studios.
-          </p>
+          <div className='card__section'>
+            <p>
+              You're dancers are not enrolled at or subscribed to any studios.
+            </p>
+          </div>
           <button className='btn-action-primary' onClick={toggle}>
             Search for a studio to browse and/or register for classes.
           </button>

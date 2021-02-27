@@ -7,7 +7,7 @@ import StaticStudioQuickMenu from './StaticStudioQuickMenu'
 import { HeaderStyles } from '../styles/HeaderStyles'
 
 export default function NewStudioHeader() {
-  const [mobileNav, toggleMobileNav] = useState(false)
+  const [showMobileNav, toggleShowMobileNav] = useState(false)
   return (
     <HeaderStyles>
       <input type='text' placeholder='Search...' className='search' />
@@ -15,17 +15,15 @@ export default function NewStudioHeader() {
       <button
         className='hide-gtLarge btn-icon'
         onClick={() => {
-          toggleMobileNav(!mobileNav)
+          toggleShowMobileNav((showMobileNav) => !showMobileNav)
         }}
       >
         <MenuSvg />
       </button>
-      {mobileNav && (
-        <MobileNavContainer>
-          <NewStudioNav />
-          <StaticStudioQuickMenu />
-        </MobileNavContainer>
-      )}
+      <MobileNavContainer showMobileNav={showMobileNav}>
+        <NewStudioNav />
+        <StaticStudioQuickMenu />
+      </MobileNavContainer>
     </HeaderStyles>
   )
 }

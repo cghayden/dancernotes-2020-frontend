@@ -3,6 +3,8 @@ import { useQuery } from '@apollo/client'
 import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
 import HairStyleCard from '../../../components/Studio/HairStyleCard'
 import { STUDIO_HAIRSTYLE_QUERY } from '../../../components/Studio/Queries'
+import Error from '../../../components/Error'
+import Loading from '../../../components/Loading'
 
 function HairStylePage() {
   const router = useRouter()
@@ -14,13 +16,17 @@ function HairStylePage() {
 
   const studioHairStyle = data?.studioHairStyle ? data.studioHairStyle : {}
 
+  if (error || loading) {
+    return (
+      <NewStudioLayout page={'Events'}>
+        <Error error={error} />
+        <Loading />
+      </NewStudioLayout>
+    )
+  }
+
   return (
-    <NewStudioLayout
-      page={'HairStyles'}
-      error={error}
-      loading={loading}
-      selection={`${studioHairStyle?.name}`}
-    >
+    <NewStudioLayout page={'HairStyles'} selection={`${studioHairStyle?.name}`}>
       <HairStyleCard hairStyle={studioHairStyle} />
     </NewStudioLayout>
   )

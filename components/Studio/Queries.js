@@ -360,8 +360,29 @@ const STUDIO_REQUESTS_QUERY = gql`
     }
   }
 `
+const UPDATE_HAIRSTYLE_MUTATION = gql`
+  mutation UPDATE_HAIRSTYLE_MUTATION(
+    $id: ID!
+    $name: String
+    $image: String
+    $imageId: String
+    $description: String
+  ) {
+    updateHairstyle(
+      id: $id
+      name: $name
+      image: $image
+      imageId: $imageId
+      description: $description
+    ) {
+      id
+      name
+    }
+  }
+`
 
 export {
+  UPDATE_HAIRSTYLE_MUTATION,
   STUDIO_USER_QUERY,
   CATEGORIES_QUERY,
   ALL_DANCE_CLASSES_QUERY,
