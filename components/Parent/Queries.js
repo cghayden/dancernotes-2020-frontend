@@ -205,6 +205,10 @@ const PARENTS_DANCERS = gql`
       id
       firstName
       avatar
+      parent {
+        id
+        email
+      }
       studios {
         id
         studioName
@@ -300,6 +304,7 @@ const PARENTS_MAKEUP_QUERY = gql`
           id
           name
           lipstick
+          eyeNotes
           eyeShadow
           eyeLids
           eyeCrease

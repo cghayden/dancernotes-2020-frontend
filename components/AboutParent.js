@@ -1,6 +1,6 @@
 import { AboutUl } from './styles/AboutStyles'
 import styled from 'styled-components'
-
+import Card from './styles/Card'
 const AboutContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -14,17 +14,19 @@ const PageSignInStyle = styled.div`
 `
 const AboutParent = ({ setView }) => {
   return (
-    <AboutContent>
+    <Card>
       <h1>Dancernotes for Parents</h1>
       <div>
         <AboutUl>
           <li>
             All of your dancers' information, from all of their studios, in one
-            place
+            place.
           </li>
           <li>
-            Find studios, retailers,opportunities for your dancers, and more!
+            Keep your own dance notes if your studio is not using Dancer Notes
+            studio.
           </li>
+          <li>Find studios, retailers, and opportunities for your dancers!</li>
         </AboutUl>
       </div>
 
@@ -45,7 +47,7 @@ const AboutParent = ({ setView }) => {
           </button>
         </PageSignInStyle>
       </div>
-    </AboutContent>
+    </Card>
   )
 }
 

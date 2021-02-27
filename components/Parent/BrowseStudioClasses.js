@@ -111,6 +111,7 @@ function BrowseStudioClasses({ studio }) {
     variables: { id: browsingDancerId },
   })
   const dancer = dancerData ? dancerData.dancer : {}
+  // console.log('dancer', dancer)
 
   // const isParentLinkedToStudio =
   //   parentUser.studios &&

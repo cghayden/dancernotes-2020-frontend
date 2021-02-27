@@ -69,7 +69,7 @@ const BrowseStudioPage = () => {
       selection={`${data.studio.studioName}`}
       studio={data.studio}
     >
-      <BrowseStudioClasses studio={data.studio} />
+      {browsingDancerId && <BrowseStudioClasses studio={data.studio} />}
     </NewBrowseStudioLayout>
   )
 }

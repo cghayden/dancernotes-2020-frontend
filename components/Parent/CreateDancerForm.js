@@ -14,7 +14,35 @@ import { DELETE_CLOUDINARY_ASSET } from '../Mutations'
 import { UPDATE_DANCER_MUTATION } from './UpdateDancerForm'
 
 import useForm from '../../utilities/useForm'
-
+const edgeParents = [
+  'kj@edgestudioofdance.com',
+  'sljoyce1027@verizon.net',
+  'elenathach@gmail.com',
+  'ella@ella.com',
+  'q@q.com',
+  'cghayden@gmail.com',
+  'sarah.hayden27@gmail.com',
+  'yengbutler@gmail.com',
+  'jopetrunyak@yahoo.com',
+  'karajdm@yahoo.com',
+  'kelli474@msn.com',
+  'lilianthana4@yahoo.com',
+  'lisabraude@gmail.com',
+  'vieira2177@gmail.com',
+  'lorironkin@yahoo.com',
+  'marcycarty@gmail.com',
+  'michaelaellensilva@gmail.com',
+  'mullinfam2061@gmail.com',
+  'blackcoffee141@msn.com',
+  'roudlylaroche@live.com',
+  'taradelamere@gmail.com',
+  'elcorredor@hotmail.com',
+  'adelaidehayden@gmail.com',
+  'hondacoupe2004@yahoo.com',
+  'svetlana.leeds83@gmail.com',
+  'shalinijay@gmail.com',
+  'tamaraimcgowan@yahoo.com',
+]
 const DancerCardContainer = styled(Card)`
   padding-bottom: 0;
   margin-top: 4rem;
@@ -67,6 +95,7 @@ const CREATE_DANCER = gql`
       firstName
       parent {
         id
+        email
       }
     }
   }
@@ -96,6 +125,7 @@ function CreateDancerForm() {
     },
     refetchQueries: [{ query: PARENT_USER_QUERY }],
   })
+  console.log('newDancer', newDancer)
 
   const [
     updateDancer,
@@ -244,6 +274,14 @@ function CreateDancerForm() {
           <Link href='/parent/dancers'>
             <a className='btn-action-secondary-outline'>I'm finished</a>
           </Link>
+          {edgeParents.includes(newDancer?.createDancer.parent.email) && (
+            <Link
+              href={`/parent/browseStudio/?studioId=ck6bbkozd000f0745ahefjkcq`}
+              className='btn-action-danger-outline'
+            >
+              <a>Take me to Corey's Edge Notes!</a>
+            </Link>
+          )}
         </ModalCard>
       </Modal>
 

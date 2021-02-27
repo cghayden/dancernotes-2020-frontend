@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import DatePicker from 'react-datepicker'
-import Form from '../styles/Form'
+import NewForm from '../styles/NewForm'
 import Card from '../styles/Card'
 import Error from '../Error'
 import useForm from '../../utilities/useForm'
@@ -140,7 +140,7 @@ function CreateEventForm() {
 
   return (
     <Card>
-      <Form
+      <NewForm
         method='post'
         onSubmit={async (e) => {
           await saveEvent(e)
@@ -149,76 +149,84 @@ function CreateEventForm() {
         <fieldset disabled={loading} aria-busy={loading}>
           <legend>Add A New Event</legend>
           <Error error={error} />
-          <div className='input-item'>
-            <label htmlFor='name'>Name</label>
-            <input
-              required
-              type='text'
-              name='name'
-              value={inputs.name}
-              onChange={handleChange}
-            />
-          </div>
-          <div className='input-item'>
-            <label htmlFor='type'>Type:</label>
-            <select
-              id='type'
-              name='type'
-              value={inputs.type}
-              onChange={handleChange}
-            >
-              <option default value={''} disabled>
-                (Competition, Rehearsal, etc...)?
-              </option>
-              <option value='competition'>Competition</option>
-              <option value='rehearsal'>Rehearsal</option>
-              <option value='recital'>Recital</option>
-              <option value='convention'>Convention</option>
-              <option value='camp'>Camp</option>
-              <option value='other'>Other</option>
-            </select>
+          <div className='form-row'>
+            <div className='form-span4'>
+              <label htmlFor='name'>Name</label>
+              <input
+                required
+                type='text'
+                name='name'
+                value={inputs.name}
+                onChange={handleChange}
+              />
+            </div>
           </div>
 
-          <div className='input-item'>
-            <SelectChoices>
-              <label htmlFor='appliesTo'>Apply To:</label>
-              {Object.entries(appliesTo).map((entry) => (
-                <li key={entry[0]}>
-                  {entry[1]}
-                  <span>
-                    <button
-                      type='button'
-                      onClick={() => removeAppliesTo(entry[0])}
-                    >
-                      X
-                    </button>
-                  </span>
-                </li>
-              ))}
-            </SelectChoices>
-            <select
-              name='appliesTo'
-              value={''}
-              onChange={(e) => handleAppliesToChange(e)}
-            >
-              <option default value={''} disabled>
-                Applies to...
-              </option>
-              {appliesToOptions.map((category) => (
-                <option
-                  key={category.value}
-                  value={category.value}
-                  label={category.label}
-                >
-                  {category.label}
+          <div class='form-row'>
+            <div className='form-span2 inputItem'>
+              <label htmlFor='type'>Type:</label>
+              <select
+                id='type'
+                name='type'
+                value={inputs.type}
+                onChange={handleChange}
+              >
+                <option default value={''} disabled>
+                  (Competition, Rehearsal, etc...)?
                 </option>
-              ))}
-            </select>
-          </div>
+                <option value='competition'>Competition</option>
+                <option value='rehearsal'>Rehearsal</option>
+                <option value='recital'>Recital</option>
+                <option value='convention'>Convention</option>
+                <option value='camp'>Camp</option>
+                <option value='other'>Other</option>
+              </select>
+            </div>
 
+            <div className='form-span2 inputItem'>
+              <label htmlFor='appliesTo'>This Event Applies To:</label>
+              <select
+                name='appliesTo'
+                value={''}
+                onChange={(e) => handleAppliesToChange(e)}
+              >
+                <option default value={''} disabled>
+                  Applies to...
+                </option>
+                {appliesToOptions.map((category) => (
+                  <option
+                    key={category.value}
+                    value={category.value}
+                    label={category.label}
+                  >
+                    {category.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className='form-row'>
+            <div className='form-span4 inputItem'></div>
+          </div>
+          <SelectChoices>
+            {Object.entries(appliesTo).map((entry) => (
+              <li key={entry[0]}>
+                {entry[1]}
+                <span>
+                  <button
+                    className='btn-icon'
+                    type='button'
+                    onClick={() => removeAppliesTo(entry[0])}
+                  >
+                    X
+                  </button>
+                </span>
+              </li>
+            ))}
+          </SelectChoices>
           {/* Dates */}
           <div className='form-row'>
-            <div className='form-row-item'>
+            <div className='form-c2 form-span1'>
               <label htmlFor='beginDate'>Begin Date:</label>
               <DatePicker
                 dateFormat='yyyy/MM/dd'
@@ -228,7 +236,8 @@ function CreateEventForm() {
                 popperPlacement='auto'
               />
             </div>
-            <div className='form-row-item'>
+
+            <div className='form-c3 form-span1'>
               <label htmlFor='endDate'>End Date:</label>
               <DatePicker
                 dateFormat='yyyy/MM/dd'
@@ -239,7 +248,17 @@ function CreateEventForm() {
               />
             </div>
           </div>
-
+          <div className='form-row'>
+            <div className='form-c2' style={{ gridColumn: '2/4' }}>
+              <label htmlFor='website'>Website</label>
+              <input
+                type='text'
+                name='url'
+                value={inputs.url}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
           {/* Location */}
           <div className='input-item'>
             <label htmlFor='location'>Location</label>
@@ -338,7 +357,7 @@ function CreateEventForm() {
             </button>
           </div>
         </fieldset>
-      </Form>
+      </NewForm>
     </Card>
   )
 }

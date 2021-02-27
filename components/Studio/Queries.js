@@ -154,7 +154,7 @@ const ENROLLMENT_REQUESTS_QUERY = gql`
         id
         firstName
       }
-      classesRequested {
+      classRequested {
         id
         name
       }
@@ -263,6 +263,7 @@ const STUDIO_MAKEUP_QUERY = gql`
         id
         name
         lipstick
+        eyeNotes
         eyeShadow
         eyeLids
         eyeCrease

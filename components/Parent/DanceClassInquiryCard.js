@@ -71,9 +71,9 @@ const CREATE_DANCECLASS_REQUEST = gql`
   }
 `
 
-const REMOVE_CLASS_FROM_REQUESTS = gql`
-  mutation REMOVE_CLASS_FROM_REQUESTS($requestId: ID!, $danceClassId: ID!) {
-    removeClassFromRequest(requestId: $requestId, danceClassId: $danceClassId) {
+const DELETE_ENROLLMENT_REQUEST = gql`
+  mutation DELETE_ENROLLMENT_REQUEST($requestId: ID!) {
+    deleteEnrollmentRequest(requestId: $requestId) {
       message
     }
   }
@@ -88,12 +88,13 @@ function DanceClassInquiryCard({
   requested,
   studioId,
   dancerName,
+  request,
 }) {
+  console.log('request', request)
   const [
-    removeClassFromRequest,
+    deleteEnrollmentRequest,
     { error: errorRemovingRequest, loading: removeRequestLoading },
-  ] = useMutation(REMOVE_CLASS_FROM_REQUESTS, {
-    variables: { requestId: dancersRequestsId, danceClassId: dance.id },
+  ] = useMutation(DELETE_ENROLLMENT_REQUEST, {
     refetchQueries: [
       { query: DANCER_QUERY, variables: { id: dancerId } },
       { query: BROWSE_STUDIO_CLASSES_QUERY, variables: { id: studioId } },
@@ -184,7 +185,13 @@ function DanceClassInquiryCard({
             <button
               type='button'
               className='btn-danger-textOnly btn-small '
-              onClick={async () => await removeClassFromRequest()}
+              onClick={async () =>
+                await deleteEnrollmentRequest({
+                  variables: {
+                    requestId: request[0].id,
+                  },
+                })
+              }
             >
               Cancel Request
             </button>

@@ -44,7 +44,7 @@ export default function EventCard({ event }) {
       {event.url && (
         <div className='card__section'>
           <a rel='noreferrer noopener' href={event.url}>
-            Event Website
+            {event.url}
           </a>
         </div>
       )}
