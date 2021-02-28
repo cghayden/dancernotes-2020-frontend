@@ -183,11 +183,6 @@ const Form = styled.form`
     align-items: center;
     margin: 0 0 1rem 0;
   }
-  .form-footer {
-    padding-top: 1rem;
-    display: flex;
-    justify-content: space-evenly;
-  }
 
   .state {
     width: 80px;

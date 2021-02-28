@@ -7,6 +7,7 @@ function About({ view, setView }) {
   return (
     <>
       {view === 'aboutParent' && <AboutParent setView={setView} />}
+
       {view === 'aboutStudio' && <AboutStudio setView={setView} />}
       {view === 'aboutRetail' && <AboutRetail />}
     </>

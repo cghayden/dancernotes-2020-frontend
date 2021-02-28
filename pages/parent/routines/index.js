@@ -34,7 +34,7 @@ export default function routinesIndex() {
         <Card>
           <div>
             <p>
-              Dance Classes and competition routines your dancers are in will
+              Dance Classes and Competition Routines your dancers are in will
               appear here.
             </p>
             <p>You currently have no dancers.</p>

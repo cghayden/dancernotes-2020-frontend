@@ -51,7 +51,7 @@ const directEdgeId =
     : `ck6bbkozd000f0745ahefjkcq`
 const DancerCardContainer = styled(Card)`
   padding-bottom: 0;
-  margin-top: 4rem;
+  margin-top: 3rem;
   p {
     margin-bottom: 10px;
   }
@@ -319,7 +319,10 @@ function CreateDancerForm() {
               className='btn-action-secondary-outline'
               onClick={() => toggleFileInput(!showFileInput)}
             >
-              Add Image
+              <div>
+                <p style={{ margin: 0 }}>Add Image</p>
+                <p style={{ fontSize: '12px', margin: 0 }}>(optional)</p>
+              </div>
             </button>
             {showFileInput && (
               <div className='input-item'>

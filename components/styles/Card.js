@@ -17,6 +17,9 @@ const Card = styled.div`
   &:last-child {
     margin-bottom: 50vh;
   }
+  &::only-child {
+    margin-bottom: 0;
+  }
 
   .card__header {
     display: flex;
