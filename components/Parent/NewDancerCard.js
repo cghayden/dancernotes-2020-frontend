@@ -1,23 +1,8 @@
-import { useContext, useState } from 'react'
 import styled from 'styled-components'
-import SearchForStudio from './SearchForStudio'
 import Card from '../styles/Card'
-import { RegistrationContext } from './RegistrationContext'
 import Link from 'next/link'
-import { AvatarStyle, InitialStyle } from '../AvatarStyle'
 import DancerCardHeader from '../DancerCardHeader'
 import NewSearchForStudio from './NewSearchForStudio'
-
-// const DancerCardHeaderStyles = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-//   align-content: center;
-//   h2 {
-//     font-size: 1.75rem;
-//     flex-grow: 1;
-//     align-self: flex-start;
-//   }
-// `
 
 const ClassesContainer = styled.div`
   display: grid;
@@ -33,17 +18,7 @@ const NoClassesContainer = styled.div`
   }
 `
 
-const DancerCardFooter = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 1rem;
-`
-
 function DancerCard({ dancer }) {
-  const [showStudioSearch, setShowStudioSearch] = useState(false)
-  const BrowsingContext = useContext(RegistrationContext)
-  const setBrowsingDancer = BrowsingContext.setBrowsingDancer
-
   if (!dancer.danceClasses.length) {
     return (
       <Card>
@@ -84,15 +59,6 @@ function DancerCard({ dancer }) {
           </div>
         ))}
       </ClassesContainer>
-      {/* <DancerCardFooter>
-        <button
-          className='btn-action-primary'
-          onClick={() => setShowStudioSearch(!showStudioSearch)}
-        >
-          Search for a Studio
-        </button>
-        {showStudioSearch && <NewSearchForStudio/>}
-      </DancerCardFooter> */}
     </Card>
   )
 }
