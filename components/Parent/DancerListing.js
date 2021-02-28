@@ -78,7 +78,7 @@ function DancerListing({ dancer }) {
           <>
             <p>{dancer.firstName} is not in any routines.</p>
             <Link
-              href={`/parent/browseStudio/?studioId=ck72koohr0t0r0b901ih2sx2t`}
+              href={`/parent/browseStudio/?studioId=ck6bbkozd000f0745ahefjkcq`}
               className='btn-action-danger-outline'
             >
               <a>Take me to the routines in Corey's Edge Notes</a>
