@@ -9,6 +9,7 @@ import Error from '../../components/Error'
 import Loading from '../../components/Loading'
 import ParentNoFilterLayout from '../../components/Parent/ParentNoFilterLayout'
 import { useEffect } from 'react'
+import { DANCER_QUERY } from '../../components/Parent/Queries'
 
 const BROWSE_STUDIO_CLASSES_QUERY = gql`
   query BROWSE_STUDIO_CLASSES_QUERY($id: ID!) {
@@ -51,8 +52,16 @@ const BrowseStudioPage = () => {
   const { data, loading, error } = useQuery(BROWSE_STUDIO_CLASSES_QUERY, {
     variables: { id: router.query.studioId },
   })
+  const {
+    data: dancerData,
+    loading: loadingDancer,
+    error: errorLoadingDancer,
+  } = useQuery(DANCER_QUERY, {
+    variables: { id: browsingDancerId },
+  })
+  console.log('dancer data:', dancerData)
 
-  if (error || loading || !data) {
+  if (error || errorLoadingDancer || loading || loadingDancer) {
     return (
       <ParentNoFilterLayout page={'Studios'}>
         {error && <Error error={error} />}
@@ -62,6 +71,13 @@ const BrowseStudioPage = () => {
   }
 
   // parent has at least one dancer - that dancer is set as the browsing dancer when linking to this page
+  if (!dancerData) {
+    return (
+      <ParentNoFilterLayout page={'Studios'}>
+        <div>Loading Dancer...</div>
+      </ParentNoFilterLayout>
+    )
+  }
   console.log('theres a dancer')
   return (
     <NewBrowseStudioLayout
@@ -69,7 +85,9 @@ const BrowseStudioPage = () => {
       selection={`${data.studio.studioName}`}
       studio={data.studio}
     >
-      {browsingDancerId && <BrowseStudioClasses studio={data.studio} />}
+      {dancerData && (
+        <BrowseStudioClasses dancer={dancerData.dancer} studio={data.studio} />
+      )}
     </NewBrowseStudioLayout>
   )
 }

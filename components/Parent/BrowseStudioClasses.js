@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import DanceClassInquiryCard from './DanceClassInquiryCard'
 import { ActiveFilters } from './BrowseClassFilter'
 import { PARENT_USER_QUERY } from './Queries'
-import { DANCER_QUERY } from './Queries'
 import { useRegistrationContext } from './RegistrationContext'
 import Card from '../styles/Card'
 import { FilterContext } from '../Studio/FilterContext'
@@ -93,25 +92,12 @@ const FiltersDisplay = styled.div`
   display: flex;
   align-items: center;
 `
-function BrowseStudioClasses({ studio }) {
+function BrowseStudioClasses({ studio, dancer }) {
   const { filter: classFilter } = useContext(FilterContext)
   const { browsingDancerId, setBrowsingDancer } = useRegistrationContext()
 
-  //get browsing dancer from cookies so it will still be available if page is refreshed
-  // const browsingDancerId = Cookies.get('browsingDancerId')
-
   const { data: parentData, loading, error } = useQuery(PARENT_USER_QUERY)
   const parentUser = parentData ? parentData.parentUser : {}
-
-  const {
-    data: dancerData,
-    loading: loadingDancer,
-    error: errorLoadingDancer,
-  } = useQuery(DANCER_QUERY, {
-    variables: { id: browsingDancerId },
-  })
-  const dancer = dancerData ? dancerData.dancer : {}
-  // console.log('dancer', dancer)
 
   // const isParentLinkedToStudio =
   //   parentUser.studios &&
@@ -134,15 +120,13 @@ function BrowseStudioClasses({ studio }) {
       )
     : []
 
-  if (loading) return '5, 6, 7, 8...'
-  if (error || errorLoadingDancer) return 'There was an error loading the page.'
-
   const activeFilters = [].concat.apply([], Object.values(classFilter))
   const requestIds = dancer.requests
     ? dancer.requests.map((request) => request.classRequested.id)
     : []
+
   return (
-    <>
+    <div>
       <DancerTabs>
         {parentUser.dancers &&
           parentUser.dancers.map((dancer) => (
@@ -198,7 +182,7 @@ function BrowseStudioClasses({ studio }) {
           }
         })}
       </ClassListCard>
-    </>
+    </div>
   )
 }
 export default BrowseStudioClasses

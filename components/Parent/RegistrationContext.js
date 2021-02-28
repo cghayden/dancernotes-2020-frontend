@@ -6,13 +6,13 @@ import { PARENTS_DANCERS } from './Queries'
 const RegistrationContext = createContext()
 
 function RegistrationContextProvider({ children }) {
-  const [browsingDancerId, setBrowsingDancerId] = useState(0)
+  const [browsingDancerId, setBrowsingDancerId] = useState(null)
   // const { data, loading, error } = useQuery(PARENTS_DANCERS, {
   //   onCompleted: (data) => setBrowsingDancerId(data.parentsDancers[0].id),
   // })
 
   const setBrowsingDancer = (id) => {
-    Cookies.set('browsingDancerId', id)
+    Cookies.set('browsingDancerId', id, { secure: true })
     setBrowsingDancerId(id)
   }
 
