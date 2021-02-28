@@ -364,6 +364,9 @@ const GlobalStyle = createGlobalStyle`
     transition: none;
   }
 }
+.react-datepicker__navigation--next,.react-datepicker__navigation--previous{
+  min-width: unset;
+}
 
 `
 
