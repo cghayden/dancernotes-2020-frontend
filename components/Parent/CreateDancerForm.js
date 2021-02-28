@@ -45,6 +45,10 @@ const edgeParents = [
   't@t.com',
   'q@q.com',
 ]
+const directEdgeId =
+  process.env.NODE_ENV === 'development'
+    ? `ck72koohr0t0r0b901ih2sx2t`
+    : `ck6bbkozd000f0745ahefjkcq`
 const DancerCardContainer = styled(Card)`
   padding-bottom: 0;
   margin-top: 4rem;
@@ -278,11 +282,10 @@ function CreateDancerForm() {
             <a className='btn-action-secondary-outline'>I'm finished</a>
           </Link>
           {edgeParents.includes(newDancer?.createDancer.parent.email) && (
-            <Link
-              href={`/parent/browseStudio/?studioId=ck6bbkozd000f0745ahefjkcq`}
-              className='btn-action-danger-outline'
-            >
-              <a>Take me to Corey's Edge Notes!</a>
+            <Link href={`/parent/browseStudio/?studioId=${directEdgeId}`}>
+              <a style={{ color: 'blueviolet' }}>
+                Take me to Corey's Edge Notes!
+              </a>
             </Link>
           )}
         </ModalCard>

@@ -54,6 +54,10 @@ const NoRoutinesOptions = styled.div`
 `
 function DancerListing({ dancer }) {
   // const initials = dancer.firstName.slice(0, 2)
+  const directEdgeId =
+    process.env.NODE_ENV === 'development'
+      ? `ck72koohr0t0r0b901ih2sx2t`
+      : `ck6bbkozd000f0745ahefjkcq`
 
   return (
     <ListingCard>
@@ -76,12 +80,10 @@ function DancerListing({ dancer }) {
       {!dancer.danceClasses.length &&
         edgeParents.includes(dancer.parent.email) && (
           <>
-            <p>{dancer.firstName} is not in any routines.</p>
-            <Link
-              href={`/parent/browseStudio/?studioId=ck72koohr0t0r0b901ih2sx2t`}
-              className='btn-action-danger-outline'
-            >
-              <a>Take me to the routines in Corey's Edge Notes</a>
+            <Link href={`/parent/browseStudio/?studioId=${directEdgeId}`}>
+              <a style={{ color: 'blue' }}>
+                Take me to the routines in Corey's Edge Notes
+              </a>
             </Link>
           </>
         )}
