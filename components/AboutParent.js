@@ -1,12 +1,7 @@
 import { AboutUl } from './styles/AboutStyles'
 import styled from 'styled-components'
 import Card from './styles/Card'
-const AboutContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-`
+
 const PageSignInStyle = styled.div`
   height: 50px;
   display: grid;
