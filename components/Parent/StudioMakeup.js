@@ -40,7 +40,7 @@ const StudioMakeup = ({ studio }) => {
               </Notes>
               {makeupSet.eyeNotes && (
                 <NoteItem>
-                  <Dt>Eyelashes:</Dt> <Dd>{makeupSet.eyelashes}</Dd>
+                  <Dt>Eyelashes:</Dt> <Dd>{makeupSet.eyeNotes}</Dd>
                 </NoteItem>
               )}
               <NoteItem>

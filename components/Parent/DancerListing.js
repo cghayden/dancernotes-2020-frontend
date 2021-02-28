@@ -15,6 +15,8 @@ const edgeParents = [
   'elenathach@gmail.com',
   'ella@ella.com',
   'q@q.com',
+  'z@z.com',
+  't@t.com',
   'cghayden@gmail.com',
   'sarah.hayden27@gmail.com',
   'yengbutler@gmail.com',
@@ -76,7 +78,7 @@ function DancerListing({ dancer }) {
           <>
             <p>{dancer.firstName} is not in any routines.</p>
             <Link
-              href={`/parent/browseStudio/?studioId=ck6bbkozd000f0745ahefjkcq`}
+              href={`/parent/browseStudio/?studioId=ck72koohr0t0r0b901ih2sx2t`}
               className='btn-action-danger-outline'
             >
               <a>Take me to the routines in Corey's Edge Notes</a>

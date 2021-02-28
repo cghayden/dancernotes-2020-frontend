@@ -1,4 +1,5 @@
 // import Link from 'next/link'
+import Card from '../styles/Card'
 import StudioMakeup from './StudioMakeup'
 
 function MakeupContent({ studios }) {
@@ -13,7 +14,7 @@ function MakeupContent({ studios }) {
   }
 
   return (
-    <div>
+    <Card>
       <p>
         You are not linked to any studios, or your studios do not have any
         makeup sets to display.
@@ -24,7 +25,7 @@ function MakeupContent({ studios }) {
           <a>Yes</a>
         </Link>
       </p> */}
-    </div>
+    </Card>
   )
 }
 

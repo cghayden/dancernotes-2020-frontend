@@ -10,8 +10,8 @@ import Modal from '../Modal'
 import CancelButton from '../CancelButton'
 import { PARENT_USER_QUERY } from './Queries'
 import { DELETE_CLOUDINARY_ASSET } from '../Mutations'
-
 import { UPDATE_DANCER_MUTATION } from './UpdateDancerForm'
+import { useRegistrationContext } from './RegistrationContext'
 
 import useForm from '../../utilities/useForm'
 const edgeParents = [
@@ -19,7 +19,6 @@ const edgeParents = [
   'sljoyce1027@verizon.net',
   'elenathach@gmail.com',
   'ella@ella.com',
-  'q@q.com',
   'cghayden@gmail.com',
   'sarah.hayden27@gmail.com',
   'yengbutler@gmail.com',
@@ -42,6 +41,9 @@ const edgeParents = [
   'svetlana.leeds83@gmail.com',
   'shalinijay@gmail.com',
   'tamaraimcgowan@yahoo.com',
+  'z@z.com',
+  't@t.com',
+  'q@q.com',
 ]
 const DancerCardContainer = styled(Card)`
   padding-bottom: 0;
@@ -114,6 +116,7 @@ function CreateDancerForm() {
   const [showModal, toggleModal] = useState(false)
   const [status, setStatus] = useState()
   const [showFileInput, toggleFileInput] = useState(false)
+  const { browsingDancerId, setBrowsingDancer } = useRegistrationContext()
 
   const [
     createDancer,
@@ -216,7 +219,7 @@ function CreateDancerForm() {
     //2 get dancerId and parentId for tags on cloudinary avatar
     const newDancerId = newDancer.data.createDancer.id
     const parentId = newDancer.data.createDancer.parent.id
-
+    setBrowsingDancer(newDancerId)
     //3 upload avatar and save to dancer as update
     if (avatarForUpload) {
       await uploadAvatarAndUpdate(newDancerId, parentId)
