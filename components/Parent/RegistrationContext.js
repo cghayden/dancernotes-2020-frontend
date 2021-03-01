@@ -12,7 +12,8 @@ function RegistrationContextProvider({ children }) {
   // })
 
   const setBrowsingDancer = (id) => {
-    Cookies.set('browsingDancerId', id, { secure: true })
+    Cookies.set('browsingDancerId', id, { secure: false })
+    console.log('setting browsing dancer cookie')
     setBrowsingDancerId(id)
   }
 

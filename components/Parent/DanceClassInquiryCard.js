@@ -64,8 +64,14 @@ const CREATE_DANCECLASS_REQUEST = gql`
     $danceId: ID!
     $dancerId: ID!
     $studioId: ID!
+    $parentEmail: String!
   ) {
-    requestDance(danceId: $danceId, dancerId: $dancerId, studioId: $studioId) {
+    requestDance(
+      danceId: $danceId
+      dancerId: $dancerId
+      studioId: $studioId
+      parentEmail: $parentEmail
+    ) {
       message
     }
   }
@@ -82,6 +88,8 @@ const DELETE_ENROLLMENT_REQUEST = gql`
 //check to see if dancerId is in array of dancers
 
 function DanceClassInquiryCard({
+  //parentEmail is only for request preapproval
+  parentEmail,
   dance,
   dancerId,
   dancersRequestsId,
@@ -90,7 +98,7 @@ function DanceClassInquiryCard({
   dancerName,
   request,
 }) {
-  console.log('request', request)
+  console.log('parentEmail', parentEmail)
   const [
     deleteEnrollmentRequest,
     { error: errorRemovingRequest, loading: removeRequestLoading },
@@ -106,6 +114,7 @@ function DanceClassInquiryCard({
     { error: errorRequestingDance, loading: requestingDance },
   ] = useMutation(CREATE_DANCECLASS_REQUEST, {
     variables: {
+      parentEmail,
       danceId: dance.id,
       dancerId: dancerId,
       studioId: studioId,
