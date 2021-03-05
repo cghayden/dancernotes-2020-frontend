@@ -26,6 +26,7 @@ const EventCheckbox = styled.div`
 `
 
 function EventsFilter({ eventFilter, setFilter }) {
+  console.log('eventFilter', eventFilter)
   const eventCategories = [
     'competition',
     'convention',

@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
 import { CATEGORIES_QUERY } from './Queries'
@@ -24,6 +23,7 @@ const CategoryCards = styled.div`
 
 const EditClassCategories = () => {
   const { data, loading, error } = useQuery(CATEGORIES_QUERY)
+  console.log('data', data)
   const studioCategories = data ? data.studioCategories : {}
   const categories = ['styles', 'competitiveLevels', 'ageDivisions']
   if (loading) return <h1>5, 6, 7, 8...</h1>

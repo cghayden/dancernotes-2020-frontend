@@ -34,6 +34,7 @@ export default function EventCard({ event }) {
         </p>
       </div>
       <div>
+        <h4>Location</h4>
         <p>{event.location}</p>
         <p>{event.address1}</p>
         <span>
@@ -43,6 +44,7 @@ export default function EventCard({ event }) {
       </div>
       {event.url && (
         <div className='card__section'>
+          <h4>Website</h4>
           <a rel='noreferrer noopener' href={event.url}>
             {event.url}
           </a>
@@ -50,6 +52,7 @@ export default function EventCard({ event }) {
       )}
       {event.notes && (
         <div className='card__section'>
+          <h4>Notes</h4>
           <EventNotes>{event.notes}</EventNotes>
         </div>
       )}

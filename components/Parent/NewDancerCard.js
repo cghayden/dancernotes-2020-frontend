@@ -3,6 +3,7 @@ import Card from '../styles/Card'
 import Link from 'next/link'
 import DancerCardHeader from '../DancerCardHeader'
 import NewSearchForStudio from './NewSearchForStudio'
+import { useRegistrationContext } from './RegistrationContext'
 
 const ClassesContainer = styled.div`
   display: grid;
@@ -19,6 +20,8 @@ const NoClassesContainer = styled.div`
 `
 
 function DancerCard({ dancer }) {
+  const { setBrowsingDancer } = useRegistrationContext()
+
   if (!dancer.danceClasses.length) {
     return (
       <Card>
@@ -47,14 +50,15 @@ function DancerCard({ dancer }) {
               })}
             </ul>
             <Link href={`/parent/browseStudio?studioId=${studio.id}`}>
-              <button
+              <a
                 className='btn-action-primary-textOnly'
                 onClick={() => {
+                  console.log('anchor clicked')
                   setBrowsingDancer(dancer.id)
                 }}
               >
                 Manage Classes at {studio.studioName}
-              </button>
+              </a>
             </Link>
           </div>
         ))}

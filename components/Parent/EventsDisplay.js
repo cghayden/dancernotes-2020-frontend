@@ -1,20 +1,22 @@
 import Card from '../styles/Card'
 import styled from 'styled-components'
 
-const StudioCardsDiv = styled.div``
-
 const EventNotes = styled.p`
   white-space: pre-wrap;
 `
 
 const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
+  console.log('activeEvents', activeEvents)
+  // console.log('allRoutines', allRoutines)
   const eventsToDisplay = events
     .filter((event) => activeEvents.includes(event.type))
     .sort(function (a, b) {
       return a.beginDate < b.beginDate ? -1 : a.beginDate > b.beginDate ? 1 : 0
     })
+  console.log('eventsToDisplay', eventsToDisplay)
 
   const allRoutineAttributes = ['all']
+  // console.log('allRoutineAttributes', allRoutineAttributes)
   for (const routine of allRoutines) {
     allRoutineAttributes.push(routine.name.toLowerCase())
     if (routine.competitiveLevel) {
@@ -25,12 +27,16 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
     }
   }
 
-  function hasAttribute(attr) {
-    return allRoutineAttributes.includes(attr)
+  // function hasAttribute(attr) {
+  //   return allRoutineAttributes.includes(attr)
+  // }
+
+  if (!eventsToDisplay.length) {
+    return <p>There are no events to display</p>
   }
 
   return (
-    <StudioCardsDiv>
+    <div>
       {eventsToDisplay.map((event) => {
         const eventBeginDate = new Date(event.beginDate).toLocaleString(
           'en-US',
@@ -70,7 +76,7 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
               </div>
               {event.url && (
                 <div className='card__section'>
-                  <a rel='noreferrer noopener' href={event.url}>
+                  <a target='_blank' rel='noreferrer noopener' href={event.url}>
                     Event Website
                   </a>
                 </div>
@@ -84,7 +90,7 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
           )
         }
       })}
-    </StudioCardsDiv>
+    </div>
   )
 }
 
