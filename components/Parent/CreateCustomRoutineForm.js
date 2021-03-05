@@ -499,6 +499,7 @@ function CreateCustomRoutineForm({ parent }) {
                 )}
 
                 <button
+                  style={{ marginBottom: '1rem' }}
                   role='button'
                   className='btn-action-primary'
                   onClick={() => {

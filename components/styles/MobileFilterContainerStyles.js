@@ -14,7 +14,7 @@ const MobileFilterContainerStyles = styled.div`
   right: 0;
   height: auto;
   overflow: hidden;
-  z-index: 100;
+  z-index: 1000;
   transition: all 0.5s;
   transform: translate3d(${(props) => (props.showFilter ? 0 : '110%')}, 0, 0);
 

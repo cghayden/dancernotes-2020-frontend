@@ -28,7 +28,7 @@ export default function EventCard({ event }) {
   return (
     <Card key={event.id}>
       <h3>{event.name}</h3>
-      <div className='card__section'>
+      <div>
         <p>
           {eventBeginDate} {eventEndDate ? ` - ${eventEndDate}` : null}
         </p>
