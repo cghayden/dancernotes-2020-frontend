@@ -42,7 +42,7 @@ const Error = ({ error }) => {
         <p>
           Or email{' '}
           <a href='mailto:cghayden@gmail.com for assistance'>
-            admin@coreyhayden.tech
+            cghayden@gmail.com
           </a>{' '}
           for assistance.
         </p>

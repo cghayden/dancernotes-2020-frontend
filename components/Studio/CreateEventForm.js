@@ -83,17 +83,17 @@ const initialInputState = {
   notes: '',
 }
 function CreateEventForm() {
-  const { inputs, updateInputs, handleChange } = useForm(initialInputState)
+  const { inputs, handleChange } = useForm(initialInputState)
   const [appliesTo, setAppliesTo] = useState({})
   const [beginDate, setBeginDate] = useState()
   const [endDate, setEndDate] = useState()
   const [showAddress2, toggleshowAddress2] = useState(false)
 
-  const {
-    data,
-    error: errorLoadingCategories,
-    loading: loadingCategories,
-  } = useQuery(CATEGORIES_QUERY)
+  // const {
+  //   data,
+  //   error: errorLoadingCategories,
+  //   loading: loadingCategories,
+  // } = useQuery(CATEGORIES_QUERY)
 
   const [createStudioEvent, { error, loading }] = useMutation(
     CREATE_STUDIO_EVENT,
@@ -101,14 +101,6 @@ function CreateEventForm() {
       refetchQueries: [{ query: STUDIO_EVENTS_QUERY }],
     }
   )
-
-  const categories = data ? data.studioCategories : {}
-
-  // const allCategories = [
-  //   ...categories.ageDivisions,
-  //   ...categories.styles,
-  //   ...categories.competitiveLevels,
-  // ];
 
   function handleAppliesToChange(e) {
     if (!e) return
@@ -162,7 +154,7 @@ function CreateEventForm() {
             </div>
           </div>
 
-          <div class='form-row'>
+          <div className='form-row'>
             <div className='form-span2 inputItem'>
               <label htmlFor='type'>Type:</label>
               <select

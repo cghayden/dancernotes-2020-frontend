@@ -9,7 +9,7 @@ import { PARENTS_DANCERS } from './Queries'
 
 const SEARCH_STUDIOS_QUERY = gql`
   query SEARCH_STUDIOS_QUERY($searchTerm: String!) {
-    studios(where: { studioName_contains: $searchTerm }) {
+    searchStudios(searchTerm: $searchTerm) {
       id
       studioName
     }
@@ -18,7 +18,7 @@ const SEARCH_STUDIOS_QUERY = gql`
 
 // TODO autofocus on search box with useRef
 export default function NewSearchForStudio() {
-  const [findStudios, { loading, data, error }] = useLazyQuery(
+  const [searchStudios, { loading, data, error }] = useLazyQuery(
     SEARCH_STUDIOS_QUERY,
     {
       fetchPolicy: 'no-cache',
@@ -31,11 +31,11 @@ export default function NewSearchForStudio() {
   } = useQuery(PARENTS_DANCERS)
 
   const dancerId = parentsDancers ? parentsDancers.parentsDancers[0].id : 0
-  const { browsingDancerId, setBrowsingDancer } = useRegistrationContext()
+  const { setBrowsingDancer } = useRegistrationContext()
 
   const router = useRouter()
   const items = data?.studios || []
-  const findStudiosDelayed = debounce(findStudios, 350)
+  const findStudiosDelayed = debounce(searchStudios, 350)
   resetIdCounter()
   const {
     isOpen,

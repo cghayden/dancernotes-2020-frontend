@@ -272,7 +272,7 @@ function CreateDanceClass({ studio }) {
             <section>
               <div>
                 <h3>Class Categories</h3>
-                <Link href='configureClassCategories'>
+                <Link href='/studio/configureClassCategories'>
                   <a className='btn-action-primary btn-small'>
                     Edit Class Categories
                   </a>

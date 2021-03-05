@@ -18,6 +18,7 @@ function EventsPage() {
     loading: loadingEvents,
     error: errorLoadingEvents,
   } = useQuery(PARENT_EVENTS_QUERY)
+  console.log('parentEvents', parentEvents)
 
   //events entered by parent
   const {

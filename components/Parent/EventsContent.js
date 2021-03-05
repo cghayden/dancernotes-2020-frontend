@@ -2,12 +2,7 @@ import { useState } from 'react'
 import EventsFilter from './EventsFilter'
 import EventsDisplay from './EventsDisplay'
 
-function EventsContent({
-  customEvents = [],
-  parentEvents = [],
-  allRoutines,
-  allEvents,
-}) {
+function EventsContent({ allRoutines, allEvents }) {
   const [eventFilter, setFilter] = useState({
     competition: true,
     convention: true,
@@ -16,7 +11,6 @@ function EventsContent({
     camp: true,
     other: true,
   })
-  console.log('allEvents', allEvents)
 
   return (
     <>
