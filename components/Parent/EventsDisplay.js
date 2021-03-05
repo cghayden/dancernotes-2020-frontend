@@ -60,7 +60,7 @@ const EventsDisplay = ({ activeEvents, events, allRoutines }) => {
           return (
             <Card key={event.id}>
               <h3>{event.name}</h3>
-              <div className='card__section'>
+              <div>
                 <p>
                   {eventBeginDate} {eventEndDate ? ` - ${eventEndDate}` : null}
                 </p>

@@ -8,7 +8,7 @@ const Card = styled.div`
   box-shadow: ${(props) => props.theme.dropShadow1};
   margin: 0 auto 1rem auto;
   padding: 1rem 1vmin;
-  width: 98%;
+  width: 97%;
   min-width: 200px;
   max-width: 600px;
   h1,
@@ -20,6 +20,9 @@ const Card = styled.div`
   }
   h3 {
     font-size: 1.1rem;
+  }
+  dd {
+    font-size: 14px;
   }
   &:first-child {
     margin-top: 1rem;
