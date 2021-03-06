@@ -34,7 +34,7 @@ export default function NewSearchForStudio() {
   const { setBrowsingDancer } = useRegistrationContext()
 
   const router = useRouter()
-  const items = data?.studios || []
+  const items = data?.searchStudios || []
   const findStudiosDelayed = debounce(searchStudios, 350)
   resetIdCounter()
   const {

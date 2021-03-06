@@ -4,7 +4,7 @@ const LandingNavStyle = styled.nav`
   padding-top: 1rem;
   display: grid;
   grid-template-columns: min-content 1fr;
-  grid-template-rows: 50px 50px;
+  grid-template-rows: 50px;
 
   .brand {
     color: ${(props) => props.theme.indigo8};
@@ -52,14 +52,6 @@ const AboutButtonsDiv = styled.div`
     }
   }
 `
-const LoginButtonsDiv = styled.div`
-  display: flex;
-  grid-column: 1/-1;
-  place-content: center;
-  button {
-    margin: 0;
-  }
-`
 
 const LandingNav = ({ setView }) => {
   return (
@@ -97,20 +89,7 @@ const LandingNav = ({ setView }) => {
             Retailers
           </button>
         </AboutButtonsDiv>
-        <LoginButtonsDiv>
-          <button
-            className='btn-action-primary-textOnly'
-            onClick={() => setView('signin')}
-          >
-            Sign In
-          </button>
-          <button
-            className='btn-action-primary-textOnly'
-            onClick={() => setView('signup')}
-          >
-            Sign Up
-          </button>
-        </LoginButtonsDiv>
+
         <AboutNav></AboutNav>
       </LandingNavStyle>
     </header>
