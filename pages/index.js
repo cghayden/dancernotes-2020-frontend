@@ -16,7 +16,7 @@ Index.getInitialProps = function ({ res, req }) {
           res.writeHead(302, { Location: `parent/routines` })
         }
         if (token.userType === 'studio') {
-          res.writeHead(302, { Location: `studio/home` })
+          res.writeHead(302, { Location: `studio/` })
         } else {
           res.writeHead(302, { Location: `/` })
         }

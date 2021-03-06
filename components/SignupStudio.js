@@ -57,7 +57,7 @@ function StudioSignup() {
       variables: { ...inputs, agreedToTermsAndPrivacy: new Date(Date.now()) },
       onCompleted: (data) => {
         Router.push({
-          pathname: '/studio',
+          pathname: '/studio/',
         })
       },
     }

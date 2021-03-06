@@ -11,19 +11,27 @@ import RequestResetPassword from './RequestResetPassword'
 const StyledLandingPage = styled.div`
   display: grid;
   grid-template-rows: min-content auto;
-  grid-template-rows: 2fr 8fr 1fr 1fr;
+  grid-template-rows: 1fr 8fr 1fr 1fr;
   height: 100vh;
 `
 
 const StyledLandingContent = styled.div`
-  grid-gap: 20px;
-  padding-top: 30px;
+  /* grid-gap: 20px; */
+  /* padding-top: 30px; */
   margin: 0 auto;
 `
 const PageSignInStyle = styled.div`
   height: 50px;
   display: grid;
   place-items: center;
+`
+const LoginButtonsDiv = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  button {
+    margin: 0;
+  }
 `
 const FooterStyle = styled.footer`
   position: fixed;
@@ -57,7 +65,23 @@ function LandingPage() {
         {view === 'signupStudio' && <SignupStudio />}
         {view == 'requestPassword' && <RequestResetPassword />}
       </StyledLandingContent>
-
+      {view === 'about' ||
+        (view === 'aboutParent' && (
+          <LoginButtonsDiv>
+            <button
+              className='btn-action-primary btn-small'
+              onClick={() => setView('signin')}
+            >
+              Sign In
+            </button>
+            <button
+              className='btn-action-secondary btn-small'
+              onClick={() => setView('signup')}
+            >
+              Try It!
+            </button>
+          </LoginButtonsDiv>
+        ))}
       <FooterStyle>
         <p>
           <span>

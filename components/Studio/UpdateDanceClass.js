@@ -195,7 +195,7 @@ function UpdateDanceClass({ danceClass, studio }) {
               <button role='button' onClick={() => toggleModal(false)}>
                 Try Again
               </button>
-              <Link href={`/studio/home`}>
+              <Link href={`/studio`}>
                 <a>Never Mind!</a>
               </Link>
             </>

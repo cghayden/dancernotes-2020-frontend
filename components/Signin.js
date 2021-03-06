@@ -35,7 +35,7 @@ function Signin({ setView }) {
         Router.push(`/parent/routines`)
       }
       if (data.signin.userType === 'studio') {
-        Router.push(`/studio/home`)
+        Router.push(`/studio/`)
       }
     },
   })
