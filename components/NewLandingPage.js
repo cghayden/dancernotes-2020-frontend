@@ -9,10 +9,8 @@ import SignupStudio from './SignupStudio'
 import RequestResetPassword from './RequestResetPassword'
 
 const StyledLandingPage = styled.div`
-  display: grid;
-  grid-template-rows: min-content auto;
-  grid-template-rows: 1fr 8fr 1fr 1fr;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
 `
 
 const StyledLandingContent = styled.div`
@@ -37,16 +35,12 @@ const FooterStyle = styled.footer`
   position: fixed;
   bottom: 0;
   height: 40px;
-  width: 100%;
   text-align: center;
   width: 100%;
-  align-items: flex-end;
-  grid-row: 4/-1;
   a {
     padding: 0;
     margin: 0;
   }
-  place-self: center;
 `
 function LandingPage() {
   const [view, setView] = useState('aboutParent')
@@ -69,16 +63,28 @@ function LandingPage() {
         (view === 'aboutParent' && (
           <LoginButtonsDiv>
             <button
-              className='btn-action-primary btn-small'
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '160px',
+              }}
+              className='btn-action-primary'
               onClick={() => setView('signin')}
             >
-              Sign In
+              <p>Have an Account?</p>
+              <p>Sign In</p>
             </button>
             <button
-              className='btn-action-secondary btn-small'
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '160px',
+              }}
+              className='btn-action-secondary'
               onClick={() => setView('signup')}
             >
-              Try It!
+              <p>New User? </p>
+              <p>Try it Out!</p>
             </button>
           </LoginButtonsDiv>
         ))}
