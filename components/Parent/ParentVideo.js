@@ -4,8 +4,8 @@ import Error from '../Error'
 
 const VideoWindow = styled.video`
   display: block;
-  width: 64%;
-  margin: 0 auto;
+  width: 60%;
+  margin: 0 auto 16px auto;
   max-width: 320px;
 `
 
