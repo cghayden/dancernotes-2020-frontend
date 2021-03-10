@@ -11,6 +11,9 @@ import RequestResetPassword from './RequestResetPassword'
 const StyledLandingPage = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  max-width: 800px;
+  margin: 0 auto;
 `
 
 const StyledLandingContent = styled.div`
@@ -32,11 +35,10 @@ const LoginButtonsDiv = styled.div`
   }
 `
 const FooterStyle = styled.footer`
-  position: fixed;
-  bottom: 0;
   height: 40px;
   text-align: center;
   width: 100%;
+  margin-top: auto;
   a {
     padding: 0;
     margin: 0;
