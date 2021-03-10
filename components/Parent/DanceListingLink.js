@@ -6,7 +6,7 @@ const HeaderStyle = styled.div`
   width: 100%;
   max-width: 500px;
   display: grid;
-  grid-template-columns: 33% 1fr 50px;
+  grid-template-columns: 33% 1fr 64px;
   align-items: center;
   ul {
     display: flex;
@@ -45,7 +45,9 @@ const DanceCardTime = styled.div`
   grid-column: 3/-1;
   grid-row: 1;
   color: ${(props) => (props.comp ? props.theme.green8 : 'inherit')};
-
+  p {
+    margin: 2px 0;
+  }
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     font-size: 0.825rem;
   }
@@ -65,13 +67,13 @@ function formatTime(timeString) {
   const array = timeString.split(':')
   let hours = parseInt(array[0])
   if (hours == 12) {
-    return hours + ':' + array[1] + 'pm'
+    return hours + ':' + array[1] + ' pm'
   }
   if (hours > 12) {
     hours -= 12
-    return hours + ':' + array[1] + 'pm'
+    return hours + ':' + array[1] + ' pm'
   } else {
-    return timeString + 'am'
+    return timeString + ' am'
   }
 }
 

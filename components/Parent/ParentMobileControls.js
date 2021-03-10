@@ -75,6 +75,7 @@ const StudioTogglersContainer = styled.div`
   background: ${(props) => props.theme.gray0};
   border-radius: ${(props) => props.theme.borderRadius};
   padding: 5px;
+  margin-bottom: 8px;
 `
 const GroupOfCheckboxes = styled.div`
   display: flex;
@@ -110,13 +111,12 @@ const ParentMobileControls = ({ toggleFilter }) => {
     toggleId,
     competitionMode,
     toggleCompetitionMode,
-    showControlPanel,
   } = useDisplayControls()
   const independents = customRoutines.filter((routine) => !routine.studio)
   const hasStudioAndIndependents = studios.length > 0 && independents.length > 0
   const showAllStudioFilter = studios.length > 1 || hasStudioAndIndependents
   return (
-    <ControlPanelStyles showControlPanel={showControlPanel}>
+    <ControlPanelStyles>
       <FilterHeaderStyles>
         <h2>Display:</h2>
         <div>
@@ -203,6 +203,26 @@ const ParentMobileControls = ({ toggleFilter }) => {
             </GroupOfCheckboxes>
           </StudioTogglersContainer>
         )}
+        <StudioTogglersContainer>
+          <GroupOfCheckboxes>
+            <CheckboxAndLabelContainer>
+              <SliderLabel id={'compMode-label'} htmlFor={'compMode-toggler'}>
+                <SliderInput
+                  aria-labelledby={'compMode-label'}
+                  name={'compMode-toggler'}
+                  id={'compMode-toggler'}
+                  type='checkbox'
+                  checked={competitionMode}
+                  onChange={() => toggleCompetitionMode()}
+                />
+                <Slider checked={competitionMode}></Slider>
+              </SliderLabel>
+              <StudioTogglerLabel>
+                Display Competition Schedule
+              </StudioTogglerLabel>
+            </CheckboxAndLabelContainer>
+          </GroupOfCheckboxes>
+        </StudioTogglersContainer>
       </AllTogglersContainer>
     </ControlPanelStyles>
   )

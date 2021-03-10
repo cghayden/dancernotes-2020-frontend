@@ -22,15 +22,14 @@ const MessageDiv = styled.div`
 const messages = [
   `All of your dancers' information, from all of their studios, in one
 place`,
-  `Keep your own dance notes if your studio is not using Dancer Notes
-studio`,
+  `Keep your own dance notes if a studio is not using Dancer Notes`,
 ]
 
 const AboutParent = ({ setView }) => {
   return (
     <div>
       <MessageDiv>
-        <p>Your dancers' and studios' necessities, all in one place</p>
+        <p>All of your dancers' and studios' necessities, all in one place</p>
       </MessageDiv>
       <ParentDemoVideo
         src={

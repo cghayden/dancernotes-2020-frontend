@@ -16,7 +16,7 @@ function StudioHome() {
   // with + option on each
 
   return (
-    <NewStudioLayout page='Home'>
+    <NewStudioLayout>
       {loading && <Loading />}
       {error && <Error error={error} />}
       {data && <Home studio={data.myStudio} />}

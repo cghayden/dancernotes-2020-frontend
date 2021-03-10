@@ -4,8 +4,8 @@ const ParentDisplayContext = createContext(null)
 
 function ParentDisplayProvider({ children }) {
   const [hiddenIds, setHiddenIds] = useState([])
-  const [showControlPanel, setshowControlPanel] = useState(false)
-  const [competitionMode, setcompetitionMode] = useState(false)
+  // const [showControlPanel, toggleControlPanel] = useState(false)
+  const [competitionMode, setCompetitionMode] = useState(false)
 
   function toggleId(id) {
     if (id === 'clear') {
@@ -21,18 +21,16 @@ function ParentDisplayProvider({ children }) {
     }
   }
 
-  function toggleControlPanel() {
-    setshowControlPanel(!showControlPanel)
-  }
+  // function toggleControlPanel() {
+  //   setshowControlPanel(!showControlPanel)
+  // }
   function toggleCompetitionMode() {
-    setcompetitionMode(!competitionMode)
+    setCompetitionMode((competitionMode) => !competitionMode)
   }
 
   return (
     <ParentDisplayContext.Provider
       value={{
-        showControlPanel,
-        toggleControlPanel,
         competitionMode,
         toggleCompetitionMode,
         hiddenIds,

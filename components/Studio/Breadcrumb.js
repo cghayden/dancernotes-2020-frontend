@@ -31,7 +31,7 @@ function Breadcrumb({ page = '', selection }) {
   // home > page > selection or filters
   return (
     <BreadcrumbStyles layout>
-      <Link href={'/studio/home'}>
+      <Link href={'/studio/'}>
         <motion.a
           layout
           className='btn-icon'

@@ -152,7 +152,6 @@ function RoutinesList({ dancerIds }) {
                     <a className='btn-selectionOption'>
                       <DanceListingLink dance={dance} />
                     </a>
-                    {/* <a className='btn-selectionOption'>{dance.name}</a> */}
                   </Link>
                 </li>
               )
@@ -164,7 +163,7 @@ function RoutinesList({ dancerIds }) {
   if (competitionMode) {
     const compRoutines = allRoutines.filter((routine) => routine.entryNumber)
     return (
-      <ul>
+      <ul className='optionsList'>
         {compRoutines
           .sort((a, b) => {
             if (parseInt(a.entryNumber) < parseInt(b.entryNumber)) {
@@ -192,7 +191,9 @@ function RoutinesList({ dancerIds }) {
                 return (
                   <li key={dance.id}>
                     <Link href={`/parent/routines/${dance.id}`}>
-                      <a className='btn-selectionOption'>{dance.name}</a>
+                      <a className='btn-selectionOption'>
+                        <DanceListingLink dance={dance} />
+                      </a>
                     </Link>
                   </li>
                 )
@@ -210,7 +211,9 @@ function RoutinesList({ dancerIds }) {
               return (
                 <li key={dance.id}>
                   <Link href={`/parent/routines/${dance.id}`}>
-                    <a className='btn-selectionOption'>{dance.name}</a>
+                    <a className='btn-selectionOption'>
+                      <DanceListingLink dance={dance} />
+                    </a>
                   </Link>
                 </li>
               )
