@@ -17,8 +17,6 @@ const StyledLandingPage = styled.div`
 `
 
 const StyledLandingContent = styled.div`
-  /* grid-gap: 20px; */
-  /* padding-top: 30px; */
   margin: 0 auto;
 `
 const PageSignInStyle = styled.div`
@@ -73,7 +71,7 @@ function LandingPage() {
               className='btn-action-primary'
               onClick={() => setView('signin')}
             >
-              <p>Have an Account?</p>
+              <p className='font14'>Have an Account?</p>
               <p>Sign In</p>
             </button>
             <button
@@ -85,7 +83,7 @@ function LandingPage() {
               className='btn-action-secondary'
               onClick={() => setView('signup')}
             >
-              <p>New User? </p>
+              <p className='font14'>New User? </p>
               <p>Try it Out!</p>
             </button>
           </LoginButtonsDiv>

@@ -2,11 +2,11 @@ import styled from 'styled-components'
 import { useDisplayControls } from './ParentDisplayProvider'
 import { SliderLabel, SliderInput, Slider } from '../styles/SmallSliderToggler'
 
-const CheckboxAndLabelContainer = styled.div`
+const CompModeTogglerDiv = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: start;
-  margin: 0.25em 0 0.25em 0.5em;
+  margin: 0.75em 0 0.75em 0.5em;
   p {
     margin-left: 5px;
   }
@@ -19,7 +19,7 @@ const CheckboxAndLabelContainer = styled.div`
 function CompModeToggler() {
   const { competitionMode, toggleCompetitionMode } = useDisplayControls()
   return (
-    <CheckboxAndLabelContainer>
+    <CompModeTogglerDiv>
       <SliderLabel id='compModeTogglerLabel' htmlFor='compModeToggler'>
         <SliderInput
           aria-labelledby='compModeTogglerLabel'
@@ -27,12 +27,12 @@ function CompModeToggler() {
           id='compModeToggler'
           type='checkbox'
           checked={competitionMode}
-          onChange={toggleCompetitionMode}
+          onChange={() => toggleCompetitionMode()}
         />
         <Slider checked={competitionMode}></Slider>
       </SliderLabel>
-      <p className='font14'>Competition View</p>
-    </CheckboxAndLabelContainer>
+      <p>Comp Schedule</p>
+    </CompModeTogglerDiv>
   )
 }
 

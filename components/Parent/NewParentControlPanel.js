@@ -64,34 +64,6 @@ const StudioTogglerLabel = styled.label`
   color: ${(props) =>
     props.disabled ? props.theme.disabledText : props.theme.lighterBlack};
 `
-const DancerTogglerLabel = styled.label`
-  padding-left: 0.5rem;
-  font-weight: 600;
-  color: ${(props) => (props.disabled ? props.theme.disabledText : 'inherit')};
-`
-
-const DancerTogglerAndCheckboxes = styled.div`
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  margin-bottom: 100px;
-  ul {
-    display: flex;
-    flex-direction: column;
-    font-size: 0.825rem;
-    li {
-      padding: 0.25rem 0;
-    }
-  }
-
-  @media (min-width: ${(props) => props.theme.largeScreen}) {
-    margin-bottom: 0;
-    ul {
-      font-size: 1rem;
-      align-items: start;
-    }
-  }
-`
 
 const ControlPanel = () => {
   // const [showHelp, setShowHelp] = useState(false)
@@ -102,7 +74,6 @@ const ControlPanel = () => {
     toggleId,
     competitionMode,
     toggleCompetitionMode,
-    showControlPanel,
   } = useDisplayControls()
 
   if (loading) return null
@@ -138,6 +109,7 @@ const ControlPanel = () => {
           </button>
         </FilterButtons>
       </ControlPanelHeading>
+      <CompModeToggler />
       <div>
         {data.parentUser.dancers.map((dancer) => (
           <DancerRoutineTogglers
@@ -202,7 +174,6 @@ const ControlPanel = () => {
           </StudioTogglersContainer>
         </div>
       )}
-      {/* <CompModeToggler /> */}
     </ControlPanelStyles>
   )
 }
