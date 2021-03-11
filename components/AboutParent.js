@@ -36,7 +36,7 @@ const AboutParent = ({ setView }) => {
       </MessageDiv>
       <ParentDemoVideo
         src={
-          'https://res.cloudinary.com/coreytesting/video/upload/v1614995972/DemoVideos/ParentDemoVideo1.mp4'
+          'https://res.cloudinary.com/coreytesting/video/upload/v1615476540/DemoVideos/ParentDemo2.mp4'
         }
       />
       {/* <AboutUl>
