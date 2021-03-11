@@ -492,52 +492,7 @@ function CreateCustomRoutineForm({ parent }) {
             )}
 
             <p>{status}</p>
-            {showModal && (
-              <Alert>
-                {errorCreatingCustomRoutine && (
-                  <>
-                    <p>
-                      Warning: there was a problem saving your class. Please try
-                      again:
-                    </p>
-                    <button role='button' onClick={() => toggleModal(false)}>
-                      Try Again
-                    </button>
-                  </>
-                )}
 
-                {newDanceClass && (
-                  <p>Success - you created {newDanceClass.name}</p>
-                )}
-                {newDanceClass && errorUploadingSong && (
-                  <p>
-                    Warning: there was a problem uploading the music for{' '}
-                    {newDanceClass.name}. You can try to add music now or later
-                    by updating the dance class:
-                    <Link href={`/parent/updateDance/${newDanceClass.id}`}>
-                      <a>Update Class</a>
-                    </Link>
-                  </p>
-                )}
-
-                <button
-                  style={{ marginBottom: '1rem' }}
-                  role='button'
-                  className='btn-action-primary'
-                  onClick={() => {
-                    resetForm()
-                    toggleModal(false)
-                  }}
-                >
-                  Create Another Routine
-                </button>
-                <Link href='/parent/routines'>
-                  <a className='btn-action-secondary'>
-                    I'm finished creating classes
-                  </a>
-                </Link>
-              </Alert>
-            )}
             <div className='form-footer'>
               <button
                 className='btn-action-primary'
@@ -550,6 +505,52 @@ function CreateCustomRoutineForm({ parent }) {
               <CancelButton />
             </div>
           </fieldset>
+          {showModal && (
+            <Alert>
+              {errorCreatingCustomRoutine && (
+                <>
+                  <p>
+                    Warning: there was a problem saving your class. Please try
+                    again:
+                  </p>
+                  <button role='button' onClick={() => toggleModal(false)}>
+                    Try Again
+                  </button>
+                </>
+              )}
+
+              {newDanceClass && (
+                <p>Success - you created {newDanceClass.name}</p>
+              )}
+              {newDanceClass && errorUploadingSong && (
+                <p>
+                  Warning: there was a problem uploading the music for{' '}
+                  {newDanceClass.name}. You can try to add music now or later by
+                  updating the dance class:
+                  <Link href={`/parent/updateDance/${newDanceClass.id}`}>
+                    <a>Update Class</a>
+                  </Link>
+                </p>
+              )}
+
+              <button
+                style={{ marginBottom: '1rem' }}
+                role='button'
+                className='btn-action-primary'
+                onClick={() => {
+                  resetForm()
+                  toggleModal(false)
+                }}
+              >
+                Create Another Routine
+              </button>
+              <Link href='/parent/routines'>
+                <a className='btn-action-secondary'>
+                  I'm finished creating classes
+                </a>
+              </Link>
+            </Alert>
+          )}
         </Form>
       </Card>
     </>
