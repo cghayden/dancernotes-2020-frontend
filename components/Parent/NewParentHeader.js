@@ -21,7 +21,7 @@ export default function NewParentHeader() {
   return (
     <HeaderStyles>
       {/* <input type='text' placeholder='Search...' className='search' /> */}
-      <DancerNotesLogo>dancer notes</DancerNotesLogo>
+      <DancerNotesLogo>dancernotes</DancerNotesLogo>
       <QuickCreateOptions dancers={dancers} />
       <button
         className='hide-gtLarge btn-icon'
