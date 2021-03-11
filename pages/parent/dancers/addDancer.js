@@ -4,7 +4,7 @@ import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayou
 function AddDancerPage() {
   return (
     <ParentNoFilterLayout page={'Add a Dancer'}>
-      <h2>Add a New Dancer</h2>
+      {/* <h2>Add a New Dancer</h2> */}
       <CreateDancerForm />
     </ParentNoFilterLayout>
   )
