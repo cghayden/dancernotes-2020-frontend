@@ -7,7 +7,7 @@ import Form from '../styles/Form'
 import Card from '../styles/Card'
 import Error from '../Error'
 import useForm from '../../utilities/useForm'
-import { SelectChoices } from './CreateCustomRoutineForm'
+import { SelectChoices } from '../styles/SelectChoices'
 import { CUSTOM_EVENTS_QUERY } from './Queries'
 
 const CREATE_CUSTOM_EVENT = gql`
@@ -117,10 +117,12 @@ function CreateCustomEventForm({ parent }) {
         }}
       >
         <fieldset disabled={loading} aria-busy={loading}>
-          <legend>Add A New Event</legend>
+          <h2>Add A New Event</h2>
 
           <div className='input-item'>
-            <label htmlFor='name'>Name</label>
+            <label htmlFor='name'>
+              Event Name <span className='required'> Required</span>
+            </label>
             <input
               required
               type='text'
@@ -150,8 +152,11 @@ function CreateCustomEventForm({ parent }) {
           </div>
 
           <div className='input-item'>
-            <SelectChoices>
-              <label htmlFor='dancer'>Dancer(s):*</label>
+            <label htmlFor='dancer'>
+              Dancer(s) This Event Applies To:{' '}
+              <span className='required'> Required</span>
+            </label>
+            <SelectChoices className='selectChoices'>
               {Object.entries(dancerChoice).map((dancer) => {
                 return (
                   <li key={dancer[0]}>
@@ -199,7 +204,7 @@ function CreateCustomEventForm({ parent }) {
 
           {/* Dates */}
           <div className='form-row'>
-            <div className='form-row-item'>
+            <div className='row-item'>
               <label htmlFor='beginDate'>Begin Date:</label>
               <DatePicker
                 dateFormat='yyyy/MM/dd'
@@ -209,7 +214,7 @@ function CreateCustomEventForm({ parent }) {
                 popperPlacement='auto'
               />
             </div>
-            <div className='form-row-item'>
+            <div className='row-item'>
               <label htmlFor='endDate'>End Date:</label>
               <DatePicker
                 dateFormat='yyyy/MM/dd'
@@ -220,10 +225,9 @@ function CreateCustomEventForm({ parent }) {
               />
             </div>
           </div>
-
-          {/* Location */}
+          <h3 style={{ padding: '0' }}>Location:</h3>
           <div className='input-item'>
-            <label htmlFor='location'>Location</label>
+            <label htmlFor='location'>Location Name</label>
             <input
               type='text'
               name='location'
@@ -231,77 +235,65 @@ function CreateCustomEventForm({ parent }) {
               onChange={handleChange}
             />
           </div>
-          {/* Address */}
-
-          <section className='card__section'>
-            <div className='left'>
-              <h3>Address:</h3>
-              <span className='subHeading'>Optional</span>
-            </div>
-
+          <div className='input-item'>
+            <label htmlFor='address1'>Location Address Line 1</label>
+            <input
+              type='text'
+              name='address1'
+              value={inputs.address1}
+              onChange={handleChange}
+            />
+          </div>
+          {showAddress2 && (
             <div className='input-item'>
-              <label htmlFor='address1'>Address Line 1</label>
+              <label htmlFor='address2'>Address Line 2</label>
               <input
                 type='text'
-                name='address1'
-                value={inputs.address1}
+                name='address2'
+                value={inputs.address2}
                 onChange={handleChange}
               />
             </div>
-            {showAddress2 && (
-              <div className='input-item'>
-                <label htmlFor='address2'>
-                  Address Line 2<span className='subLabel'>Optional</span>
-                </label>
-                <input
-                  type='text'
-                  name='address2'
-                  value={inputs.address2}
-                  onChange={handleChange}
-                />
-              </div>
-            )}
-            <div className='input-item'>
-              <div className='form-row'>
-                <div className='form-row-item'>
-                  <label htmlFor='city'>City</label>
-                  <input
-                    type='text'
-                    name='city'
-                    value={inputs.city}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className='form-row-item'>
-                  <label htmlFor='state'>State</label>
-                  <input
-                    className='state'
-                    type='text'
-                    name='state'
-                    value={inputs.state}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className='form-row-item'>
-                  <label htmlFor='zip'>Zip Code</label>
-                  <input
-                    className='zip'
-                    type='text'
-                    name='zip'
-                    value={inputs.zip}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
+          )}
+          <div className='form-row'>
+            <div className='row-item'>
+              <label htmlFor='city'>City</label>
+              <input
+                type='text'
+                name='city'
+                value={inputs.city}
+                onChange={handleChange}
+              />
             </div>
-          </section>
+            <div className='row-item'>
+              <label htmlFor='state'>State</label>
+              <input
+                className='state'
+                type='text'
+                name='state'
+                value={inputs.state}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='row-item'>
+              <label htmlFor='zip'>Zip Code</label>
+              <input
+                className='zip'
+                type='text'
+                name='zip'
+                value={inputs.zip}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
           <div className='input-item'>
             <label htmlFor='notes'>Notes</label>
             <textarea
               id='notes'
               type='text'
               name='notes'
-              rows='5'
+              rows='3'
               value={inputs.notes}
               onChange={handleChange}
             />

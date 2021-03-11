@@ -36,7 +36,7 @@ export default function ParentQuickMenu({ dancers }) {
               className='btn-action-primary-textOnly'
               href='/parent/routines/createRoutine'
             >
-              Create a Routine
+              Add a Routine
             </a>
           </motion.li>
           <motion.li variants={linkVariants}>

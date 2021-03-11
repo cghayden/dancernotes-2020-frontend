@@ -3,13 +3,13 @@ import Card from '../styles/Card'
 function HairStyleCard(props) {
   const { hairStyle } = props
   return (
-    <Card>
-      <div className='card__header'>
+    <div>
+      <div>
         <h3>{hairStyle.name}</h3>
       </div>
 
       {hairStyle.image ? (
-        <div className='card__section'>
+        <div>
           <img
             className='img-large'
             src={hairStyle.image}
@@ -33,7 +33,7 @@ function HairStyleCard(props) {
           </a>
         )}
       </div>
-    </Card>
+    </div>
   )
 }
 

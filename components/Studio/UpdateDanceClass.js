@@ -68,6 +68,7 @@ function UpdateDanceClass({ danceClass, studio }) {
   const [showModal, toggleModal] = useState(false)
   const [status, setStatus] = useState()
   const [showFileInput, toggleFileInput] = useState(false)
+  console.log('danceClass', danceClass)
 
   const [
     updateDanceClass,

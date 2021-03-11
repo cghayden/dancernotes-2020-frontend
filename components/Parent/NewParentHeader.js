@@ -11,7 +11,7 @@ import styled from 'styled-components'
 
 const DancerNotesLogo = styled.div`
   font-family: 'Dancing Script';
-  font-size: 18px;
+  font-size: 22px;
 `
 
 export default function NewParentHeader() {
@@ -21,7 +21,7 @@ export default function NewParentHeader() {
   return (
     <HeaderStyles>
       {/* <input type='text' placeholder='Search...' className='search' /> */}
-      <DancerNotesLogo>dancer notes</DancerNotesLogo>
+      <DancerNotesLogo>dancernotes</DancerNotesLogo>
       <QuickCreateOptions dancers={dancers} />
       <button
         className='hide-gtLarge btn-icon'

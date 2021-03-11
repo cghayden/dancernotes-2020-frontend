@@ -5,6 +5,8 @@ import NoFilterLayout from '../../../components/Studio/NoFilterLayout'
 import UpdateDanceClass from '../../../components/Studio/UpdateDanceClass'
 import { useStudio } from '../../../components/Studio/useStudio'
 import { SINGLE_DANCE_QUERY } from '../../../components/Studio/Queries'
+import Error from '../../../components/Error'
+import Loading from '../../../components/Loading'
 
 const updateStudioClassDancePage = () => {
   const router = useRouter()
@@ -14,9 +16,16 @@ const updateStudioClassDancePage = () => {
     variables: { id: classId },
   })
   const studio = useStudio()
-
+  if (loading || error) {
+    return (
+      <NoFilterLayout page='Classes' selection='Edit Class'>
+        <Error error={error} />
+        <Loading />
+      </NoFilterLayout>
+    )
+  }
   return (
-    <NoFilterLayout page='Classes' selection='Edit Class'>
+    <NoFilterLayout page='Classes' selection={`Edit ${data.danceClass.name}`}>
       <UpdateDanceClass studio={studio} danceClass={data.danceClass} />
     </NoFilterLayout>
   )

@@ -12,7 +12,7 @@ const SelectionWindowStyles = styled.div`
   h5,
   h6 {
     text-align: center;
-    padding: 1rem 0;
+    padding: 0.5rem 0;
   }
 `
 const SelectionWindowHeaderStyles = styled.div`

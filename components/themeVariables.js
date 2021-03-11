@@ -163,6 +163,9 @@ const theme = {
   yellow7: '#CB6E17',
   yellow8: '#B44D12',
   yellow9: '#8D2B0B',
+
+  dutchGreen: '#019e8c',
+  dutchRed: '#ed632f',
   // text Colors...
   blackText: colors['gray9'],
   lighterBlack: colors['gray7'],
@@ -182,6 +185,7 @@ const theme = {
   bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
   dropShadow1: '1px 4px 7px 5px rgba(0, 0, 0, 0.1)',
   dropShadow3: '1px 4px 7px 5px rgba(0, 0, 0, 0.3)',
+  dropShadow5: '-6px 12px 14px 10px rgba(0, 0, 0, 0.3)',
   dropShadowPizzazz: '0 0 5px 3px rgba(0, 170, 170, 0.9)',
   perimeterShadow: '1px 1px 5px 3px rgba(0, 0, 0, 0.15)',
   hoveringDropdownShadow: '5px 5px 6px 5px rgba(0, 0, 0, 0.10)',
