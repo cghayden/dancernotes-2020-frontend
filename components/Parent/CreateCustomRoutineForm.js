@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react'
+import { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import styled from 'styled-components'
@@ -222,7 +222,7 @@ function CreateCustomRoutineForm({ parent }) {
   }
 
   return (
-    <Fragment>
+    <>
       <Card>
         <Form
           method='post'
@@ -231,37 +231,44 @@ function CreateCustomRoutineForm({ parent }) {
           <fieldset disabled={loading} aria-busy={loading}>
             <h2>Create Your Own Routine</h2>
             <div className='input-item'>
-              <label htmlFor='dancer'>
-                Dancer(s): <span className='required'> Required</span>
-              </label>
-              <SelectChoices className='selectChoices'>
-                {Object.entries(dancerChoice).map((dancer) => (
-                  <li key={dancer[0]}>
-                    <p>{dancer[0]}</p>
-                    <button
-                      type='button'
-                      className='btn-icon'
-                      onClick={() => removeChosenDancer(dancer[0])}
-                    >
-                      X
-                    </button>
-                  </li>
-                ))}
-              </SelectChoices>
+              {/* // 1 dancer? list the dancer,  */}
+              {parent.dancers.length === 1 && (
+                <label htmlFor='dancer'>
+                  Dancer: {parent.dancers[0].firstName}
+                </label>
+              )}
+              {/* // +1 Dancer ? select option */}
               {parent.dancers.length > 1 && (
-                <select
-                  id='dancer'
-                  name='dancer'
-                  value={''}
-                  onChange={(e) => {
-                    handleSelectChange(e)
-                  }}
-                >
-                  <option default value={''} disabled>
-                    Dancer(s)...
-                  </option>
-                  {parent &&
-                    parent.dancers.map((dancer) => (
+                <>
+                  <label htmlFor='dancer'>
+                    Dancer(s): <span className='required'> Required</span>
+                  </label>
+                  <SelectChoices className='selectChoices'>
+                    {Object.entries(dancerChoice).map((dancer) => (
+                      <li key={dancer[0]}>
+                        <p>{dancer[0]}</p>
+                        <button
+                          type='button'
+                          className='btn-icon'
+                          onClick={() => removeChosenDancer(dancer[0])}
+                        >
+                          X
+                        </button>
+                      </li>
+                    ))}
+                  </SelectChoices>
+                  <select
+                    id='dancer'
+                    name='dancer'
+                    value={''}
+                    onChange={(e) => {
+                      handleSelectChange(e)
+                    }}
+                  >
+                    <option default value={''} disabled>
+                      Dancer(s)...
+                    </option>
+                    {parent.dancers.map((dancer) => (
                       <option
                         key={dancer.id}
                         value={dancer.id}
@@ -270,7 +277,8 @@ function CreateCustomRoutineForm({ parent }) {
                         {dancer.firstName}
                       </option>
                     ))}
-                </select>
+                  </select>
+                </>
               )}
             </div>
             <div className='input-item'>
@@ -544,7 +552,7 @@ function CreateCustomRoutineForm({ parent }) {
           </fieldset>
         </Form>
       </Card>
-    </Fragment>
+    </>
   )
 }
 
