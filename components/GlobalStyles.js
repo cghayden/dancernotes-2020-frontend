@@ -188,6 +188,26 @@ const GlobalStyle = createGlobalStyle`
       color: ${theme.indigo0};
       }
     }
+    &.btn-comp{
+      background-color: ${theme.green8};
+      border: 1px solid ${theme.green8};
+      color: white;
+      :hover {
+        border: none;
+      background-color: ${theme.green6};
+      color: white;
+      } 
+    }
+    &.btn-comp-outline{
+      background-color: none;
+      color: ${theme.green8};
+      border: 1px solid ${theme.green8};
+      :hover {
+        border: none;
+      background-color: ${theme.green6};
+      color: white;
+      } 
+    }
     &.btn-comp-outline{
       background-color: none;
       color: ${theme.green8};
@@ -314,9 +334,6 @@ const GlobalStyle = createGlobalStyle`
 
 .subHeading{
   font-size: 12px;
-}
-.left{
-  text-align: left;
 }
 
 .react-datepicker-popper{

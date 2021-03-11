@@ -11,7 +11,7 @@ import {
   SelectionWindowHeaderStyles,
   SelectionWindowMainStyles,
 } from '../styles/SelectionWindowStyles'
-import { LayoutStyles, BodyLayoutStyles } from '../styles/PageLayoutStyles'
+import { BodyLayoutStyles } from '../styles/PageLayoutStyles'
 
 export default function NewParentLayout({
   children,
@@ -24,7 +24,6 @@ export default function NewParentLayout({
   return (
     <>
       <NewParentHeader />
-      {/* <LayoutStyles> */}
       <BodyLayoutStyles>
         <div className='hide-ltLarge'>
           <NewParentNav />
@@ -53,7 +52,6 @@ export default function NewParentLayout({
           <SelectionWindowMainStyles>{children}</SelectionWindowMainStyles>
         </SelectionWindowStyles>
       </BodyLayoutStyles>
-      {/* </LayoutStyles> */}
     </>
   )
 }

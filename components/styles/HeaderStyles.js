@@ -5,7 +5,7 @@ const HeaderStyles = styled.header`
   top: 0;
   left: 0;
   right: 0;
-  background: ${(props) => props.theme.gray5};
+  background: ${(props) => props.theme.dutchGreen};
   display: flex;
   align-items: center;
   justify-content: space-between;

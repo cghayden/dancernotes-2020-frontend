@@ -21,7 +21,7 @@ const Slider = styled.span`
   right: 0;
   bottom: 0;
   background-color: ${(props) =>
-    props.checked ? props.theme.green8 : props.theme.gray2};
+    props.checked ? props.theme.dutchRed : props.theme.gray2};
   -webkit-transition: 0.4s;
   transition: 0.4s;
 

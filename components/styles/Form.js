@@ -14,9 +14,11 @@ const loading = keyframes`
 
 const Form = styled.form`
   /* each form should be inside a card */
+  input[type='time'] {
+    width: 115px;
+  }
   text-align: center;
   border-radius: ${(props) => props.theme.borderRadius};
-  /* color: ${(props) => props.theme.blackText}; */
   background: ${(props) => props.theme.gray0};
   width: 100%;
   max-width: 550px;
@@ -42,7 +44,6 @@ const Form = styled.form`
   h5,
   h6 {
     padding: 0.5rem 0;
-    /* margin-bottom: .75rem; */
   }
 
   label {
@@ -113,10 +114,9 @@ const Form = styled.form`
       animation: ${loading} 1s linear infinite;
     }
   }
-  .time {
+  /* .time {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    /* padding: 0.5rem; */
     justify-items: center;
     justify-content: center;
     margin-bottom: 12px;
@@ -129,44 +129,43 @@ const Form = styled.form`
     label {
       margin-right: 10px;
     }
+  } */
+  .input-item {
+    display: grid;
+    width: 90%;
+    margin: 0 auto 12px auto;
   }
-
   .day {
-    margin: 5px 0;
     text-align: center;
-    display: flex;
-    /* padding: 0.5rem; */
+    width: 70px;
     justify-content: center;
     align-items: center;
     select {
       padding-left: 0;
-      width: 100px;
+      width: 70px;
     }
     label {
       display: inline-block;
       margin-right: 10px;
     }
   }
-
+  .time {
+    width: auto;
+  }
   .fileLoader {
     background: ${(props) => props.theme.indigo2};
   }
-  .input-item {
-    display: grid;
-    width: 90%;
-    margin: 0 auto 12px auto;
-  }
-  input {
-    width: 100%;
-  }
-
   .form-row {
-    margin: 0 auto 12px auto;
-    width: 90%;
+    margin: 0 auto 4px auto;
+    width: 100%;
     display: flex;
-    justify-content: space-around;
+    align-items: center;
     flex-wrap: wrap;
-
+    .row-item {
+      display: grid;
+      width: auto;
+      margin: 0 auto 12px auto;
+    }
     .form-row-item {
       display: grid;
       place-content: center;
@@ -207,6 +206,18 @@ const Form = styled.form`
     select {
       padding: 0.5rem;
     }
+  }
+  .required {
+    font-size: 12px;
+    color: ${(props) => props.theme.red7};
+    padding: 0 8px;
+  }
+  ul.selectChoices {
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: row;
   }
 `
 

@@ -14,9 +14,11 @@ const loading = keyframes`
 
 const Form = styled.form`
   /* each form should be inside a card */
+  input[type='time'] {
+    width: 115px;
+  }
   text-align: center;
   border-radius: ${(props) => props.theme.borderRadius};
-  /* color: ${(props) => props.theme.blackText}; */
   background: ${(props) => props.theme.gray0};
   width: 100%;
   max-width: 550px;
@@ -73,7 +75,6 @@ const Form = styled.form`
 
   button[type='submit'],
   input[type='submit'] {
-    /* width: 50%; */
     flex-grow: 1;
     max-width: 300px;
     padding: 0.5rem;
@@ -156,6 +157,9 @@ const Form = styled.form`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 16px;
+    input {
+      width: auto;
+    }
   }
   .form-span1 {
     grid-column: span 1;

@@ -62,6 +62,9 @@ const SINGLE_DANCE_QUERY = gql`
       music
       performanceName
       size
+      entryNumber
+      entryTime
+      entryDay
       dancers {
         id
         firstName

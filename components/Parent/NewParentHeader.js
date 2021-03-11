@@ -11,7 +11,7 @@ import styled from 'styled-components'
 
 const DancerNotesLogo = styled.div`
   font-family: 'Dancing Script';
-  font-size: 18px;
+  font-size: 22px;
 `
 
 export default function NewParentHeader() {

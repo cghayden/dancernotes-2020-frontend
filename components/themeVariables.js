@@ -163,6 +163,9 @@ const theme = {
   yellow7: '#CB6E17',
   yellow8: '#B44D12',
   yellow9: '#8D2B0B',
+
+  dutchGreen: '#019e8c',
+  dutchRed: '#ed632f',
   // text Colors...
   blackText: colors['gray9'],
   lighterBlack: colors['gray7'],

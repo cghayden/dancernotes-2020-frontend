@@ -231,8 +231,10 @@ function CreateCustomRoutineForm({ parent }) {
           <fieldset disabled={loading} aria-busy={loading}>
             <h2>Create Your Own Routine</h2>
             <div className='input-item'>
-              <SelectChoices>
-                <label htmlFor='dancer'>Dancer(s):*</label>
+              <label htmlFor='dancer'>
+                Dancer(s): <span className='required'> Required</span>
+              </label>
+              <SelectChoices className='selectChoices'>
                 {Object.entries(dancerChoice).map((dancer) => (
                   <li key={dancer[0]}>
                     <p>{dancer[0]}</p>
@@ -246,7 +248,6 @@ function CreateCustomRoutineForm({ parent }) {
                   </li>
                 ))}
               </SelectChoices>
-
               {parent.dancers.length > 1 && (
                 <select
                   id='dancer'
@@ -273,7 +274,10 @@ function CreateCustomRoutineForm({ parent }) {
               )}
             </div>
             <div className='input-item'>
-              <label htmlFor='name'>Name of Routine* </label>
+              <label htmlFor='name'>
+                Routine / Class Name
+                <span className='required'> Required</span>{' '}
+              </label>
               <input
                 required
                 pattern='(?!^ +$)^.+$'
@@ -295,7 +299,9 @@ function CreateCustomRoutineForm({ parent }) {
               />
             </div>
             <div className='input-item'>
-              <label htmlFor='studio'>Studio:*</label>
+              <label htmlFor='studio'>
+                Studio: <span className='required'> Required</span>
+              </label>
               <select
                 required
                 id='studio'
@@ -315,29 +321,53 @@ function CreateCustomRoutineForm({ parent }) {
                 <option value={'none'}>None / Other</option>
               </select>
             </div>
-            <div className='day'>
-              <label htmlFor='day'>Day:</label>
-              <select
-                className='day'
-                id='day'
-                name='day'
-                value={inputs.day}
-                onChange={handleChange}
+            <div className='input-item'>
+              {/* <button
+                type='button'
+                className='btn-action-primary-outline btn-small'
+                onClick={() =>
+                  toggleFileInput((showFileInput) => !showFileInput)
+                }
               >
-                <option default value={''} disabled>
-                  Day...
-                </option>
-                <option value='Mon.'>Mon.</option>
-                <option value='Tue.'>Tue.</option>
-                <option value='Wed.'>Wed.</option>
-                <option value='Thur.'>Thur.</option>
-                <option value='Fri.'>Fri.</option>
-                <option value='Sat.'>Sat.</option>
-                <option value='Sun.'>Sun.</option>
-              </select>
+                Add Music
+              </button> */}
+
+              <div className='input-item'>
+                <label htmlFor='music'>Music</label>
+                <input
+                  type='file'
+                  id='audioFile'
+                  name='audioFile'
+                  placeholder='Upload the music for this dance'
+                  onChange={setSongtoState}
+                />
+              </div>
             </div>
-            <div className='time'>
-              <div>
+
+            <div className='form-row'>
+              <div className='input-item day'>
+                <label htmlFor='day'>Day:</label>
+                <select
+                  className='day'
+                  id='day'
+                  name='day'
+                  value={inputs.day}
+                  onChange={handleChange}
+                >
+                  <option default value={''} disabled>
+                    Day...
+                  </option>
+                  <option value='Mon.'>Mon.</option>
+                  <option value='Tue.'>Tue.</option>
+                  <option value='Wed.'>Wed.</option>
+                  <option value='Thur.'>Thur.</option>
+                  <option value='Fri.'>Fri.</option>
+                  <option value='Sat.'>Sat.</option>
+                  <option value='Sun.'>Sun.</option>
+                </select>
+              </div>
+              {/* <div className='time'> */}
+              <div className='input-item time'>
                 <label htmlFor='startTime'>Start Time:</label>
                 <input
                   type='time'
@@ -349,7 +379,7 @@ function CreateCustomRoutineForm({ parent }) {
                   onChange={handleChange}
                 />
               </div>
-              <div>
+              <div className='input-item time'>
                 <label htmlFor='endTime'>End Time:</label>
                 <input
                   type='time'
@@ -361,6 +391,7 @@ function CreateCustomRoutineForm({ parent }) {
                   onChange={handleChange}
                 />
               </div>
+              {/* </div> */}
             </div>
             <div className='input-item'>
               <label htmlFor='tights'>Tights</label>
@@ -389,44 +420,27 @@ function CreateCustomRoutineForm({ parent }) {
                 id='notes'
                 type='text'
                 name='notes'
-                rows='5'
+                rows='4'
                 value={inputs.notes}
                 onChange={handleChange}
               />
             </div>
-            <button
-              type='button'
-              className='btn-action-primary-outline'
-              onClick={() => toggleFileInput(!showFileInput)}
-            >
-              Add Music
-            </button>
-            <button
-              type='button'
-              className='btn-comp-outline'
-              onClick={() => toggleFileInput(!showCompInput)}
-            >
-              Add Entry
-            </button>
-            {showFileInput && (
-              <div className='input-item'>
-                <label htmlFor='music'>
-                  Upload the music for this dance...
-                </label>
-                <input
-                  type='file'
-                  id='audioFile'
-                  name='audioFile'
-                  placeholder='Upload the music for this dance'
-                  onChange={setSongtoState}
-                />
-              </div>
-            )}
+            <div className='input-item'>
+              <button
+                type='button'
+                className='btn-comp btn-small'
+                onClick={() =>
+                  toggleCompInput((showCompInput) => !showCompInput)
+                }
+              >
+                Add Competition Entry and Time
+              </button>
+            </div>
             {showCompInput && (
               <section>
                 <h3>Competition Entry Information</h3>
                 <div className='form-row'>
-                  <div className='form-row-item'>
+                  <div className='row-item'>
                     <label htmlFor='entryNumber'>Entry Number:</label>
                     <input
                       type='text'
@@ -435,7 +449,7 @@ function CreateCustomRoutineForm({ parent }) {
                       onChange={handleChange}
                     />
                   </div>
-                  <div className='day form-row-item'>
+                  <div className='day row-item'>
                     <label htmlFor='entryDay'>Day:</label>
                     <select
                       id='entryDay'
@@ -454,7 +468,7 @@ function CreateCustomRoutineForm({ parent }) {
                       <option value='Fri.'>Fri.</option>
                     </select>
                   </div>
-                  <div className='form-row-item'>
+                  <div className='row-item'>
                     <label htmlFor='entryTime'>Entry Time: </label>
                     <input
                       type='time'
@@ -535,4 +549,3 @@ function CreateCustomRoutineForm({ parent }) {
 }
 
 export default CreateCustomRoutineForm
-export { SelectChoices }

@@ -5,6 +5,7 @@ const SelectChoices = styled.ul`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  flex-direction: row;
 
   li {
     border-radius: ${(props) => props.theme.borderRadius};

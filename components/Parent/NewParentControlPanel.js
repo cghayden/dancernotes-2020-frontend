@@ -6,7 +6,7 @@ import { SliderLabel, SliderInput, Slider } from '../styles/SmallSliderToggler'
 import { useDisplayControls } from './ParentDisplayProvider'
 import DancerRoutineTogglers from './DancerRoutineTogglers'
 import CompModeToggler from './CompModeToggler'
-import LockedSvg from '../Icons/LockedSvg'
+// import LockedSvg from '../Icons/LockedSvg'
 import TrashIcon from '../Icons/TrashIcon'
 
 const ControlPanelStyles = styled.div`
@@ -26,18 +26,6 @@ const ControlPanelHeading = styled.div`
 const FilterButtons = styled.div`
   display: flex;
 `
-
-const HelpMessage = styled.p`
-  font-size: 14px;
-  padding-bottom: 4px;
-`
-
-const HelpDiv = styled.div`
-  button {
-    font-size: 14px;
-    padding: 5px 10px;
-  }
-`
 const CheckboxAndLabelContainer = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
@@ -49,14 +37,12 @@ const CheckboxAndLabelContainer = styled.div`
     margin-top: 4px;
   }
 `
-
 const StudioTogglersContainer = styled.div``
 const GroupOfCheckboxes = styled.div`
   display: flex;
   justify-content: space-around;
   flex-direction: column;
 `
-
 const StudioTogglerLabel = styled.label`
   font-size: 16px;
   padding-left: 0.5rem;
@@ -64,17 +50,11 @@ const StudioTogglerLabel = styled.label`
   color: ${(props) =>
     props.disabled ? props.theme.disabledText : props.theme.lighterBlack};
 `
-
 const ControlPanel = () => {
-  // const [showHelp, setShowHelp] = useState(false)
   const { data, loading, error } = useQuery(PARENT_USER_QUERY)
+  console.log('data', data)
 
-  const {
-    hiddenIds,
-    toggleId,
-    competitionMode,
-    toggleCompetitionMode,
-  } = useDisplayControls()
+  const { hiddenIds, toggleId } = useDisplayControls()
 
   if (loading) return null
   if (error) return null

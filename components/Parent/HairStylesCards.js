@@ -6,7 +6,7 @@ export default function HairStylesCards({ hairstyles }) {
     <>
       {hairstyles.map((studio) => (
         <Card>
-          <div className='card__header'>
+          <div>
             <h2>Studio: {studio.studioName}</h2>
           </div>
           {studio.hairStyles.length ? (

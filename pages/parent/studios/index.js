@@ -50,7 +50,7 @@ export default function studiosIndex() {
 
   if (data && data.parentUser.studios.length < 1) {
     return (
-      <NewParentLayout page={'Studios'}>
+      <ParentNoFilterLayout page={'Studios'}>
         <Card>
           <div className='card__section'>
             <p>
@@ -62,12 +62,12 @@ export default function studiosIndex() {
           </button>
           {isToggled && <NewSearchForStudio />}
         </Card>
-      </NewParentLayout>
+      </ParentNoFilterLayout>
     )
   }
 
   return (
-    <NewParentLayout page={'Studios'}>
+    <ParentNoFilterLayout page={'Studios'}>
       {data.parentUser.studios.map((studio) => (
         <StudioCard
           key={studio.id}
@@ -75,6 +75,6 @@ export default function studiosIndex() {
           dancers={data.parentUser.dancers}
         ></StudioCard>
       ))}
-    </NewParentLayout>
+    </ParentNoFilterLayout>
   )
 }

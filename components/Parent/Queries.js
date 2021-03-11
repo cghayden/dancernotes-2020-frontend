@@ -140,6 +140,7 @@ const PARENT_USER_QUERY = gql`
       customRoutines {
         id
         name
+        entryNumber
         studio {
           id
         }
@@ -157,6 +158,7 @@ const PARENT_USER_QUERY = gql`
         danceClasses {
           id
           name
+          entryNumber
           studio {
             id
           }
