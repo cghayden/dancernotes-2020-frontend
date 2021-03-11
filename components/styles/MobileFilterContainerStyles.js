@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const MobileFilterContainerStyles = styled.div`
   border-radius: 5px;
-  box-shadow: ${(props) => props.theme.dropShadow3};
+  box-shadow: -6px 12px 14px 10px rgba(0, 0, 0, 0.3);
   background: ${(props) => props.theme.gray2};
   padding: 0.5rem;
   display: grid;

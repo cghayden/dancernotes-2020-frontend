@@ -29,7 +29,10 @@ const AboutParent = ({ setView }) => {
   return (
     <div>
       <MessageDiv>
-        <p>All of your dancers' and studios' necessities, all in one place</p>
+        <p>
+          Everything your dancers' need to know, from all their studios, in one
+          place
+        </p>
       </MessageDiv>
       <ParentDemoVideo
         src={

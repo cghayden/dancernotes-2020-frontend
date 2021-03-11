@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const MobileNavContainer = styled.div`
   background: ${(props) => props.theme.gray3};
-  box-shadow: ${(props) => props.theme.dropShadow3};
+  box-shadow: ${(props) => props.theme.dropShadow5};
   color: ${(props) => props.theme.blackText};
   padding: 0.5rem;
   display: grid;
