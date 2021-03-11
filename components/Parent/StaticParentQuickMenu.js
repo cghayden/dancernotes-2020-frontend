@@ -20,7 +20,7 @@ export default function StaticParentQuickMenu({ dancers }) {
                   className='btn-nav'
                   href='/parent/routines/createRoutine'
                 >
-                  Create a Routine
+                  Add a Routine
                 </a>
               </li>
               <li>
