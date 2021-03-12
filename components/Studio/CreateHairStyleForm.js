@@ -141,7 +141,7 @@ function CreateHairStyleForm() {
       setStatus()
       throw `Image Upload failed: ${file.error}`
     }
-    setStatus('Saving Avatar...')
+    setStatus('Saving Image...')
     setUploadingImage(false)
     await updateHairstyle({
       variables: {

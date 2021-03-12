@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react'
+import { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import Link from 'next/link'
@@ -68,7 +68,6 @@ function UpdateDanceClass({ danceClass, studio }) {
   const [showModal, toggleModal] = useState(false)
   const [status, setStatus] = useState()
   const [showFileInput, toggleFileInput] = useState(false)
-  console.log('danceClass', danceClass)
 
   const [
     updateDanceClass,
@@ -184,7 +183,7 @@ function UpdateDanceClass({ danceClass, studio }) {
   const disableButton = Object.keys(inputs).length < 1
 
   return (
-    <Fragment>
+    <>
       <Modal open={showModal} setOpen={toggleModal}>
         <div>
           {errorUpdatingDanceClass && (
@@ -521,7 +520,7 @@ function UpdateDanceClass({ danceClass, studio }) {
           </fieldset>
         </Form>
       </Card>
-    </Fragment>
+    </>
   )
 }
 

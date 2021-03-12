@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
-import NewStudioLayout from '../../../components/Studio/NewStudioLayout'
 import MakeupSetCard from '../../../components/Studio/MakeupSetCard'
 import { STUDIO_MAKEUPSET_QUERY } from '../../../components/Studio/Queries'
+import NoFilterLayout from '../../../components/Studio/NoFilterLayout'
 
 function MakeupSetPage() {
   const router = useRouter()
@@ -15,14 +15,14 @@ function MakeupSetPage() {
   const makeupSet = data?.studioMakeupSet ? data.studioMakeupSet : {}
 
   return (
-    <NewStudioLayout
+    <NoFilterLayout
       page={'Makeup'}
       error={error}
       loading={loading}
       selection={`${makeupSet?.name}`}
     >
       <MakeupSetCard makeupSet={makeupSet} />
-    </NewStudioLayout>
+    </NoFilterLayout>
   )
 }
 

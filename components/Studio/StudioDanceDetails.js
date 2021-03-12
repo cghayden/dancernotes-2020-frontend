@@ -63,11 +63,6 @@ function StudioDanceDetails({ dance }) {
           </Dd>
         </NoteItem>
       </dl>
-      <div>
-        <Link href={`/studio/updateClass/${dance.id}`}>
-          <a>Edit</a>
-        </Link>
-      </div>
     </StudioDanceCardBodyStyles>
   )
 }

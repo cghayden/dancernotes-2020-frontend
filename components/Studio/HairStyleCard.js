@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import styled from 'styled-components'
 import Card from '../styles/Card'
-import Edit from '../Icons/Edit'
-import EditHairStyleForm from './EditHairStyleForm'
 
 const HairImage = styled.div`
   text-align: center;
@@ -15,19 +13,11 @@ const HairImage = styled.div`
 `
 
 function HairStyleCard({ hairStyle }) {
-  console.log('hairStyle', hairStyle)
-  const [showEdit, setShowEdit] = useState(false)
-  useEffect(() => setShowEdit(false), [hairStyle])
-  return !showEdit ? (
+  return (
     <Card>
       <div className='card__header'>
         <h3>{hairStyle.name}</h3>
-        <button
-          onClick={() => setShowEdit(true)}
-          className='card__header--editButton'
-        >
-          <Edit />
-        </button>
+        <Link href={`/studio/updateHair/${hairStyle.id}`}>Edit</Link>
       </div>
       {hairStyle.image && (
         <HairImage>
@@ -51,8 +41,6 @@ function HairStyleCard({ hairStyle }) {
         )}
       </div>
     </Card>
-  ) : (
-    <EditHairStyleForm hairStyle={hairStyle} setShowEdit={setShowEdit} />
   )
 }
 

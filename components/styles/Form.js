@@ -19,7 +19,7 @@ const Form = styled.form`
   }
   text-align: center;
   border-radius: ${(props) => props.theme.borderRadius};
-  background: ${(props) => props.theme.gray0};
+  background: aliceblue;
   width: 100%;
   max-width: 550px;
   .form-section {
@@ -161,6 +161,7 @@ const Form = styled.form`
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    justify-content: space-evenly;
     .row-item {
       display: grid;
       width: auto;
