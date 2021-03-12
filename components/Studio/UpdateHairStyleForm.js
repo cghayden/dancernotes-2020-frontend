@@ -23,9 +23,10 @@ const initialInputState = {
   link: '',
   description: '',
 }
+const initialInputState = {}
 
 export default function UpdateHairStyleForm({ hairstyle }) {
-  const { inputs, updateInputs, handleChange } = useForm(initialInputState)
+  const { inputs, updateInputs, handleChange } = useForm()
   const [imagePreview, setImagePreview] = useState()
   const [imageForUpload, setImageForUpload] = useState()
   const [errorUploadingToCloudinary, setCloudinaryUploadError] = useState()

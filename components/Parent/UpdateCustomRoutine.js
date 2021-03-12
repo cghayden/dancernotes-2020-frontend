@@ -407,7 +407,16 @@ function UpdateCustomRoutine({ dance, parent }) {
                 Sav
                 {updatingRoutine ? 'ing ' : 'e '} Changes
               </button>
-              <CancelButton />
+              <button
+                className='btn-danger'
+                type='button'
+                onClick={() => {
+                  updateInputs(initialInputState)
+                  Router.back()
+                }}
+              >
+                Cancel
+              </button>{' '}
               <DeleteCustomRoutineButton
                 id={dance.id}
                 musicId={dance.musicId}

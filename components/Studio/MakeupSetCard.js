@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Card from '../styles/Card'
 import { NoteItem, Dt, Dd, Notes } from '../styles/NewCardBodyStyles'
 
@@ -6,6 +7,7 @@ function MakeupSetCard({ makeupSet }) {
     <Card>
       <div>
         <h3>{makeupSet.name}</h3>
+        <Link href={`/studio/updateMakeup/${makeupSet.id}`}>Edit</Link>
         <dl>
           <NoteItem>
             <Dt>Lipstick:</Dt> <Dd>{makeupSet.lipstick}</Dd>
