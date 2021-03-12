@@ -1,16 +1,16 @@
-import React from 'react'
 import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
-import Router from 'next/router'
 import NewForm from '../styles/NewForm'
 import Card from '../styles/Card'
 import Error from '../Error'
-import useForm from '../../utilities/useForm'
 import { STUDIO_MAKEUP_QUERY } from './Queries'
+import useForm from '../../utilities/useForm'
+import Router from 'next/router'
 
-const CREATE_MAKEUP_SET_MUTATION = gql`
-  mutation CREATE_MAKEUP_SET_MUTATION(
-    $name: String!
+const UPDATE_MAKEUP_SET_MUTATION = gql`
+  mutation UPDATE_MAKEUP_SET_MUTATION(
+    $id: ID!
+    $name: String
     $lipstick: String
     $eyeNotes: String
     $eyeShadow: String
@@ -25,7 +25,8 @@ const CREATE_MAKEUP_SET_MUTATION = gql`
     $applyToCategories: String
     $notes: String
   ) {
-    createMakeupSet(
+    updateMakeupSet(
+      id: $id
       name: $name
       lipstick: $lipstick
       eyeNotes: $eyeNotes
@@ -45,61 +46,41 @@ const CREATE_MAKEUP_SET_MUTATION = gql`
     }
   }
 `
+const initialInputState = {}
 
-const initialInputState = {
-  name: '',
-  lipstick: '',
-  eyeNotes: '',
-  eyeShadow: '',
-  eyeLids: '',
-  eyeCrease: '',
-  eyeLiner: '',
-  foundation: '',
-  powder: '',
-  blush: '',
-  bronzer: '',
-  notes: '',
-  applyToCategories: '',
-}
-
-function CreateMakeupForm({ toggleForm, studio }) {
-  const { inputs, updateInputs, handleChange } = useForm(initialInputState)
-
-  const [
-    createMakeupSet,
+export default function UpdateMakeupForm({ makeupSet }) {
+  console.log('makeupSet', makeupSet)
+  const { inputs, updateInputs, handleChange } = useForm()
+  const [updateMakeupSet, { data, error, loading }] = useMutation(
+    UPDATE_MAKEUP_SET_MUTATION,
     {
-      data: newMakeupSet,
-      loading: creatingMakeupSet,
-      error: errorCreatingMakeupSet,
-    },
-  ] = useMutation(CREATE_MAKEUP_SET_MUTATION, {
-    variables: { ...inputs },
-    onCompleted: () => {
-      updateInputs({ ...initialInputState })
-      Router.push('/studio/makeup')
-    },
-    refetchQueries: [{ query: STUDIO_MAKEUP_QUERY }],
-  })
-
-  async function saveMakeupSet(e) {
-    e.preventDefault()
-    await createMakeupSet()
-  }
+      variables: { ...inputs, id: makeupSet.id },
+      refetchQueries: [{ query: STUDIO_MAKEUP_QUERY }],
+      awaitRefetchQueries: true,
+    }
+  )
+  // disable submission of empty state if no updates are made
+  const disableButton = Object.keys(inputs).length < 1
 
   return (
     <Card>
-      <NewForm method='post' onSubmit={(e) => saveMakeupSet(e)}>
-        <h2>Create a Makeup Set</h2>
-        <fieldset disabled={creatingMakeupSet} aria-busy={creatingMakeupSet}>
-          <Error error={errorCreatingMakeupSet} />
-
+      <NewForm
+        method='post'
+        onSubmit={(e) => {
+          e.preventDefault()
+          updateMakeupSet()
+        }}
+      >
+        <h2>Update Makeup Set</h2>
+        <fieldset disabled={loading} aria-busy={loading}>
+          <Error error={error} />
           <div className='form-row'>
             <div className='form-span4'>
               <label htmlFor='name'>Name</label>
               <input
-                required
                 type='text'
                 name='name'
+                defaultValue={makeupSet.name}
                 value={inputs.name}
                 onChange={handleChange}
               />
@@ -116,6 +97,7 @@ function CreateMakeupForm({ toggleForm, studio }) {
               <input
                 type='text'
                 name='eyeNotes'
+                defaultValue={makeupSet.eyeNotes}
                 value={inputs.eyeNotes}
                 onChange={handleChange}
               />
@@ -126,6 +108,7 @@ function CreateMakeupForm({ toggleForm, studio }) {
               <input
                 type='text'
                 name='eyeShadow'
+                defaultValue={makeupSet.eyeShadow}
                 value={inputs.eyeShadow}
                 onChange={handleChange}
               />
@@ -138,6 +121,7 @@ function CreateMakeupForm({ toggleForm, studio }) {
                 type='text'
                 name='eyeLids'
                 rows='2'
+                defaultValue={makeupSet.eyeLids}
                 value={inputs.eyeLids}
                 onChange={handleChange}
               />
@@ -149,6 +133,7 @@ function CreateMakeupForm({ toggleForm, studio }) {
                 type='text'
                 name='eyeCrease'
                 rows='2'
+                defaultValue={makeupSet.eyeCrease}
                 value={inputs.eyeCrease}
                 onChange={handleChange}
               />
@@ -161,6 +146,7 @@ function CreateMakeupForm({ toggleForm, studio }) {
               <input
                 type='text'
                 name='eyeLiner'
+                defaultValue={makeupSet.eyeLiner}
                 value={inputs.eyeLiner}
                 onChange={handleChange}
               />
@@ -171,6 +157,7 @@ function CreateMakeupForm({ toggleForm, studio }) {
               <input
                 type='text'
                 name='eyelashes'
+                defaultValue={makeupSet.eyelashes}
                 value={inputs.eyelashes}
                 onChange={handleChange}
               />
@@ -182,6 +169,7 @@ function CreateMakeupForm({ toggleForm, studio }) {
               <input
                 type='text'
                 name='foundation'
+                defaultValue={makeupSet.foundation}
                 value={inputs.foundation}
                 onChange={handleChange}
               />
@@ -192,6 +180,7 @@ function CreateMakeupForm({ toggleForm, studio }) {
               <input
                 type='text'
                 name='powder'
+                defaultValue={makeupSet.powder}
                 value={inputs.powder}
                 onChange={handleChange}
               />
@@ -203,6 +192,7 @@ function CreateMakeupForm({ toggleForm, studio }) {
               <input
                 type='text'
                 name='blush'
+                defaultValue={makeupSet.blush}
                 value={inputs.blush}
                 onChange={handleChange}
               />
@@ -213,6 +203,7 @@ function CreateMakeupForm({ toggleForm, studio }) {
               <input
                 type='text'
                 name='bronzer'
+                defaultValue={makeupSet.bronzer}
                 value={inputs.bronzer}
                 onChange={handleChange}
               />
@@ -225,6 +216,7 @@ function CreateMakeupForm({ toggleForm, studio }) {
                 type='text'
                 name='notes'
                 rows='5'
+                defaultValue={makeupSet.notes}
                 value={inputs.notes}
                 onChange={handleChange}
               />
@@ -238,7 +230,10 @@ function CreateMakeupForm({ toggleForm, studio }) {
             <button
               className='btn-danger'
               type='button'
-              onClick={() => Router.back()}
+              onClick={() => {
+                updateInputs(initialInputState)
+                Router.back()
+              }}
             >
               Cancel
             </button>
@@ -248,5 +243,3 @@ function CreateMakeupForm({ toggleForm, studio }) {
     </Card>
   )
 }
-
-export default CreateMakeupForm

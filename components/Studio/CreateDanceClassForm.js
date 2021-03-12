@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import Link from 'next/link'
@@ -190,7 +190,7 @@ function CreateDanceClass({ studio }) {
   }
 
   return (
-    <Fragment>
+    <>
       <Modal open={showModal} setOpen={toggleModal}>
         <div>
           {errorCreatingDanceClass && (
@@ -278,8 +278,8 @@ function CreateDanceClass({ studio }) {
                   </a>
                 </Link>
               </div>
-              <div>
-                <div className='input-item'>
+              <div className='form-row'>
+                <div className='row-item'>
                   <label htmlFor='style'>Style: *</label>
                   <select
                     required
@@ -299,7 +299,7 @@ function CreateDanceClass({ studio }) {
                       ))}
                   </select>
                 </div>
-                <div className='input-item'>
+                <div className='row-item'>
                   <label htmlFor='competitiveLevel'>Competitive Level: *</label>
                   <select
                     required
@@ -319,7 +319,7 @@ function CreateDanceClass({ studio }) {
                       ))}
                   </select>
                 </div>
-                <div className='input-item'>
+                <div className='row-item'>
                   <label htmlFor='ageDivision'>Age Division:</label>
                   <select
                     id='ageDivision'
@@ -463,7 +463,7 @@ function CreateDanceClass({ studio }) {
           </fieldset>
         </Form>
       </Card>
-    </Fragment>
+    </>
   )
 }
 

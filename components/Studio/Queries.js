@@ -220,20 +220,6 @@ const STUDIO_EVENT_QUERY = gql`
     }
   }
 `
-const STUDIO_HAIRSTYLE_QUERY = gql`
-  query($id: ID!) {
-    studioHairStyle(id: $id) {
-      id
-      name
-      description
-      image
-      link
-      studio {
-        id
-      }
-    }
-  }
-`
 
 const STUDIO_DANCER = gql`
   query($id: ID!) {
@@ -318,18 +304,6 @@ const STUDIO_MAKEUPSET_QUERY = gql`
   }
 `
 
-const HAIRSTYLES_QUERY = gql`
-  query HAIRSTYLES_QUERY {
-    studioHairStyles {
-      id
-      name
-      description
-      image
-      link
-    }
-  }
-`
-
 const STUDIO_REQUESTS_QUERY = gql`
   query STUDIO_REQUESTS_QUERY {
     myStudio {
@@ -360,6 +334,34 @@ const STUDIO_REQUESTS_QUERY = gql`
           lastName
           email
         }
+      }
+    }
+  }
+`
+
+const HAIRSTYLES_QUERY = gql`
+  query HAIRSTYLES_QUERY {
+    studioHairStyles {
+      id
+      name
+      description
+      image
+      imageId
+      link
+    }
+  }
+`
+const STUDIO_HAIRSTYLE_QUERY = gql`
+  query($id: ID!) {
+    studioHairStyle(id: $id) {
+      id
+      name
+      description
+      image
+      imageId
+      link
+      studio {
+        id
       }
     }
   }
