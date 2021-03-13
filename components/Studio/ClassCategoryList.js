@@ -8,11 +8,15 @@ import DeleteIcon from '../Icons/DeleteIcon'
 import Card from '../styles/Card'
 import Form from '../styles/Form'
 import Error from '../Error'
+import XSvg from '../Icons/XSvg'
+// import TrashIcon from '../Icons/TrashIcon'
 
 //TODO - add optimistic return to add category to list
 const CategoryCard = styled(Card)`
   min-width: unset;
   width: unset;
+  display: flex;
+  flex-direction: column;
   label {
     font-size: 0.875rem;
   }
@@ -41,13 +45,18 @@ const StyledDeleteButton = styled.button`
 `
 
 const StyledUl = styled.ul`
-  li {
-    display: flex;
-    align-items: center;
-    padding: 0.25rem 0;
+  padding-bottom: 1rem;
+`
+const NewCategoryForm = styled(Form)`
+  .input-item {
+    max-width: 220px;
+    text-align: left;
+    margin: 0;
+    input {
+      margin: 2px 0 4px 0;
+    }
   }
 `
-
 const UPDATE_CATEGORY_MUTATION = gql`
   mutation UPDATE_CATEGORY_MUTATION($category: String!, $items: [String]!) {
     updateStudioClassCategory(category: $category, items: $items) {
@@ -55,7 +64,20 @@ const UPDATE_CATEGORY_MUTATION = gql`
     }
   }
 `
-
+const ItemWithDelete = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid ${(props) => props.theme.gray2};
+  padding: 2px 4px;
+  &:hover {
+    background: white;
+  }
+  button {
+    margin-left: auto;
+    color: ${(props) => props.theme.dutchRed};
+  }
+`
 function ClassCategoryList({ existingItems, category }) {
   const [newItems, setNewItems] = useState('')
 
@@ -72,13 +94,15 @@ function ClassCategoryList({ existingItems, category }) {
   const regex = new RegExp(`,\s*`, 'g')
 
   async function deleteItemFromCategoryList(e) {
-    const newItems = existingItems.filter((item) => item !== e.target.value)
-    return await updateCategoryMutation({
-      variables: {
-        category,
-        items: newItems,
-      },
-    })
+    if (confirm('Do you Really Want To Delete This Category?')) {
+      const newItems = existingItems.filter((item) => item !== e.target.value)
+      return await updateCategoryMutation({
+        variables: {
+          category,
+          items: newItems,
+        },
+      })
+    }
   }
 
   function formatCategoryHeading(category) {
@@ -91,7 +115,39 @@ function ClassCategoryList({ existingItems, category }) {
 
   return (
     <CategoryCard>
-      <Form
+      <div>
+        <h4>{categoryHeading}</h4>
+        <StyledUl>
+          {existingItems.map((item) => (
+            <ItemWithDelete key={item}>
+              {item}
+              <button
+                title='Delete this option'
+                type='button'
+                className='btn-icon'
+                aria-label={`delete `}
+                value={item}
+                onClick={(e) => deleteItemFromCategoryList(e)}
+              >
+                <XSvg w={14} h={14} />
+                {/* <TrashIcon w={12} h={12} /> */}
+              </button>
+              {/* <StyledDeleteButton
+                    title='Delete this option'
+                    type='button'
+                    className='btn-icon'
+                    aria-label={`delete `}
+                    value={item}
+                    onClick={(e) => deleteItemFromCategoryList(e)}
+                  >
+                    <DeleteIcon />
+                  </StyledDeleteButton>{' '} */}
+            </ItemWithDelete>
+          ))}
+        </StyledUl>
+      </div>
+      <NewCategoryForm
+        style={{ marginTop: 'auto' }}
         method='post'
         onSubmit={async (e) => {
           e.preventDefault(e)
@@ -103,27 +159,8 @@ function ClassCategoryList({ existingItems, category }) {
           setNewItems('')
         }}
       >
-        <h4>{categoryHeading}</h4>
-
-        <div className='card__section'>
-          <StyledUl>
-            {existingItems.map((item) => (
-              <li key={item}>
-                <StyledDeleteButton
-                  title='Delete this option'
-                  type='button'
-                  aria-label={`delete ${item}`}
-                  value={item}
-                  onClick={(e) => deleteItemFromCategoryList(e)}
-                >
-                  <DeleteIcon />
-                </StyledDeleteButton>{' '}
-                {item}
-              </li>
-            ))}
-          </StyledUl>
-        </div>
         <fieldset disabled={loading} aria-busy={loading}>
+          <Error error={error} />
           <div className='input-item'>
             <label>
               {`Add ${categoryHeading.slice(0, -1)}(s), separated by a comma`}
@@ -137,12 +174,11 @@ function ClassCategoryList({ existingItems, category }) {
               onChange={(e) => setNewItems(e.target.value)}
             />
           </div>
-          <Error error={error} />
           <button type='submit' className='btn-action-primary'>
             Add to Category
           </button>
         </fieldset>
-      </Form>
+      </NewCategoryForm>
     </CategoryCard>
   )
 }

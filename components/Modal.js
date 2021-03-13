@@ -11,7 +11,16 @@ const AnimatedModalContainer = styled.div`
   left: 10%;
   padding: 1em;
   text-align: center;
-
+  .modal-options {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    :no-button,
+    a {
+      margin: 1rem;
+    }
+  }
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     left: 3%;
     right: 3%;

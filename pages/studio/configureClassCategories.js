@@ -3,7 +3,7 @@ import NoFilterLayout from '../../components/Studio/NoFilterLayout'
 
 function configureClassCategoriesPage() {
   return (
-    <NoFilterLayout>
+    <NoFilterLayout page={'Configure Class Categories'}>
       <EditClassCategories />
     </NoFilterLayout>
   )
