@@ -25,7 +25,7 @@ const BreadcrumbStyles = styled(motion.div)`
   }
 `
 
-function Breadcrumb({ page = '', selection }) {
+function Breadcrumb({ page = '', selection = '' }) {
   const { filter } = useContext(FilterContext)
 
   // home > page > selection or filters
@@ -42,11 +42,21 @@ function Breadcrumb({ page = '', selection }) {
           <span className='sr-only'>Home</span>
         </motion.a>
       </Link>
-      <motion.span layout>{'>'}</motion.span>
       {/* <motion.div key='page' layout> */}
-      <Link href={`/studio/${page.toLowerCase()}`}>
-        <a>{page}</a>
-      </Link>
+      {page && selection && (
+        <>
+          <motion.span layout>{'>'}</motion.span>
+          <Link href={`/studio/${page.toLowerCase()}`}>
+            <a>{page}</a>
+          </Link>
+        </>
+      )}
+      {page && !selection && (
+        <>
+          <motion.span layout>{'>'}</motion.span>
+          <p>{page}</p>
+        </>
+      )}
       {/* </motion.div> */}
       <AnimatePresence>
         {/* selection? render selection name */}

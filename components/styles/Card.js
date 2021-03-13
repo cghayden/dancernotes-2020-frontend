@@ -11,11 +11,8 @@ const Card = styled.div`
   width: 94%;
   min-width: 200px;
   max-width: 600px;
-  &:first-child {
-    margin-top: 1rem;
-  }
   &:last-child {
-    margin-bottom: 50vh;
+    /* margin-bottom: 50vh; */
   }
   &::only-child {
     margin-bottom: 0;

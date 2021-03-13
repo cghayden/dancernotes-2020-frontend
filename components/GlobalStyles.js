@@ -14,8 +14,8 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     height:100vh; 
-    overflow: auto;
-    background-color: ${theme.background};
+    overflow: hidden;
+    background-color: ${theme.gray0};
     margin: 0;
     line-height: 1.25;
     font-family: "Source Sans Pro", "Roboto", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;

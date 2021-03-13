@@ -231,7 +231,9 @@ function CreateDanceClass({ studio }) {
             <legend>Add A New Dance Class To Your Schedule</legend>
 
             <div className='input-item'>
-              <label htmlFor='name'>Class Name *</label>
+              <label htmlFor='name'>
+                Class Name <span className='required'> Required</span>
+              </label>
               <input
                 required
                 type='text'
@@ -251,7 +253,9 @@ function CreateDanceClass({ studio }) {
               />
             </div>
             <div className='input-item'>
-              <label htmlFor='size'>Size: *</label>
+              <label htmlFor='size'>
+                Size: <span className='required'> Required</span>
+              </label>
               <select
                 required
                 id='size'
@@ -300,7 +304,10 @@ function CreateDanceClass({ studio }) {
                   </select>
                 </div>
                 <div className='row-item'>
-                  <label htmlFor='competitiveLevel'>Competitive Level: *</label>
+                  <label htmlFor='competitiveLevel'>
+                    Competitive Level:{' '}
+                    <span className='required'> Required</span>
+                  </label>
                   <select
                     required
                     id='competitiveLevel'

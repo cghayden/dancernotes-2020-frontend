@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
 const SelectionWindowStyles = styled.div`
+  background: ${(props) => props.theme.gray0};
+
   height: 100vh;
   overflow-y: auto;
   position: relative;
@@ -37,13 +39,7 @@ const SelectionWindowMainStyles = styled.main`
   display: flex;
   flex-direction: column;
   overflow: auto;
-  ul {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-size: 1rem;
-    letter-spacing: 0.02rem;
-  }
+  padding-top: 1rem;
 `
 export {
   SelectionWindowStyles,

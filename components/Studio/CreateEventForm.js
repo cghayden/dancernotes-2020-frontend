@@ -8,6 +8,10 @@ import Error from '../Error'
 import useForm from '../../utilities/useForm'
 import { SelectChoices } from '../styles/SelectChoices'
 import { STUDIO_EVENTS_QUERY, CATEGORIES_QUERY } from './Queries'
+import Router from 'next/router'
+import Modal from '../Modal'
+import Link from 'next/link'
+import { DataStore } from 'apollo-client/data/store'
 
 const CREATE_STUDIO_EVENT = gql`
   mutation CREATE_STUDIO_EVENT(
@@ -87,6 +91,7 @@ function CreateEventForm() {
   const [appliesTo, setAppliesTo] = useState({})
   const [beginDate, setBeginDate] = useState()
   const [endDate, setEndDate] = useState()
+  const [showModal, toggleModal] = useState(false)
 
   // const {
   //   data,
@@ -94,12 +99,15 @@ function CreateEventForm() {
   //   loading: loadingCategories,
   // } = useQuery(CATEGORIES_QUERY)
 
-  const [createStudioEvent, { error, loading }] = useMutation(
+  const [createStudioEvent, { data, error, loading }] = useMutation(
     CREATE_STUDIO_EVENT,
     {
       refetchQueries: [{ query: STUDIO_EVENTS_QUERY }],
+      awaitRefetchQueries: true,
+      onCompleted: () => toggleModal(true),
     }
   )
+  console.log('data', data)
 
   function handleAppliesToChange(e) {
     if (!e) return
@@ -130,201 +138,246 @@ function CreateEventForm() {
   }
 
   return (
-    <Card>
-      <Form
-        method='post'
-        onSubmit={async (e) => {
-          await saveEvent(e)
-        }}
-      >
-        <fieldset disabled={loading} aria-busy={loading}>
-          <legend>Add A New Event</legend>
-          <Error error={error} />
-          <div className='input-item'>
-            <label htmlFor='name'>Name</label>
-            <input
-              required
-              type='text'
-              name='name'
-              value={inputs.name}
-              onChange={handleChange}
-            />
-          </div>
-          <div className='form-row'>
-            <div className='row-item'>
-              <label htmlFor='type'>Type:</label>
-              <select
-                id='type'
-                name='type'
-                value={inputs.type}
+    <>
+      <Card>
+        <Form
+          method='post'
+          onSubmit={async (e) => {
+            await saveEvent(e)
+          }}
+        >
+          <fieldset disabled={loading} aria-busy={loading}>
+            <legend>Add A New Event</legend>
+            <Error error={error} />
+            <div className='input-item'>
+              <label htmlFor='name'>
+                Name <span className='required'> Required</span>
+              </label>
+              <input
+                required
+                type='text'
+                name='name'
+                value={inputs.name}
                 onChange={handleChange}
-              >
-                <option default value={'all'} disabled>
-                  (Competition, Rehearsal, etc...)?
-                </option>
-                <option value='competition'>Competition</option>
-                <option value='rehearsal'>Rehearsal</option>
-                <option value='recital'>Recital</option>
-                <option value='convention'>Convention</option>
-                <option value='camp'>Camp</option>
-                <option value='other'>Other</option>
-              </select>
+              />
             </div>
-
-            <div className='row-item'>
-              <label htmlFor='appliesTo'>This Event Applies To:</label>
-              <select
-                name='appliesTo'
-                value={''}
-                onChange={(e) => handleAppliesToChange(e)}
-              >
-                <option default value={''} disabled>
-                  Applies to...
-                </option>
-                {appliesToOptions.map((category) => (
-                  <option
-                    key={category.value}
-                    value={category.value}
-                    label={category.label}
-                  >
-                    {category.label}
+            <div className='form-row'>
+              <div className='row-item'>
+                <label htmlFor='type'>
+                  Type: <span className='required'> Required</span>
+                </label>
+                <select
+                  required
+                  id='type'
+                  name='type'
+                  value={inputs.type}
+                  onChange={handleChange}
+                >
+                  <option default value={'all'} disabled>
+                    (Competition, Rehearsal, etc...)?
                   </option>
-                ))}
-              </select>
+                  <option value='competition'>Competition</option>
+                  <option value='rehearsal'>Rehearsal</option>
+                  <option value='recital'>Recital</option>
+                  <option value='convention'>Convention</option>
+                  <option value='camp'>Camp</option>
+                  <option value='other'>Other</option>
+                </select>
+              </div>
+              <div className='row-item'>
+                <label htmlFor='appliesTo'>
+                  This Event Applies To:{' '}
+                  <span className='required'> Required</span>
+                </label>
+                <select
+                  name='appliesTo'
+                  value={''}
+                  onChange={(e) => handleAppliesToChange(e)}
+                >
+                  <option default value={''} disabled>
+                    Applies to...
+                  </option>
+                  {appliesToOptions.map((category) => (
+                    <option
+                      key={category.value}
+                      value={category.value}
+                      label={category.label}
+                    >
+                      {category.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-          </div>
-          <SelectChoices>
-            {Object.entries(appliesTo).map((entry) => (
-              <li key={entry[0]}>
-                {entry[1]}
-                <span>
-                  <button
-                    className='btn-icon'
-                    type='button'
-                    onClick={() => removeAppliesTo(entry[0])}
-                  >
-                    X
-                  </button>
-                </span>
-              </li>
-            ))}
-          </SelectChoices>
-          {/* Dates */}
-          <div className='form-row'>
-            <div className='row-item'>
-              <label htmlFor='beginDate'>Begin Date:</label>
-              <DatePicker
-                dateFormat='yyyy/MM/dd'
-                id='beginDate'
-                selected={beginDate}
-                onChange={(date) => setBeginDate(date)}
-                popperPlacement='auto'
-              />
+            <SelectChoices>
+              {Object.entries(appliesTo).map((entry) => (
+                <li key={entry[0]}>
+                  {entry[1]}
+                  <span>
+                    <button
+                      className='btn-icon'
+                      type='button'
+                      onClick={() => removeAppliesTo(entry[0])}
+                    >
+                      X
+                    </button>
+                  </span>
+                </li>
+              ))}
+            </SelectChoices>
+            {/* Dates */}
+            <div className='form-row'>
+              <div className='row-item'>
+                <label htmlFor='beginDate'>Begin Date:</label>
+                <DatePicker
+                  dateFormat='yyyy/MM/dd'
+                  id='beginDate'
+                  selected={beginDate}
+                  onChange={(date) => setBeginDate(date)}
+                  popperPlacement='auto'
+                />
+              </div>
+              <div className='row-item'>
+                <label htmlFor='endDate'>End Date:</label>
+                <DatePicker
+                  dateFormat='yyyy/MM/dd'
+                  id='endDate'
+                  selected={endDate}
+                  onChange={(date) => setEndDate(date)}
+                  popperPlacement='auto'
+                />
+              </div>
             </div>
-            <div className='row-item'>
-              <label htmlFor='endDate'>End Date:</label>
-              <DatePicker
-                dateFormat='yyyy/MM/dd'
-                id='endDate'
-                selected={endDate}
-                onChange={(date) => setEndDate(date)}
-                popperPlacement='auto'
-              />
-            </div>
-          </div>
-          <div className='input-item'>
-            <label htmlFor='website'>Website</label>
-            <input
-              type='text'
-              name='url'
-              value={inputs.url}
-              onChange={handleChange}
-            />
-          </div>
-          <div className='input-item'>
-            <label htmlFor='location'>Location Name</label>
-            <input
-              type='text'
-              name='location'
-              value={inputs.location}
-              onChange={handleChange}
-            />
-          </div>
-          <div className='input-item'>
-            <label htmlFor='address1'>Address Line 1</label>
-            <input
-              type='text'
-              name='address1'
-              value={inputs.address1}
-              onChange={handleChange}
-            />
-          </div>
-          <div className='input-item'>
-            <label htmlFor='address2'>Address Line 2</label>
-            <input
-              type='text'
-              name='address2'
-              value={inputs.address2}
-              onChange={handleChange}
-            />
-          </div>
-          <div className='form-row'>
-            <div className='row-item'>
-              <label htmlFor='city'>City</label>
+            <div className='input-item'>
+              <label htmlFor='website'>Website</label>
               <input
                 type='text'
-                name='city'
-                value={inputs.city}
+                name='url'
+                value={inputs.url}
                 onChange={handleChange}
               />
             </div>
-            <div className='row-item'>
-              <label htmlFor='state'>State</label>
+            <div className='input-item'>
+              <label htmlFor='location'>Location Name</label>
               <input
-                className='state'
                 type='text'
-                name='state'
-                value={inputs.state}
+                name='location'
+                value={inputs.location}
                 onChange={handleChange}
               />
             </div>
-            <div className='row-item'>
-              <label htmlFor='zip'>Zip Code</label>
+            <div className='input-item'>
+              <label htmlFor='address1'>Address Line 1</label>
               <input
-                className='zip'
                 type='text'
-                name='zip'
-                value={inputs.zip}
+                name='address1'
+                value={inputs.address1}
                 onChange={handleChange}
               />
             </div>
-          </div>
-          <div className='input-item'>
-            <label htmlFor='notes'>Notes</label>
-            <textarea
-              id='notes'
-              type='text'
-              name='notes'
-              rows='4'
-              value={inputs.notes}
-              onChange={handleChange}
-            />
-          </div>
+            <div className='input-item'>
+              <label htmlFor='address2'>Address Line 2</label>
+              <input
+                type='text'
+                name='address2'
+                value={inputs.address2}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='form-row'>
+              <div className='row-item'>
+                <label htmlFor='city'>City</label>
+                <input
+                  type='text'
+                  name='city'
+                  value={inputs.city}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className='row-item'>
+                <label htmlFor='state'>State</label>
+                <input
+                  className='state'
+                  type='text'
+                  name='state'
+                  value={inputs.state}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className='row-item'>
+                <label htmlFor='zip'>Zip Code</label>
+                <input
+                  className='zip'
+                  type='text'
+                  name='zip'
+                  value={inputs.zip}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className='input-item'>
+              <label htmlFor='notes'>Notes</label>
+              <textarea
+                id='notes'
+                type='text'
+                name='notes'
+                rows='4'
+                value={inputs.notes}
+                onChange={handleChange}
+              />
+            </div>
+            {/* footer */}
+            <div className='form-footer'>
+              <button
+                className='btn-action-primary'
+                type='submit'
+                disabled={loading}
+              >
+                Creat
+                {loading ? 'ing ' : 'e '} Event
+              </button>
+            </div>
+          </fieldset>
+        </Form>
+      </Card>
+      <Modal open={showModal} setOpen={toggleModal}>
+        <div>
+          {error && (
+            <>
+              <p>
+                Warning: there was a problem creating the event. Please try
+                again:
+              </p>
+              <button
+                className='btn-action-primary'
+                role='button'
+                onClick={() => toggleModal(false)}
+              >
+                Try Again
+              </button>
+            </>
+          )}
 
-          {/* footer */}
-          <div className='form-footer'>
+          {data?.createStudioEvent && (
+            <p>Success - you created {data.createStudioEvent.name}</p>
+          )}
+          <div className='modal-options'>
             <button
               className='btn-action-primary'
-              type='submit'
-              disabled={loading}
+              role='button'
+              onClick={() => toggleModal(false)}
             >
-              Creat
-              {loading ? 'ing ' : 'e '} Event
+              Create Another Event
             </button>
+            <Link href='/studio/events'>
+              <a className='btn-action-secondary'>
+                I'm finished creating events
+              </a>
+            </Link>
           </div>
-        </fieldset>
-      </Form>
-    </Card>
+        </div>
+      </Modal>
+    </>
   )
 }
 

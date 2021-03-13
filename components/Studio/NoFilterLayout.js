@@ -3,7 +3,7 @@ import Error from '../../components/Error'
 import Loading from '../../components/Loading'
 import NewStudioHeader from './NewStudioHeader'
 import NewStudioNav from './NewStudioNav'
-import Breadcrumb from './Breadcrumb'
+import Breadcrumb from './StudioBreadcrumb'
 import {
   SelectionWindowStyles,
   SelectionWindowHeaderStyles,
