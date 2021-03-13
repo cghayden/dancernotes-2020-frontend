@@ -17,12 +17,6 @@ const HairImage = styled.div`
     height: 300px;
   }
 `
-const initialInputState = {
-  name: '',
-  image: '',
-  link: '',
-  description: '',
-}
 const initialInputState = {}
 
 export default function UpdateHairStyleForm({ hairstyle }) {
