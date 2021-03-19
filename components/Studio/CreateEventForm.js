@@ -1,17 +1,16 @@
-import { useState } from 'react'
-import { useMutation, useQuery } from '@apollo/client'
-import gql from 'graphql-tag'
-import DatePicker from 'react-datepicker'
-import Form from '../styles/Form'
-import Card from '../styles/Card'
-import Error from '../Error'
-import useForm from '../../utilities/useForm'
-import { SelectChoices } from '../styles/SelectChoices'
-import { STUDIO_EVENTS_QUERY, CATEGORIES_QUERY } from './Queries'
-import Router from 'next/router'
-import Modal from '../Modal'
-import Link from 'next/link'
-import { DataStore } from 'apollo-client/data/store'
+import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import gql from 'graphql-tag';
+import DatePicker from 'react-datepicker';
+import Form from '../styles/Form';
+import Card from '../styles/Card';
+import Error from '../Error';
+import useForm from '../../utilities/useForm';
+import { SelectChoices } from '../styles/SelectChoices';
+import { STUDIO_EVENTS_QUERY } from './Queries';
+import Router from 'next/router';
+import Modal from '../Modal';
+import Link from 'next/link';
 
 const CREATE_STUDIO_EVENT = gql`
   mutation CREATE_STUDIO_EVENT(
@@ -50,7 +49,7 @@ const CREATE_STUDIO_EVENT = gql`
       appliesTo
     }
   }
-`
+`;
 const appliesToOptions = [
   { value: 'all', label: 'All Classes', name: 'appliesTo' },
   { value: 'recreational', label: 'Recreational', name: 'appliesTo' },
@@ -73,7 +72,7 @@ const appliesToOptions = [
   { value: 'production', label: 'Production', name: 'appliesTo' },
   { value: 'acro team', label: 'Acro Team', name: 'appliesTo' },
   { value: 'mini acro team', label: 'Mini Acro Team', name: 'appliesTo' },
-]
+];
 const initialInputState = {
   type: '',
   name: '',
@@ -85,19 +84,14 @@ const initialInputState = {
   zip: '',
   url: '',
   notes: '',
-}
-function CreateEventForm() {
-  const { inputs, handleChange } = useForm(initialInputState)
-  const [appliesTo, setAppliesTo] = useState({})
-  const [beginDate, setBeginDate] = useState()
-  const [endDate, setEndDate] = useState()
-  const [showModal, toggleModal] = useState(false)
-
-  // const {
-  //   data,
-  //   error: errorLoadingCategories,
-  //   loading: loadingCategories,
-  // } = useQuery(CATEGORIES_QUERY)
+};
+function CreateEventForm({ categories }) {
+  console.log('categories', categories);
+  const { inputs, handleChange } = useForm(initialInputState);
+  const [appliesTo, setAppliesTo] = useState({});
+  const [beginDate, setBeginDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [showModal, toggleModal] = useState(false);
 
   const [createStudioEvent, { data, error, loading }] = useMutation(
     CREATE_STUDIO_EVENT,
@@ -106,27 +100,27 @@ function CreateEventForm() {
       awaitRefetchQueries: true,
       onCompleted: () => toggleModal(true),
     }
-  )
-  console.log('data', data)
+  );
+  console.log('data', data);
 
   function handleAppliesToChange(e) {
-    if (!e) return
-    const selectedValue = e.target.selectedOptions[0].value
-    const selectedLabel = e.target.selectedOptions[0].label
-    setAppliesTo({ ...appliesTo, [selectedValue]: selectedLabel })
+    if (!e) return;
+    const selectedValue = e.target.selectedOptions[0].value;
+    const selectedLabel = e.target.selectedOptions[0].label;
+    setAppliesTo({ ...appliesTo, [selectedValue]: selectedLabel });
   }
 
   function removeAppliesTo(selection) {
-    const choices = { ...appliesTo }
-    delete choices[selection]
-    setAppliesTo(choices)
+    const choices = { ...appliesTo };
+    delete choices[selection];
+    setAppliesTo(choices);
   }
 
   async function saveEvent(e) {
-    e.preventDefault()
-    const applyTo = Object.keys(appliesTo)
-    const beginningDate = beginDate ? beginDate.toISOString() : null
-    const endingDate = endDate ? endDate.toISOString() : null
+    e.preventDefault();
+    const applyTo = Object.keys(appliesTo);
+    const beginningDate = beginDate ? beginDate.toISOString() : null;
+    const endingDate = endDate ? endDate.toISOString() : null;
     await createStudioEvent({
       variables: {
         ...inputs,
@@ -134,7 +128,7 @@ function CreateEventForm() {
         beginDate: beginningDate,
         endDate: endingDate,
       },
-    })
+    });
   }
 
   return (
@@ -143,7 +137,7 @@ function CreateEventForm() {
         <Form
           method='post'
           onSubmit={async (e) => {
-            await saveEvent(e)
+            await saveEvent(e);
           }}
         >
           <fieldset disabled={loading} aria-busy={loading}>
@@ -378,7 +372,7 @@ function CreateEventForm() {
         </div>
       </Modal>
     </>
-  )
+  );
 }
 
-export default CreateEventForm
+export default CreateEventForm;

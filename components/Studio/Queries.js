@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
 
 const STUDIO_USER_QUERY = gql`
   query STUDIO_USER_QUERY {
@@ -28,7 +28,7 @@ const STUDIO_USER_QUERY = gql`
       }
     }
   }
-`
+`;
 const STUDIO_LINKED_PARENTS = gql`
   query STUDIO_LINKED_PARENTS {
     studioLinkedParents {
@@ -43,7 +43,7 @@ const STUDIO_LINKED_PARENTS = gql`
       }
     }
   }
-`
+`;
 
 const SINGLE_DANCE_QUERY = gql`
   query SINGLE_DANCE_QUERY($id: ID!) {
@@ -71,7 +71,7 @@ const SINGLE_DANCE_QUERY = gql`
       }
     }
   }
-`
+`;
 
 const CATEGORIES_QUERY = gql`
   query CATEGORIES_QUERY {
@@ -79,13 +79,9 @@ const CATEGORIES_QUERY = gql`
       styles
       competitiveLevels
       ageDivisions
-      makeupSets {
-        name
-        id
-      }
     }
   }
-`
+`;
 
 const ALL_DANCE_CLASSES_QUERY = gql`
   query ALL_DANCE_CLASSES_QUERY {
@@ -112,7 +108,7 @@ const ALL_DANCE_CLASSES_QUERY = gql`
       size
     }
   }
-`
+`;
 
 const STUDIO_ALL_DANCERS_QUERY = gql`
   query STUDIO_ALL_DANCERS_QUERY {
@@ -142,7 +138,7 @@ const STUDIO_ALL_DANCERS_QUERY = gql`
       }
     }
   }
-`
+`;
 
 const ENROLLMENT_REQUESTS_QUERY = gql`
   query ENROLLMENT_REQUESTS_QUERY {
@@ -163,7 +159,7 @@ const ENROLLMENT_REQUESTS_QUERY = gql`
       }
     }
   }
-`
+`;
 const ACCESS_REQUESTS_QUERY = gql`
   query ACCESS_REQUESTS_QUERY {
     accessRequests {
@@ -175,7 +171,7 @@ const ACCESS_REQUESTS_QUERY = gql`
       }
     }
   }
-`
+`;
 
 const STUDIO_EVENTS_QUERY = gql`
   query STUDIO_EVENTS_QUERY {
@@ -199,7 +195,7 @@ const STUDIO_EVENTS_QUERY = gql`
       }
     }
   }
-`
+`;
 const STUDIO_EVENT_QUERY = gql`
   query($id: ID!) {
     studioEvent(id: $id) {
@@ -219,7 +215,7 @@ const STUDIO_EVENT_QUERY = gql`
       notes
     }
   }
-`
+`;
 
 const STUDIO_DANCER = gql`
   query($id: ID!) {
@@ -243,7 +239,7 @@ const STUDIO_DANCER = gql`
       }
     }
   }
-`
+`;
 const STUDIO_MAKEUP_QUERY = gql`
   query STUDIO_MAKEUP_QUERY {
     myStudio {
@@ -274,7 +270,7 @@ const STUDIO_MAKEUP_QUERY = gql`
       }
     }
   }
-`
+`;
 
 const STUDIO_MAKEUPSET_QUERY = gql`
   query($id: ID!) {
@@ -302,7 +298,7 @@ const STUDIO_MAKEUPSET_QUERY = gql`
       }
     }
   }
-`
+`;
 
 const STUDIO_REQUESTS_QUERY = gql`
   query STUDIO_REQUESTS_QUERY {
@@ -337,7 +333,7 @@ const STUDIO_REQUESTS_QUERY = gql`
       }
     }
   }
-`
+`;
 
 const HAIRSTYLES_QUERY = gql`
   query HAIRSTYLES_QUERY {
@@ -350,7 +346,7 @@ const HAIRSTYLES_QUERY = gql`
       link
     }
   }
-`
+`;
 const STUDIO_HAIRSTYLE_QUERY = gql`
   query($id: ID!) {
     studioHairStyle(id: $id) {
@@ -365,7 +361,7 @@ const STUDIO_HAIRSTYLE_QUERY = gql`
       }
     }
   }
-`
+`;
 const UPDATE_HAIRSTYLE_MUTATION = gql`
   mutation UPDATE_HAIRSTYLE_MUTATION(
     $id: ID!
@@ -385,7 +381,7 @@ const UPDATE_HAIRSTYLE_MUTATION = gql`
       name
     }
   }
-`
+`;
 
 export {
   UPDATE_HAIRSTYLE_MUTATION,
@@ -405,4 +401,4 @@ export {
   STUDIO_HAIRSTYLE_QUERY,
   STUDIO_LINKED_PARENTS,
   STUDIO_REQUESTS_QUERY,
-}
+};
