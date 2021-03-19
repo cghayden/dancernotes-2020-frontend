@@ -11,6 +11,8 @@ import { STUDIO_EVENTS_QUERY } from './Queries';
 import Router from 'next/router';
 import Modal from '../Modal';
 import Link from 'next/link';
+import app from 'next/app';
+import styled from 'styled-components';
 
 const CREATE_STUDIO_EVENT = gql`
   mutation CREATE_STUDIO_EVENT(
@@ -73,6 +75,18 @@ const appliesToOptions = [
   { value: 'acro team', label: 'Acro Team', name: 'appliesTo' },
   { value: 'mini acro team', label: 'Mini Acro Team', name: 'appliesTo' },
 ];
+const CheckboxAndLabelContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  margin-left: 0.75em;
+  input {
+    color: ${(props) =>
+      props.disabled ? props.theme.disabledText : 'inherit'};
+    margin-top: 4px;
+    margin-right: 8px;
+  }
+`;
 const initialInputState = {
   type: '',
   name: '',
@@ -88,7 +102,7 @@ const initialInputState = {
 function CreateEventForm({ categories }) {
   console.log('categories', categories);
   const { inputs, handleChange } = useForm(initialInputState);
-  const [appliesTo, setAppliesTo] = useState({});
+  const [appliesTo, setAppliesTo] = useState([]);
   const [beginDate, setBeginDate] = useState();
   const [endDate, setEndDate] = useState();
   const [showModal, toggleModal] = useState(false);
@@ -101,13 +115,19 @@ function CreateEventForm({ categories }) {
       onCompleted: () => toggleModal(true),
     }
   );
-  console.log('data', data);
 
-  function handleAppliesToChange(e) {
-    if (!e) return;
-    const selectedValue = e.target.selectedOptions[0].value;
-    const selectedLabel = e.target.selectedOptions[0].label;
-    setAppliesTo({ ...appliesTo, [selectedValue]: selectedLabel });
+  function handleAppliesToChange(category) {
+    // if (!e) return;
+    if (appliesTo.includes(category)) {
+      const index = appliesTo.indexOf(category);
+      const newAppliesTo = [...appliesTo];
+      newAppliesTo.splice(index, 1);
+      setAppliesTo(newAppliesTo);
+    } else {
+      const newAppliesTo = [category, ...appliesTo];
+      setAppliesTo(newAppliesTo);
+    }
+    console.log('new applies to:', appliesTo);
   }
 
   function removeAppliesTo(selection) {
@@ -178,32 +198,67 @@ function CreateEventForm({ categories }) {
                   <option value='other'>Other</option>
                 </select>
               </div>
+            </div>
+            <div className='form-row'>
+              <h3>This event applies to:</h3>
+            </div>
+            <div className='form-row'>
               <div className='row-item'>
-                <label htmlFor='appliesTo'>
-                  This Event Applies To:{' '}
-                  <span className='required'> Required</span>
-                </label>
-                <select
-                  name='appliesTo'
-                  value={''}
-                  onChange={(e) => handleAppliesToChange(e)}
-                >
-                  <option default value={''} disabled>
-                    Applies to...
-                  </option>
-                  {appliesToOptions.map((category) => (
-                    <option
-                      key={category.value}
-                      value={category.value}
-                      label={category.label}
-                    >
-                      {category.label}
-                    </option>
-                  ))}
-                </select>
+                <legend>
+                  Age Division: <span className='required'> Required</span>
+                </legend>
+                {categories.ageDivisions.map((ageDivision) => (
+                  <CheckboxAndLabelContainer key={ageDivision}>
+                    <label>
+                      <input
+                        type='checkbox'
+                        checked={appliesTo.includes(ageDivision)}
+                        value={ageDivision}
+                        onChange={() => handleAppliesToChange(ageDivision)}
+                      />
+                      {ageDivision}
+                    </label>
+                  </CheckboxAndLabelContainer>
+                ))}
+              </div>
+              <div className='row-item'>
+                <legend>
+                  Competitive Level: <span className='required'> Required</span>
+                </legend>
+                {categories.competitiveLevels.map((compLevel) => (
+                  <CheckboxAndLabelContainer key={compLevel}>
+                    <label>
+                      <input
+                        type='checkbox'
+                        checked={appliesTo.includes(compLevel)}
+                        value={compLevel}
+                        onChange={() => handleAppliesToChange(compLevel)}
+                      />
+                      {compLevel}
+                    </label>
+                  </CheckboxAndLabelContainer>
+                ))}
+              </div>
+              <div className='row-item'>
+                <legend>
+                  Style: <span className='required'> Required</span>
+                </legend>
+                {categories.styles.map((style) => (
+                  <CheckboxAndLabelContainer key={style}>
+                    <label>
+                      <input
+                        type='checkbox'
+                        checked={appliesTo.includes(style)}
+                        value={style}
+                        onChange={() => handleAppliesToChange(style)}
+                      />
+                      {style}
+                    </label>
+                  </CheckboxAndLabelContainer>
+                ))}
               </div>
             </div>
-            <SelectChoices>
+            {/* <SelectChoices>
               {Object.entries(appliesTo).map((entry) => (
                 <li key={entry[0]}>
                   {entry[1]}
@@ -218,7 +273,7 @@ function CreateEventForm({ categories }) {
                   </span>
                 </li>
               ))}
-            </SelectChoices>
+            </SelectChoices> */}
             {/* Dates */}
             <div className='form-row'>
               <div className='row-item'>
