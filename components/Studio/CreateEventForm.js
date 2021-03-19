@@ -52,29 +52,7 @@ const CREATE_STUDIO_EVENT = gql`
     }
   }
 `;
-const appliesToOptions = [
-  { value: 'all', label: 'All Classes', name: 'appliesTo' },
-  { value: 'recreational', label: 'Recreational', name: 'appliesTo' },
-  { value: 'company', label: 'All Company', name: 'appliesTo' },
-  { value: 'star', label: 'All Star', name: 'appliesTo' },
-  { value: 'mini star', label: 'Mini Star', name: 'appliesTo' },
-  { value: 'mini company', label: 'Mini Company', name: 'appliesTo' },
-  { value: 'junior star', label: 'Junior Star', name: 'appliesTo' },
-  { value: 'junior company', label: 'Junior Company', name: 'appliesTo' },
-  { value: 'teen 1 star', label: 'Teen Star', name: 'appliesTo' },
-  { value: 'teen 1 company', label: 'Teen 1 Company', name: 'appliesTo' },
-  { value: 'teen 2 star', label: 'Teen Star', name: 'appliesTo' },
-  { value: 'teen 2 company', label: 'Teen 2 Company', name: 'appliesTo' },
-  { value: 'senior star', label: 'Senior Star', name: 'appliesTo' },
-  { value: 'senior company', label: 'Senior Company', name: 'appliesTo' },
-  { value: 'lyric', label: 'Lyric', name: 'appliesTo' },
-  { value: 'jazz', label: 'Jazz', name: 'appliesTo' },
-  { value: 'hip hop', label: 'Hip Hop', name: 'appliesTo' },
-  { value: 'tap', label: 'Tap', name: 'appliesTo' },
-  { value: 'production', label: 'Production', name: 'appliesTo' },
-  { value: 'acro team', label: 'Acro Team', name: 'appliesTo' },
-  { value: 'mini acro team', label: 'Mini Acro Team', name: 'appliesTo' },
-];
+
 const CheckboxAndLabelContainer = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
@@ -85,6 +63,26 @@ const CheckboxAndLabelContainer = styled.div`
       props.disabled ? props.theme.disabledText : 'inherit'};
     margin-top: 4px;
     margin-right: 8px;
+  }
+`;
+const CategoryOptions = styled.div`
+  legend {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    font-weight: bold;
+    p {
+      font-size: 14px;
+      margin-top: -4px;
+    }
+    @media (min-width: ${(props) => props.theme.largeScreen}) {
+      legend {
+        font-size: 18px;
+        p {
+          font-size: 16px;
+        }
+      }
+    }
   }
 `;
 const initialInputState = {
@@ -100,12 +98,12 @@ const initialInputState = {
   notes: '',
 };
 function CreateEventForm({ categories }) {
-  console.log('categories', categories);
   const { inputs, handleChange } = useForm(initialInputState);
   const [appliesTo, setAppliesTo] = useState([]);
   const [beginDate, setBeginDate] = useState();
   const [endDate, setEndDate] = useState();
   const [showModal, toggleModal] = useState(false);
+  console.log('appliesTo', appliesTo);
 
   const [createStudioEvent, { data, error, loading }] = useMutation(
     CREATE_STUDIO_EVENT,
@@ -199,65 +197,118 @@ function CreateEventForm({ categories }) {
                 </select>
               </div>
             </div>
-            <div className='form-row'>
-              <h3>This event applies to:</h3>
-            </div>
-            <div className='form-row'>
-              <div className='row-item'>
-                <legend>
-                  Age Division: <span className='required'> Required</span>
-                </legend>
-                {categories.ageDivisions.map((ageDivision) => (
-                  <CheckboxAndLabelContainer key={ageDivision}>
+
+            <section>
+              <div>
+                <h3>This event applies to:</h3>
+                <CheckboxAndLabelContainer>
+                  <label>
+                    <input
+                      type='checkbox'
+                      checked={appliesTo.includes('all')}
+                      value={'all'}
+                      onChange={() => handleAppliesToChange('all')}
+                    />
+                    All Classes
+                  </label>
+                </CheckboxAndLabelContainer>
+              </div>
+              <div className='form-row'>
+                <CategoryOptions className='row-item'>
+                  <legend>
+                    Age Division:{' '}
+                    <p>
+                      <span className='required'> Required</span>
+                    </p>
+                  </legend>
+                  <CheckboxAndLabelContainer>
                     <label>
                       <input
                         type='checkbox'
-                        checked={appliesTo.includes(ageDivision)}
-                        value={ageDivision}
-                        onChange={() => handleAppliesToChange(ageDivision)}
+                        checked={appliesTo.includes('allAges')}
+                        value={'allAges'}
+                        onChange={() => handleAppliesToChange('allAges')}
                       />
-                      {ageDivision}
+                      All Ages
                     </label>
                   </CheckboxAndLabelContainer>
-                ))}
-              </div>
-              <div className='row-item'>
-                <legend>
-                  Competitive Level: <span className='required'> Required</span>
-                </legend>
-                {categories.competitiveLevels.map((compLevel) => (
-                  <CheckboxAndLabelContainer key={compLevel}>
+                  {categories.ageDivisions.map((ageDivision) => (
+                    <CheckboxAndLabelContainer key={ageDivision}>
+                      <label>
+                        <input
+                          type='checkbox'
+                          checked={appliesTo.includes(ageDivision)}
+                          value={ageDivision}
+                          onChange={() => handleAppliesToChange(ageDivision)}
+                        />
+                        {ageDivision}
+                      </label>
+                    </CheckboxAndLabelContainer>
+                  ))}
+                </CategoryOptions>
+
+                <CategoryOptions className='row-item'>
+                  <legend>
+                    Competitive Level:{' '}
+                    <span className='required'> Required</span>
+                  </legend>
+                  <CheckboxAndLabelContainer>
                     <label>
                       <input
                         type='checkbox'
-                        checked={appliesTo.includes(compLevel)}
-                        value={compLevel}
-                        onChange={() => handleAppliesToChange(compLevel)}
+                        checked={appliesTo.includes('allCompLevels')}
+                        value={'allCompLevels'}
+                        onChange={() => handleAppliesToChange('allCompLevels')}
                       />
-                      {compLevel}
+                      All
                     </label>
                   </CheckboxAndLabelContainer>
-                ))}
-              </div>
-              <div className='row-item'>
-                <legend>
-                  Style: <span className='required'> Required</span>
-                </legend>
-                {categories.styles.map((style) => (
-                  <CheckboxAndLabelContainer key={style}>
+                  {categories.competitiveLevels.map((compLevel) => (
+                    <CheckboxAndLabelContainer key={compLevel}>
+                      <label>
+                        <input
+                          type='checkbox'
+                          checked={appliesTo.includes(compLevel)}
+                          value={compLevel}
+                          onChange={() => handleAppliesToChange(compLevel)}
+                        />
+                        {compLevel}
+                      </label>
+                    </CheckboxAndLabelContainer>
+                  ))}
+                </CategoryOptions>
+
+                <CategoryOptions className='row-item'>
+                  <legend>
+                    Style: <span className='required'> Required</span>
+                  </legend>
+                  <CheckboxAndLabelContainer>
                     <label>
                       <input
                         type='checkbox'
-                        checked={appliesTo.includes(style)}
-                        value={style}
-                        onChange={() => handleAppliesToChange(style)}
+                        checked={appliesTo.includes('allStyles')}
+                        value={'allStyles'}
+                        onChange={() => handleAppliesToChange('allStyles')}
                       />
-                      {style}
+                      All Styles
                     </label>
                   </CheckboxAndLabelContainer>
-                ))}
+                  {categories.styles.map((style) => (
+                    <CheckboxAndLabelContainer key={style}>
+                      <label>
+                        <input
+                          type='checkbox'
+                          checked={appliesTo.includes(style)}
+                          value={style}
+                          onChange={() => handleAppliesToChange(style)}
+                        />
+                        {style}
+                      </label>
+                    </CheckboxAndLabelContainer>
+                  ))}
+                </CategoryOptions>
               </div>
-            </div>
+            </section>
             {/* <SelectChoices>
               {Object.entries(appliesTo).map((entry) => (
                 <li key={entry[0]}>
