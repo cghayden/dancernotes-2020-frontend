@@ -1,23 +1,25 @@
-import { useState } from 'react'
-import { useMutation, useQuery } from '@apollo/client'
-import gql from 'graphql-tag'
-import DatePicker from 'react-datepicker'
-import Form from '../styles/Form'
-import Card from '../styles/Card'
-import Error from '../Error'
-import useForm from '../../utilities/useForm'
-import { SelectChoices } from '../styles/SelectChoices'
-import { STUDIO_EVENTS_QUERY, CATEGORIES_QUERY } from './Queries'
-import Router from 'next/router'
-import Modal from '../Modal'
-import Link from 'next/link'
-import { DataStore } from 'apollo-client/data/store'
+import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import gql from 'graphql-tag';
+import DatePicker from 'react-datepicker';
+import Form from '../styles/Form';
+import Card from '../styles/Card';
+import Error from '../Error';
+import useForm from '../../utilities/useForm';
+// import { SelectChoices } from '../styles/SelectChoices';
+import { STUDIO_EVENTS_QUERY } from './Queries';
+import Router from 'next/router';
+import Modal from '../Modal';
+import Link from 'next/link';
+import styled from 'styled-components';
 
 const CREATE_STUDIO_EVENT = gql`
   mutation CREATE_STUDIO_EVENT(
     $name: String!
     $type: String!
-    $appliesTo: [String!]!
+    $ageDivision: [String!]!
+    $competitiveLevel: [String!]!
+    $style: [String!]!
     $beginDate: DateTime
     $endDate: DateTime
     $location: String
@@ -32,7 +34,9 @@ const CREATE_STUDIO_EVENT = gql`
     createStudioEvent(
       name: $name
       type: $type
-      appliesTo: $appliesTo
+      ageDivision: $ageDivision
+      competitiveLevel: $competitiveLevel
+      style: $style
       beginDate: $beginDate
       endDate: $endDate
       location: $location
@@ -47,33 +51,46 @@ const CREATE_STUDIO_EVENT = gql`
       id
       type
       name
-      appliesTo
     }
   }
-`
-const appliesToOptions = [
-  { value: 'all', label: 'All Classes', name: 'appliesTo' },
-  { value: 'recreational', label: 'Recreational', name: 'appliesTo' },
-  { value: 'company', label: 'All Company', name: 'appliesTo' },
-  { value: 'star', label: 'All Star', name: 'appliesTo' },
-  { value: 'mini star', label: 'Mini Star', name: 'appliesTo' },
-  { value: 'mini company', label: 'Mini Company', name: 'appliesTo' },
-  { value: 'junior star', label: 'Junior Star', name: 'appliesTo' },
-  { value: 'junior company', label: 'Junior Company', name: 'appliesTo' },
-  { value: 'teen 1 star', label: 'Teen Star', name: 'appliesTo' },
-  { value: 'teen 1 company', label: 'Teen 1 Company', name: 'appliesTo' },
-  { value: 'teen 2 star', label: 'Teen Star', name: 'appliesTo' },
-  { value: 'teen 2 company', label: 'Teen 2 Company', name: 'appliesTo' },
-  { value: 'senior star', label: 'Senior Star', name: 'appliesTo' },
-  { value: 'senior company', label: 'Senior Company', name: 'appliesTo' },
-  { value: 'lyric', label: 'Lyric', name: 'appliesTo' },
-  { value: 'jazz', label: 'Jazz', name: 'appliesTo' },
-  { value: 'hip hop', label: 'Hip Hop', name: 'appliesTo' },
-  { value: 'tap', label: 'Tap', name: 'appliesTo' },
-  { value: 'production', label: 'Production', name: 'appliesTo' },
-  { value: 'acro team', label: 'Acro Team', name: 'appliesTo' },
-  { value: 'mini acro team', label: 'Mini Acro Team', name: 'appliesTo' },
-]
+`;
+
+const CheckboxAndLabelContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  margin-left: 0.75em;
+  label {
+    color: ${(props) =>
+      props.disabled ? props.theme.disabledText : 'inherit'};
+  }
+  input {
+    color: ${(props) =>
+      props.disabled ? props.theme.disabledText : 'inherit'};
+    margin-top: 4px;
+    margin-right: 8px;
+  }
+`;
+const CategoryOptions = styled.div`
+  legend {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    font-weight: bold;
+    p {
+      font-size: 14px;
+      margin-top: -4px;
+    }
+    @media (min-width: ${(props) => props.theme.largeScreen}) {
+      legend {
+        font-size: 18px;
+        p {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+`;
 const initialInputState = {
   type: '',
   name: '',
@@ -85,19 +102,15 @@ const initialInputState = {
   zip: '',
   url: '',
   notes: '',
-}
-function CreateEventForm() {
-  const { inputs, handleChange } = useForm(initialInputState)
-  const [appliesTo, setAppliesTo] = useState({})
-  const [beginDate, setBeginDate] = useState()
-  const [endDate, setEndDate] = useState()
-  const [showModal, toggleModal] = useState(false)
-
-  // const {
-  //   data,
-  //   error: errorLoadingCategories,
-  //   loading: loadingCategories,
-  // } = useQuery(CATEGORIES_QUERY)
+};
+function CreateEventForm({ categories }) {
+  const { inputs, handleChange } = useForm(initialInputState);
+  const [eventAgeDivision, setEventAgeDivision] = useState(['all']);
+  const [eventCompetitiveLevel, setEventCompetitiveLevel] = useState(['all']);
+  const [eventStyle, setEventStyle] = useState(['all']);
+  const [beginDate, setBeginDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [showModal, toggleModal] = useState(false);
 
   const [createStudioEvent, { data, error, loading }] = useMutation(
     CREATE_STUDIO_EVENT,
@@ -106,35 +119,102 @@ function CreateEventForm() {
       awaitRefetchQueries: true,
       onCompleted: () => toggleModal(true),
     }
-  )
-  console.log('data', data)
+  );
 
-  function handleAppliesToChange(e) {
-    if (!e) return
-    const selectedValue = e.target.selectedOptions[0].value
-    const selectedLabel = e.target.selectedOptions[0].label
-    setAppliesTo({ ...appliesTo, [selectedValue]: selectedLabel })
+  function handleEventAgeDivisionChange(choice) {
+    const newArray = [...eventAgeDivision];
+    if (choice === 'all') {
+      setEventAgeDivision(['all']);
+      return;
+    }
+    if (newArray.includes(choice)) {
+      //remove choice
+      newArray.splice(newArray.indexOf(choice), 1);
+      // if now empty, set as  ['all']
+      if (newArray.length === 0) {
+        setEventAgeDivision(['all']);
+      } else {
+        setEventAgeDivision(newArray);
+      }
+    }
+    if (!newArray.includes(choice)) {
+      //add to array
+      newArray.push(choice);
+      //remove 'all' if it is in there
+      if (newArray.includes('all')) {
+        newArray.splice(newArray.indexOf('all'), 1);
+      }
+      setEventAgeDivision(newArray);
+    }
   }
-
-  function removeAppliesTo(selection) {
-    const choices = { ...appliesTo }
-    delete choices[selection]
-    setAppliesTo(choices)
+  function handleEventCompLevelChange(choice) {
+    const newArray = [...eventCompetitiveLevel];
+    if (choice === 'all') {
+      setEventCompetitiveLevel(['all']);
+      return;
+    }
+    if (newArray.includes(choice)) {
+      //remove choice
+      newArray.splice(newArray.indexOf(choice), 1);
+      // if now empty, set as  ['all']
+      if (newArray.length === 0) {
+        setEventCompetitiveLevel(['all']);
+      } else {
+        setEventCompetitiveLevel(newArray);
+      }
+    }
+    if (!newArray.includes(choice)) {
+      //add to array
+      newArray.push(choice);
+      //remove 'all' if it is in there
+      if (newArray.includes('all')) {
+        newArray.splice(newArray.indexOf('all'), 1);
+      }
+      setEventCompetitiveLevel(newArray);
+    }
+  }
+  function handleCategoryChange(state, setFunc, choice) {
+    const newArray = [...state];
+    if (choice === 'all') {
+      setFunc(['all']);
+      return;
+    }
+    if (newArray.includes(choice)) {
+      const index = newArray.indexOf(choice);
+      newArray.splice(index, 1);
+      // if now empty, set as  ['all']
+      if (newArray.length === 0) {
+        setFunc(['all']);
+      } else {
+        setFunc(newArray);
+      }
+      return;
+    }
+    if (!newArray.includes(choice)) {
+      //add to array
+      newArray.push(choice);
+      //remove 'all' if it is in there
+      if (newArray.includes('all')) {
+        newArray.splice(newArray.indexOf('all'), 1);
+      }
+      setFunc(newArray);
+    }
   }
 
   async function saveEvent(e) {
-    e.preventDefault()
-    const applyTo = Object.keys(appliesTo)
-    const beginningDate = beginDate ? beginDate.toISOString() : null
-    const endingDate = endDate ? endDate.toISOString() : null
+    e.preventDefault();
+    const beginningDate = beginDate ? beginDate.toISOString() : null;
+    const endingDate = endDate ? endDate.toISOString() : null;
     await createStudioEvent({
       variables: {
         ...inputs,
-        appliesTo: applyTo,
+        ageDivision: eventAgeDivision,
+        competitiveLevel: eventCompetitiveLevel,
+        style: eventStyle,
         beginDate: beginningDate,
         endDate: endingDate,
       },
-    })
+    });
   }
 
   return (
@@ -143,7 +223,7 @@ function CreateEventForm() {
         <Form
           method='post'
           onSubmit={async (e) => {
-            await saveEvent(e)
+            await saveEvent(e);
           }}
         >
           <fieldset disabled={loading} aria-busy={loading}>
@@ -173,8 +253,8 @@ function CreateEventForm() {
                   value={inputs.type}
                   onChange={handleChange}
                 >
-                  <option default value={'all'} disabled>
-                    (Competition, Rehearsal, etc...)?
+                  <option default value={''} disabled>
+                    Choose Event Type...
                   </option>
                   <option value='competition'>Competition</option>
                   <option value='rehearsal'>Rehearsal</option>
@@ -184,48 +264,141 @@ function CreateEventForm() {
                   <option value='other'>Other</option>
                 </select>
               </div>
-              <div className='row-item'>
-                <label htmlFor='appliesTo'>
-                  This Event Applies To:{' '}
-                  <span className='required'> Required</span>
-                </label>
-                <select
-                  name='appliesTo'
-                  value={''}
-                  onChange={(e) => handleAppliesToChange(e)}
-                >
-                  <option default value={''} disabled>
-                    Applies to...
-                  </option>
-                  {appliesToOptions.map((category) => (
-                    <option
-                      key={category.value}
-                      value={category.value}
-                      label={category.label}
-                    >
-                      {category.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
             </div>
-            <SelectChoices>
-              {Object.entries(appliesTo).map((entry) => (
-                <li key={entry[0]}>
-                  {entry[1]}
-                  <span>
-                    <button
-                      className='btn-icon'
-                      type='button'
-                      onClick={() => removeAppliesTo(entry[0])}
-                    >
-                      X
-                    </button>
-                  </span>
-                </li>
-              ))}
-            </SelectChoices>
-            {/* Dates */}
+
+            <section>
+              <div>
+                <h3>This event applies to:</h3>
+              </div>
+              <div className='form-row'>
+                <CategoryOptions className='row-item'>
+                  <legend>
+                    Age Division:{' '}
+                    <p>
+                      <span className='required'> Required</span>
+                    </p>
+                  </legend>
+                  <CheckboxAndLabelContainer>
+                    <label>
+                      <input
+                        type='checkbox'
+                        checked={eventAgeDivision.includes('all')}
+                        value={'all'}
+                        onChange={() =>
+                          handleCategoryChange(
+                            eventAgeDivision,
+                            setEventAgeDivision,
+                            'all'
+                          )
+                        }
+                      />
+                      All Ages
+                    </label>
+                  </CheckboxAndLabelContainer>
+                  {categories.ageDivisions.map((ageChoice) => (
+                    <CheckboxAndLabelContainer key={ageChoice}>
+                      <label>
+                        <input
+                          type='checkbox'
+                          checked={eventAgeDivision.includes(ageChoice)}
+                          value={ageChoice}
+                          onChange={() =>
+                            handleCategoryChange(
+                              eventAgeDivision,
+                              setEventAgeDivision,
+                              ageChoice
+                            )
+                          }
+                        />
+                        {ageChoice}
+                      </label>
+                    </CheckboxAndLabelContainer>
+                  ))}
+                </CategoryOptions>
+
+                <CategoryOptions className='row-item'>
+                  <legend>
+                    Competitive Level:{' '}
+                    <span className='required'> Required</span>
+                  </legend>
+                  <CheckboxAndLabelContainer>
+                    <label>
+                      <input
+                        type='checkbox'
+                        checked={eventCompetitiveLevel.includes('all')}
+                        value={'all'}
+                        onChange={() =>
+                          handleCategoryChange(
+                            eventCompetitiveLevel,
+                            setEventCompetitiveLevel,
+                            'all'
+                          )
+                        }
+                      />
+                      All
+                    </label>
+                  </CheckboxAndLabelContainer>
+                  {categories.competitiveLevels.map((compChoice) => (
+                    <CheckboxAndLabelContainer key={compChoice}>
+                      <label>
+                        <input
+                          type='checkbox'
+                          checked={eventCompetitiveLevel.includes(compChoice)}
+                          value={compChoice}
+                          onChange={() =>
+                            handleCategoryChange(
+                              eventCompetitiveLevel,
+                              setEventCompetitiveLevel,
+                              compChoice
+                            )
+                          }
+                        />
+                        {compChoice}
+                      </label>
+                    </CheckboxAndLabelContainer>
+                  ))}
+                </CategoryOptions>
+
+                <CategoryOptions className='row-item'>
+                  <legend>
+                    Style: <span className='required'> Required</span>
+                  </legend>
+                  <CheckboxAndLabelContainer>
+                    <label>
+                      <input
+                        type='checkbox'
+                        checked={eventStyle.includes('all')}
+                        value={'all'}
+                        onChange={() =>
+                          handleCategoryChange(eventStyle, setEventStyle, 'all')
+                        }
+                      />
+                      All Styles
+                    </label>
+                  </CheckboxAndLabelContainer>
+                  {categories.styles.map((styleChoice) => (
+                    <CheckboxAndLabelContainer key={styleChoice}>
+                      <label>
+                        <input
+                          type='checkbox'
+                          checked={eventStyle.includes(styleChoice)}
+                          value={styleChoice}
+                          onChange={() =>
+                            handleCategoryChange(
+                              eventStyle,
+                              setEventStyle,
+                              styleChoice
+                            )
+                          }
+                        />
+                        {styleChoice}
+                      </label>
+                    </CheckboxAndLabelContainer>
+                  ))}
+                </CategoryOptions>
+              </div>
+            </section>
+
             <div className='form-row'>
               <div className='row-item'>
                 <label htmlFor='beginDate'>Begin Date:</label>
@@ -378,7 +551,7 @@ function CreateEventForm() {
         </div>
       </Modal>
     </>
-  )
+  );
 }
 
-export default CreateEventForm
+export default CreateEventForm;

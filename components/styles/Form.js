@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components'
+import styled, { keyframes } from 'styled-components';
 
 const loading = keyframes`
   from {
@@ -10,7 +10,7 @@ const loading = keyframes`
     background-position: 100% 100%;
     /* rotate: 360deg; */
   }
-`
+`;
 
 const Form = styled.form`
   /* each form should be inside a card */
@@ -162,6 +162,8 @@ const Form = styled.form`
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    align-items: start;
+
     .row-item {
       display: grid;
       width: auto;
@@ -220,7 +222,7 @@ const Form = styled.form`
     align-items: center;
     flex-direction: row;
   }
-`
+`;
 
 const LandingPageForm = styled(Form)`
   border: none;
@@ -234,7 +236,7 @@ const LandingPageForm = styled(Form)`
     display: block;
     margin: 0 auto 1.25rem auto;
   }
-`
+`;
 
-export default Form
-export { LandingPageForm }
+export default Form;
+export { LandingPageForm };

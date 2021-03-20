@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const EventCheckboxesDiv = styled.div`
   width: 85%;
@@ -7,7 +7,7 @@ const EventCheckboxesDiv = styled.div`
   grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-items: left;
-`
+`;
 
 const EventCheckbox = styled.div`
   padding: 0.25rem 0.25rem 0.25rem 2rem;
@@ -23,10 +23,9 @@ const EventCheckbox = styled.div`
       font-size: 1rem;
     }
   }
-`
+`;
 
 function EventsFilter({ eventFilter, setFilter }) {
-  console.log('eventFilter', eventFilter)
   const eventCategories = [
     'competition',
     'convention',
@@ -34,7 +33,7 @@ function EventsFilter({ eventFilter, setFilter }) {
     'recital',
     'camp',
     'other',
-  ]
+  ];
   return (
     <EventCheckboxesDiv>
       {eventCategories.map((eventCategory) => (
@@ -58,6 +57,6 @@ function EventsFilter({ eventFilter, setFilter }) {
         </EventCheckbox>
       ))}
     </EventCheckboxesDiv>
-  )
+  );
 }
-export default EventsFilter
+export default EventsFilter;

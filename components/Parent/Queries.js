@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
 
 const ALL_Rs = gql`
   query {
@@ -36,7 +36,7 @@ const ALL_Rs = gql`
       videoUrl
     }
   }
-`
+`;
 
 const SINGLE_ROUTINE_QUERY = gql`
   query SINGLE_ROUTINE_QUERY($id: ID!) {
@@ -77,7 +77,7 @@ const SINGLE_ROUTINE_QUERY = gql`
       videoUrl
     }
   }
-`
+`;
 
 const PARENT_EVENTS_QUERY = gql`
   query {
@@ -85,7 +85,9 @@ const PARENT_EVENTS_QUERY = gql`
       id
       name
       type
-      appliesTo
+      ageDivision
+      competitiveLevel
+      style
       beginDate
       endDate
       location
@@ -102,7 +104,7 @@ const PARENT_EVENTS_QUERY = gql`
       }
     }
   }
-`
+`;
 
 const CUSTOM_EVENTS_QUERY = gql`
   query {
@@ -127,7 +129,7 @@ const CUSTOM_EVENTS_QUERY = gql`
       dancerIds
     }
   }
-`
+`;
 
 const PARENT_USER_QUERY = gql`
   query {
@@ -183,7 +185,7 @@ const PARENT_USER_QUERY = gql`
       accessRequests
     }
   }
-`
+`;
 
 const STUDIOS_AND_DANCERS = gql`
   query {
@@ -199,7 +201,7 @@ const STUDIOS_AND_DANCERS = gql`
       }
     }
   }
-`
+`;
 
 const PARENTS_DANCERS = gql`
   query PARENTS_DANCERS {
@@ -228,7 +230,7 @@ const PARENTS_DANCERS = gql`
       }
     }
   }
-`
+`;
 
 const CUSTOM_ROUTINE_QUERY = gql`
   query CUSTOM_ROUTINE_QUERY($id: ID!) {
@@ -251,7 +253,7 @@ const CUSTOM_ROUTINE_QUERY = gql`
       entryTime
     }
   }
-`
+`;
 const DANCER_QUERY = gql`
   query DANCER_QUERY($id: ID!) {
     dancer(id: $id) {
@@ -295,7 +297,7 @@ const DANCER_QUERY = gql`
       }
     }
   }
-`
+`;
 const PARENTS_MAKEUP_QUERY = gql`
   query PARENTS_MAKEUP_QUERY {
     parentMakeup {
@@ -321,7 +323,7 @@ const PARENTS_MAKEUP_QUERY = gql`
       }
     }
   }
-`
+`;
 
 const STUDIO_CARD_QUERY = gql`
   query STUDIO_CARD_QUERY {
@@ -352,7 +354,7 @@ const STUDIO_CARD_QUERY = gql`
       }
     }
   }
-`
+`;
 
 const HAIRSTYLES_QUERY = gql`
   query HAIRSTYLES_QUERY {
@@ -367,7 +369,7 @@ const HAIRSTYLES_QUERY = gql`
       }
     }
   }
-`
+`;
 
 export {
   PARENT_USER_QUERY,
@@ -382,4 +384,4 @@ export {
   CUSTOM_EVENTS_QUERY,
   STUDIO_CARD_QUERY,
   HAIRSTYLES_QUERY,
-}
+};

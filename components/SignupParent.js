@@ -72,7 +72,7 @@ function SignupParent() {
 
   return (
     <LandingPageForm
-      method='post'
+      method='POST'
       onSubmit={async (e) => {
         e.preventDefault()
         await signupParent()

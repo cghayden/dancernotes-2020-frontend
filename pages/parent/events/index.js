@@ -1,13 +1,13 @@
-import { useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client';
 import {
   PARENT_EVENTS_QUERY,
   CUSTOM_EVENTS_QUERY,
   ALL_Rs,
-} from '../../../components/Parent/Queries'
-import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout'
-import EventsContent from '../../../components/Parent/EventsContent'
-import Error from '../../../components/Error'
-import Loading from '../../../components/Loading'
+} from '../../../components/Parent/Queries';
+import ParentNoFilterLayout from '../../../components/Parent/ParentNoFilterLayout';
+import EventsContent from '../../../components/Parent/EventsContent';
+import Error from '../../../components/Error';
+import Loading from '../../../components/Loading';
 
 // import { useParentEvents } from '../../../components/Parent/useParentEvents'
 
@@ -17,26 +17,27 @@ function EventsPage() {
     data: parentEvents,
     loading: loadingEvents,
     error: errorLoadingEvents,
-  } = useQuery(PARENT_EVENTS_QUERY)
-  console.log('parentEvents', parentEvents)
+  } = useQuery(PARENT_EVENTS_QUERY);
+  console.log('parentEvents', parentEvents);
 
   //events entered by parent
   const {
     data: customEvents,
     loading: loadingCustomEvents,
     error: errorLoadingCustomEvents,
-  } = useQuery(CUSTOM_EVENTS_QUERY)
+  } = useQuery(CUSTOM_EVENTS_QUERY);
+  // console.log('customEvents', customEvents);
 
   const {
     data: allRoutinesData,
     loading: loadingRoutines,
     error: errorLoadingRoutines,
-  } = useQuery(ALL_Rs)
-  const allRoutines = allRoutinesData ? allRoutinesData.allRs : []
+  } = useQuery(ALL_Rs);
+  const allRoutines = allRoutinesData ? allRoutinesData.allRs : [];
 
-  const loading = loadingEvents || loadingRoutines || loadingCustomEvents
+  const loading = loadingEvents || loadingRoutines || loadingCustomEvents;
   const error =
-    errorLoadingEvents || errorLoadingRoutines || errorLoadingCustomEvents
+    errorLoadingEvents || errorLoadingRoutines || errorLoadingCustomEvents;
 
   if (error || loading) {
     return (
@@ -44,26 +45,31 @@ function EventsPage() {
         {error && <Error error={error} />}
         {loading && <Loading />}
       </ParentNoFilterLayout>
-    )
+    );
   }
 
   const customEventsWithAll =
     customEvents &&
     customEvents.customEvents.map((event) => {
-      return { ...event, appliesTo: ['all'] }
-    })
+      return { ...event, appliesTo: ['all'] };
+    });
 
   return (
     <ParentNoFilterLayout
       page={'Events'}
       createLink={`/parent/events/createEvent`}
     >
+      <p>events page</p>
       <EventsContent
         allRoutines={allRoutines}
-        allEvents={[...customEventsWithAll, ...parentEvents.parentEvents]}
+        allEvents={parentEvents.parentEvents}
       />
+      {/* <EventsContent
+        allRoutines={allRoutines}
+        allEvents={[...customEventsWithAll, ...parentEvents.parentEvents]}
+      /> */}
     </ParentNoFilterLayout>
-  )
+  );
 }
 
-export default EventsPage
+export default EventsPage;
