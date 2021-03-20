@@ -181,7 +181,9 @@ const STUDIO_EVENTS_QUERY = gql`
         id
         name
         type
-        appliesTo
+        ageDivision
+        competitiveLevel
+        style
         beginDate
         endDate
         location
@@ -202,7 +204,9 @@ const STUDIO_EVENT_QUERY = gql`
       id
       name
       type
-      appliesTo
+      ageDivision
+      competitiveLevel
+      style
       beginDate
       endDate
       location

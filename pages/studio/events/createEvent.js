@@ -15,6 +15,7 @@ const CreateEventPage = () => {
       </NoFilterLayout>
     );
   }
+  console.log('studioCategories', data.studioCategories);
   return (
     <NoFilterLayout page={'Events'} selection={'Create an Event'}>
       <CreateEventForm categories={data.studioCategories} />

@@ -6,19 +6,20 @@ import Form from '../styles/Form';
 import Card from '../styles/Card';
 import Error from '../Error';
 import useForm from '../../utilities/useForm';
-import { SelectChoices } from '../styles/SelectChoices';
+// import { SelectChoices } from '../styles/SelectChoices';
 import { STUDIO_EVENTS_QUERY } from './Queries';
 import Router from 'next/router';
 import Modal from '../Modal';
 import Link from 'next/link';
-import app from 'next/app';
 import styled from 'styled-components';
 
 const CREATE_STUDIO_EVENT = gql`
   mutation CREATE_STUDIO_EVENT(
     $name: String!
     $type: String!
-    $appliesTo: [String!]!
+    $ageDivision: [String!]!
+    $competitiveLevel: [String!]!
+    $style: [String!]!
     $beginDate: DateTime
     $endDate: DateTime
     $location: String
@@ -33,7 +34,9 @@ const CREATE_STUDIO_EVENT = gql`
     createStudioEvent(
       name: $name
       type: $type
-      appliesTo: $appliesTo
+      ageDivision: $ageDivision
+      competitiveLevel: $competitiveLevel
+      style: $style
       beginDate: $beginDate
       endDate: $endDate
       location: $location
@@ -48,7 +51,6 @@ const CREATE_STUDIO_EVENT = gql`
       id
       type
       name
-      appliesTo
     }
   }
 `;
@@ -58,6 +60,10 @@ const CheckboxAndLabelContainer = styled.div`
   grid-template-columns: auto 1fr;
   align-items: start;
   margin-left: 0.75em;
+  label {
+    color: ${(props) =>
+      props.disabled ? props.theme.disabledText : 'inherit'};
+  }
   input {
     color: ${(props) =>
       props.disabled ? props.theme.disabledText : 'inherit'};
@@ -99,11 +105,12 @@ const initialInputState = {
 };
 function CreateEventForm({ categories }) {
   const { inputs, handleChange } = useForm(initialInputState);
-  const [appliesTo, setAppliesTo] = useState([]);
+  const [eventAgeDivision, setEventAgeDivision] = useState(['all']);
+  const [eventCompetitiveLevel, setEventCompetitiveLevel] = useState(['all']);
+  const [eventStyle, setEventStyle] = useState(['all']);
   const [beginDate, setBeginDate] = useState();
   const [endDate, setEndDate] = useState();
   const [showModal, toggleModal] = useState(false);
-  console.log('appliesTo', appliesTo);
 
   const [createStudioEvent, { data, error, loading }] = useMutation(
     CREATE_STUDIO_EVENT,
@@ -114,35 +121,96 @@ function CreateEventForm({ categories }) {
     }
   );
 
-  function handleAppliesToChange(category) {
-    // if (!e) return;
-    if (appliesTo.includes(category)) {
-      const index = appliesTo.indexOf(category);
-      const newAppliesTo = [...appliesTo];
-      newAppliesTo.splice(index, 1);
-      setAppliesTo(newAppliesTo);
-    } else {
-      const newAppliesTo = [category, ...appliesTo];
-      setAppliesTo(newAppliesTo);
+  function handleEventAgeDivisionChange(choice) {
+    const newArray = [...eventAgeDivision];
+    if (choice === 'all') {
+      setEventAgeDivision(['all']);
+      return;
     }
-    console.log('new applies to:', appliesTo);
+    if (newArray.includes(choice)) {
+      //remove choice
+      newArray.splice(newArray.indexOf(choice), 1);
+      // if now empty, set as  ['all']
+      if (newArray.length === 0) {
+        setEventAgeDivision(['all']);
+      } else {
+        setEventAgeDivision(newArray);
+      }
+    }
+    if (!newArray.includes(choice)) {
+      //add to array
+      newArray.push(choice);
+      //remove 'all' if it is in there
+      if (newArray.includes('all')) {
+        newArray.splice(newArray.indexOf('all'), 1);
+      }
+      setEventAgeDivision(newArray);
+    }
   }
-
-  function removeAppliesTo(selection) {
-    const choices = { ...appliesTo };
-    delete choices[selection];
-    setAppliesTo(choices);
+  function handleEventCompLevelChange(choice) {
+    const newArray = [...eventCompetitiveLevel];
+    if (choice === 'all') {
+      setEventCompetitiveLevel(['all']);
+      return;
+    }
+    if (newArray.includes(choice)) {
+      //remove choice
+      newArray.splice(newArray.indexOf(choice), 1);
+      // if now empty, set as  ['all']
+      if (newArray.length === 0) {
+        setEventCompetitiveLevel(['all']);
+      } else {
+        setEventCompetitiveLevel(newArray);
+      }
+    }
+    if (!newArray.includes(choice)) {
+      //add to array
+      newArray.push(choice);
+      //remove 'all' if it is in there
+      if (newArray.includes('all')) {
+        newArray.splice(newArray.indexOf('all'), 1);
+      }
+      setEventCompetitiveLevel(newArray);
+    }
+  }
+  function handleCategoryChange(state, setFunc, choice) {
+    const newArray = [...state];
+    if (choice === 'all') {
+      setFunc(['all']);
+      return;
+    }
+    if (newArray.includes(choice)) {
+      const index = newArray.indexOf(choice);
+      newArray.splice(index, 1);
+      // if now empty, set as  ['all']
+      if (newArray.length === 0) {
+        setFunc(['all']);
+      } else {
+        setFunc(newArray);
+      }
+      return;
+    }
+    if (!newArray.includes(choice)) {
+      //add to array
+      newArray.push(choice);
+      //remove 'all' if it is in there
+      if (newArray.includes('all')) {
+        newArray.splice(newArray.indexOf('all'), 1);
+      }
+      setFunc(newArray);
+    }
   }
 
   async function saveEvent(e) {
     e.preventDefault();
-    const applyTo = Object.keys(appliesTo);
     const beginningDate = beginDate ? beginDate.toISOString() : null;
     const endingDate = endDate ? endDate.toISOString() : null;
     await createStudioEvent({
       variables: {
         ...inputs,
-        appliesTo: applyTo,
+        ageDivision: eventAgeDivision,
+        competitiveLevel: eventCompetitiveLevel,
+        style: eventStyle,
         beginDate: beginningDate,
         endDate: endingDate,
       },
@@ -185,8 +253,8 @@ function CreateEventForm({ categories }) {
                   value={inputs.type}
                   onChange={handleChange}
                 >
-                  <option default value={'all'} disabled>
-                    (Competition, Rehearsal, etc...)?
+                  <option default value={''} disabled>
+                    Choose Event Type...
                   </option>
                   <option value='competition'>Competition</option>
                   <option value='rehearsal'>Rehearsal</option>
@@ -201,17 +269,6 @@ function CreateEventForm({ categories }) {
             <section>
               <div>
                 <h3>This event applies to:</h3>
-                <CheckboxAndLabelContainer>
-                  <label>
-                    <input
-                      type='checkbox'
-                      checked={appliesTo.includes('all')}
-                      value={'all'}
-                      onChange={() => handleAppliesToChange('all')}
-                    />
-                    All Classes
-                  </label>
-                </CheckboxAndLabelContainer>
               </div>
               <div className='form-row'>
                 <CategoryOptions className='row-item'>
@@ -225,23 +282,35 @@ function CreateEventForm({ categories }) {
                     <label>
                       <input
                         type='checkbox'
-                        checked={appliesTo.includes('allAges')}
-                        value={'allAges'}
-                        onChange={() => handleAppliesToChange('allAges')}
+                        checked={eventAgeDivision.includes('all')}
+                        value={'all'}
+                        onChange={() =>
+                          handleCategoryChange(
+                            eventAgeDivision,
+                            setEventAgeDivision,
+                            'all'
+                          )
+                        }
                       />
                       All Ages
                     </label>
                   </CheckboxAndLabelContainer>
-                  {categories.ageDivisions.map((ageDivision) => (
-                    <CheckboxAndLabelContainer key={ageDivision}>
+                  {categories.ageDivisions.map((ageChoice) => (
+                    <CheckboxAndLabelContainer key={ageChoice}>
                       <label>
                         <input
                           type='checkbox'
-                          checked={appliesTo.includes(ageDivision)}
-                          value={ageDivision}
-                          onChange={() => handleAppliesToChange(ageDivision)}
+                          checked={eventAgeDivision.includes(ageChoice)}
+                          value={ageChoice}
+                          onChange={() =>
+                            handleCategoryChange(
+                              eventAgeDivision,
+                              setEventAgeDivision,
+                              ageChoice
+                            )
+                          }
                         />
-                        {ageDivision}
+                        {ageChoice}
                       </label>
                     </CheckboxAndLabelContainer>
                   ))}
@@ -256,23 +325,35 @@ function CreateEventForm({ categories }) {
                     <label>
                       <input
                         type='checkbox'
-                        checked={appliesTo.includes('allCompLevels')}
-                        value={'allCompLevels'}
-                        onChange={() => handleAppliesToChange('allCompLevels')}
+                        checked={eventCompetitiveLevel.includes('all')}
+                        value={'all'}
+                        onChange={() =>
+                          handleCategoryChange(
+                            eventCompetitiveLevel,
+                            setEventCompetitiveLevel,
+                            'all'
+                          )
+                        }
                       />
                       All
                     </label>
                   </CheckboxAndLabelContainer>
-                  {categories.competitiveLevels.map((compLevel) => (
-                    <CheckboxAndLabelContainer key={compLevel}>
+                  {categories.competitiveLevels.map((compChoice) => (
+                    <CheckboxAndLabelContainer key={compChoice}>
                       <label>
                         <input
                           type='checkbox'
-                          checked={appliesTo.includes(compLevel)}
-                          value={compLevel}
-                          onChange={() => handleAppliesToChange(compLevel)}
+                          checked={eventCompetitiveLevel.includes(compChoice)}
+                          value={compChoice}
+                          onChange={() =>
+                            handleCategoryChange(
+                              eventCompetitiveLevel,
+                              setEventCompetitiveLevel,
+                              compChoice
+                            )
+                          }
                         />
-                        {compLevel}
+                        {compChoice}
                       </label>
                     </CheckboxAndLabelContainer>
                   ))}
@@ -286,46 +367,38 @@ function CreateEventForm({ categories }) {
                     <label>
                       <input
                         type='checkbox'
-                        checked={appliesTo.includes('allStyles')}
-                        value={'allStyles'}
-                        onChange={() => handleAppliesToChange('allStyles')}
+                        checked={eventStyle.includes('all')}
+                        value={'all'}
+                        onChange={() =>
+                          handleCategoryChange(eventStyle, setEventStyle, 'all')
+                        }
                       />
                       All Styles
                     </label>
                   </CheckboxAndLabelContainer>
-                  {categories.styles.map((style) => (
-                    <CheckboxAndLabelContainer key={style}>
+                  {categories.styles.map((styleChoice) => (
+                    <CheckboxAndLabelContainer key={styleChoice}>
                       <label>
                         <input
                           type='checkbox'
-                          checked={appliesTo.includes(style)}
-                          value={style}
-                          onChange={() => handleAppliesToChange(style)}
+                          checked={eventStyle.includes(styleChoice)}
+                          value={styleChoice}
+                          onChange={() =>
+                            handleCategoryChange(
+                              eventStyle,
+                              setEventStyle,
+                              styleChoice
+                            )
+                          }
                         />
-                        {style}
+                        {styleChoice}
                       </label>
                     </CheckboxAndLabelContainer>
                   ))}
                 </CategoryOptions>
               </div>
             </section>
-            {/* <SelectChoices>
-              {Object.entries(appliesTo).map((entry) => (
-                <li key={entry[0]}>
-                  {entry[1]}
-                  <span>
-                    <button
-                      className='btn-icon'
-                      type='button'
-                      onClick={() => removeAppliesTo(entry[0])}
-                    >
-                      X
-                    </button>
-                  </span>
-                </li>
-              ))}
-            </SelectChoices> */}
-            {/* Dates */}
+
             <div className='form-row'>
               <div className='row-item'>
                 <label htmlFor='beginDate'>Begin Date:</label>

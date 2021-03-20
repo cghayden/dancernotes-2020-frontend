@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react'
-import Card from '../styles/Card'
-import styled from 'styled-components'
+import { useState, useEffect } from 'react';
+import Card from '../styles/Card';
+import styled from 'styled-components';
 
 const EventNotes = styled.p`
   white-space: pre-wrap;
-`
+`;
 
 export default function EventCard({ event }) {
-  const [showEdit, setShowEdit] = useState(false)
-  useEffect(() => setShowEdit(false), [event])
+  const [showEdit, setShowEdit] = useState(false);
+  useEffect(() => setShowEdit(false), [event]);
 
   const eventBeginDate = event.beginDate
     ? new Date(event.beginDate).toLocaleString('en-US', {
@@ -16,14 +16,14 @@ export default function EventCard({ event }) {
         day: 'numeric',
         year: 'numeric',
       })
-    : ''
+    : '';
   const eventEndDate = event.endDate
     ? new Date(event.endDate).toLocaleString('en-US', {
         month: 'long',
         day: 'numeric',
         year: 'numeric',
       })
-    : ''
+    : '';
 
   return (
     <Card key={event.id}>
@@ -34,9 +34,18 @@ export default function EventCard({ event }) {
         </p>
       </div>
       <div>
+        <h4>Applies To:</h4>
+        <ul>
+          {event.appliesTo.map((category, i) => (
+            <li key={i}>{category}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
         <h4>Location</h4>
         <p>{event.location}</p>
         <p>{event.address1}</p>
+
         <span>
           {event.city && <span>{`${event.city},`}</span>}{' '}
           <span>{event.state}</span> <span>{event.zip}</span>
@@ -57,5 +66,5 @@ export default function EventCard({ event }) {
         </div>
       )}
     </Card>
-  )
+  );
 }
