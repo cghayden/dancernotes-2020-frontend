@@ -79,7 +79,7 @@ const colors = {
   yellow7: '#CB6E17',
   yellow8: '#B44D12',
   yellow9: '#8D2B0B',
-}
+};
 
 const theme = {
   indigo0: '#E0E8F9',
@@ -165,7 +165,8 @@ const theme = {
   yellow9: '#8D2B0B',
 
   dutchGreen: '#019e8c',
-  dutchRed: '#ed632f',
+  dutchRed: '#bb4518',
+  // dutchRed: '#ed632f',
   // text Colors...
   blackText: colors['gray9'],
   lighterBlack: colors['gray7'],
@@ -344,9 +345,9 @@ const theme = {
     110: '#0057c1',
     120: '#0051b5',
   },
-}
+};
 
-export { theme }
+export { theme };
 
 // parentBg: "#C8CDE5",
 // color: "#1F567A",
