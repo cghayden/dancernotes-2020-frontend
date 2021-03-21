@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import EnrolledDancers from './EnrolledDancers'
-import { useDisplayControls } from './ParentDisplayProvider'
+import styled from 'styled-components';
+import EnrolledDancers from './EnrolledDancers';
+import { useDisplayControls } from './ParentDisplayProvider';
 
 const HeaderStyle = styled.div`
   width: 100%;
@@ -14,7 +14,7 @@ const HeaderStyle = styled.div`
       padding: 0 5px;
     }
   }
-`
+`;
 const DanceCardTitle = styled.div`
   font-size: 0.875rem;
   grid-column: 1 / -1;
@@ -38,7 +38,7 @@ const DanceCardTitle = styled.div`
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     font-size: 1rem;
   }
-`
+`;
 
 const DanceCardTime = styled.div`
   font-size: 0.75rem;
@@ -51,7 +51,7 @@ const DanceCardTime = styled.div`
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     font-size: 0.825rem;
   }
-`
+`;
 const DanceCardEntryInfo = styled.div`
   color: red;
   font-size: 0.825rem;
@@ -61,30 +61,31 @@ const DanceCardEntryInfo = styled.div`
   @media (min-width: ${(props) => props.theme.largeScreen}) {
     font-size: 0.825rem;
   }
-`
+`;
 
 function formatTime(timeString) {
-  const array = timeString.split(':')
-  let hours = parseInt(array[0])
+  const array = timeString.split(':');
+  let hours = parseInt(array[0]);
   if (hours == 12) {
-    return hours + ':' + array[1] + ' pm'
+    return hours + ':' + array[1] + ' pm';
   }
   if (hours > 12) {
-    hours -= 12
-    return hours + ':' + array[1] + ' pm'
+    hours -= 12;
+    return hours + ':' + array[1] + ' pm';
   } else {
-    return timeString + ' am'
+    return timeString + ' am';
   }
 }
 
 const DanceListingLink = ({ dance }) => {
-  const { competitionMode, hiddenIds } = useDisplayControls()
+  const { competitionMode, hiddenIds } = useDisplayControls();
   return (
     <HeaderStyle>
       <EnrolledDancers hiddenIds={hiddenIds} dancers={dance.dancers} />
       <DanceCardTitle>
         <p>{dance.name}</p>
-        <p>{dance.studio?.studioName}</p>
+        {/* <p>{dance.studio?.studioName}</p> */}
+        <p>{dance.performanceName}</p>
       </DanceCardTitle>
       {!competitionMode ? (
         <DanceCardTime>
@@ -99,7 +100,7 @@ const DanceListingLink = ({ dance }) => {
         </DanceCardTime>
       )}
     </HeaderStyle>
-  )
-}
+  );
+};
 
-export default DanceListingLink
+export default DanceListingLink;
