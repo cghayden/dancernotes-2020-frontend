@@ -44,7 +44,7 @@ const DanceCardTime = styled.div`
   font-size: 0.75rem;
   grid-column: 3/-1;
   grid-row: 1;
-  color: ${(props) => (props.comp ? props.theme.dutchRed : 'inherit')};
+  color: #822b0a;
   p {
     margin: 2px 0;
   }
