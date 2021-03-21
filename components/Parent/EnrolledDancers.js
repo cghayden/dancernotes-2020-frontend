@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const EnrolledDiv = styled.div`
   display: flex;
@@ -7,7 +7,7 @@ const EnrolledDiv = styled.div`
   align-items: center;
   grid-row: 1;
   grid-column: 1;
-`
+`;
 const Avatar = styled.img`
   width: 40px;
   height: 40px;
@@ -19,7 +19,7 @@ const Avatar = styled.img`
   border-radius: 25px;
   margin: 0 0.25rem;
   object-fit: cover;
-`
+`;
 
 const Initial = styled.div`
   /* width: 40px;
@@ -31,11 +31,13 @@ const Initial = styled.div`
   display: grid;
   place-items: center;
   font-size: ${(props) => (props.isDancerHidden ? `1.4em` : `1.6em`)};
-  background-color: ${(props) =>
-    props.isDancerHidden ? props.theme.gray2 : props.theme.green7};
-  color: ${(props) =>
-    props.isDancerHidden ? props.theme.gray4 : props.theme.green0};
-`
+  background-color: slateblue;
+  /* background-color: ${(props) =>
+    props.isDancerHidden ? props.theme.gray2 : props.theme.green7}; */
+  color: #ddedf2;
+  /* color: ${(props) =>
+    props.isDancerHidden ? props.theme.gray4 : props.theme.green0}; */
+`;
 
 export default function EnrolledDancers({ dancers, hiddenIds = [] }) {
   return (
@@ -49,7 +51,7 @@ export default function EnrolledDancers({ dancers, hiddenIds = [] }) {
               src={dancer.avatar}
               alt={dancer.firstName}
             />
-          )
+          );
         } else {
           return (
             <Initial
@@ -58,9 +60,9 @@ export default function EnrolledDancers({ dancers, hiddenIds = [] }) {
             >
               <p>{dancer.firstName[0]}</p>
             </Initial>
-          )
+          );
         }
       })}
     </EnrolledDiv>
-  )
+  );
 }

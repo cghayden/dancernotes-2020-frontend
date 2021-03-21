@@ -18,7 +18,7 @@ function EventsPage() {
     loading: loadingEvents,
     error: errorLoadingEvents,
   } = useQuery(PARENT_EVENTS_QUERY);
-  console.log('parentEvents', parentEvents);
+  // console.log('parentEvents', parentEvents);
 
   //events entered by parent
   const {
@@ -26,7 +26,7 @@ function EventsPage() {
     loading: loadingCustomEvents,
     error: errorLoadingCustomEvents,
   } = useQuery(CUSTOM_EVENTS_QUERY);
-  // console.log('customEvents', customEvents);
+  console.log('customEvents', customEvents);
 
   const {
     data: allRoutinesData,
@@ -48,26 +48,16 @@ function EventsPage() {
     );
   }
 
-  const customEventsWithAll =
-    customEvents &&
-    customEvents.customEvents.map((event) => {
-      return { ...event, appliesTo: ['all'] };
-    });
-
   return (
     <ParentNoFilterLayout
       page={'Events'}
       createLink={`/parent/events/createEvent`}
     >
-      <p>events page</p>
       <EventsContent
         allRoutines={allRoutines}
         allEvents={parentEvents.parentEvents}
+        customEvents={customEvents.customEvents}
       />
-      {/* <EventsContent
-        allRoutines={allRoutines}
-        allEvents={[...customEventsWithAll, ...parentEvents.parentEvents]}
-      /> */}
     </ParentNoFilterLayout>
   );
 }
