@@ -7,6 +7,7 @@ const EventNotes = styled.p`
 `;
 
 export default function EventCard({ event }) {
+  console.log('event', event);
   const [showEdit, setShowEdit] = useState(false);
   useEffect(() => setShowEdit(false), [event]);
 
@@ -36,9 +37,9 @@ export default function EventCard({ event }) {
       <div>
         <h4>Applies To:</h4>
         <ul>
-          {event.appliesTo.map((category, i) => (
-            <li key={i}>{category}</li>
-          ))}
+          <li>Competitive Level: {event.competitiveLevel}</li>
+          <li>Age: {event.ageDivision}</li>
+          <li>Style: {event.style}</li>
         </ul>
       </div>
       <div>
