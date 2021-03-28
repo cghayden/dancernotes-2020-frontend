@@ -235,6 +235,7 @@ const LandingPageForm = styled(Form)`
     font-size: larger;
     display: block;
     margin: 0 auto 1.25rem auto;
+    width: 100%;
   }
 `;
 

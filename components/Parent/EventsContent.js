@@ -2,8 +2,7 @@ import { useState } from 'react';
 import EventsFilter from './EventsFilter';
 import EventsDisplay from './EventsDisplay';
 
-function EventsContent({ allRoutines, allEvents }) {
-  console.log('allRoutines', allRoutines);
+function EventsContent({ allRoutines, allEvents, customEvents }) {
   const [eventFilter, setFilter] = useState({
     competition: true,
     convention: true,
@@ -22,22 +21,6 @@ function EventsContent({ allRoutines, allEvents }) {
   //     style: ['all'],
   //   },
   // };
-  // const event2 = {
-  //   ...allEvents[1],
-  //   limiters: {
-  //     ageDivision: ['Senior'],
-  //     competitiveLevel: ['Company'],
-  //     style: ['Tap'],
-  //   },
-  // };
-  // const event3 = {
-  //   ...allEvents[2],
-  //   limiters: {
-  //     ageDivision: ['all'],
-  //     competitiveLevel: ['Recreational'],
-  //     style: ['Tap'],
-  //   },
-  // };
 
   const adjustedEvents = allEvents.map((event) => {
     return {
@@ -49,7 +32,6 @@ function EventsContent({ allRoutines, allEvents }) {
       },
     };
   });
-  console.log('adjustedEvents', adjustedEvents);
 
   return (
     <>
@@ -59,6 +41,7 @@ function EventsContent({ allRoutines, allEvents }) {
           (eventCategory) => eventFilter[eventCategory]
         )}
         allEvents={adjustedEvents}
+        customEvents={customEvents}
         allRoutines={allRoutines}
       />
     </>
